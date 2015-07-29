@@ -1,9 +1,8 @@
-package parser.features.entities;
+package parser.entities;
 
 public class CausalRelation extends Relation{
 	
-	private enum Type {CAUSE, ENABLE, PREVENT};
-	private Type relType;
+	private EntityEnum.ClinkType relType;
 	private String signal;
 
 	public CausalRelation(Entity source, Entity target) {
@@ -11,11 +10,11 @@ public class CausalRelation extends Relation{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Type getRelType() {
+	public EntityEnum.ClinkType getRelType() {
 		return relType;
 	}
 
-	public void setRelType(Type relType) {
+	public void setRelType(EntityEnum.ClinkType relType) {
 		this.relType = relType;
 	}
 

@@ -1,4 +1,4 @@
-package parser.features.entities;
+package parser.entities;
 
 public class Event extends Entity{
 	
@@ -12,7 +12,8 @@ public class Event extends Entity{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setTenseAspectPolarity(String tense, String aspect, String pol) {
+	public void setAttributes(String eventClass, String tense, String aspect, String pol) {
+		this.eventClass = eventClass;
 		this.tense = tense;
 		this.aspect = aspect;
 		this.polarity = pol;

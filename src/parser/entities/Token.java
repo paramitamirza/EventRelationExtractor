@@ -1,4 +1,4 @@
-package parser.features;
+package parser.entities;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +19,7 @@ public class Token {
 	private Map<String, String> dependencyRel;
 	private String eventID;
 	private String timexID;
+	private String tSignalID;
 	private String cSignalID;
 	
 	public Token(String id) {
@@ -33,10 +34,9 @@ public class Token {
 		dependencyRel = new HashMap<String, String>();
 	}
 	
-	public void setLemmaPosChunk(String lemma, String pos, String mainPos, String chunk) {
+	public void setLemmaPosChunk(String lemma, String pos, String chunk) {
 		this.lemma = lemma;
 		this.pos = pos;
-		this.mainPos = mainPos;
 		this.chunk = chunk;
 	}
 	
@@ -169,5 +169,13 @@ public class Token {
 
 	public void setMainPos(String mainPos) {
 		this.mainPos = mainPos;
+	}
+
+	public String gettSignalID() {
+		return tSignalID;
+	}
+
+	public void settSignalID(String tSignalID) {
+		this.tSignalID = tSignalID;
 	}
 }

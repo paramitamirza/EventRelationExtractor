@@ -1,4 +1,4 @@
-package parser.features.entities;
+package parser.entities;
 
 public class TemporalSignal extends Signal{
 

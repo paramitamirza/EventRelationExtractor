@@ -1,10 +1,8 @@
-package parser.features.entities;
+package parser.entities;
 
 public class TemporalRelation extends Relation{
 	
-	private enum Type {BEFORE, AFTER, IBEFORE, IAFTER, BEGINS, BEGUN_BY, ENDS, ENDED_BY,
-		INCLUDES, IS_INCLUDED, DURING, DURING_INV, MEASURE, SIMULTANEOUS, IDENTITY};
-	private Type relType;
+	private EntityEnum.TlinkType relType;
 	private String signal;
 
 	public TemporalRelation(Entity source, Entity target) {
@@ -20,11 +18,11 @@ public class TemporalRelation extends Relation{
 		this.signal = signal;
 	}
 
-	public Type getRelType() {
+	public EntityEnum.TlinkType getRelType() {
 		return relType;
 	}
 
-	public void setRelType(Type relType) {
+	public void setRelType(EntityEnum.TlinkType relType) {
 		this.relType = relType;
 	}
 

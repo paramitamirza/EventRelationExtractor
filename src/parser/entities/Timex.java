@@ -1,4 +1,4 @@
-package parser.features.entities;
+package parser.entities;
 
 public class Timex extends Entity{
 	
@@ -12,7 +12,7 @@ public class Timex extends Entity{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setTypeValue(String type, String value) {
+	public void setAttributes(String type, String value) {
 		this.type = type;
 		this.value = value;
 	}
