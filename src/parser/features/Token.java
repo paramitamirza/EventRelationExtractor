@@ -1,5 +1,8 @@
 package parser.features;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Token {
 	
 	private String ID;
@@ -7,28 +10,33 @@ public class Token {
 	private String text;
 	private String lemma;
 	private String pos;
+	private String mainPos;
 	private String chunk;
 	private String namedEntity;
 	private String wnSupersense;
 	private String discourseConn;
-	private String dependencyRel;
+	private Boolean mainVerb;
+	private Map<String, String> dependencyRel;
 	private String eventID;
 	private String timexID;
 	private String cSignalID;
 	
 	public Token(String id) {
 		this.setID(id);
+		dependencyRel = new HashMap<String, String>();
 	}
 	
 	public Token(String id, String sentid, String text) {
 		this.ID = id;
 		this.sentID = sentid;
 		this.text = text;
+		dependencyRel = new HashMap<String, String>();
 	}
 	
-	public void setLemmaPosChunk(String lemma, String pos, String chunk) {
+	public void setLemmaPosChunk(String lemma, String pos, String mainPos, String chunk) {
 		this.lemma = lemma;
 		this.pos = pos;
+		this.mainPos = mainPos;
 		this.chunk = chunk;
 	}
 	
@@ -36,6 +44,11 @@ public class Token {
 		this.eventID = eventid;
 		this.timexID = timexid;
 		this.cSignalID = csignalid;
+	}
+	
+	public void setDependencyInfo(Boolean main, Map<String, String> dependencyRel) {
+		this.mainVerb = main;
+		this.dependencyRel = dependencyRel;
 	}
 
 	public String getID() {
@@ -110,11 +123,11 @@ public class Token {
 		this.discourseConn = discourseConn;
 	}
 
-	public String getDependencyRel() {
+	public Map<String, String> getDependencyRel() {
 		return dependencyRel;
 	}
 
-	public void setDependencyRel(String dependencyRel) {
+	public void setDependencyRel(Map<String, String> dependencyRel) {
 		this.dependencyRel = dependencyRel;
 	}
 
@@ -140,5 +153,21 @@ public class Token {
 
 	public void setcSignalID(String cSignalID) {
 		this.cSignalID = cSignalID;
+	}
+
+	public boolean isMainVerb() {
+		return mainVerb;
+	}
+
+	public void setMainVerb(boolean mainVerb) {
+		this.mainVerb = mainVerb;
+	}
+
+	public String getMainPos() {
+		return mainPos;
+	}
+
+	public void setMainPos(String mainPos) {
+		this.mainPos = mainPos;
 	}
 }
