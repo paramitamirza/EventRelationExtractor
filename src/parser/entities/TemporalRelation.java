@@ -2,10 +2,10 @@ package parser.entities;
 
 public class TemporalRelation extends Relation{
 	
-	private EntityEnum.TlinkType relType;
+	private String relType;
 	private String signal;
 
-	public TemporalRelation(Entity source, Entity target) {
+	public TemporalRelation(String source, String target) {
 		super(source, target);
 		// TODO Auto-generated constructor stub
 	}
@@ -18,12 +18,11 @@ public class TemporalRelation extends Relation{
 		this.signal = signal;
 	}
 
-	public EntityEnum.TlinkType getRelType() {
+	public String getRelType() {
 		return relType;
 	}
 
-	public void setRelType(EntityEnum.TlinkType relType) {
+	public void setRelType(String relType) {
 		this.relType = relType;
 	}
-
 }

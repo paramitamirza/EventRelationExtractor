@@ -2,20 +2,11 @@ package parser.entities;
 
 public class CausalRelation extends Relation{
 	
-	private EntityEnum.ClinkType relType;
 	private String signal;
 
-	public CausalRelation(Entity source, Entity target) {
+	public CausalRelation(String source, String target) {
 		super(source, target);
 		// TODO Auto-generated constructor stub
-	}
-
-	public EntityEnum.ClinkType getRelType() {
-		return relType;
-	}
-
-	public void setRelType(EntityEnum.ClinkType relType) {
-		this.relType = relType;
 	}
 
 	public String getSignal() {
@@ -25,5 +16,4 @@ public class CausalRelation extends Relation{
 	public void setSignal(String signal) {
 		this.signal = signal;
 	}
-
 }

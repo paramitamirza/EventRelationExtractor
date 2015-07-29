@@ -2,28 +2,41 @@ package parser.entities;
 
 public class Relation {
 	
-	private Entity source;
-	private Entity target;
+	private String sourceID;
+	private String targetID;
 	
-	public Relation(Entity source, Entity target) {
-		this.setSource(source);
-		this.setTarget(target);
+	public Relation(String source, String target) {
+		this.setSourceID(source);
+		this.setTargetID(target);
 	}
 
-	public Entity getSource() {
-		return source;
+	public String getSourceID() {
+		return sourceID;
 	}
 
-	public void setSource(Entity source) {
-		this.source = source;
+	public void setSourceID(String sourceID) {
+		this.sourceID = sourceID;
 	}
 
-	public Entity getTarget() {
-		return target;
+	public String getTargetID() {
+		return targetID;
 	}
 
-	public void setTarget(Entity target) {
-		this.target = target;
+	public void setTargetID(String targetID) {
+		this.targetID = targetID;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+	        return false;
+	    }
+	    if (getClass() != obj.getClass()) {
+	        return false;
+	    }
+	    final Relation other = (Relation) obj;
+	    return (this.sourceID.equals(other.sourceID) && 
+	    	this.targetID.equals(other.targetID));
 	}
 
 }
