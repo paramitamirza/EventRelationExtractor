@@ -52,18 +52,6 @@ public class TXPParser {
 			parseLine(line, doc);
 		}
 		
-		/*for (Entity ent : doc.getEntityArr()) {
-			if (ent instanceof Timex) {
-				System.out.println(ent.getID() + "\tTimex\t" + ent.getStartTokID() + "\t" + ent.getEndTokID());
-			} else if (ent instanceof Event) {
-				System.out.println(ent.getID() + "\tEvent\t" + ent.getStartTokID() + "\t" + ent.getEndTokID());
-			}
-		}*/
-		for (TemporalRelation tlink : doc.getTlinks()) {
-			System.out.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + tlink.getRelType());
-		}
-		System.out.println();
-		
 		return doc;
 	}
 	
@@ -129,7 +117,7 @@ public class TXPParser {
 			Timex dct = new Timex(tmx_id, "O", "O");
 			dct.setAttributes(cols.get(getIndex(Field.tmx_type)), 
 					cols.get(getIndex(Field.tmx_value)));
-			doc.getEntityArr().add(dct);
+			doc.getEntityArr().add(tmx_id);
 			doc.getEntities().put(tmx_id, dct);
 		} else if(!cols.get(0).isEmpty()) {
 			//token basic info
@@ -162,6 +150,9 @@ public class TXPParser {
 				csig_id = cols.get(getIndex(Field.csignal));
 			}
 			
+			doc.getTokenArr().add(tok_id);
+			doc.getTokens().put(tok_id, tok);
+			
 			String tense = "O", aspect = "O", pol = "O";
 			//tense, aspect, polarity
 			if (getIndex(Field.tense_aspect_pol) != -1) {
@@ -193,8 +184,8 @@ public class TXPParser {
 			} else if (currEntity != null && currEntity instanceof Timex && 
 					!tmx_id.equals(currEntity.getID()) &&
 					tmx_id.equals("O")) {
-				doc.getEntityArr().add(currEntity);
-				doc.getEntities().put(tmx_id, currEntity);
+				doc.getEntityArr().add(currEntity.getID());
+				doc.getEntities().put(currEntity.getID(), currEntity);
 				currEntity = null;
 			} else if (currEntity != null && currEntity instanceof Timex && 
 					!tmx_id.equals(currEntity.getID()) &&
@@ -217,8 +208,8 @@ public class TXPParser {
 			} else if (currEntity != null && currEntity instanceof Event && 
 					!ev_id.equals(currEntity.getID()) &&
 					ev_id.equals("O")) {
-				doc.getEntityArr().add(currEntity);
-				doc.getEntities().put(ev_id, currEntity);
+				doc.getEntityArr().add(currEntity.getID());
+				doc.getEntities().put(currEntity.getID(), currEntity);
 				currEntity = null;
 			} else if (currEntity != null && currEntity instanceof Event && 
 					!ev_id.equals(currEntity.getID()) &&

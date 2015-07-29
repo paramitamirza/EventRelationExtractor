@@ -4,7 +4,12 @@ import java.io.File;
 import java.io.IOException;
 
 import parser.entities.Document;
+import parser.entities.Entity;
 import parser.entities.EntityEnum;
+import parser.entities.Event;
+import parser.entities.TemporalRelation;
+import parser.entities.Timex;
+import parser.entities.Token;
 import parser.TXPParser.Field;
 
 public class testParser {
@@ -26,6 +31,36 @@ public class testParser {
 				
 				try {
 					Document doc = parser.parseDocument(file.getPath());
+					
+					/*for (String tid : doc.getTokenArr()) {
+						Token tok = doc.getTokens().get(tid);
+						System.out.println(tok.getText() + "\t" + tok.getLemma() + "\t" + tok.getPos() + 
+								"\t" + tok.getMainPos() + "\t" + tok.getChunk() + "\t" + tok.getNamedEntity());
+						if (tok.getDependencyRel() != null) {
+							for (String key : tok.getDependencyRel().keySet()) {
+								System.out.println(key + "-" + tok.getDependencyRel().get(key));
+							}
+						}
+					}*/
+					
+					/*for (String ent_id : doc.getEntityArr()) {
+						Entity ent = doc.getEntities().get(ent_id);
+						if (ent instanceof Timex) {
+							System.out.println(ent.getID() + "\tTimex\t" + ent.getStartTokID() + 
+									"\t" + ent.getEndTokID());
+						} else if (ent instanceof Event) {
+							System.out.println(ent.getID() + "\tEvent\t" + ent.getStartTokID() + 
+									"\t" + ent.getEndTokID());
+						}
+					}*/
+					
+					/*for (TemporalRelation tlink : doc.getTlinks()) {
+						System.out.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + 
+								"\t" + tlink.getRelType());
+					}*/
+					
+					System.out.println();
+					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
