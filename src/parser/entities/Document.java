@@ -10,32 +10,35 @@ public class Document {
 	private EntityEnum.Language lang;
 	private Map<String, Token> tokens;
 	private Map<String, Sentence> sentences;
-	private ArrayList<Entity> entities;
+	private ArrayList<Entity> entityArr;
+	private Map<String, Entity> entities;
 	private Map<String, TemporalSignal> temporalSignals;
 	private Map<String, CausalSignal> causalSignals;
-	private Map<String, TemporalRelation> tlinks;
-	private Map<String, CausalRelation> clinks;
+	private ArrayList<TemporalRelation> tlinks;
+	private ArrayList<CausalRelation> clinks;
 	
 	public Document() {
 		this.setLang(EntityEnum.Language.EN);
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entities = new ArrayList<Entity>();
+		entityArr = new ArrayList<Entity>();
+		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new HashMap<String, TemporalRelation>();
-		clinks = new HashMap<String, CausalRelation>();
+		tlinks = new ArrayList<TemporalRelation>();
+		clinks = new ArrayList<CausalRelation>();
 	}
 	
 	public Document(EntityEnum.Language lang) {
 		this.setLang(lang);
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entities = new ArrayList<Entity>();
+		entityArr = new ArrayList<Entity>();
+		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new HashMap<String, TemporalRelation>();
-		clinks = new HashMap<String, CausalRelation>();
+		tlinks = new ArrayList<TemporalRelation>();
+		clinks = new ArrayList<CausalRelation>();
 	}
 	
 	public Document(EntityEnum.Language lang, String filename) {
@@ -43,11 +46,12 @@ public class Document {
 		this.setFilename(filename);
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entities = new ArrayList<Entity>();
+		entityArr = new ArrayList<Entity>();
+		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new HashMap<String, TemporalRelation>();
-		clinks = new HashMap<String, CausalRelation>();
+		tlinks = new ArrayList<TemporalRelation>();
+		clinks = new ArrayList<CausalRelation>();
 	}
 
 	public String getFilename() {
@@ -82,11 +86,11 @@ public class Document {
 		this.sentences = sentences;
 	}
 
-	public ArrayList<Entity> getEntities() {
+	public Map<String, Entity> getEntities() {
 		return entities;
 	}
 
-	public void setEntities(ArrayList<Entity> entities) {
+	public void setEntities(Map<String, Entity> entities) {
 		this.entities = entities;
 	}
 
@@ -106,19 +110,27 @@ public class Document {
 		this.causalSignals = causalSignals;
 	}
 
-	public Map<String, TemporalRelation> getTlinks() {
+	public ArrayList<TemporalRelation> getTlinks() {
 		return tlinks;
 	}
 
-	public void setTlinks(Map<String, TemporalRelation> tlinks) {
+	public void setTlinks(ArrayList<TemporalRelation> tlinks) {
 		this.tlinks = tlinks;
 	}
 
-	public Map<String, CausalRelation> getClinks() {
+	public ArrayList<CausalRelation> getClinks() {
 		return clinks;
 	}
 
-	public void setClinks(Map<String, CausalRelation> clinks) {
+	public void setClinks(ArrayList<CausalRelation> clinks) {
 		this.clinks = clinks;
+	}
+
+	public ArrayList<Entity> getEntityArr() {
+		return entityArr;
+	}
+
+	public void setEntityArr(ArrayList<Entity> entity_arr) {
+		this.entityArr = entity_arr;
 	}
 }

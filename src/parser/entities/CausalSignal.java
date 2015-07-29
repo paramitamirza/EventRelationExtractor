@@ -1,6 +1,6 @@
 package parser.entities;
 
-public class CausalSignal extends Signal{
+public class CausalSignal extends Entity{
 
 	public CausalSignal(String id, String start, String end) {
 		super(id, start, end);
