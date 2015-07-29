@@ -17,6 +17,7 @@ public class Document {
 	private Map<String, CausalSignal> causalSignals;
 	private ArrayList<TemporalRelation> tlinks;
 	private ArrayList<CausalRelation> clinks;
+	private Map<String, ArrayList<String>> corefEvents;
 	
 	public Document() {
 		this.setLang(EntityEnum.Language.EN);
@@ -144,5 +145,13 @@ public class Document {
 
 	public void setTokenArr(ArrayList<String> tokenArr) {
 		this.tokenArr = tokenArr;
+	}
+
+	public Map<String, ArrayList<String>> getCorefEvent() {
+		return corefEvents;
+	}
+
+	public void setCorefEvent(Map<String, ArrayList<String>> corefEvents) {
+		this.corefEvents = corefEvents;
 	}
 }
