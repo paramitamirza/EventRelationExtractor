@@ -8,9 +8,10 @@ public class Document {
 	
 	private String filename;
 	private EntityEnum.Language lang;
+	private ArrayList<String> tokenArr;
 	private Map<String, Token> tokens;
 	private Map<String, Sentence> sentences;
-	private ArrayList<Entity> entityArr;
+	private ArrayList<String> entityArr;
 	private Map<String, Entity> entities;
 	private Map<String, TemporalSignal> temporalSignals;
 	private Map<String, CausalSignal> causalSignals;
@@ -19,9 +20,10 @@ public class Document {
 	
 	public Document() {
 		this.setLang(EntityEnum.Language.EN);
+		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<Entity>();
+		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
@@ -31,9 +33,10 @@ public class Document {
 	
 	public Document(EntityEnum.Language lang) {
 		this.setLang(lang);
+		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<Entity>();
+		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
@@ -44,9 +47,10 @@ public class Document {
 	public Document(EntityEnum.Language lang, String filename) {
 		this.setLang(lang);
 		this.setFilename(filename);
+		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
 		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<Entity>();
+		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
 		temporalSignals = new HashMap<String, TemporalSignal>();
 		causalSignals = new HashMap<String, CausalSignal>();
@@ -126,11 +130,19 @@ public class Document {
 		this.clinks = clinks;
 	}
 
-	public ArrayList<Entity> getEntityArr() {
+	public ArrayList<String> getEntityArr() {
 		return entityArr;
 	}
 
-	public void setEntityArr(ArrayList<Entity> entity_arr) {
-		this.entityArr = entity_arr;
+	public void setEntityArr(ArrayList<String> entityArr) {
+		this.entityArr = entityArr;
+	}
+
+	public ArrayList<String> getTokenArr() {
+		return tokenArr;
+	}
+
+	public void setTokenArr(ArrayList<String> tokenArr) {
+		this.tokenArr = tokenArr;
 	}
 }
