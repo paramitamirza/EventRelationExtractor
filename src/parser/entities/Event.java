@@ -1,11 +1,14 @@
 package parser.entities;
 
+import java.util.ArrayList;
+
 public class Event extends Entity{
 	
 	private String eventClass;
 	private String tense;
 	private String aspect;
 	private String polarity;
+	private ArrayList<String> corefList;
 
 	public Event(String id, String start, String end) {
 		super(id, start, end);
@@ -17,6 +20,7 @@ public class Event extends Entity{
 		this.tense = tense;
 		this.aspect = aspect;
 		this.polarity = pol;
+		this.corefList = new ArrayList<String>();
 	}
 
 	public String getEventClass() {
@@ -49,6 +53,14 @@ public class Event extends Entity{
 
 	public void setPolarity(String polarity) {
 		this.polarity = polarity;
+	}
+
+	public ArrayList<String> getCorefList() {
+		return corefList;
+	}
+
+	public void setCorefList(ArrayList<String> corefList) {
+		this.corefList = corefList;
 	}
 
 	

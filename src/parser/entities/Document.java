@@ -10,6 +10,7 @@ public class Document {
 	private EntityEnum.Language lang;
 	private ArrayList<String> tokenArr;
 	private Map<String, Token> tokens;
+	private ArrayList<String> sentenceArr;
 	private Map<String, Sentence> sentences;
 	private ArrayList<String> entityArr;
 	private Map<String, Entity> entities;
@@ -17,12 +18,12 @@ public class Document {
 	private Map<String, CausalSignal> causalSignals;
 	private ArrayList<TemporalRelation> tlinks;
 	private ArrayList<CausalRelation> clinks;
-	private Map<String, ArrayList<String>> corefEvents;
 	
 	public Document() {
 		this.setLang(EntityEnum.Language.EN);
 		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
+		sentenceArr = new ArrayList<String>();
 		sentences = new HashMap<String, Sentence>();
 		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
@@ -36,6 +37,7 @@ public class Document {
 		this.setLang(lang);
 		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
+		sentenceArr = new ArrayList<String>();
 		sentences = new HashMap<String, Sentence>();
 		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
@@ -50,6 +52,7 @@ public class Document {
 		this.setFilename(filename);
 		tokenArr = new ArrayList<String>();
 		tokens = new HashMap<String, Token>();
+		sentenceArr = new ArrayList<String>();
 		sentences = new HashMap<String, Sentence>();
 		entityArr = new ArrayList<String>();
 		entities = new HashMap<String, Entity>();
@@ -147,11 +150,11 @@ public class Document {
 		this.tokenArr = tokenArr;
 	}
 
-	public Map<String, ArrayList<String>> getCorefEvent() {
-		return corefEvents;
+	public ArrayList<String> getSentenceArr() {
+		return sentenceArr;
 	}
 
-	public void setCorefEvent(Map<String, ArrayList<String>> corefEvents) {
-		this.corefEvents = corefEvents;
+	public void setSentenceArr(ArrayList<String> sentenceArr) {
+		this.sentenceArr = sentenceArr;
 	}
 }

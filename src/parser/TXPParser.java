@@ -21,7 +21,7 @@ public class TXPParser {
 		deps, tmx_id, tmx_type, tmx_value, ner, ev_class, 
 		ev_id, role1, role2, role3, is_arg_pred, has_semrole, 
 		chunk, main_verb, connective, morpho, supersense,
-		tense_aspect_pol, tense, aspect, pol, coevent, 
+		tense_aspect_pol, tense, aspect, pol, coref_event, 
 		tlink, clink, tsignal, csignal;
 	}
 	
@@ -29,6 +29,7 @@ public class TXPParser {
 	private Field[] fields;
 	
 	private Entity currEntity = null;
+	private Sentence currSentence = null;
 	
 	public TXPParser(EntityEnum.Language lang, Field[] fields) {
 		this.language = lang;
@@ -51,6 +52,11 @@ public class TXPParser {
 		while ((line = reader.readLine()) != null) { 
 			parseLine(line, doc);
 		}
+		
+		//Add the last sentence
+		doc.getSentenceArr().add(currSentence.getID());
+		doc.getSentences().put(currSentence.getID(), currSentence);
+		currSentence = null;
 		
 		return doc;
 	}
@@ -102,10 +108,17 @@ public class TXPParser {
 	
 	private String[] parseTenseAspectPol(String tense_aspect_pol) {
 		String[] arr = {"O", "O", "O"};
-        if (tense_aspect_pol.equals("O") && tense_aspect_pol.equals("_")) {
+        if (!tense_aspect_pol.equals("O") && !tense_aspect_pol.equals("_")) {
         	arr = tense_aspect_pol.split("\\+");
         }
         return arr;
+	}
+	
+	private String[] parseCoreference(String coref) {
+		if (!coref.equals("O") && !coref.equals("_")) {
+        	return coref.split(":");
+        }
+        return null;
 	}
 	
 	public void parseLine(String s, Document doc) {
@@ -153,6 +166,18 @@ public class TXPParser {
 			doc.getTokenArr().add(tok_id);
 			doc.getTokens().put(tok_id, tok);
 			
+			//sentence info
+			String sent_id = cols.get(getIndex(Field.sent_id));
+			if (currSentence == null) {
+				currSentence = new Sentence(sent_id, tok_id, tok_id);
+			} else if (currSentence != null && sent_id.equals(currSentence.getID())) {
+				currSentence.setEndTokID(tok_id);
+			} else if (currSentence != null && !sent_id.equals(currSentence.getID())) {
+				doc.getSentenceArr().add(currSentence.getID());
+				doc.getSentences().put(currSentence.getID(), currSentence);
+				currSentence = new Sentence(sent_id, tok_id, tok_id);
+			}
+			
 			String tense = "O", aspect = "O", pol = "O";
 			//tense, aspect, polarity
 			if (getIndex(Field.tense_aspect_pol) != -1) {
@@ -196,12 +221,23 @@ public class TXPParser {
 						cols.get(getIndex(Field.tmx_value)));
 			}
 			
+			//coreference info
+			String[] coref = null;
+			if (getIndex(Field.coref_event) != -1) {
+				coref = parseCoreference(cols.get(getIndex(Field.coref_event)));
+			}
+			
 			//Event
 			if (currEntity == null && !ev_id.equals("O") && tmx_id.equals("O")) {
 				tok.setEventID(ev_id);
 				currEntity = new Event(ev_id, tok_id, tok_id);
 				((Event)currEntity).setAttributes(cols.get(getIndex(Field.ev_class)), 
 						tense, aspect, pol);
+				if (coref != null) {
+					for (String c : coref) {
+						((Event)currEntity).getCorefList().add(c);
+					}
+				}
 			} else if (currEntity != null && ev_id.equals(currEntity.getID())) {
 				tok.setEventID(ev_id);
 				currEntity.setEndTokID(tok_id);
@@ -218,6 +254,11 @@ public class TXPParser {
 				currEntity = new Event(ev_id, tok_id, tok_id);
 				((Event)currEntity).setAttributes(cols.get(getIndex(Field.ev_class)), 
 						tense, aspect, pol);
+				if (coref != null) {
+					for (String c : coref) {
+						((Event)currEntity).getCorefList().add(c);
+					}
+				}
 			}
 			
 			//Temporal signals

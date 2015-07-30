@@ -3,13 +3,7 @@ package parser;
 import java.io.File;
 import java.io.IOException;
 
-import parser.entities.Document;
-import parser.entities.Entity;
-import parser.entities.EntityEnum;
-import parser.entities.Event;
-import parser.entities.TemporalRelation;
-import parser.entities.Timex;
-import parser.entities.Token;
+import parser.entities.*;
 import parser.TXPParser.Field;
 
 public class testParser {
@@ -21,7 +15,7 @@ public class testParser {
 				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
 				Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
 				Field.main_verb, Field.connective, Field.morpho, 
-				Field.tense_aspect_pol, Field.coevent, Field.tlink};
+				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
 		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
 		
 		File dir_TXP = new File(args[0]);
@@ -43,6 +37,11 @@ public class testParser {
 						}
 					}*/
 					
+					/*for (String sid : doc.getSentenceArr()) {
+						Sentence sent = doc.getSentences().get(sid);
+						System.out.println(sent.getID() + "\t" + sent.getStartTokID() + "\t" + sent.getEndTokID());
+					}*/
+					
 					/*for (String ent_id : doc.getEntityArr()) {
 						Entity ent = doc.getEntities().get(ent_id);
 						if (ent instanceof Timex) {
@@ -51,6 +50,10 @@ public class testParser {
 						} else if (ent instanceof Event) {
 							System.out.println(ent.getID() + "\tEvent\t" + ent.getStartTokID() + 
 									"\t" + ent.getEndTokID());
+							for (String eid : ((Event)ent).getCorefList()) {
+								System.out.print(eid + "|");
+							}
+							System.out.println();
 						}
 					}*/
 					
@@ -59,7 +62,7 @@ public class testParser {
 								"\t" + tlink.getRelType());
 					}*/
 					
-					System.out.println();
+					//System.out.println();
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
