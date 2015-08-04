@@ -339,8 +339,12 @@ public class FeatureVector {
 		Collections.reverse(wordList);
 		String reversedContext = String.join(" ", wordList);
 		
+		wordList = Arrays.asList(signal.split(" "));
+		Collections.reverse(wordList);
+		String reversedSignal = String.join(" ", wordList);
+		
 		if (position.equals("BEFORE")) {
-			String resContext = reversedContext.trim().substring(0, reversedContext.indexOf(signal));
+			String resContext = reversedContext.trim().substring(0, reversedContext.indexOf(reversedSignal));
 			return resContext.length() - resContext.replace(" ", "").length(); //count the number of spaces
 		} else {
 			String resContext = context.trim().substring(0, context.indexOf(signal));
@@ -364,6 +368,7 @@ public class FeatureVector {
 			String tidBefore = "", tidAfter = "";
 			if (eidx == 0) { //first entity
 				tidBefore = s.getStartTokID();
+					
 			} else {
 				Entity eBefore = doc.getEntities().get(entArr.get(eidx - 1)); 
 				tidBefore = doc.getTokenArr().get(doc.getTokenArr().indexOf(eBefore.getEndTokID()) + 1);
@@ -375,9 +380,18 @@ public class FeatureVector {
 				tidAfter = doc.getTokenArr().get(doc.getTokenArr().indexOf(eAfter.getStartTokID()) - 1);
 			}
 			
-			String tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
-			String tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
-			String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+			String tidStart = "", tidEnd = "", tidBegin = "";
+			if (e.getStartTokID().equals(s.getStartTokID())) {
+				tidStart = s.getStartTokID();
+			} else {
+				tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
+			}
+			if (e.getEndTokID().equals(s.getEndTokID())) {
+				tidEnd = s.getEndTokID();
+			} else {
+				tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
+			}
+			tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
 			
 			String contextBefore = getString(tidBefore, tidStart);
 			String contextAfter = getString(tidEnd, tidAfter);
@@ -472,6 +486,7 @@ public class FeatureVector {
 		String tidBefore = "", tidAfter = "";
 		if (eidx == 0) { //first entity
 			tidBefore = s.getStartTokID();
+				
 		} else {
 			Entity eBefore = doc.getEntities().get(entArr.get(eidx - 1)); 
 			tidBefore = doc.getTokenArr().get(doc.getTokenArr().indexOf(eBefore.getEndTokID()) + 1);
@@ -483,9 +498,18 @@ public class FeatureVector {
 			tidAfter = doc.getTokenArr().get(doc.getTokenArr().indexOf(eAfter.getStartTokID()) - 1);
 		}
 		
-		String tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
-		String tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
-		String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+		String tidStart = "", tidEnd = "", tidBegin = "";
+		if (e.getStartTokID().equals(s.getStartTokID())) {
+			tidStart = s.getStartTokID();
+		} else {
+			tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
+		}
+		if (e.getEndTokID().equals(s.getEndTokID())) {
+			tidEnd = s.getEndTokID();
+		} else {
+			tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
+		}
+		tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
 		
 		ArrayList<String> tidConnBefore = getConnectiveTidArr(tidBefore, tidStart, "BEFORE");
 		ArrayList<String> tidConnAfter = getConnectiveTidArr(tidEnd, tidAfter, "AFTER");

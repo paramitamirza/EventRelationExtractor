@@ -167,8 +167,8 @@ public class EventTimexFeatureVector extends FeatureVector{
 				if (eidx < entArr.size()-1 && doc.getEntities().get(entArr.get(eidx+1)) instanceof Timex) {
 					Entity tmx2 = doc.getEntities().get(entArr.get(eidx+1));
 					int tmx2Idx = doc.getTokens().get(tmx2.getStartTokID()).getIndex();
-					String beforeTmx1 = doc.getTokens().get(tidxStart-1).getTokenAttribute(Feature.lemma);
-					String beforeTmx2 = doc.getTokens().get(tmx2Idx-1).getTokenAttribute(Feature.lemma);
+					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(Feature.lemma);
+					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tmx2Idx-1)).getTokenAttribute(Feature.lemma);
 					
 					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
 						return "TMX-BEGIN";
@@ -183,8 +183,8 @@ public class EventTimexFeatureVector extends FeatureVector{
 				} else if (eidx > 0 && doc.getEntities().get(entArr.get(eidx-1)) instanceof Timex) {
 					Entity tmx1 = doc.getEntities().get(entArr.get(eidx-1));
 					int tmx1Idx = doc.getTokens().get(tmx1.getStartTokID()).getIndex();
-					String beforeTmx1 = doc.getTokens().get(tmx1Idx-1).getTokenAttribute(Feature.lemma);
-					String beforeTmx2 = doc.getTokens().get(tidxStart-1).getTokenAttribute(Feature.lemma);
+					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tmx1Idx-1)).getTokenAttribute(Feature.lemma);
+					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(Feature.lemma);
 					
 					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
 						return "TMX-END";

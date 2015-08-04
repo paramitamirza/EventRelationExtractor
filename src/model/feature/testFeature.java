@@ -10,27 +10,26 @@ import parser.entities.*;
 
 public class testFeature {
 	
-	public static void main(String [] args) {
-		
-		Field[] fields = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
-				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
-				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
-				Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
-				Field.main_verb, Field.connective, Field.morpho, 
-				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
-		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
-		
-		//dir_TXP <-- data/example_TXP
-		File dir_TXP = new File(args[0]);
+	public static void getFeatureVector(TXPParser parser, String filepath) throws IOException {
+		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
+		
+		if (files_TXP == null) return;
+		
 		for (File file : files_TXP) {
-			if (file.isFile()) {
+			if (file.isDirectory()){
 				
-				try {
-					Document doc = parser.parseDocument(file.getPath());
-					TemporalSignalList tsignalList = new TemporalSignalList(doc.getLang());
-					
-					for (TemporalRelation tlink : doc.getTlinks()) {
+				getFeatureVector(parser, file.getPath());
+				
+			} else if (file.isFile()) {				
+				Document doc = parser.parseDocument(file.getPath());
+				TemporalSignalList tsignalList = new TemporalSignalList(doc.getLang());
+				
+				for (TemporalRelation tlink : doc.getTlinks()) {
+					if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
+							doc.getEntities().containsKey(tlink.getSourceID()) &&
+							doc.getEntities().containsKey(tlink.getTargetID())) {
+						//System.out.println(file.getName() + "\t " + tlink.getSourceID() + "-" + tlink.getTargetID());
 						Entity e1 = doc.getEntities().get(tlink.getSourceID());
 						Entity e2 = doc.getEntities().get(tlink.getTargetID());
 						
@@ -103,12 +102,29 @@ public class testFeature {
 							System.out.println(fv.printVectors());
 						}
 					}
-					
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 			}
+		}
+		
+		
+	}
+	
+	public static void main(String [] args) {
+		
+		Field[] fields = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
+				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
+				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
+				Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
+				Field.main_verb, Field.connective, Field.morpho, 
+				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
+		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
+		
+		//dir_TXP <-- data/example_TXP
+		try {
+			getFeatureVector(parser, args[0]);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

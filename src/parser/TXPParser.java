@@ -28,7 +28,10 @@ public class TXPParser {
 	private EntityEnum.Language language;
 	private Field[] fields;
 	
-	private Entity currEntity = null;
+	private Entity currTimex = null;
+	private Entity currEvent = null;
+	private Entity currTSignal = null;
+	private Entity currCSignal = null;
 	private Sentence currSentence = null;
 	
 	public TXPParser(EntityEnum.Language lang, Field[] fields) {
@@ -216,37 +219,42 @@ public class TXPParser {
 			}
 			
 			//Timex
-			if (currEntity == null && !tmx_id.equals("O")) {				
+			if (currTimex == null && !tmx_id.equals("O")) {
 				tok.setTimexID(tmx_id);
-				currEntity = new Timex(tmx_id, tok_id, tok_id);
+				currTimex = new Timex(tmx_id, tok_id, tok_id);
 				String type = cols.get(getIndex(Field.tmx_type));
 				if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
-				((Timex)currEntity).setAttributes(type, 
+				((Timex)currTimex).setAttributes(type, 
 						cols.get(getIndex(Field.tmx_value)));
-				((Timex)currEntity).setDct(false);
-				((Timex)currEntity).setEmptyTag(false);
-			} else if (currEntity != null && tmx_id.equals(currEntity.getID())) {
+				((Timex)currTimex).setDct(false);
+				((Timex)currTimex).setEmptyTag(false);
+			} else if (currTimex != null && tmx_id.equals(currTimex.getID())) {
 				tok.setTimexID(tmx_id);
-				currEntity.setEndTokID(tok_id);
-			} else if (currEntity != null && currEntity instanceof Timex && 
-					!tmx_id.equals(currEntity.getID()) &&
+				currTimex.setEndTokID(tok_id);
+			} else if (currTimex != null && currTimex instanceof Timex && 
+					!tmx_id.equals(currTimex.getID()) &&
 					tmx_id.equals("O")) {
-				currEntity.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
-				currEntity.setSentID(currSentence.getID());
-				doc.getEntities().put(currEntity.getID(), currEntity);	
-				currSentence.getEntityArr().add(currEntity.getID());
-				currEntity = null;
-			} else if (currEntity != null && currEntity instanceof Timex && 
-					!tmx_id.equals(currEntity.getID()) &&
+				currTimex.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currTimex.setSentID(currSentence.getID());
+				doc.getEntities().put(currTimex.getID(), currTimex);	
+				currSentence.getEntityArr().add(currTimex.getID());
+				currTimex = null;
+			} else if (currTimex != null && currTimex instanceof Timex && 
+					!tmx_id.equals(currTimex.getID()) &&
 					!tmx_id.equals("O")) {
+				currTimex.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currTimex.setSentID(currSentence.getID());
+				doc.getEntities().put(currTimex.getID(), currTimex);	
+				currSentence.getEntityArr().add(currTimex.getID());				
+				
 				tok.setTimexID(tmx_id);
-				currEntity = new Timex(tmx_id, tok_id, tok_id);
+				currTimex = new Timex(tmx_id, tok_id, tok_id);
 				String type = cols.get(getIndex(Field.tmx_type));
 				if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
-				((Timex)currEntity).setAttributes(type, 
+				((Timex)currTimex).setAttributes(type, 
 						cols.get(getIndex(Field.tmx_value)));
-				((Timex)currEntity).setDct(false);
-				((Timex)currEntity).setEmptyTag(false);
+				((Timex)currTimex).setDct(false);
+				((Timex)currTimex).setEmptyTag(false);
 			}
 			
 			//coreference info
@@ -256,90 +264,95 @@ public class TXPParser {
 			}
 			
 			//Event
-			if (currEntity == null && !ev_id.equals("O") && tmx_id.equals("O")) {
+			if (currEvent == null && !ev_id.equals("O") && tmx_id.equals("O")) {
 				tok.setEventID(ev_id);
-				currEntity = new Event(ev_id, tok_id, tok_id);
-				((Event)currEntity).setAttributes(cols.get(getIndex(Field.ev_class)), 
+				currEvent = new Event(ev_id, tok_id, tok_id);
+				((Event)currEvent).setAttributes(cols.get(getIndex(Field.ev_class)), 
 						tense, aspect, pol);
 				if (coref != null) {
 					for (String c : coref) {
-						((Event)currEntity).getCorefList().add(c);
+						((Event)currEvent).getCorefList().add(c);
 					}
 				}
-			} else if (currEntity != null && ev_id.equals(currEntity.getID())) {
+			} else if (currEvent != null && ev_id.equals(currEvent.getID())) {
 				tok.setEventID(ev_id);
-				currEntity.setEndTokID(tok_id);
-			} else if (currEntity != null && currEntity instanceof Event && 
-					!ev_id.equals(currEntity.getID()) &&
+				currEvent.setEndTokID(tok_id);
+			} else if (currEvent != null && currEvent instanceof Event && 
+					!ev_id.equals(currEvent.getID()) &&
 					ev_id.equals("O")) {
-				currEntity.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
-				currEntity.setSentID(currSentence.getID());
-				doc.getEntities().put(currEntity.getID(), currEntity);
-				currSentence.getEntityArr().add(currEntity.getID());
-				currEntity = null;
-			} else if (currEntity != null && currEntity instanceof Event && 
-					!ev_id.equals(currEntity.getID()) &&
+				currEvent.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currEvent.setSentID(currSentence.getID());
+				doc.getEntities().put(currEvent.getID(), currEvent);
+				currSentence.getEntityArr().add(currEvent.getID());
+				currEvent = null;
+			} else if (currEvent != null && currEvent instanceof Event && 
+					!ev_id.equals(currEvent.getID()) &&
 					!ev_id.equals("O")) {
+				currEvent.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currEvent.setSentID(currSentence.getID());
+				doc.getEntities().put(currEvent.getID(), currEvent);
+				currSentence.getEntityArr().add(currEvent.getID());
+				
 				tok.setEventID(ev_id);
-				currEntity = new Event(ev_id, tok_id, tok_id);
-				((Event)currEntity).setAttributes(cols.get(getIndex(Field.ev_class)), 
+				currEvent = new Event(ev_id, tok_id, tok_id);
+				((Event)currEvent).setAttributes(cols.get(getIndex(Field.ev_class)), 
 						tense, aspect, pol);
 				if (coref != null) {
 					for (String c : coref) {
-						((Event)currEntity).getCorefList().add(c);
+						((Event)currEvent).getCorefList().add(c);
 					}
 				}
 			}
 			
 			//Temporal signals
 			if (tsig_id != null) {
-				if (currEntity == null && !tsig_id.equals("O")) {
+				if (currTSignal == null && !tsig_id.equals("O")) {
 					tok.settSignalID(tsig_id);
-					currEntity = new TemporalSignal(tsig_id, tok_id, tok_id);
-				} else if (currEntity != null && tsig_id.equals(currEntity.getID())) {
+					currTSignal = new TemporalSignal(tsig_id, tok_id, tok_id);
+				} else if (currTSignal != null && tsig_id.equals(currTSignal.getID())) {
 					tok.settSignalID(tsig_id);
-					currEntity.setEndTokID(tok_id);
-				} else if (currEntity != null && currEntity instanceof TemporalSignal && 
-						!tsig_id.equals(currEntity.getID()) &&
+					currTSignal.setEndTokID(tok_id);
+				} else if (currTSignal != null && currTSignal instanceof TemporalSignal && 
+						!tsig_id.equals(currTSignal.getID()) &&
 						tsig_id.equals("O")) {
-					doc.getTemporalSignals().put(tsig_id, ((TemporalSignal)currEntity));
-					currEntity = null;
-				} else if (currEntity != null && currEntity instanceof TemporalSignal && 
-						!tsig_id.equals(currEntity.getID()) &&
+					doc.getTemporalSignals().put(tsig_id, ((TemporalSignal)currTSignal));
+					currTSignal = null;
+				} else if (currTSignal != null && currTSignal instanceof TemporalSignal && 
+						!tsig_id.equals(currTSignal.getID()) &&
 						!tsig_id.equals("O")) {
 					tok.settSignalID(tsig_id);
-					currEntity = new TemporalSignal(tsig_id, tok_id, tok_id);
+					currTSignal = new TemporalSignal(tsig_id, tok_id, tok_id);
 				}
 			}
 			
 			//Causal signals
 			if (csig_id != null) {
-				if (currEntity == null && !csig_id.equals("O")) {
+				if (currCSignal == null && !csig_id.equals("O")) {
 					tok.setcSignalID(csig_id);
-					currEntity = new CausalSignal(csig_id, tok_id, tok_id);
-				} else if (currEntity != null && csig_id.equals(currEntity.getID())) {
+					currCSignal = new CausalSignal(csig_id, tok_id, tok_id);
+				} else if (currCSignal != null && csig_id.equals(currCSignal.getID())) {
 					tok.settSignalID(csig_id);
-					currEntity.setEndTokID(tok_id);
-				} else if (currEntity != null && currEntity instanceof CausalSignal && 
-						!csig_id.equals(currEntity.getID()) &&
+					currCSignal.setEndTokID(tok_id);
+				} else if (currCSignal != null && currCSignal instanceof CausalSignal && 
+						!csig_id.equals(currCSignal.getID()) &&
 						csig_id.equals("O")) {
-					doc.getCausalSignals().put(csig_id, ((CausalSignal)currEntity));
-					currEntity = null;
-				} else if (currEntity != null && currEntity instanceof CausalSignal && 
-						!csig_id.equals(currEntity.getID()) &&
+					doc.getCausalSignals().put(csig_id, ((CausalSignal)currCSignal));
+					currCSignal = null;
+				} else if (currCSignal != null && currCSignal instanceof CausalSignal && 
+						!csig_id.equals(currCSignal.getID()) &&
 						!csig_id.equals("O")) {
 					tok.setcSignalID(tsig_id);
-					currEntity = new CausalSignal(csig_id, tok_id, tok_id);
+					currCSignal = new CausalSignal(csig_id, tok_id, tok_id);
 				}
 			}
 			
 			if (!tmx_id.equals("O") || !ev_id.equals("O")) {
 				
 				String tlinks = null, clinks = null;
-				if (getIndex(Field.tlink) != -1) {
+				if (getIndex(Field.tlink) != -1 && getIndex(Field.tlink) < cols.size()) {
 					tlinks = cols.get(getIndex(Field.tlink));
 				}
-				if (getIndex(Field.clink) != -1) {
+				if (getIndex(Field.clink) != -1 && getIndex(Field.clink) < cols.size()) {
 					clinks = cols.get(getIndex(Field.clink));
 				}
 				
