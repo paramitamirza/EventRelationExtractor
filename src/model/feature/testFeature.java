@@ -84,11 +84,14 @@ public class testFeature {
 							//dependency information
 							/*fv.getVectors().add(((EventTimexFeatureVector) fv).getMateDependencyPath());
 							fv.getVectors().add(((EventTimexFeatureVector) fv).getMateMainVerb());*/
+							
+							//temporal signal
+							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalSignal());
 						}
 						
 						fv.getVectors().add(fv.getLabel());
 						
-						if (fv instanceof EventEventFeatureVector)
+						//if (fv instanceof EventTimexFeatureVector)
 							System.out.println(fv.printVectors());
 					}
 					

@@ -186,8 +186,10 @@ public class EventEventFeatureVector extends FeatureVector{
 		Marker me2 = super.getTemporalSignal(e2);
 		tSignals.add(me1.getText());
 		tSignals.add(me1.getPosition());
+		tSignals.add(me1.getDepRel());
 		tSignals.add(me2.getText());
 		tSignals.add(me2.getPosition());
+		tSignals.add(me2.getDepRel());
 		return tSignals;
 	}
 

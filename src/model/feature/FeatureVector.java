@@ -3,8 +3,11 @@ package model.feature;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import model.feature.FeatureEnum.*;
@@ -310,6 +313,41 @@ public class FeatureVector {
 		return "O";
 	}
 	
+	private ArrayList<String> getSignalTidArr(String signal, String context, String tidStartContext, String position) {
+		ArrayList<String> signalTidArr = new ArrayList<String>();
+		
+		String resContext = null;
+		if (position.equals("BEFORE")) {
+			resContext = context.trim().substring(0, context.lastIndexOf(signal));
+		} else {
+			resContext = context.trim().substring(0, context.indexOf(signal));
+		}
+		int start = resContext.length() - resContext.replace(" ", "").length(); //count the number of spaces
+		
+		int tidxStartContext = doc.getTokenArr().indexOf(tidStartContext);
+		int tidxStartSignal = tidxStartContext + start;
+		int signalLength = signal.trim().split(" ").length;
+		for (int i = tidxStartSignal; i < tidxStartSignal + signalLength; i++) {
+			signalTidArr.add(doc.getTokenArr().get(i));
+		}
+		
+		return signalTidArr;
+	}
+	
+	private Integer getSignalEntityDistance(String signal, String context, String position) {
+		List<String> wordList = Arrays.asList(context.split(" "));
+		Collections.reverse(wordList);
+		String reversedContext = String.join(" ", wordList);
+		
+		if (position.equals("BEFORE")) {
+			String resContext = reversedContext.trim().substring(0, reversedContext.indexOf(signal));
+			return resContext.length() - resContext.replace(" ", "").length(); //count the number of spaces
+		} else {
+			String resContext = context.trim().substring(0, context.indexOf(signal));
+			return resContext.length() - resContext.replace(" ", "").length(); //count the number of spaces
+		}
+	}
+	
 	public Marker getTemporalSignal(Entity e) throws IOException {
 		Map<String, String> tsignalList = null;
 		if (e instanceof Event) {
@@ -317,8 +355,6 @@ public class FeatureVector {
 		} else if (e instanceof Timex) {
 			tsignalList = ((TemporalSignalList) this.getSignalList()).getTimexList();
 		}
-		
-		Marker m = new Marker("O", "O", "O");
 		
 		if (tsignalList != null) {		
 			Sentence s = doc.getSentences().get(e.getSentID());
@@ -346,23 +382,52 @@ public class FeatureVector {
 			String contextBefore = getContext(tidBefore, tidStart);
 			String contextAfter = getContext(tidEnd, tidAfter);
 			String contextBegin = getContext(s.getStartTokID(), tidBegin);
+			String contextEntity = getContext(e.getStartTokID(), e.getEndTokID());
+			
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
 			
 			for (String key : tsignalList.keySet()) {
 				//if (key.equals("before")) System.out.println(e.getID() + "\t" + key + "\t-" + contextBefore + "-");
 				if (contextBefore.contains(" " + key + " ")) {
+					Marker m = new Marker();
 					m.setText(tsignalList.get(key).replace(" ", "_"));
 					m.setPosition("BEFORE");
-					//m.setDepRel(getSignalMateDependencyPath(e, ));
+					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
+						getSignalTidArr(key, contextBefore, tidBefore, "BEFORE")));
+					candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE"), m);
 				} else if (contextAfter.contains(" " + key + " ")) {
+					Marker m = new Marker();
 					m.setText(tsignalList.get(key).replace(" ", "_"));
 					m.setPosition("AFTER");
+					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
+						getSignalTidArr(key, contextAfter, tidEnd, "AFTER")));
+					candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 100, m);
+				} else if (contextEntity.contains(" " + key + " ")) {
+					Marker m = new Marker();
+					m.setText(tsignalList.get(key).replace(" ", "_"));
+					m.setPosition("INSIDE");
+					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
+						getSignalTidArr(key, contextEntity, e.getStartTokID(), "INSIDE")));
+					candidates.put(getSignalEntityDistance(key, contextEntity, "INSIDE") + 200, m);
 				} else if (contextBegin.contains(" " + key + " ")) {
+					Marker m = new Marker();
 					m.setText(tsignalList.get(key).replace(" ", "_"));
 					m.setPosition("BEGIN");
-				}
+					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
+						getSignalTidArr(key, contextBegin, s.getStartTokID(), "BEGIN")));
+					candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 300, m);
+				} 
+			}
+			
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O");
 			}
 		}
 		
-		return m;
+		return null;
 	}
 }

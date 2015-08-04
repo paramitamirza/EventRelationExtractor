@@ -1,5 +1,6 @@
 package model.feature;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +92,31 @@ public class EventTimexFeatureVector extends FeatureVector{
 	
 	public String getMateMainVerb() {
 		return super.getMateMainVerb(e1);
+	}
+	
+	public ArrayList<String> getTemporalSignal() throws IOException {
+		ArrayList<String> tSignals = new ArrayList<String>();
+		
+		//Assuming that the pair is already in event-timex order
+		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+			!isSameSentence()) {
+			tSignals.add("O");
+			tSignals.add("O");
+			tSignals.add("O");
+			tSignals.add("O");
+			tSignals.add("O");
+			tSignals.add("O");
+		} else {	
+			Marker me1 = super.getTemporalSignal(e1);
+			Marker me2 = super.getTemporalSignal(e2);
+			tSignals.add(me1.getText());
+			tSignals.add(me1.getPosition());
+			tSignals.add(me1.getDepRel());
+			tSignals.add(me2.getText());
+			tSignals.add(me2.getPosition());
+			tSignals.add(me2.getDepRel());
+		}
+		return tSignals;
 	}
 
 }
