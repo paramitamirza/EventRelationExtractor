@@ -10,7 +10,7 @@ import parser.entities.*;
 
 public class testFeature {
 	
-	public static void getFeatureVector(TXPParser parser, String filepath) throws IOException {
+	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList) throws IOException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -19,11 +19,10 @@ public class testFeature {
 		for (File file : files_TXP) {
 			if (file.isDirectory()){
 				
-				getFeatureVector(parser, file.getPath());
+				getFeatureVector(parser, file.getPath(), tsignalList);
 				
 			} else if (file.isFile()) {				
 				Document doc = parser.parseDocument(file.getPath());
-				TemporalSignalList tsignalList = new TemporalSignalList(doc.getLang());
 				
 				for (TemporalRelation tlink : doc.getTlinks()) {
 					if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
@@ -121,7 +120,8 @@ public class testFeature {
 		
 		//dir_TXP <-- data/example_TXP
 		try {
-			getFeatureVector(parser, args[0]);
+			TemporalSignalList tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
+			getFeatureVector(parser, args[0], tsignalList);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
