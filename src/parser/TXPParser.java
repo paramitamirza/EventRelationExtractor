@@ -54,6 +54,7 @@ public class TXPParser {
 		}
 		
 		//Add the last sentence
+		currSentence.setIndex(doc.getSentIdx()); doc.setSentIdx(doc.getSentIdx() + 1);
 		doc.getSentenceArr().add(currSentence.getID());
 		doc.getSentences().put(currSentence.getID(), currSentence);
 		currSentence = null;
@@ -128,10 +129,25 @@ public class TXPParser {
 		if(cols.get(0).contains("DCT_")) {
 			String tmx_id = cols.get(getIndex(Field.tmx_id));
 			Timex dct = new Timex(tmx_id, "O", "O");
-			dct.setAttributes(cols.get(getIndex(Field.tmx_type)), 
+			String type = cols.get(getIndex(Field.tmx_type));
+			if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
+			dct.setAttributes(type, 
 					cols.get(getIndex(Field.tmx_value)));
-			doc.getEntityArr().add(tmx_id);
+			dct.setDct(true);
+			dct.setEmptyTag(false);
+			dct.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
 			doc.getEntities().put(tmx_id, dct);
+		} else if(cols.get(0).contains("ETX_")) {
+			String tmx_id = cols.get(getIndex(Field.tmx_id));
+			Timex etx = new Timex(tmx_id, "O", "O");
+			String type = cols.get(getIndex(Field.tmx_type));
+			if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
+			etx.setAttributes(type, 
+					cols.get(getIndex(Field.tmx_value)));
+			etx.setDct(false);
+			etx.setEmptyTag(true);
+			etx.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+			doc.getEntities().put(tmx_id, etx);
 		} else if(!cols.get(0).isEmpty()) {
 			//token basic info
 			String tok_id = cols.get(getIndex(Field.token_id));
@@ -163,6 +179,7 @@ public class TXPParser {
 				csig_id = cols.get(getIndex(Field.csignal));
 			}
 			
+			tok.setIndex(doc.getTokIdx()); doc.setTokIdx(doc.getTokIdx() + 1);
 			doc.getTokenArr().add(tok_id);
 			doc.getTokens().put(tok_id, tok);
 			
@@ -173,6 +190,7 @@ public class TXPParser {
 			} else if (currSentence != null && sent_id.equals(currSentence.getID())) {
 				currSentence.setEndTokID(tok_id);
 			} else if (currSentence != null && !sent_id.equals(currSentence.getID())) {
+				currSentence.setIndex(doc.getSentIdx()); doc.setSentIdx(doc.getSentIdx() + 1);
 				doc.getSentenceArr().add(currSentence.getID());
 				doc.getSentences().put(currSentence.getID(), currSentence);
 				currSentence = new Sentence(sent_id, tok_id, tok_id);
@@ -201,24 +219,34 @@ public class TXPParser {
 			if (currEntity == null && !tmx_id.equals("O")) {				
 				tok.setTimexID(tmx_id);
 				currEntity = new Timex(tmx_id, tok_id, tok_id);
-				((Timex)currEntity).setAttributes(cols.get(getIndex(Field.tmx_type)), 
-						cols.get(getIndex(Field.tmx_value)));					
+				String type = cols.get(getIndex(Field.tmx_type));
+				if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
+				((Timex)currEntity).setAttributes(type, 
+						cols.get(getIndex(Field.tmx_value)));
+				((Timex)currEntity).setDct(false);
+				((Timex)currEntity).setEmptyTag(false);
 			} else if (currEntity != null && tmx_id.equals(currEntity.getID())) {
 				tok.setTimexID(tmx_id);
 				currEntity.setEndTokID(tok_id);
 			} else if (currEntity != null && currEntity instanceof Timex && 
 					!tmx_id.equals(currEntity.getID()) &&
 					tmx_id.equals("O")) {
-				doc.getEntityArr().add(currEntity.getID());
-				doc.getEntities().put(currEntity.getID(), currEntity);
+				currEntity.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currEntity.setSentID(currSentence.getID());
+				doc.getEntities().put(currEntity.getID(), currEntity);	
+				currSentence.getEntityArr().add(currEntity.getID());
 				currEntity = null;
 			} else if (currEntity != null && currEntity instanceof Timex && 
 					!tmx_id.equals(currEntity.getID()) &&
 					!tmx_id.equals("O")) {
 				tok.setTimexID(tmx_id);
 				currEntity = new Timex(tmx_id, tok_id, tok_id);
-				((Timex)currEntity).setAttributes(cols.get(getIndex(Field.tmx_type)), 
+				String type = cols.get(getIndex(Field.tmx_type));
+				if (type.contains("B-") || type.contains("I-")) type = type.substring(2);
+				((Timex)currEntity).setAttributes(type, 
 						cols.get(getIndex(Field.tmx_value)));
+				((Timex)currEntity).setDct(false);
+				((Timex)currEntity).setEmptyTag(false);
 			}
 			
 			//coreference info
@@ -244,8 +272,10 @@ public class TXPParser {
 			} else if (currEntity != null && currEntity instanceof Event && 
 					!ev_id.equals(currEntity.getID()) &&
 					ev_id.equals("O")) {
-				doc.getEntityArr().add(currEntity.getID());
+				currEntity.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
+				currEntity.setSentID(currSentence.getID());
 				doc.getEntities().put(currEntity.getID(), currEntity);
+				currSentence.getEntityArr().add(currEntity.getID());
 				currEntity = null;
 			} else if (currEntity != null && currEntity instanceof Event && 
 					!ev_id.equals(currEntity.getID()) &&

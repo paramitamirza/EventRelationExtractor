@@ -8,58 +8,67 @@ public class Document {
 	
 	private String filename;
 	private EntityEnum.Language lang;
-	private ArrayList<String> tokenArr;
 	private Map<String, Token> tokens;
-	private ArrayList<String> sentenceArr;
 	private Map<String, Sentence> sentences;
-	private ArrayList<String> entityArr;
 	private Map<String, Entity> entities;
+	private ArrayList<String> tokenArr;
+	private ArrayList<String> sentenceArr;
 	private Map<String, TemporalSignal> temporalSignals;
 	private Map<String, CausalSignal> causalSignals;
 	private ArrayList<TemporalRelation> tlinks;
 	private ArrayList<CausalRelation> clinks;
 	
+	private int tokIdx;
+	private int sentIdx;
+	private int entIdx;
+	
 	public Document() {
 		this.setLang(EntityEnum.Language.EN);
-		tokenArr = new ArrayList<String>();
-		tokens = new HashMap<String, Token>();
-		sentenceArr = new ArrayList<String>();
-		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<String>();
-		entities = new HashMap<String, Entity>();
-		temporalSignals = new HashMap<String, TemporalSignal>();
-		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new ArrayList<TemporalRelation>();
-		clinks = new ArrayList<CausalRelation>();
+		setTokens(new HashMap<String, Token>());
+		setSentences(new HashMap<String, Sentence>());
+		setEntities(new HashMap<String, Entity>());
+		setTokIdx(0);
+		setSentIdx(0);
+		setEntIdx(0);
+		setTokenArr(new ArrayList<String>());
+		setSentenceArr(new ArrayList<String>());
+		setTemporalSignals(new HashMap<String, TemporalSignal>());
+		setCausalSignals(new HashMap<String, CausalSignal>());
+		setTlinks(new ArrayList<TemporalRelation>());
+		setClinks(new ArrayList<CausalRelation>());
 	}
 	
 	public Document(EntityEnum.Language lang) {
 		this.setLang(lang);
-		tokenArr = new ArrayList<String>();
-		tokens = new HashMap<String, Token>();
-		sentenceArr = new ArrayList<String>();
-		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<String>();
-		entities = new HashMap<String, Entity>();
-		temporalSignals = new HashMap<String, TemporalSignal>();
-		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new ArrayList<TemporalRelation>();
-		clinks = new ArrayList<CausalRelation>();
+		setTokens(new HashMap<String, Token>());
+		setSentences(new HashMap<String, Sentence>());
+		setEntities(new HashMap<String, Entity>());
+		setTokIdx(0);
+		setSentIdx(0);
+		setEntIdx(0);
+		setTokenArr(new ArrayList<String>());
+		setSentenceArr(new ArrayList<String>());
+		setTemporalSignals(new HashMap<String, TemporalSignal>());
+		setCausalSignals(new HashMap<String, CausalSignal>());
+		setTlinks(new ArrayList<TemporalRelation>());
+		setClinks(new ArrayList<CausalRelation>());
 	}
 	
 	public Document(EntityEnum.Language lang, String filename) {
 		this.setLang(lang);
 		this.setFilename(filename);
-		tokenArr = new ArrayList<String>();
-		tokens = new HashMap<String, Token>();
-		sentenceArr = new ArrayList<String>();
-		sentences = new HashMap<String, Sentence>();
-		entityArr = new ArrayList<String>();
-		entities = new HashMap<String, Entity>();
-		temporalSignals = new HashMap<String, TemporalSignal>();
-		causalSignals = new HashMap<String, CausalSignal>();
-		tlinks = new ArrayList<TemporalRelation>();
-		clinks = new ArrayList<CausalRelation>();
+		setTokens(new HashMap<String, Token>());
+		setSentences(new HashMap<String, Sentence>());
+		setEntities(new HashMap<String, Entity>());
+		setTokIdx(0);
+		setSentIdx(0);
+		setEntIdx(0);
+		setTokenArr(new ArrayList<String>());
+		setSentenceArr(new ArrayList<String>());
+		setTemporalSignals(new HashMap<String, TemporalSignal>());
+		setCausalSignals(new HashMap<String, CausalSignal>());
+		setTlinks(new ArrayList<TemporalRelation>());
+		setClinks(new ArrayList<CausalRelation>());
 	}
 
 	public String getFilename() {
@@ -134,12 +143,28 @@ public class Document {
 		this.clinks = clinks;
 	}
 
-	public ArrayList<String> getEntityArr() {
-		return entityArr;
+	public int getTokIdx() {
+		return tokIdx;
 	}
 
-	public void setEntityArr(ArrayList<String> entityArr) {
-		this.entityArr = entityArr;
+	public void setTokIdx(int tokIdx) {
+		this.tokIdx = tokIdx;
+	}
+
+	public int getSentIdx() {
+		return sentIdx;
+	}
+
+	public void setSentIdx(int sentIdx) {
+		this.sentIdx = sentIdx;
+	}
+
+	public int getEntIdx() {
+		return entIdx;
+	}
+
+	public void setEntIdx(int entIdx) {
+		this.entIdx = entIdx;
 	}
 
 	public ArrayList<String> getTokenArr() {

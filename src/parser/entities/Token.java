@@ -3,10 +3,13 @@ package parser.entities;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.feature.FeatureEnum.Feature;
+
 public class Token {
 	
 	private String ID;
 	private String sentID;
+	private Integer index;
 	private String text;
 	private String lemma;
 	private String pos;
@@ -49,6 +52,29 @@ public class Token {
 	public void setDependencyInfo(Boolean main, Map<String, String> dependencyRel) {
 		this.mainVerb = main;
 		this.dependencyRel = dependencyRel;
+	}
+	
+	public String getTokenText(Feature feature) {
+		switch (feature) {
+			case token: return this.getText(); 
+			case lemma: return this.getLemma();
+			default: return this.getText() + "\t" + this.getLemma();
+		}
+	}
+	
+	public String getTokenAttribute(Feature feature) {
+		switch (feature) {
+			case token: return this.getText(); 
+			case lemma: return this.getLemma();
+			case pos: return this.getPos(); 
+			case mainpos: return this.getMainPos();
+			case chunk: return this.getChunk();
+			case ner: return this.getNamedEntity();
+			case supersense: return this.getWnSupersense();
+			default: return this.getText() + "\t" + this.getLemma() + "\t" +
+				this.getPos() + "\t" + this.getMainPos() + "\t" + this.getChunk() + "\t" + 
+				this.getNamedEntity() + "\t" + this.getWnSupersense();
+		}
 	}
 
 	public String getID() {
@@ -177,5 +203,13 @@ public class Token {
 
 	public void settSignalID(String tSignalID) {
 		this.tSignalID = tSignalID;
+	}
+
+	public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
 	}
 }

@@ -1,5 +1,7 @@
 package parser.entities;
 
+import model.feature.FeatureEnum.Feature;
+
 public class Timex extends Entity{
 	
 	private String type;
@@ -33,7 +35,7 @@ public class Timex extends Entity{
 		this.value = value;
 	}
 
-	public Boolean getDct() {
+	public Boolean isDct() {
 		return dct;
 	}
 
@@ -41,12 +43,29 @@ public class Timex extends Entity{
 		this.dct = dct;
 	}
 
-	public Boolean getEmptyTag() {
+	public Boolean isEmptyTag() {
 		return emptyTag;
 	}
 
 	public void setEmptyTag(Boolean emptyTag) {
 		this.emptyTag = emptyTag;
+	}
+	
+	public String getValueTemplate() {
+		String template = "";
+		template = this.value.replaceAll("\\d", "N");
+		return template;
+	}
+	
+	public String getAttribute(Feature feature) {
+		switch (feature) {
+			case timexType: return this.getType(); 
+			case timexValue: return this.getValue();
+			case dct: return this.isDct() ? "TRUE" : "FALSE";
+			case timexValueTemplate: return getValueTemplate();
+			default: return this.getType() + "\t" + this.getValue() + "\t" +
+			(this.isDct() ? "TRUE" : "FALSE");
+		}
 	}
 	
 }

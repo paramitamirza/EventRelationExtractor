@@ -26,7 +26,8 @@ public class testParser {
 				try {
 					Document doc = parser.parseDocument(file.getPath());
 					
-					/*for (String tid : doc.getTokenArr()) {
+					//array of tokens
+					for (String tid : doc.getTokenArr()) {
 						Token tok = doc.getTokens().get(tid);
 						System.out.println(tok.getText() + "\t" + tok.getLemma() + "\t" + tok.getPos() + 
 								"\t" + tok.getMainPos() + "\t" + tok.getChunk() + "\t" + tok.getNamedEntity());
@@ -35,14 +36,20 @@ public class testParser {
 								System.out.println(key + "-" + tok.getDependencyRel().get(key));
 							}
 						}
-					}*/
+					}
 					
-					/*for (String sid : doc.getSentenceArr()) {
+					//array of sentences
+					for (String sid : doc.getSentenceArr()) {
 						Sentence sent = doc.getSentences().get(sid);
 						System.out.println(sent.getID() + "\t" + sent.getStartTokID() + "\t" + sent.getEndTokID());
-					}*/
+						for (String eid : sent.getEntityArr()) {
+							System.out.print(eid + " ");
+						}
+						System.out.println();
+					}
 					
-					/*for (String ent_id : doc.getEntityArr()) {
+					//array of entities
+					for (String ent_id : doc.getEntities().keySet()) {
 						Entity ent = doc.getEntities().get(ent_id);
 						if (ent instanceof Timex) {
 							System.out.println(ent.getID() + "\tTimex\t" + ent.getStartTokID() + 
@@ -55,14 +62,15 @@ public class testParser {
 							}
 							System.out.println();
 						}
-					}*/
+					}
 					
-					/*for (TemporalRelation tlink : doc.getTlinks()) {
+					//array of TLINKs
+					for (TemporalRelation tlink : doc.getTlinks()) {
 						System.out.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + 
 								"\t" + tlink.getRelType());
-					}*/
+					}
 					
-					//System.out.println();
+					System.out.println();
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

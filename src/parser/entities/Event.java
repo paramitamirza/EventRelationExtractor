@@ -2,6 +2,8 @@ package parser.entities;
 
 import java.util.ArrayList;
 
+import model.feature.FeatureEnum.Feature;
+
 public class Event extends Entity{
 	
 	private String eventClass;
@@ -63,6 +65,15 @@ public class Event extends Entity{
 		this.corefList = corefList;
 	}
 
-	
+	public String getAttribute(Feature feature) {
+		switch (feature) {
+			case eventClass: return this.getEventClass(); 
+			case tense: return this.getTense();
+			case aspect: return this.getAspect();
+			case polarity: return this.getPolarity();
+			default: return this.getEventClass() + "\t" + this.getTense() + "\t" +
+			this.getAspect() + "\t" + this.getPolarity();
+		}
+	}
 	
 }
