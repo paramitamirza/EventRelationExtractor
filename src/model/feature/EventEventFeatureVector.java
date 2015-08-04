@@ -192,5 +192,18 @@ public class EventEventFeatureVector extends FeatureVector{
 		tSignals.add(me2.getDepRel());
 		return tSignals;
 	}
+	
+	public ArrayList<String> getTemporalConnective() {
+		ArrayList<String> tSignals = new ArrayList<String>();
+		Marker me1 = super.getTemporalConnective(e1);
+		Marker me2 = super.getTemporalConnective(e2);
+		tSignals.add(me1.getText());
+		tSignals.add(me1.getPosition());
+		tSignals.add(me1.getDepRel());
+		tSignals.add(me2.getText());
+		tSignals.add(me2.getPosition());
+		tSignals.add(me2.getDepRel());
+		return tSignals;
+	}
 
 }

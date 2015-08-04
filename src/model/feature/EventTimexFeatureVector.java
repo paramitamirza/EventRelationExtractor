@@ -8,6 +8,7 @@ import model.feature.FeatureEnum.Feature;
 import parser.entities.Document;
 import parser.entities.Entity;
 import parser.entities.Event;
+import parser.entities.Sentence;
 import parser.entities.TemporalRelation;
 import parser.entities.Timex;
 
@@ -117,6 +118,88 @@ public class EventTimexFeatureVector extends FeatureVector{
 			tSignals.add(me2.getDepRel());
 		}
 		return tSignals;
+	}
+	
+	public ArrayList<String> getTemporalConnective() {
+		ArrayList<String> tConns = new ArrayList<String>();
+		
+		//Assuming that the pair is already in event-timex order
+		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+			!isSameSentence()) {
+			tConns.add("O");
+			tConns.add("O");
+			tConns.add("O");
+			tConns.add("O");
+			tConns.add("O");
+			tConns.add("O");
+		} else {	
+			Marker me1 = super.getTemporalConnective(e1);
+			Marker me2 = super.getTemporalConnective(e2);
+			tConns.add(me1.getText());
+			tConns.add(me1.getPosition());
+			tConns.add(me1.getDepRel());
+			tConns.add(me2.getText());
+			tConns.add(me2.getPosition());
+			tConns.add(me2.getDepRel());
+		}
+		return tConns;
+	}
+	
+	/**
+	 * Feature for timespan timexes
+	 * e.g. "between" tmx1 "and" tmx2, "from" tmx1 "to" tmx 2, tmx1 "-" tmx2, tmx1 "until" tmx2
+	 *      we said that timex is tmx1 is "TMX-BEGIN" and tmx2 is "TMX-END"
+	 * @return String timexRule
+	 */
+	public String getTimexRule() {
+		//Assuming that the pair is already in event-timex order
+		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag())) {
+			return "O";
+		} else {
+			Sentence s = doc.getSentences().get(e2.getSentID());
+			ArrayList<String> entArr = s.getEntityArr();
+			int eidx = entArr.indexOf(e2.getID());
+			
+			int tidxStart = doc.getTokens().get(e2.getStartTokID()).getIndex();
+			int tidxStartSent = doc.getTokens().get(s.getStartTokID()).getIndex();
+			
+			if (tidxStart > tidxStartSent) {
+				if (eidx < entArr.size()-1 && doc.getEntities().get(entArr.get(eidx+1)) instanceof Timex) {
+					Entity tmx2 = doc.getEntities().get(entArr.get(eidx+1));
+					int tmx2Idx = doc.getTokens().get(tmx2.getStartTokID()).getIndex();
+					String beforeTmx1 = doc.getTokens().get(tidxStart-1).getTokenAttribute(Feature.lemma);
+					String beforeTmx2 = doc.getTokens().get(tmx2Idx-1).getTokenAttribute(Feature.lemma);
+					
+					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
+						return "TMX-BEGIN";
+					} else if (beforeTmx1.equals("from") && 
+							(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
+						return "TMX-BEGIN";
+					} else if (beforeTmx2.equals("-")) {
+						return "TMX-BEGIN";
+					} else if (beforeTmx2.equals("until") || beforeTmx2.equals("until")) {
+						return "TMX-BEGIN";
+					}
+				} else if (eidx > 0 && doc.getEntities().get(entArr.get(eidx-1)) instanceof Timex) {
+					Entity tmx1 = doc.getEntities().get(entArr.get(eidx-1));
+					int tmx1Idx = doc.getTokens().get(tmx1.getStartTokID()).getIndex();
+					String beforeTmx1 = doc.getTokens().get(tmx1Idx-1).getTokenAttribute(Feature.lemma);
+					String beforeTmx2 = doc.getTokens().get(tidxStart-1).getTokenAttribute(Feature.lemma);
+					
+					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
+						return "TMX-END";
+					} else if (beforeTmx1.equals("from") && 
+							(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
+						return "TMX-END";
+					} else if (beforeTmx2.equals("-")) {
+						return "TMX-END";
+					} else if (beforeTmx2.equals("until") || beforeTmx2.equals("until")) {
+						return "TMX-END";
+					}
+				}
+			}
+			return "O";
+		}
 	}
 
 }

@@ -18,6 +18,7 @@ public class testParser {
 				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
 		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
 		
+		//dir_TXP <-- data/example_TXP
 		File dir_TXP = new File(args[0]);
 		File[] files_TXP = dir_TXP.listFiles();
 		for (File file : files_TXP) {
