@@ -15,6 +15,9 @@ public class Token {
 	private String pos;
 	private String mainPos;
 	private String chunk;
+	private String tense;
+	private String aspect;
+	private String polarity;
 	private String namedEntity;
 	private String wnSupersense;
 	private String discourseConn;
@@ -211,5 +214,29 @@ public class Token {
 
 	public void setIndex(Integer index) {
 		this.index = index;
+	}
+
+	public String getTense() {
+		return tense;
+	}
+
+	public void setTense(String tense) {
+		this.tense = tense;
+	}
+
+	public String getAspect() {
+		return aspect;
+	}
+
+	public void setAspect(String aspect) {
+		this.aspect = aspect;
+	}
+
+	public String getPolarity() {
+		return polarity;
+	}
+
+	public void setPolarity(String polarity) {
+		this.polarity = polarity;
 	}
 }

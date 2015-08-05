@@ -171,15 +171,25 @@ public class TXPParser {
 			tok.setDependencyInfo(isMainVerb(cols.get(getIndex(Field.main_verb))), 
 					parseDependency(cols.get(getIndex(Field.deps))));
 			
-			//entity info
-			String tmx_id = cols.get(getIndex(Field.tmx_id));
-			String ev_id = cols.get(getIndex(Field.ev_id));
-			String tsig_id = null, csig_id = null;
-			if (getIndex(Field.csignal) != -1) {
-				tsig_id = cols.get(getIndex(Field.tsignal));
-			} else if (getIndex(Field.csignal) != -1) {
-				csig_id = cols.get(getIndex(Field.csignal));
+			String tense = "O", aspect = "O", pol = "O";
+			//tense, aspect, polarity
+			if (getIndex(Field.tense_aspect_pol) != -1) {
+				String[] arr = parseTenseAspectPol(cols.get(getIndex(Field.tense_aspect_pol)));
+				tense = arr[0];
+				aspect = arr[1];
+				pol = arr[2];
+			} else {
+				if (getIndex(Field.tense) != -1) {
+					tense = cols.get(getIndex(Field.tense));
+				}
+				if (getIndex(Field.aspect) != -1) {
+					aspect = cols.get(getIndex(Field.aspect));
+				}
+				if (getIndex(Field.pol) != -1) {
+					pol = cols.get(getIndex(Field.pol));
+				}
 			}
+			tok.setTense(tense); tok.setAspect(aspect); tok.setPolarity(pol);
 			
 			tok.setIndex(doc.getTokIdx()); doc.setTokIdx(doc.getTokIdx() + 1);
 			doc.getTokenArr().add(tok_id);
@@ -198,23 +208,14 @@ public class TXPParser {
 				currSentence = new Sentence(sent_id, tok_id, tok_id);
 			}
 			
-			String tense = "O", aspect = "O", pol = "O";
-			//tense, aspect, polarity
-			if (getIndex(Field.tense_aspect_pol) != -1) {
-				String[] arr = parseTenseAspectPol(cols.get(getIndex(Field.tense_aspect_pol)));
-				tense = arr[0];
-				aspect = arr[1];
-				pol = arr[2];
-			} else {
-				if (getIndex(Field.tense) != -1) {
-					tense = cols.get(getIndex(Field.tense));
-				}
-				if (getIndex(Field.aspect) != -1) {
-					aspect = cols.get(getIndex(Field.aspect));
-				}
-				if (getIndex(Field.pol) != -1) {
-					pol = cols.get(getIndex(Field.pol));
-				}
+			//entity info
+			String tmx_id = cols.get(getIndex(Field.tmx_id));
+			String ev_id = cols.get(getIndex(Field.ev_id));
+			String tsig_id = null, csig_id = null;
+			if (getIndex(Field.csignal) != -1) {
+				tsig_id = cols.get(getIndex(Field.tsignal));
+			} else if (getIndex(Field.csignal) != -1) {
+				csig_id = cols.get(getIndex(Field.csignal));
 			}
 			
 			//Timex

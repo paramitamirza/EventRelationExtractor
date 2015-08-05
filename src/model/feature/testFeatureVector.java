@@ -27,7 +27,7 @@ public class testFeatureVector {
 				
 				Object[] entArr = doc.getEntities().keySet().toArray();
 				
-				/*for (int i = 0; i < entArr.length; i++) {
+				for (int i = 0; i < entArr.length; i++) {
 					for (int j = i; j < entArr.length; j++) {
 						if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 								doc.getEntities().get(entArr[j]) instanceof Timex) {
@@ -37,7 +37,7 @@ public class testFeatureVector {
 									tt.getRelType());
 						}
 					}
-				}*/
+				}
 				
 				for (TemporalRelation tlink : doc.getTlinks()) {
 					if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
@@ -54,11 +54,11 @@ public class testFeatureVector {
 							fv = new EventTimexFeatureVector(fv);
 						}
 						
-						//fv.getVectors().add(fv.getE1().getID());
-						//fv.getVectors().add(fv.getE2().getID());
+						fv.getVectors().add(fv.getE1().getID());
+						fv.getVectors().add(fv.getE2().getID());
 						
 						//token attribute features
-						/*fv.getVectors().addAll(fv.getTokenAttribute(Feature.token));
+						fv.getVectors().addAll(fv.getTokenAttribute(Feature.token));
 						fv.getVectors().addAll(fv.getTokenAttribute(Feature.lemma));
 						fv.getVectors().addAll(fv.getCombinedTokenAttribute(Feature.pos));
 						fv.getVectors().addAll(fv.getCombinedTokenAttribute(Feature.mainpos));
@@ -69,7 +69,7 @@ public class testFeatureVector {
 						
 						//context features
 						fv.getVectors().add(fv.getEntityDistance().toString());
-						fv.getVectors().add(fv.getSentenceDistance().toString());*/
+						fv.getVectors().add(fv.getSentenceDistance().toString());
 						
 						if (fv instanceof EventEventFeatureVector) {
 							//WordNet similarity
@@ -77,7 +77,7 @@ public class testFeatureVector {
 							
 							//Entity attributes
 							//fv.getVectors().addAll(((EventEventFeatureVector) fv).getEntityAttributes());
-							/*fv.getVectors().addAll(((EventEventFeatureVector) fv).getCombinedEntityAttributes());
+							fv.getVectors().addAll(((EventEventFeatureVector) fv).getCombinedEntityAttributes());
 							fv.getVectors().addAll(((EventEventFeatureVector) fv).getSameEntityAttributes());
 							
 							//dependency information
@@ -89,7 +89,7 @@ public class testFeatureVector {
 							fv.getVectors().addAll(((EventEventFeatureVector) fv).getTemporalConnective());
 							
 							//event co-reference
-							fv.getVectors().add(((EventEventFeatureVector) fv).isCoreference() ? "COREF" : "O");*/
+							fv.getVectors().add(((EventEventFeatureVector) fv).isCoreference() ? "COREF" : "NOCOREF");
 							
 						} else if (fv instanceof EventTimexFeatureVector) {
 							fv.getVectors().add(fv.getOrder());
@@ -102,7 +102,7 @@ public class testFeatureVector {
 							fv.getVectors().add(((EventTimexFeatureVector) fv).getMateMainVerb());
 							
 							//temporal signal & connective
-							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalSignal());
+							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalSignalCluster());
 							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalConnective());
 							
 							//timex rule type
@@ -113,10 +113,9 @@ public class testFeatureVector {
 						
 						if (fv instanceof EventEventFeatureVector) {
 							event.println(fv.printVectors());
+						} else if (fv instanceof EventTimexFeatureVector) {
+							timex.println(fv.printVectors());
 						}
-						//else if (fv instanceof EventTimexFeatureVector) {
-						//	timex.println(fv.printVectors());
-						//}
 					}
 				}
 			}

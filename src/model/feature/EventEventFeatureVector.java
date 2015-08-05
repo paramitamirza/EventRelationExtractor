@@ -43,7 +43,23 @@ public class EventEventFeatureVector extends FeatureVector{
 	}
 	
 	protected String getEntityAttribute(Entity e, Feature feature) {
-		return ((Event)e).getAttribute(feature);
+		if ((feature == Feature.tense || feature == Feature.aspect || feature == Feature.polarity) && 
+				((Event)e).getAttribute(feature).equals("O")) {
+			String relatedTid = null;
+			if (doc.getTokens().get(e.getStartTokID()).getMainPos().equals("n")) {
+				relatedTid = getMateVerbFromSbjNoun(e.getStartTokID());
+				if (relatedTid == null) relatedTid = getMateVerbFromObjNoun(e.getStartTokID());
+			} else if (doc.getTokens().get(e.getStartTokID()).getMainPos().equals("adj")) {
+				relatedTid = getMateVerbFromAdj(e.getStartTokID());
+			}
+			if (relatedTid != null) {
+				if (feature == Feature.tense) return doc.getTokens().get(relatedTid).getTense();
+				else if (feature == Feature.aspect) return doc.getTokens().get(relatedTid).getAspect();
+				else if (feature == Feature.polarity) return doc.getTokens().get(relatedTid).getPolarity();
+			}
+		}
+		if (((Event)e).getAttribute(feature).equals("O")) return "NONE";
+		else return ((Event)e).getAttribute(feature);
 	}
 	
 	public ArrayList<String> getEntityAttributes() {
@@ -62,8 +78,8 @@ public class EventEventFeatureVector extends FeatureVector{
 	public ArrayList<String> getCombinedEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "|" + getEntityAttribute(e2, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e1, Feature.aspect) + "|" + getEntityAttribute(e2, Feature.aspect));
+		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect) + "|" + 
+				getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
 		entityAttrs.add(getEntityAttribute(e1, Feature.polarity) + "|" + getEntityAttribute(e2, Feature.polarity));
 		return entityAttrs;
 	}
@@ -99,8 +115,8 @@ public class EventEventFeatureVector extends FeatureVector{
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
-				if (getCoordVerb(govID) != null) {
-					generateDependencyPath(getCoordVerb(govID), tokenArr2, paths, "", visited);
+				if (getMateCoordVerb(govID) != null) {
+					generateDependencyPath(getMateCoordVerb(govID), tokenArr2, paths, "", visited);
 					if (!paths.isEmpty()) {
 						return paths.get(0).substring(1);
 					}
@@ -113,8 +129,8 @@ public class EventEventFeatureVector extends FeatureVector{
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
-				if (getCoordVerb(govID) != null) {
-					generateDependencyPath(getCoordVerb(govID), tokenArr1, paths, "", visited);
+				if (getMateCoordVerb(govID) != null) {
+					generateDependencyPath(getMateCoordVerb(govID), tokenArr1, paths, "", visited);
 					if (!paths.isEmpty()) {
 						return paths.get(0).substring(1);
 					}
@@ -125,18 +141,18 @@ public class EventEventFeatureVector extends FeatureVector{
 			tokenArr2.clear();			
 			
 			if (getTokenAttribute(e1, Feature.mainpos).equals("v")) {
-				tokenArr1.add(getHeadVerb(tokenID1));
+				tokenArr1.add(getMateHeadVerb(tokenID1));
 			} else if (getTokenAttribute(e1, Feature.mainpos).equals("adj") &&
-				getVerbFromAdj(tokenID1) != null) {
-				tokenArr1.add(getVerbFromAdj(tokenID1));
+				getMateVerbFromAdj(tokenID1) != null) {
+				tokenArr1.add(getMateVerbFromAdj(tokenID1));
 			} else {
 				tokenArr1.add(tokenID1);
 			}
 			if (getTokenAttribute(e2, Feature.mainpos).equals("v")) {
-				tokenArr2.add(getHeadVerb(tokenID2));
+				tokenArr2.add(getMateHeadVerb(tokenID2));
 			} else if (getTokenAttribute(e2, Feature.mainpos).equals("adj") &&
-				getVerbFromAdj(tokenID2) != null) {
-				tokenArr2.add(getVerbFromAdj(tokenID2));
+				getMateVerbFromAdj(tokenID2) != null) {
+				tokenArr2.add(getMateVerbFromAdj(tokenID2));
 			} else {
 				tokenArr2.add(tokenID2);
 			}
@@ -148,8 +164,8 @@ public class EventEventFeatureVector extends FeatureVector{
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
-				if (getCoordVerb(govID) != null) {
-					generateDependencyPath(getCoordVerb(govID), tokenArr2, paths, "", visited);
+				if (getMateCoordVerb(govID) != null) {
+					generateDependencyPath(getMateCoordVerb(govID), tokenArr2, paths, "", visited);
 					if (!paths.isEmpty()) {
 						return paths.get(0).substring(1);
 					}
@@ -162,8 +178,8 @@ public class EventEventFeatureVector extends FeatureVector{
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
-				if (getCoordVerb(govID) != null) {
-					generateDependencyPath(getCoordVerb(govID), tokenArr1, paths, "", visited);
+				if (getMateCoordVerb(govID) != null) {
+					generateDependencyPath(getMateCoordVerb(govID), tokenArr1, paths, "", visited);
 					if (!paths.isEmpty()) {
 						return paths.get(0).substring(1);
 					}
@@ -184,11 +200,20 @@ public class EventEventFeatureVector extends FeatureVector{
 		ArrayList<String> tSignals = new ArrayList<String>();
 		Marker me1 = super.getTemporalSignal(e1);
 		Marker me2 = super.getTemporalSignal(e2);
-		tSignals.add(me1.getText());
-		tSignals.add(me1.getPosition());
+		tSignals.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
 		tSignals.add(me1.getDepRel());
-		tSignals.add(me2.getText());
-		tSignals.add(me2.getPosition());
+		tSignals.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
+		tSignals.add(me2.getDepRel());
+		return tSignals;
+	}
+	
+	public ArrayList<String> getTemporalSignalCluster() throws IOException {
+		ArrayList<String> tSignals = new ArrayList<String>();
+		Marker me1 = super.getTemporalSignal(e1);
+		Marker me2 = super.getTemporalSignal(e2);
+		tSignals.add(me1.getCluster().replace(" ", "_") + "|" + me1.getPosition());
+		tSignals.add(me1.getDepRel());
+		tSignals.add(me2.getCluster().replace(" ", "_") + "|" + me2.getPosition());
 		tSignals.add(me2.getDepRel());
 		return tSignals;
 	}
@@ -197,11 +222,9 @@ public class EventEventFeatureVector extends FeatureVector{
 		ArrayList<String> tSignals = new ArrayList<String>();
 		Marker me1 = super.getTemporalConnective(e1);
 		Marker me2 = super.getTemporalConnective(e2);
-		tSignals.add(me1.getText());
-		tSignals.add(me1.getPosition());
+		tSignals.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
 		tSignals.add(me1.getDepRel());
-		tSignals.add(me2.getText());
-		tSignals.add(me2.getPosition());
+		tSignals.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
 		tSignals.add(me2.getDepRel());
 		return tSignals;
 	}

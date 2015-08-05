@@ -213,21 +213,49 @@ public class FeatureVector {
 		return null;
 	}
 	
-	protected String getHeadVerb(String tokID) {
+	protected String getMateHeadVerb(String tokID) {
 		Sentence s = doc.getSentences().get(doc.getTokens().get(tokID).getSentID());
 		ArrayList<String> tokenArr = getTokenIDArr(s.getStartTokID(), s.getEndTokID());
 		for (String tok : tokenArr) {
 			if (!tokID.equals(tok) && doc.getTokens().get(tok).getDependencyRel() != null) {
 				if (doc.getTokens().get(tok).getDependencyRel().keySet().contains(tokID) &&
 					doc.getTokens().get(tok).getDependencyRel().get(tokID).equals("VC")) {
-					return getHeadVerb(tok);
+					return getMateHeadVerb(tok);
 				} 
 			}
 		}
 		return tokID;
 	}
 	
-	protected String getVerbFromAdj(String tokID) {
+	protected String getMateVerbFromSbjNoun(String tokID) {
+		Sentence s = doc.getSentences().get(doc.getTokens().get(tokID).getSentID());
+		ArrayList<String> tokenArr = getTokenIDArr(s.getStartTokID(), s.getEndTokID());
+		for (String tok : tokenArr) {
+			if (!tokID.equals(tok) && doc.getTokens().get(tok).getDependencyRel() != null) {
+				if (doc.getTokens().get(tok).getDependencyRel().keySet().contains(tokID) &&
+					doc.getTokens().get(tok).getDependencyRel().get(tokID).equals("SBJ")) {
+					return tok;
+				}
+			}
+		}
+		return null;
+	}
+	
+	protected String getMateVerbFromObjNoun(String tokID) {
+		Sentence s = doc.getSentences().get(doc.getTokens().get(tokID).getSentID());
+		ArrayList<String> tokenArr = getTokenIDArr(s.getStartTokID(), s.getEndTokID());
+		for (String tok : tokenArr) {
+			if (!tokID.equals(tok) && doc.getTokens().get(tok).getDependencyRel() != null) {
+				if (doc.getTokens().get(tok).getDependencyRel().keySet().contains(tokID) &&
+					doc.getTokens().get(tok).getDependencyRel().get(tokID).equals("OBJ")) {
+					return tok;
+				}
+			}
+		}
+		return null;
+	}
+	
+	protected String getMateVerbFromAdj(String tokID) {
 		Sentence s = doc.getSentences().get(doc.getTokens().get(tokID).getSentID());
 		ArrayList<String> tokenArr = getTokenIDArr(s.getStartTokID(), s.getEndTokID());
 		for (String tok : tokenArr) {
@@ -241,10 +269,10 @@ public class FeatureVector {
 		return null;
 	}
 	
-	protected String getCoordVerb(String tokID) {
+	protected String getMateCoordVerb(String tokID) {
 		Sentence s = doc.getSentences().get(doc.getTokens().get(tokID).getSentID());
 		ArrayList<String> tokenArr = getTokenIDArr(s.getStartTokID(), s.getEndTokID());
-		String headID = getHeadVerb(tokID);
+		String headID = getMateHeadVerb(tokID);
 		for (String tok : tokenArr) {
 			if (!headID.equals(tok) && 
 				doc.getTokens().get(tok).getDependencyRel() != null) {
@@ -271,7 +299,7 @@ public class FeatureVector {
 	
 	public String getMateMainVerb(Entity e) {
 		if (getTokenAttribute(e, Feature.mainpos).equals("v")) {
-			return (doc.getTokens().get(getHeadVerb(e.getStartTokID())).isMainVerb() ? "MAIN" : "O");
+			return (doc.getTokens().get(getMateHeadVerb(e.getStartTokID())).isMainVerb() ? "MAIN" : "O");
 		}
 		return "O";
 	}
@@ -290,17 +318,17 @@ public class FeatureVector {
 			List<String> paths = new ArrayList<String>();
 			List<String> visited = new ArrayList<String>();
 			if (getTokenAttribute(e, Feature.mainpos).equals("v")) {
-				govID = getHeadVerb(govID);
+				govID = getMateHeadVerb(govID);
 			} else if (getTokenAttribute(e, Feature.mainpos).equals("adj") &&
-				getVerbFromAdj(govID) != null) {
-				govID = getVerbFromAdj(govID);
+				getMateVerbFromAdj(govID) != null) {
+				govID = getMateVerbFromAdj(govID);
 			}
 			generateDependencyPath(govID, signalArr, paths, "", visited);
 			if (!paths.isEmpty()) {
 				return paths.get(0).substring(1);
 			}
-			if (getCoordVerb(govID) != null) {
-				generateDependencyPath(getCoordVerb(govID), signalArr, paths, "", visited);
+			if (getMateCoordVerb(govID) != null) {
+				generateDependencyPath(getMateCoordVerb(govID), signalArr, paths, "", visited);
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
@@ -407,28 +435,32 @@ public class FeatureVector {
 			for (String key : tsignalList.keySet()) {
 				if (contextBefore.contains(" " + key + " ")) {
 					Marker m = new Marker();
-					m.setText(tsignalList.get(key).replace(" ", "_"));
+					m.setText(key);
+					m.setCluster(tsignalList.get(key));
 					m.setPosition("BEFORE");
 					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
 						getSignalTidArr(key, contextBefore, tidBefore, "BEFORE")));
 					candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE"), m);
 				} else if (contextAfter.contains(" " + key + " ")) {
 					Marker m = new Marker();
-					m.setText(tsignalList.get(key).replace(" ", "_"));
+					m.setText(key);
+					m.setCluster(tsignalList.get(key));
 					m.setPosition("AFTER");
 					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
 						getSignalTidArr(key, contextAfter, tidEnd, "AFTER")));
 					candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 100, m);
 				} else if (contextEntity.contains(" " + key + " ")) {
 					Marker m = new Marker();
-					m.setText(tsignalList.get(key).replace(" ", "_"));
+					m.setText(key);
+					m.setCluster(tsignalList.get(key));
 					m.setPosition("INSIDE");
 					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
 						getSignalTidArr(key, contextEntity, e.getStartTokID(), "INSIDE")));
 					candidates.put(getSignalEntityDistance(key, contextEntity, "INSIDE") + 200, m);
 				} else if (contextBegin.contains(" " + key + " ")) {
 					Marker m = new Marker();
-					m.setText(tsignalList.get(key).replace(" ", "_"));
+					m.setText(key);
+					m.setCluster(tsignalList.get(key));
 					m.setPosition("BEGIN");
 					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
 						getSignalTidArr(key, contextBegin, s.getStartTokID(), "BEGIN")));
@@ -441,7 +473,7 @@ public class FeatureVector {
 				Arrays.sort(keys);
 				return candidates.get(keys[0]);
 			} else {
-				return new Marker("O", "O", "O");
+				return new Marker("O", "O", "O", "O");
 			}
 		}
 		
@@ -554,7 +586,7 @@ public class FeatureVector {
 			Arrays.sort(keys);
 			return candidates.get(keys[0]);
 		} else {
-			return new Marker("O", "O", "O");
+			return new Marker("O", "O", "O", "O");
 		}
 	}
 }

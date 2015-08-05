@@ -41,7 +41,7 @@ public class TimexTimexRelationRule {
 					dateTime2 = t2.getValue().split("T");
 				} 
 				if (dateTime1[0].equals(dateTime2[0])) {
-					if (!dateTime1[1].equals("") && !dateTime1[2].equals("")) {
+					if (!dateTime1[1].equals("") && !dateTime2[1].equals("")) {
 						this.setRelType(getTimeRelation(getTimeComponents(dateTime1[1]), 
 								getTimeComponents(dateTime2[1])));
 					}

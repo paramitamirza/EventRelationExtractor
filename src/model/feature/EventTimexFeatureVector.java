@@ -71,17 +71,17 @@ public class EventTimexFeatureVector extends FeatureVector{
 				List<String> paths = new ArrayList<String>();
 				List<String> visited = new ArrayList<String>();
 				if (getTokenAttribute(e1, Feature.mainpos).equals("v")) {
-					govID = getHeadVerb(govID);
+					govID = getMateHeadVerb(govID);
 				} else if (getTokenAttribute(e1, Feature.mainpos).equals("adj") &&
-					getVerbFromAdj(govID) != null) {
-					govID = getVerbFromAdj(govID);
+					getMateVerbFromAdj(govID) != null) {
+					govID = getMateVerbFromAdj(govID);
 				}
 				generateDependencyPath(govID, tokenArr2, paths, "", visited);
 				if (!paths.isEmpty()) {
 					return paths.get(0).substring(1);
 				}
-				if (getCoordVerb(govID) != null) {
-					generateDependencyPath(getCoordVerb(govID), tokenArr2, paths, "", visited);
+				if (getMateCoordVerb(govID) != null) {
+					generateDependencyPath(getMateCoordVerb(govID), tokenArr2, paths, "", visited);
 					if (!paths.isEmpty()) {
 						return paths.get(0).substring(1);
 					}
@@ -101,22 +101,39 @@ public class EventTimexFeatureVector extends FeatureVector{
 		//Assuming that the pair is already in event-timex order
 		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
 			!isSameSentence()) {
+			tSignals.add("O|O");
 			tSignals.add("O");
-			tSignals.add("O");
-			tSignals.add("O");
-			tSignals.add("O");
-			tSignals.add("O");
+			tSignals.add("O|O");
 			tSignals.add("O");
 		} else {	
 			Marker me1 = super.getTemporalSignal(e1);
 			Marker me2 = super.getTemporalSignal(e2);
-			tSignals.add(me1.getText());
-			tSignals.add(me1.getPosition());
+			tSignals.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
 			tSignals.add(me1.getDepRel());
-			tSignals.add(me2.getText());
-			tSignals.add(me2.getPosition());
+			tSignals.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
 			tSignals.add(me2.getDepRel());
 		}
+		return tSignals;
+	}
+	
+	public ArrayList<String> getTemporalSignalCluster() throws IOException {
+		ArrayList<String> tSignals = new ArrayList<String>();
+		
+		//Assuming that the pair is already in event-timex order
+		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+				!isSameSentence()) {
+				tSignals.add("O|O");
+				tSignals.add("O");
+				tSignals.add("O|O");
+				tSignals.add("O");
+			} else {	
+				Marker me1 = super.getTemporalSignal(e1);
+				Marker me2 = super.getTemporalSignal(e2);
+				tSignals.add(me1.getCluster().replace(" ", "_") + "|" + me1.getPosition());
+				tSignals.add(me1.getDepRel());
+				tSignals.add(me2.getCluster().replace(" ", "_") + "|" + me2.getPosition());
+				tSignals.add(me2.getDepRel());
+			}
 		return tSignals;
 	}
 	
@@ -126,20 +143,16 @@ public class EventTimexFeatureVector extends FeatureVector{
 		//Assuming that the pair is already in event-timex order
 		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
 			!isSameSentence()) {
+			tConns.add("O|O");
 			tConns.add("O");
-			tConns.add("O");
-			tConns.add("O");
-			tConns.add("O");
-			tConns.add("O");
+			tConns.add("O|O");
 			tConns.add("O");
 		} else {	
 			Marker me1 = super.getTemporalConnective(e1);
 			Marker me2 = super.getTemporalConnective(e2);
-			tConns.add(me1.getText());
-			tConns.add(me1.getPosition());
+			tConns.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
 			tConns.add(me1.getDepRel());
-			tConns.add(me2.getText());
-			tConns.add(me2.getPosition());
+			tConns.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
 			tConns.add(me2.getDepRel());
 		}
 		return tConns;

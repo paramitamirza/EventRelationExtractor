@@ -3,6 +3,7 @@ package model.feature;
 public class Marker {
 	
 	private String txt;
+	private String cluster;
 	private String position;
 	private String depRel;
 	
@@ -10,8 +11,9 @@ public class Marker {
 		
 	}
 	
-	public Marker(String txt, String position, String depRel) {
+	public Marker(String txt, String cluster, String position, String depRel) {
 		this.setText(txt);
+		this.setCluster(cluster);
 		this.setPosition(position);
 		this.setDepRel(depRel);
 	}
@@ -38,6 +40,14 @@ public class Marker {
 	
 	public void setDepRel(String depRel) {
 		this.depRel = depRel;
+	}
+
+	public String getCluster() {
+		return cluster;
+	}
+
+	public void setCluster(String cluster) {
+		this.cluster = cluster;
 	}
 
 }

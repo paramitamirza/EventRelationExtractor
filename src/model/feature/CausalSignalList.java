@@ -12,10 +12,10 @@ public class CausalSignalList extends SignalList{
 	
 	private Map<String, String> list;
 	
-	public CausalSignalList(Language lang) {
+	public CausalSignalList(Language lang) throws IOException {
 		super(lang);
 		list = new HashMap<String, String>();
-		//readSignalFile();
+		readSignalFile();
 	}
 	
 	public void readSignalFile() throws IOException {
@@ -31,16 +31,8 @@ public class CausalSignalList extends SignalList{
 				String[] cols = line.split("\\|\\|\\|");
 				list.put(cols[0].trim(), cols[1].trim());
 			}
-			//for (String key : eventList.keySet()) System.out.println(key + "\t" + eventList.get(key));
-		}/*
-		if (timexreader != null) {
-			String line;
-			while ((line = timexreader.readLine()) != null) { 
-				String[] cols = line.split("\\|\\|\\|");
-				timexList.put(cols[0].trim(), cols[1].trim());
-			}
-			//for (String key : timexList.keySet()) System.out.println(key + "\t" + timexList.get(key));
-		}*/
+			//for (String key : list.keySet()) System.out.println(key + "\t" + list.get(key));
+		}
 	}
 
 	public Map<String, String> getList() {
