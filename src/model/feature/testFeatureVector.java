@@ -4,11 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 import model.feature.FeatureEnum.*;
+import model.feature.temporal.EventEventFeatureVector;
+import model.feature.temporal.EventTimexFeatureVector;
+import model.feature.temporal.TemporalSignalList;
+import model.feature.temporal.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
 import parser.entities.*;
 
-public class testFeature {
+public class testFeatureVector {
 	
 	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList) throws IOException {
 		File dir_TXP = new File(filepath);
@@ -23,6 +27,20 @@ public class testFeature {
 				
 			} else if (file.isFile()) {				
 				Document doc = parser.parseDocument(file.getPath());
+				
+				Object[] entArr = doc.getEntities().keySet().toArray();
+				
+				for (int i = 0; i < entArr.length; i++) {
+					for (int j = i; j < entArr.length; j++) {
+						if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
+								doc.getEntities().get(entArr[j]) instanceof Timex) {
+							TimexTimexRelationRule tt = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
+									((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
+							System.out.println(entArr[i] + "\t" + entArr[j] + "\t" + 
+									tt.getRelType());
+						}
+					}
+				}
 				
 				for (TemporalRelation tlink : doc.getTlinks()) {
 					if (!tlink.getSourceID().equals(tlink.getTargetID()) &&

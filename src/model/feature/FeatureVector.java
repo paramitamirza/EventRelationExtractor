@@ -7,10 +7,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 
 import model.feature.FeatureEnum.*;
+import model.feature.temporal.TemporalSignalList;
 import parser.entities.*;
 
 public class FeatureVector {

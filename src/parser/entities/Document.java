@@ -17,6 +17,7 @@ public class Document {
 	private Map<String, CausalSignal> causalSignals;
 	private ArrayList<TemporalRelation> tlinks;
 	private ArrayList<CausalRelation> clinks;
+	private Timex dct;
 	
 	private int tokIdx;
 	private int sentIdx;
@@ -181,5 +182,13 @@ public class Document {
 
 	public void setSentenceArr(ArrayList<String> sentenceArr) {
 		this.sentenceArr = sentenceArr;
+	}
+
+	public Timex getDct() {
+		return dct;
+	}
+
+	public void setDct(Timex dct) {
+		this.dct = dct;
 	}
 }

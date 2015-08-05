@@ -1,9 +1,12 @@
-package model.feature;
+package model.feature.temporal;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.feature.FeatureVector;
+import model.feature.Marker;
+import model.feature.SignalList;
 import model.feature.FeatureEnum.Feature;
 import parser.entities.Document;
 import parser.entities.Entity;

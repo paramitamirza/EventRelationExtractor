@@ -4,14 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
-
 import parser.entities.*;
 
 public class TXPParser {
@@ -43,7 +39,7 @@ public class TXPParser {
 		File f = new File(filepath);
 		Document doc = new Document(this.language, f.getName());
 		
-		BufferedReader reader = new BufferedReader(new FileReader(filepath));
+		BufferedReader reader = new BufferedReader(new FileReader(filepath));	
 		
 		//Read the first 4 lines (comments)
 		reader.readLine();
@@ -61,6 +57,8 @@ public class TXPParser {
 		doc.getSentenceArr().add(currSentence.getID());
 		doc.getSentences().put(currSentence.getID(), currSentence);
 		currSentence = null;
+		
+		reader.close();
 		
 		return doc;
 	}
@@ -140,6 +138,7 @@ public class TXPParser {
 			dct.setEmptyTag(false);
 			dct.setIndex(doc.getEntIdx()); doc.setEntIdx(doc.getEntIdx() + 1);
 			doc.getEntities().put(tmx_id, dct);
+			doc.setDct(dct);
 		} else if(cols.get(0).contains("ETX_")) {
 			String tmx_id = cols.get(getIndex(Field.tmx_id));
 			Timex etx = new Timex(tmx_id, "O", "O");
