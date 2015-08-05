@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.feature.FeatureEnum.*;
-import model.feature.temporal.TemporalSignalList;
 import parser.entities.*;
 
 public class FeatureVector {
@@ -150,6 +149,12 @@ public class FeatureVector {
 		ArrayList<String> texts = new ArrayList<String>();
 		texts.add(getTokenAttribute(e1, feature));
 		texts.add(getTokenAttribute(e2, feature));
+		return texts;
+	}
+	
+	public ArrayList<String> getCombinedTokenAttribute(Feature feature) {
+		ArrayList<String> texts = new ArrayList<String>();
+		texts.add(getTokenAttribute(e1, feature) + "|" + getTokenAttribute(e2, feature));
 		return texts;
 	}
 	

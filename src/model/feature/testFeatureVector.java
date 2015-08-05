@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import model.feature.FeatureEnum.*;
-import model.feature.temporal.EventEventFeatureVector;
-import model.feature.temporal.EventTimexFeatureVector;
-import model.feature.temporal.TemporalSignalList;
-import model.feature.temporal.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
 import parser.entities.*;

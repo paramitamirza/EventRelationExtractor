@@ -1,13 +1,9 @@
-package model.feature.temporal;
+package model.feature;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.feature.FeatureVector;
-import model.feature.Marker;
-import model.feature.SignalList;
-import model.feature.FeatureEnum.Feature;
 import parser.entities.Document;
 import parser.entities.Entity;
 import parser.entities.Event;
@@ -16,6 +12,7 @@ import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Lin;
+import model.feature.FeatureEnum.Feature;
 
 public class EventEventFeatureVector extends FeatureVector{
 
@@ -64,10 +61,10 @@ public class EventEventFeatureVector extends FeatureVector{
 	
 	public ArrayList<String> getCombinedEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "-" + getEntityAttribute(e2, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "-" + getEntityAttribute(e2, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "-" + getEntityAttribute(e2, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "-" + getEntityAttribute(e2, Feature.polarity));
+		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.eventClass));
+		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.tense));
+		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.aspect));
+		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.polarity));
 		return entityAttrs;
 	}
 	

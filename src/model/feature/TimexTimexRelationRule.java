@@ -1,4 +1,4 @@
-package model.feature.temporal;
+package model.feature;
 
 import java.util.ArrayList;
 import java.util.Arrays;

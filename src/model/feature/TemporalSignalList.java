@@ -1,4 +1,4 @@
-package model.feature.temporal;
+package model.feature;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,8 +8,6 @@ import parser.entities.EntityEnum.Language;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import model.feature.SignalList;
 
 public class TemporalSignalList extends SignalList{
 	
