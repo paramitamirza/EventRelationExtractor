@@ -1,8 +1,8 @@
 # FILE: james_brady_dies.ascii.TE3input.naf.txp
-# DATE: 2014-08-04T17:07T00:00:00
+# DATE: 2014-08-04T17:07
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2014-08-04T17:07T00:00:00	O	O	O	O	O	tmx0	B-DATE	2014-08-04T17:07T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2014-08-04T17:07	O	O	O	O	O	tmx0	B-TIME	2014-08-04T17:07	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 James	t1	1	NP0	james	O	O	O	O	person	O	O	O	O	O	die	A1	B-NP	O	O	james+pn	O	O	O	
 Brady	t2	1	NP0	brady	t1:NAME||t3:P||t9:APPO||t35:P	O	O	O	person	O	O	O	O	O	die	A1	I-NP	O	O	O	O	O	O	

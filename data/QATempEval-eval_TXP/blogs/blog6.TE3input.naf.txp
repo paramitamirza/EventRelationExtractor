@@ -2,7 +2,7 @@
 # DATE: 2003-09-22T00:00:00
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2003-09-22T00:00:00	O	O	O	O	O	tmx0	B-DATE	2003-09-22T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2003-09-22	O	O	O	O	O	tmx0	B-DATE	2003-09-22	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 It	t1	1	PNP	it	O	O	O	O	O	O	O	O	O	O	O	O	B-NP	O	O	it+pron	O	O	O	
 's	t2	1	NN0	have	t1:SBJ||t3:VC||t10:P||t11:COORD||t31:P	O	O	O	O	O	O	O	O	O	O	O	B-VP	mainVb	O	have+v+indic+pres+sing3	PRESENT+PERFECTIVE+pos	O	O	

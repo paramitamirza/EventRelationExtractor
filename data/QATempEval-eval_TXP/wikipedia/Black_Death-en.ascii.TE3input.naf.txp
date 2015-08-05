@@ -1,8 +1,8 @@
 # FILE: Black_Death-en.ascii.TE3input.naf.txp
-# DATE: 2014-08-22T00:00:00
+# DATE: 2014-08-22
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2014-08-22T00:00:00	O	O	O	O	O	tmx0	B-DATE	2014-08-22T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2014-08-22	O	O	O	O	O	tmx0	B-DATE	2014-08-22	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 The	t1	1	AT0	the	O	O	O	O	O	O	O	O	O	O	result	A1	B-NP	O	O	the+art	O	O	O	
 Black	t2	1	NP0	black	O	O	O	O	misc	O	O	O	O	O	result	A1	I-NP	O	O	black+n+sing	O	O	O	

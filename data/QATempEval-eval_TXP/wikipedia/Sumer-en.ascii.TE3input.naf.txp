@@ -1,8 +1,8 @@
 # FILE: Sumer-en.ascii.TE3input.naf.txp
-# DATE: 2014-08-22T00:00:00
+# DATE: 2014-08-22
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2014-08-22T00:00:00	O	O	O	O	O	tmx0	B-DATE	2014-08-22T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2014-08-22	O	O	O	O	O	tmx0	B-DATE	2014-08-22	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 Sumer	t1	1	NP0	sumer	O	O	O	O	person	O	O	O	O	O	O	O	B-NP	O	O	sumer+pn	O	O	O	
 was	t2	1	VVD	be	t1:SBJ||t5:PRD||t16:P||t17:TMP||t24:P	O	O	O	O	O	O	O	O	O	O	O	B-VP	mainVb	O	be+v+indic+past	PAST+NONE+pos	O	O	

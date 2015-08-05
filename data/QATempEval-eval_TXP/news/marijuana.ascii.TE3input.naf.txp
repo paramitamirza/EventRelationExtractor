@@ -1,8 +1,8 @@
 # FILE: marijuana.ascii.TE3input.naf.txp
-# DATE: 2014-07-29T00:00:00
+# DATE: 2014-07-29
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2014-07-29T00:00:00	O	O	O	O	O	tmx0	B-DATE	2014-07-29T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2014-07-29	O	O	O	O	O	tmx0	B-DATE	2014-07-29	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 The	t1	1	AT0	the	O	O	O	O	O	O	O	O	O	O	law	A1	B-NP	O	O	the+art	O	O	O	
 federal	t2	1	AJ0	federal	O	O	O	O	O	O	O	O	O	O	law	A0	I-NP	O	O	federal+adj+zero	O	O	O	

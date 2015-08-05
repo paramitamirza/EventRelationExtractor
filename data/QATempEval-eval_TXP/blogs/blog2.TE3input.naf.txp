@@ -1,8 +1,8 @@
 # FILE: blog2.TE3input.naf.txp
-# DATE: 2004-03-10T00:00:00
+# DATE: 2004-03-10
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2004-03-10T00:00:00	O	O	O	O	O	tmx0	B-DATE	2004-03-10T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2004-03-10	O	O	O	O	O	tmx0	B-DATE	2004-03-10	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 Well	t1	1	ITJ	well	t2:P	O	O	O	O	O	O	O	O	O	O	O	B-ADVP	mainVb	O	well+n+sing	O	O	O	
 .	t2	1	PUN	.	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	.+punc	O	O	O	

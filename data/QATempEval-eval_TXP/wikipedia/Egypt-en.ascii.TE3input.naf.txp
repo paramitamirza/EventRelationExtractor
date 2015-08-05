@@ -1,8 +1,8 @@
 # FILE: Egypt-en.ascii.TE3input.naf.txp
-# DATE: 2014-08-22T00:00:00
+# DATE: 2014-08-22
 # FIELDS: token	tokenid	sentid	POS	lemma	dep	timex_id	timex_type	timex_value	entity	pred_class	event_id	role1	role2	role3	is_arg_pred	has_semrole	chunk	main_verb	connectives	morpho	tense+aspect+pol	coevent	pairs	
 
-DCT_2014-08-22T00:00:00	O	O	O	O	O	tmx0	B-DATE	2014-08-22T00:00:00	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
+DCT_2014-08-22	O	O	O	O	O	tmx0	B-DATE	2014-08-22	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	
 
 Egypt	t1	1	NP0	egypt	t2:P||t3:COORD||t10:P	O	O	O	location	O	O	O	O	O	O	O	B-NP	O	O	egypt+pn	O	O	O	
 ,	t2	1	PUN	,	O	O	O	O	O	O	O	O	O	O	O	O	O	O	O	punc	O	O	O	
