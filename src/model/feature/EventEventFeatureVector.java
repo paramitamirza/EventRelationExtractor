@@ -62,18 +62,18 @@ public class EventEventFeatureVector extends FeatureVector{
 	public ArrayList<String> getCombinedEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.polarity));
+		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "|" + getEntityAttribute(e2, Feature.tense));
+		entityAttrs.add(getEntityAttribute(e1, Feature.aspect) + "|" + getEntityAttribute(e2, Feature.aspect));
+		entityAttrs.add(getEntityAttribute(e1, Feature.polarity) + "|" + getEntityAttribute(e2, Feature.polarity));
 		return entityAttrs;
 	}
 	
 	public ArrayList<String> getSameEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.tense)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
+		entityAttrs.add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "TRUE" : "FALSE");
+		entityAttrs.add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
+		entityAttrs.add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
 		return entityAttrs;
 	}
 	

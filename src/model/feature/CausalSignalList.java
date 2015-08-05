@@ -1,0 +1,54 @@
+package model.feature;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import parser.entities.EntityEnum.Language;
+
+public class CausalSignalList extends SignalList{
+	
+	private Map<String, String> list;
+	
+	public CausalSignalList(Language lang) {
+		super(lang);
+		list = new HashMap<String, String>();
+		//readSignalFile();
+	}
+	
+	public void readSignalFile() throws IOException {
+		BufferedReader reader = null;
+		if (language.equals(Language.EN)) {
+			reader = new BufferedReader(new FileReader("resource/causal_signal.list"));
+		} else if (language.equals(Language.IT)) {
+			
+		}
+		if (reader != null) {
+			String line;
+			while ((line = reader.readLine()) != null) { 
+				String[] cols = line.split("\\|\\|\\|");
+				list.put(cols[0].trim(), cols[1].trim());
+			}
+			//for (String key : eventList.keySet()) System.out.println(key + "\t" + eventList.get(key));
+		}/*
+		if (timexreader != null) {
+			String line;
+			while ((line = timexreader.readLine()) != null) { 
+				String[] cols = line.split("\\|\\|\\|");
+				timexList.put(cols[0].trim(), cols[1].trim());
+			}
+			//for (String key : timexList.keySet()) System.out.println(key + "\t" + timexList.get(key));
+		}*/
+	}
+
+	public Map<String, String> getList() {
+		return list;
+	}
+
+	public void setList(Map<String, String> list) {
+		this.list = list;
+	}
+
+}
