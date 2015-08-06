@@ -101,6 +101,14 @@ public class FeatureVector {
 	public String printVectors() {
 		return String.join("\t", this.vectors);
 	}
+	
+	public String printCSVVectors() {
+		String csv = "";
+		for (String col : vectors) {
+			csv += col.replace(",", "COMMA") + ",";
+		}
+		return csv.substring(0, csv.length()-1);
+	}
 
 	public PairType getPairType() {
 		return pairType;
@@ -163,10 +171,8 @@ public class FeatureVector {
 		return texts;
 	}
 	
-	public ArrayList<String> getCombinedTokenAttribute(Feature feature) {
-		ArrayList<String> texts = new ArrayList<String>();
-		texts.add(getTokenAttribute(e1, feature) + "|" + getTokenAttribute(e2, feature));
-		return texts;
+	public String getCombinedTokenAttribute(Feature feature) {
+		return getTokenAttribute(e1, feature) + "|" + getTokenAttribute(e2, feature);
 	}
 	
 	public Boolean isSameTokenAttribute(Feature feature) {

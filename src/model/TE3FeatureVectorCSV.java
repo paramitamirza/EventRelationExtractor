@@ -1,26 +1,40 @@
-package model.feature;
+package model;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import model.feature.FeatureEnum.*;
+import model.feature.CausalSignalList;
+import model.feature.EventEventFeatureVector;
+import model.feature.EventTimexFeatureVector;
+import model.feature.FeatureVector;
+import model.feature.TemporalSignalList;
+import model.feature.TimexTimexRelationRule;
+import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.PairType;
 import parser.TXPParser;
 import parser.TXPParser.Field;
-import parser.entities.*;
+import parser.entities.Document;
+import parser.entities.Entity;
+import parser.entities.EntityEnum;
+import parser.entities.TemporalRelation;
+import parser.entities.Timex;
 
-public class testFeatureVector {
-	
-	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList, PrintWriter event, PrintWriter timex) throws IOException {
+public class TE3FeatureVectorCSV {
+	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList, 
+			PrintWriter ee, PrintWriter et, PrintWriter tt) throws IOException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
 		if (files_TXP == null) return;
 		
+		String eeFeatures = "token_e1,token_e2,lemma_e1,lemma_e2,pos_e1|pos_e2,mainpos_e1|mainpos_e2,chunk_e1|chunk_e2,ner_e1|ner_e2,samepos_e1_e2,samemainpos_e1_e2,";
+		ee.println(eeFeatures);
+		
 		for (File file : files_TXP) {
 			if (file.isDirectory()){
 				
-				getFeatureVector(parser, file.getPath(), tsignalList, csignalList, event, timex);
+				getFeatureVector(parser, file.getPath(), tsignalList, csignalList, ee, et, tt);
 				
 			} else if (file.isFile()) {				
 				Document doc = parser.parseDocument(file.getPath());
@@ -31,10 +45,12 @@ public class testFeatureVector {
 					for (int j = i; j < entArr.length; j++) {
 						if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 								doc.getEntities().get(entArr[j]) instanceof Timex) {
-							TimexTimexRelationRule tt = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
+							TimexTimexRelationRule timextimex = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
 									((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
-							System.out.println(entArr[i] + "\t" + entArr[j] + "\t" + 
-									tt.getRelType());
+							if (!timextimex.getRelType().equals("O")) {
+								tt.println(entArr[i] + "\t" + entArr[j] + "\t" + 
+										timextimex.getRelType());
+							}
 						}
 					}
 				}
@@ -42,7 +58,8 @@ public class testFeatureVector {
 				for (TemporalRelation tlink : doc.getTlinks()) {
 					if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
 							doc.getEntities().containsKey(tlink.getSourceID()) &&
-							doc.getEntities().containsKey(tlink.getTargetID())) {
+							doc.getEntities().containsKey(tlink.getTargetID()) &&
+							!tlink.getRelType().equals("NONE")) {	//classifying the relation task
 						//System.out.println(file.getName() + "\t " + tlink.getSourceID() + "-" + tlink.getTargetID());
 						Entity e1 = doc.getEntities().get(tlink.getSourceID());
 						Entity e2 = doc.getEntities().get(tlink.getTargetID());
@@ -54,8 +71,8 @@ public class testFeatureVector {
 							fv = new EventTimexFeatureVector(fv);
 						}
 						
-						fv.getVectors().add(fv.getE1().getID());
-						fv.getVectors().add(fv.getE2().getID());
+						//fv.getVectors().add(fv.getE1().getID());
+						//fv.getVectors().add(fv.getE2().getID());
 						
 						//token attribute features
 						fv.getVectors().addAll(fv.getTokenAttribute(Feature.token));
@@ -111,9 +128,9 @@ public class testFeatureVector {
 						fv.getVectors().add(fv.getLabel());
 						
 						if (fv instanceof EventEventFeatureVector) {
-							event.println(fv.printVectors());
+							ee.println(fv.printCSVVectors());
 						} else if (fv instanceof EventTimexFeatureVector) {
-							timex.println(fv.printVectors());
+							et.println(fv.printCSVVectors());
 						}
 					}
 				}
@@ -138,18 +155,19 @@ public class testFeatureVector {
 			TemporalSignalList tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
 			CausalSignalList csignalList = new CausalSignalList(EntityEnum.Language.EN);
 			
-			PrintWriter event = new PrintWriter("data/event-event.tlink", "UTF-8");
-			PrintWriter timex = new PrintWriter("data/event-timex.tlink", "UTF-8");
+			PrintWriter ee = new PrintWriter("data/event-event.tlink", "UTF-8");
+			PrintWriter et = new PrintWriter("data/event-timex.tlink", "UTF-8");
+			PrintWriter tt = new PrintWriter("data/timex-timex.tlink", "UTF-8");
 			
-			getFeatureVector(parser, args[0], tsignalList, csignalList, event, timex);
+			getFeatureVector(parser, args[0], tsignalList, csignalList, ee, et, tt);
 			
-			event.close();
-			timex.close();
+			ee.close();
+			et.close();
+			tt.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
-
 }
