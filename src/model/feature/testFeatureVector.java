@@ -11,7 +11,7 @@ import parser.entities.*;
 
 public class testFeatureVector {
 	
-	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, PrintWriter event, PrintWriter timex) throws IOException {
+	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList, PrintWriter event, PrintWriter timex) throws IOException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -20,7 +20,7 @@ public class testFeatureVector {
 		for (File file : files_TXP) {
 			if (file.isDirectory()){
 				
-				getFeatureVector(parser, file.getPath(), tsignalList, event, timex);
+				getFeatureVector(parser, file.getPath(), tsignalList, csignalList, event, timex);
 				
 			} else if (file.isFile()) {				
 				Document doc = parser.parseDocument(file.getPath());
@@ -47,7 +47,7 @@ public class testFeatureVector {
 						Entity e1 = doc.getEntities().get(tlink.getSourceID());
 						Entity e2 = doc.getEntities().get(tlink.getTargetID());
 						
-						FeatureVector fv = new FeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList);		
+						FeatureVector fv = new FeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList, csignalList);		
 						if (fv.getPairType().equals(PairType.event_event)) {
 							fv = new EventEventFeatureVector(fv);
 						} else if (fv.getPairType().equals(PairType.event_timex)) {
@@ -84,9 +84,9 @@ public class testFeatureVector {
 							fv.getVectors().add(((EventEventFeatureVector) fv).getMateDependencyPath());
 							fv.getVectors().addAll(((EventEventFeatureVector) fv).getMateMainVerb());
 							
-							//temporal signal & connective
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getTemporalSignal());
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getTemporalConnective());
+							//temporal/causal signal & connective
+							fv.getVectors().addAll(((EventEventFeatureVector) fv).getTemporalMarker());
+							fv.getVectors().addAll(((EventEventFeatureVector) fv).getCausalMarker());
 							
 							//event co-reference
 							fv.getVectors().add(((EventEventFeatureVector) fv).isCoreference() ? "COREF" : "NOCOREF");
@@ -102,8 +102,7 @@ public class testFeatureVector {
 							fv.getVectors().add(((EventTimexFeatureVector) fv).getMateMainVerb());
 							
 							//temporal signal & connective
-							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalSignalCluster());
-							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalConnective());
+							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalMarker());
 							
 							//timex rule type
 							fv.getVectors().add(((EventTimexFeatureVector) fv).getTimexRule());
@@ -137,10 +136,12 @@ public class testFeatureVector {
 		//dir_TXP <-- data/example_TXP
 		try {
 			TemporalSignalList tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
+			CausalSignalList csignalList = new CausalSignalList(EntityEnum.Language.EN);
+			
 			PrintWriter event = new PrintWriter("data/event-event.tlink", "UTF-8");
 			PrintWriter timex = new PrintWriter("data/event-timex.tlink", "UTF-8");
 			
-			getFeatureVector(parser, args[0], tsignalList, event, timex);
+			getFeatureVector(parser, args[0], tsignalList, csignalList, event, timex);
 			
 			event.close();
 			timex.close();

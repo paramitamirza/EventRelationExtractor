@@ -19,9 +19,10 @@ public class FeatureVector {
 	protected Entity e2;
 	protected String label;
 	private PairType pairType;
-	private SignalList signalList;
+	private TemporalSignalList tempSignalList;
+	private CausalSignalList causalSignalList;
 	
-	public FeatureVector(Document doc, Entity e1, Entity e2, String label, SignalList signalList) {
+	public FeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
 		this.setE2(e2);
@@ -35,10 +36,11 @@ public class FeatureVector {
 		} else if (e1 instanceof Timex && e2 instanceof Timex) {
 			this.setPairType(PairType.timex_timex);
 		}
-		this.setSignalList(signalList);
+		this.setTempSignalList(tempSignalList);
+		this.setCausalSignalList(causalSignalList);
 	}
 	
-	public FeatureVector(Document doc, Entity e1, Entity e2, ArrayList<String> vectors, String label, SignalList signalList) {
+	public FeatureVector(Document doc, Entity e1, Entity e2, ArrayList<String> vectors, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
 		this.setE2(e2);
@@ -52,7 +54,8 @@ public class FeatureVector {
 		} else if (e1 instanceof Timex && e2 instanceof Timex) {
 			this.setPairType(PairType.timex_timex);
 		}
-		this.setSignalList(signalList);
+		this.setTempSignalList(tempSignalList);
+		this.setCausalSignalList(causalSignalList);
 	}
 
 	public Document getDoc() {
@@ -107,12 +110,20 @@ public class FeatureVector {
 		this.pairType = pairType;
 	}
 
-	public SignalList getSignalList() {
-		return signalList;
+	public TemporalSignalList getTempSignalList() {
+		return tempSignalList;
 	}
 
-	public void setSignalList(SignalList signalList) {
-		this.signalList = signalList;
+	public void setTempSignalList(TemporalSignalList tempSignalList) {
+		this.tempSignalList = tempSignalList;
+	}
+
+	public CausalSignalList getCausalSignalList() {
+		return causalSignalList;
+	}
+
+	public void setCausalSignalList(CausalSignalList causalSignalList) {
+		this.causalSignalList = causalSignalList;
 	}
 	
 	protected ArrayList<String> getTokenIDArr(String startTokID, String endTokID) {
@@ -349,7 +360,7 @@ public class FeatureVector {
 		ArrayList<String> signalTidArr = new ArrayList<String>();
 		
 		String resContext = null;
-		if (position.equals("BEFORE")) {
+		if (position.equals("BEFORE") || position.equals("BETWEEN")) {
 			resContext = context.trim().substring(0, context.lastIndexOf(signal));
 		} else {
 			resContext = context.trim().substring(0, context.indexOf(signal));
@@ -375,7 +386,7 @@ public class FeatureVector {
 		Collections.reverse(wordList);
 		String reversedSignal = String.join(" ", wordList);
 		
-		if (position.equals("BEFORE")) {
+		if (position.equals("BEFORE") || position.equals("BETWEEN")) {
 			String resContext = reversedContext.trim().substring(0, reversedContext.indexOf(reversedSignal));
 			return resContext.length() - resContext.replace(" ", "").length(); //count the number of spaces
 		} else {
@@ -384,111 +395,55 @@ public class FeatureVector {
 		}
 	}
 	
-	public Marker getTemporalSignal(Entity e) throws IOException {
-		Map<String, String> tsignalList = null;
-		if (e instanceof Event) {
-			tsignalList = ((TemporalSignalList) this.getSignalList()).getEventList();
-		} else if (e instanceof Timex) {
-			tsignalList = ((TemporalSignalList) this.getSignalList()).getTimexList();
+	protected ArrayList<String> getTidEntityBeforeAfter(Entity e) {
+		ArrayList<String> tids = new ArrayList<String>();
+		Sentence s = doc.getSentences().get(e.getSentID());
+		ArrayList<String> entArr = s.getEntityArr();
+		int eidx = entArr.indexOf(e.getID());
+		
+		if (eidx == 0) { //first entity
+			tids.add(s.getStartTokID());
+		} else {
+			Entity eBefore = doc.getEntities().get(entArr.get(eidx - 1)); 
+			tids.add(doc.getTokenArr().get(doc.getTokenArr().indexOf(eBefore.getEndTokID()) + 1));
+		}
+		if (eidx == entArr.size()-1) { //last entity
+			tids.add(s.getEndTokID());
+		} else { 
+			Entity eAfter = doc.getEntities().get(entArr.get(eidx + 1));
+			tids.add(doc.getTokenArr().get(doc.getTokenArr().indexOf(eAfter.getStartTokID()) - 1));
 		}
 		
-		if (tsignalList != null) {		
-			Sentence s = doc.getSentences().get(e.getSentID());
-			ArrayList<String> entArr = s.getEntityArr();
-			int eidx = entArr.indexOf(e.getID());
-			
-			String tidBefore = "", tidAfter = "";
-			if (eidx == 0) { //first entity
-				tidBefore = s.getStartTokID();
-					
-			} else {
-				Entity eBefore = doc.getEntities().get(entArr.get(eidx - 1)); 
-				tidBefore = doc.getTokenArr().get(doc.getTokenArr().indexOf(eBefore.getEndTokID()) + 1);
-			}
-			if (eidx == entArr.size()-1) { //last entity
-				tidAfter = s.getEndTokID();
-			} else { 
-				Entity eAfter = doc.getEntities().get(entArr.get(eidx + 1));
-				tidAfter = doc.getTokenArr().get(doc.getTokenArr().indexOf(eAfter.getStartTokID()) - 1);
-			}
-			
-			String tidStart = "", tidEnd = "", tidBegin = "";
-			if (e.getStartTokID().equals(s.getStartTokID())) {
-				tidStart = s.getStartTokID();
-			} else {
-				tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
-			}
-			if (e.getEndTokID().equals(s.getEndTokID())) {
-				tidEnd = s.getEndTokID();
-			} else {
-				tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
-			}
-			tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
-			
-			String contextBefore = getString(tidBefore, tidStart);
-			String contextAfter = getString(tidEnd, tidAfter);
-			String contextBegin = getString(s.getStartTokID(), tidBegin);
-			String contextEntity = getString(e.getStartTokID(), e.getEndTokID());
-			
-			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
-			
-			for (String key : tsignalList.keySet()) {
-				if (contextBefore.contains(" " + key + " ")) {
-					Marker m = new Marker();
-					m.setText(key);
-					m.setCluster(tsignalList.get(key));
-					m.setPosition("BEFORE");
-					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
-						getSignalTidArr(key, contextBefore, tidBefore, "BEFORE")));
-					candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE"), m);
-				} else if (contextAfter.contains(" " + key + " ")) {
-					Marker m = new Marker();
-					m.setText(key);
-					m.setCluster(tsignalList.get(key));
-					m.setPosition("AFTER");
-					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
-						getSignalTidArr(key, contextAfter, tidEnd, "AFTER")));
-					candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 100, m);
-				} else if (contextEntity.contains(" " + key + " ")) {
-					Marker m = new Marker();
-					m.setText(key);
-					m.setCluster(tsignalList.get(key));
-					m.setPosition("INSIDE");
-					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
-						getSignalTidArr(key, contextEntity, e.getStartTokID(), "INSIDE")));
-					candidates.put(getSignalEntityDistance(key, contextEntity, "INSIDE") + 200, m);
-				} else if (contextBegin.contains(" " + key + " ")) {
-					Marker m = new Marker();
-					m.setText(key);
-					m.setCluster(tsignalList.get(key));
-					m.setPosition("BEGIN");
-					m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), 
-						getSignalTidArr(key, contextBegin, s.getStartTokID(), "BEGIN")));
-					candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 300, m);
-				} 
-			}
-			
-			if (!candidates.isEmpty()) {
-				Object[] keys = candidates.keySet().toArray();
-				Arrays.sort(keys);
-				return candidates.get(keys[0]);
-			} else {
-				return new Marker("O", "O", "O", "O");
-			}
-		}
-		
-		return null;
+		return tids;
 	}
 	
-	public ArrayList<String> getConnectiveTidArr(String startTidContext, String endTidContext, String position) {
+	protected ArrayList<String> getTidBeforeAfter(Entity e) {
+		ArrayList<String> tids = new ArrayList<String>();
+		Sentence s = doc.getSentences().get(e.getSentID());
+		
+		if (e.getStartTokID().equals(s.getStartTokID())) { //first entity
+			tids.add(s.getStartTokID());
+		} else {
+			tids.add(doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1));
+		}
+		if (e.getEndTokID().equals(s.getEndTokID())) { //last entity
+			tids.add(s.getEndTokID());
+		} else {
+			tids.add(doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1));
+		}
+		
+		return tids;
+	}
+	
+	public ArrayList<String> getConnectiveTidArr(String conn, String startTidContext, String endTidContext, String position) {
 		ArrayList<String> connTidArr = new ArrayList<String>();
 		ArrayList<String> tidArr = getTokenIDArr(startTidContext,endTidContext);
-		if (position.equals("BEFORE")) {
+		if (position.equals("BEFORE") || position.equals("BETWEEN")) {
 			Collections.reverse(tidArr);
 		}
 		Boolean start = false;
 		for (String tid : tidArr) {
-			if (doc.getTokens().get(tid).getDiscourseConn().equals("Temporal")) {
+			if (doc.getTokens().get(tid).getDiscourseConn().equals(conn)) {
 				connTidArr.add(tid);
 				start = true;
 			} else {
@@ -498,14 +453,14 @@ public class FeatureVector {
 				}
 			}
 		}
-		if (position.equals("BEFORE")) {
+		if (position.equals("BEFORE") || position.equals("BETWEEN")) {
 			Collections.reverse(connTidArr);
 		}
 		return connTidArr;
 	}
 	
 	private Integer getConnectiveEntityDistance(Entity e, ArrayList<String> tidConn, String position) {
-		if (position.equals("BEFORE")) {
+		if (position.equals("BEFORE") || position.equals("BETWEEN")) {
 			return Math.abs(doc.getTokenArr().indexOf(e.getStartTokID()) 
 				- doc.getTokenArr().indexOf(tidConn.get(tidConn.size()-1)));
 		} else {
@@ -513,72 +468,198 @@ public class FeatureVector {
 				- doc.getTokenArr().indexOf(tidConn.get(0)));
 		}
 	}
+
+	public Marker getSignalMarker(Map<String, String> signalList, String text, String position, String context, String contextStartTid) {
+		Marker m = new Marker();
+		m.setText(text);
+		m.setCluster(signalList.get(text));
+		m.setPosition(position);
+		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+				getSignalTidArr(text, context, contextStartTid, position));
+		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+				getSignalTidArr(text, context, contextStartTid, position));
+		m.setDepRelE1(dep1);
+		m.setDepRelE2(dep2);
+		return m;
+	}
 	
-	public Marker getTemporalConnective(Entity e) {
-		Sentence s = doc.getSentences().get(e.getSentID());
-		ArrayList<String> entArr = s.getEntityArr();
-		int eidx = entArr.indexOf(e.getID());
+	public Marker getConnectiveMarker(String text, String position, ArrayList<String> conn) {
+		Marker m = new Marker();
+		m.setText(text);
+		m.setCluster(text);
+		m.setPosition(position);
+		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), conn);
+		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), conn);
+		m.setDepRelE1(dep1);
+		m.setDepRelE2(dep2);
+		return m;
+	}
+	
+	public Marker getVerbMarker(Map<String, String> verbList, String text, String position, String verbTid) {
+		Marker m = new Marker();
+		m.setText(text);
+		m.setCluster(verbList.get(text));
+		m.setPosition(position);
+		ArrayList<String> verbTidArr = new ArrayList<String>(); verbTidArr.add(verbTid);
+		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), verbTidArr);
+		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), verbTidArr);
+		m.setDepRelE1(dep1);
+		m.setDepRelE2(dep2);
+		return m;
+	}
+	
+	public Marker getTemporalSignal() throws IOException {
+		Map<String, String> tsignalListEvent = this.getTempSignalList().getEventList();
+		Map<String, String> tsignalListTimex = this.getTempSignalList().getTimexList();
 		
-		String tidBefore = "", tidAfter = "";
-		if (eidx == 0) { //first entity
-			tidBefore = s.getStartTokID();
+		if (tsignalListEvent != null && tsignalListTimex != null) {		
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+			
+			if (isSameSentence()) {
+				Sentence s = doc.getSentences().get(e1.getSentID());
 				
-		} else {
-			Entity eBefore = doc.getEntities().get(entArr.get(eidx - 1)); 
-			tidBefore = doc.getTokenArr().get(doc.getTokenArr().indexOf(eBefore.getEndTokID()) + 1);
+				String tidBefore1 = getTidEntityBeforeAfter(e1).get(0);
+				//String tidAfter1 = getTidEntityBeforeAfter(e1).get(1);
+				String tidStart1 = getTidBeforeAfter(e1).get(0);
+				//String tidEnd1 = getTidBeforeAfter(e1).get(1);
+				
+				String tidBefore2 = getTidEntityBeforeAfter(e1).get(0);
+				String tidAfter2 = getTidEntityBeforeAfter(e2).get(1);
+				String tidStart2 = getTidBeforeAfter(e2).get(0);
+				String tidEnd2 = getTidBeforeAfter(e2).get(1);
+				
+				String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+				
+				String contextBefore = getString(tidBefore1, tidStart1);
+				String contextBetween = getString(tidBefore2, tidStart2);	//#only consider the context before e2 (after other entity)
+				String contextAfter = getString(tidEnd2, tidAfter2);
+				String contextBegin = getString(s.getStartTokID(), tidBegin);
+				String contextEntity = getString(e2.getStartTokID(), e2.getEndTokID());	//in event-timex pair, sometimes signal is within timex
+				
+				Map<String, String> signalList;
+				if (e2 instanceof Timex) signalList = tsignalListTimex;
+				else signalList = tsignalListEvent;
+				for (String key : signalList.keySet()) {
+					if (contextBetween.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BETWEEN", contextBetween, tidBefore2);
+						candidates.put(getSignalEntityDistance(key, contextBetween, "BETWEEN"), m);
+					} else if (contextEntity.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "INSIDE", contextEntity, e2.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextEntity, "INSIDE") + 100, m);
+					} else if (contextAfter.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "AFTER", contextAfter, tidEnd2);
+						candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 300, m);
+					}
+				}
+				for (String key : tsignalListEvent.keySet()) {
+					if (contextBefore.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, key, "BEFORE", contextBefore, tidBefore1);
+						candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE") + 200, m);
+					} else if (contextBegin.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN", contextBegin, s.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 400, m);
+					} 
+				}
+			} else { //different sentences
+				Sentence s1 = doc.getSentences().get(e1.getSentID());
+				Sentence s2 = doc.getSentences().get(e2.getSentID());
+				String tidBegin1 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s1.getStartTokID()) + 4);
+				String tidBegin2 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s2.getStartTokID()) + 4);
+				String contextBegin1 = getString(s1.getStartTokID(), tidBegin1);
+				String contextBegin2 = getString(s2.getStartTokID(), tidBegin2);
+				
+				for (String key : tsignalListEvent.keySet()) {
+					if (contextBegin2.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin2, "BEGIN-BETWEEN"), m);
+					} else if (contextBegin1.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin1, "BEGIN-BEFORE") + 100, m);
+					}
+				}
+			}
+			
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O", "O", "O");
+			}
 		}
-		if (eidx == entArr.size()-1) { //last entity
-			tidAfter = s.getEndTokID();
-		} else { 
-			Entity eAfter = doc.getEntities().get(entArr.get(eidx + 1));
-			tidAfter = doc.getTokenArr().get(doc.getTokenArr().indexOf(eAfter.getStartTokID()) - 1);
-		}
-		
-		String tidStart = "", tidEnd = "", tidBegin = "";
-		if (e.getStartTokID().equals(s.getStartTokID())) {
-			tidStart = s.getStartTokID();
-		} else {
-			tidStart = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getStartTokID()) - 1);
-		}
-		if (e.getEndTokID().equals(s.getEndTokID())) {
-			tidEnd = s.getEndTokID();
-		} else {
-			tidEnd = doc.getTokenArr().get(doc.getTokenArr().indexOf(e.getEndTokID()) + 1);
-		}
-		tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
-		
-		ArrayList<String> tidConnBefore = getConnectiveTidArr(tidBefore, tidStart, "BEFORE");
-		ArrayList<String> tidConnAfter = getConnectiveTidArr(tidEnd, tidAfter, "AFTER");
-		ArrayList<String> tidConnBegin = getConnectiveTidArr(s.getStartTokID(), tidBegin, "BEGIN");
-		ArrayList<String> tidConnEntity = getConnectiveTidArr(e.getStartTokID(), e.getEndTokID(), "INSIDE");
-		
+		return null;
+	}
+			
+	public Marker getTemporalConnective() {
 		Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
 		
-		//if (key.equals("before")) System.out.println(e.getID() + "\t" + key + "\t-" + contextBefore + "-");
-		if (!tidConnBefore.isEmpty()) {
-			Marker m = new Marker();
-			m.setText(getString(tidConnBefore.get(0), tidConnBefore.get(tidConnBefore.size()-1)));
-			m.setPosition("BEFORE");
-			m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), tidConnBefore));
-			candidates.put(getConnectiveEntityDistance(e, tidConnBefore, "BEFORE"), m);
-		} else if (!tidConnAfter.isEmpty()) {			
-			Marker m = new Marker();
-			m.setText(getString(tidConnAfter.get(0), tidConnAfter.get(tidConnAfter.size()-1)));
-			m.setPosition("AFTER");
-			m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), tidConnAfter));
-			candidates.put(getConnectiveEntityDistance(e, tidConnAfter, "AFTER") + 100, m);
-		} else if (!tidConnEntity.isEmpty()) {
-			Marker m = new Marker();
-			m.setText(getString(tidConnEntity.get(0), tidConnEntity.get(tidConnEntity.size()-1)));
-			m.setPosition("INSIDE");
-			m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), tidConnEntity));
-			candidates.put(getConnectiveEntityDistance(e, tidConnEntity, "INSIDE") + 200, m);
-		} else if (!tidConnBegin.isEmpty()) {
-			Marker m = new Marker();
-			m.setText(getString(tidConnBegin.get(0), tidConnBegin.get(tidConnBegin.size()-1)));
-			m.setPosition("BEGIN");
-			m.setDepRel(getSignalMateDependencyPath(e, getTokenIDArr(e.getStartTokID(), e.getEndTokID()), tidConnBegin));
-			candidates.put(getConnectiveEntityDistance(e, tidConnBegin, "BEGIN") + 300, m);
+		if (isSameSentence()) {
+			Sentence s = doc.getSentences().get(e1.getSentID());
+			
+			String tidBefore1 = getTidEntityBeforeAfter(e1).get(0);
+			//String tidAfter1 = getTidEntityBeforeAfter(e1).get(1);
+			String tidStart1 = getTidBeforeAfter(e1).get(0);
+			//String tidEnd1 = getTidBeforeAfter(e1).get(1);
+			
+			String tidBefore2 = getTidEntityBeforeAfter(e1).get(0);
+			String tidAfter2 = getTidEntityBeforeAfter(e2).get(1);
+			String tidStart2 = getTidBeforeAfter(e2).get(0);
+			String tidEnd2 = getTidBeforeAfter(e2).get(1);
+			
+			String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+			
+			ArrayList<String> tidConnBefore = getConnectiveTidArr("Temporal", tidBefore1, tidStart1, "BEFORE");
+			ArrayList<String> tidConnBetween = getConnectiveTidArr("Temporal", tidBefore2, tidStart2, "BETWEEN");
+			ArrayList<String> tidConnAfter = getConnectiveTidArr("Temporal", tidEnd2, tidAfter2, "AFTER");
+			ArrayList<String> tidConnBegin = getConnectiveTidArr("Temporal", s.getStartTokID(), tidBegin, "BEGIN");
+			ArrayList<String> tidConnEntity = getConnectiveTidArr("Temporal", e2.getStartTokID(), e2.getEndTokID(), "INSIDE");
+			
+			if (!tidConnBetween.isEmpty()) {
+				String text = getString(tidConnBetween.get(0), tidConnBetween.get(tidConnBetween.size()-1));
+				Marker m = getConnectiveMarker(text, "BETWEEN", tidConnBetween);
+				candidates.put(getConnectiveEntityDistance(e2, tidConnBetween, "BETWEEN"), m);
+			} else if (!tidConnBefore.isEmpty()) {
+				String text = getString(tidConnBefore.get(0), tidConnBefore.get(tidConnBefore.size()-1));
+				Marker m = getConnectiveMarker(text, "BEFORE", tidConnBefore);
+				candidates.put(getConnectiveEntityDistance(e1, tidConnBefore, "BEFORE") + 100, m);
+			} else if (!tidConnAfter.isEmpty()) {
+				String text = getString(tidConnAfter.get(0), tidConnAfter.get(tidConnAfter.size()-1));
+				Marker m = getConnectiveMarker(text, "AFTER", tidConnAfter);
+				candidates.put(getConnectiveEntityDistance(e2, tidConnAfter, "AFTER") + 200, m);
+			} else if (!tidConnEntity.isEmpty()) {
+				String text = getString(tidConnEntity.get(0), tidConnEntity.get(tidConnEntity.size()-1));
+				Marker m = getConnectiveMarker(text, "INSIDE", tidConnBegin);
+				int distance = Math.abs(doc.getTokenArr().indexOf(e2.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnEntity.get(0)));
+				candidates.put(distance + 300, m);
+			} else if (!tidConnBegin.isEmpty()) {
+				String text = getString(tidConnBegin.get(0), tidConnBegin.get(tidConnBegin.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN", tidConnBegin);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin.get(0)));
+				candidates.put(distance + 400, m);
+			}
+		} else { //different sentences
+			Sentence s1 = doc.getSentences().get(e1.getSentID());
+			Sentence s2 = doc.getSentences().get(e2.getSentID());
+			String tidBegin1 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s1.getStartTokID()) + 4);
+			String tidBegin2 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s2.getStartTokID()) + 4);
+			ArrayList<String> tidConnBegin1 = getConnectiveTidArr("Temporal", s1.getStartTokID(), tidBegin1, "BEGIN");
+			ArrayList<String> tidConnBegin2 = getConnectiveTidArr("Temporal", s1.getStartTokID(), tidBegin2, "BEGIN");
+			
+			if (!tidConnBegin2.isEmpty()) {
+				String text = getString(tidConnBegin2.get(0), tidConnBegin2.get(tidConnBegin2.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN-BETWEEN", tidConnBegin2);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s2.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin2.get(0)));
+				candidates.put(distance, m);
+			} else if (!tidConnBegin1.isEmpty()) {
+				String text = getString(tidConnBegin1.get(0), tidConnBegin1.get(tidConnBegin1.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN-BEFORE", tidConnBegin1);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s1.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin1.get(0)));
+				candidates.put(distance + 100, m);
+			}
 		}
 		
 		if (!candidates.isEmpty()) {
@@ -586,7 +667,220 @@ public class FeatureVector {
 			Arrays.sort(keys);
 			return candidates.get(keys[0]);
 		} else {
-			return new Marker("O", "O", "O", "O");
+			return new Marker("O", "O", "O", "O", "O");
 		}
+	}
+	
+	public Marker getCausalSignal() throws IOException {
+		Map<String, String> signalList = null;
+		signalList = ((CausalSignalList) this.getCausalSignalList()).getList();
+		
+		if (signalList != null) {	
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+			
+			if (isSameSentence()) {
+				Sentence s = doc.getSentences().get(e1.getSentID());
+				
+				String tidBefore1 = getTidEntityBeforeAfter(e1).get(0);
+				//String tidAfter1 = getTidEntityBeforeAfter(e1).get(1);
+				String tidStart1 = getTidBeforeAfter(e1).get(0);
+				//String tidEnd1 = getTidBeforeAfter(e1).get(1);
+				
+				String tidBefore2 = getTidEntityBeforeAfter(e1).get(0);
+				String tidAfter2 = getTidEntityBeforeAfter(e2).get(1);
+				String tidStart2 = getTidBeforeAfter(e2).get(0);
+				String tidEnd2 = getTidBeforeAfter(e2).get(1);
+				
+				String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+				
+				String contextBefore = getString(tidBefore1, tidStart1);
+				String contextBetween = getString(tidBefore2, tidStart2);	//#only consider the context before e2 (after other entity)
+				String contextAfter = getString(tidEnd2, tidAfter2);
+				String contextBegin = getString(s.getStartTokID(), tidBegin);
+				
+				for (String key : signalList.keySet()) {
+					if (contextBetween.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BETWEEN", contextBetween, tidBefore2);
+						candidates.put(getSignalEntityDistance(key, contextBetween, "BETWEEN"), m);
+					} else if (contextBefore.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BEFORE", contextBefore, tidBefore1);
+						candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE") + 100, m);
+					} else if (contextAfter.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "AFTER", contextAfter, tidEnd2);
+						candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 200, m);
+					} else if (contextBegin.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BEGIN", contextBegin, s.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 300, m);
+					} 
+				}
+			} else { //consecutive sentences
+				Sentence s1 = doc.getSentences().get(e1.getSentID());
+				Sentence s2 = doc.getSentences().get(e2.getSentID());
+				String tidBegin1 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s1.getStartTokID()) + 4);
+				String tidBegin2 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s2.getStartTokID()) + 4);
+				String contextBegin1 = getString(s1.getStartTokID(), tidBegin1);
+				String contextBegin2 = getString(s2.getStartTokID(), tidBegin2);
+				
+				for (String key : signalList.keySet()) {
+					if (contextBegin2.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin2, "BEGIN-BETWEEN"), m);
+					} else if (contextBegin1.contains(" " + key + " ")) {
+						Marker m = getSignalMarker(signalList, key, "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
+						candidates.put(getSignalEntityDistance(key, contextBegin1, "BEGIN-BEFORE") + 100, m);
+					}
+				}
+			}
+			
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O", "O", "O");
+			}
+		}
+		return null;
+	}
+	
+	public Marker getCausalConnective() {
+		Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+		
+		if (isSameSentence()) {
+			Sentence s = doc.getSentences().get(e1.getSentID());
+			
+			String tidBefore1 = getTidEntityBeforeAfter(e1).get(0);
+			//String tidAfter1 = getTidEntityBeforeAfter(e1).get(1);
+			String tidStart1 = getTidBeforeAfter(e1).get(0);
+			//String tidEnd1 = getTidBeforeAfter(e1).get(1);
+			
+			String tidBefore2 = getTidEntityBeforeAfter(e1).get(0);
+			String tidAfter2 = getTidEntityBeforeAfter(e2).get(1);
+			String tidStart2 = getTidBeforeAfter(e2).get(0);
+			String tidEnd2 = getTidBeforeAfter(e2).get(1);
+			
+			String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+			
+			ArrayList<String> tidConnBefore = getConnectiveTidArr("Contingency", tidBefore1, tidStart1, "BEFORE");
+			ArrayList<String> tidConnBetween = getConnectiveTidArr("Contingency", tidBefore2, tidStart2, "BETWEEN");
+			ArrayList<String> tidConnAfter = getConnectiveTidArr("Contingency", tidEnd2, tidAfter2, "AFTER");
+			ArrayList<String> tidConnBegin = getConnectiveTidArr("Contingency", s.getStartTokID(), tidBegin, "BEGIN");
+			
+			if (!tidConnBetween.isEmpty()) {
+				String text = getString(tidConnBetween.get(0), tidConnBetween.get(tidConnBetween.size()-1));
+				Marker m = getConnectiveMarker(text, "BETWEEN", tidConnBetween);
+				candidates.put(getConnectiveEntityDistance(e2, tidConnBetween, "BETWEEN"), m);
+			} else if (!tidConnBefore.isEmpty()) {
+				String text = getString(tidConnBefore.get(0), tidConnBefore.get(tidConnBefore.size()-1));
+				Marker m = getConnectiveMarker(text, "BEFORE", tidConnBefore);
+				candidates.put(getConnectiveEntityDistance(e1, tidConnBefore, "BEFORE") + 100, m);
+			} else if (!tidConnAfter.isEmpty()) {
+				String text = getString(tidConnAfter.get(0), tidConnAfter.get(tidConnAfter.size()-1));
+				Marker m = getConnectiveMarker(text, "AFTER", tidConnAfter);
+				candidates.put(getConnectiveEntityDistance(e2, tidConnAfter, "AFTER") + 200, m);
+			} else if (!tidConnBegin.isEmpty()) {
+				String text = getString(tidConnBegin.get(0), tidConnBegin.get(tidConnBegin.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN", tidConnBegin);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin.get(0)));
+				candidates.put(distance + 300, m);
+			}
+		} else { //consecutive sentences
+			Sentence s1 = doc.getSentences().get(e1.getSentID());
+			Sentence s2 = doc.getSentences().get(e2.getSentID());
+			String tidBegin1 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s1.getStartTokID()) + 4);
+			String tidBegin2 = doc.getTokenArr().get(doc.getTokenArr().indexOf(s2.getStartTokID()) + 4);
+			ArrayList<String> tidConnBegin1 = getConnectiveTidArr("Contingency", s1.getStartTokID(), tidBegin1, "BEGIN");
+			ArrayList<String> tidConnBegin2 = getConnectiveTidArr("Contingency", s1.getStartTokID(), tidBegin2, "BEGIN");
+			
+			if (!tidConnBegin2.isEmpty()) {
+				String text = getString(tidConnBegin2.get(0), tidConnBegin2.get(tidConnBegin2.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN-BETWEEN", tidConnBegin2);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s2.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin2.get(0)));
+				candidates.put(distance, m);
+			} else if (!tidConnBegin1.isEmpty()) {
+				String text = getString(tidConnBegin1.get(0), tidConnBegin1.get(tidConnBegin1.size()-1));
+				Marker m = getConnectiveMarker(text, "BEGIN-BEFORE", tidConnBegin1);
+				int distance = Math.abs(doc.getTokenArr().indexOf(s1.getStartTokID()) 
+						- doc.getTokenArr().indexOf(tidConnBegin1.get(0)));
+				candidates.put(distance + 100, m);
+			}
+		}
+		if (!candidates.isEmpty()) {
+			Object[] keys = candidates.keySet().toArray();
+			Arrays.sort(keys);
+			return candidates.get(keys[0]);
+		} else {
+			return new Marker("O", "O", "O", "O", "O");
+		}
+	}
+	
+	public Marker getCausalVerb() {
+		Map<String, String> verbList = null;
+		verbList = ((CausalSignalList) this.getCausalSignalList()).getVerbList();
+		
+		if (verbList != null) {	
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+			
+			if (isSameSentence()) {
+				//String tidStart1 = getTidBeforeAfter(e1).get(0);
+				String tidEnd1 = getTidBeforeAfter(e1).get(1);
+				String tidStart2 = getTidBeforeAfter(e2).get(0);
+				//String tidEnd2 = getTidBeforeAfter(e2).get(1);
+				
+				ArrayList<String> tidBetweenArr = getTokenIDArr(tidEnd1, tidStart2); //all words between e1 and e2
+				
+				for (String tid : tidBetweenArr) {
+					if (doc.getTokens().get(tid).getMainPos().equals("v")) {
+						String lemma = doc.getTokens().get(tid).getLemma();
+						if (lemma.equals("link") || lemma.equals("lead") || lemma.equals("depend") || lemma.equals("result")) {
+							String[] possiblePrep = {"to", "with", "on", "in"};
+							List<String> possiblePrepList = Arrays.asList(possiblePrep);
+							Map<String, String> deps = doc.getTokens().get(tid).getDependencyRel();
+							for (String prep : possiblePrepList) {
+								if (deps.keySet().contains(prep)) {
+									Marker m = getVerbMarker(verbList, lemma, "BETWEEN", tid);
+									int distance = Math.abs(doc.getTokenArr().indexOf(tid) 
+											- doc.getTokenArr().indexOf(e2.getStartTokID()));
+									candidates.put(distance, m);
+								}
+							}
+						} else if (lemma.equals("have")) {
+							Boolean vc = false;
+							Map<String, String> deps = doc.getTokens().get(tid).getDependencyRel();
+							if (deps != null) {
+								for (String depid : deps.keySet()) {
+									if (deps.get(depid).equals("VC")) {
+										vc = true; 
+										break;
+									}
+								}
+							}
+							if (!vc) {
+								Marker m = getVerbMarker(verbList, lemma, "BETWEEN", tid);
+								int distance = Math.abs(doc.getTokenArr().indexOf(tid) 
+										- doc.getTokenArr().indexOf(e2.getStartTokID()));
+								candidates.put(distance, m);
+							}
+					    } else if (verbList.keySet().contains(lemma)) {
+							Marker m = getVerbMarker(verbList, lemma, "BETWEEN", tid);
+							int distance = Math.abs(doc.getTokenArr().indexOf(tid) 
+									- doc.getTokenArr().indexOf(e2.getStartTokID()));
+							candidates.put(distance, m);
+						}
+					}
+				}
+				
+			}
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O", "O", "O");
+			}
+		}
+		return null;
 	}
 }

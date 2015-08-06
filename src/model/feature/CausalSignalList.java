@@ -11,17 +11,20 @@ import parser.entities.EntityEnum.Language;
 public class CausalSignalList extends SignalList{
 	
 	private Map<String, String> list;
+	private Map<String, String> verbList;
 	
 	public CausalSignalList(Language lang) throws IOException {
 		super(lang);
 		list = new HashMap<String, String>();
+		verbList = new HashMap<String, String>();
 		readSignalFile();
 	}
 	
 	public void readSignalFile() throws IOException {
-		BufferedReader reader = null;
+		BufferedReader reader = null, verbReader = null;
 		if (language.equals(Language.EN)) {
 			reader = new BufferedReader(new FileReader("resource/causal_signal.list"));
+			verbReader = new BufferedReader(new FileReader("resource/causal_verb.list"));
 		} else if (language.equals(Language.IT)) {
 			
 		}
@@ -33,6 +36,14 @@ public class CausalSignalList extends SignalList{
 			}
 			//for (String key : list.keySet()) System.out.println(key + "\t" + list.get(key));
 		}
+		if (verbReader != null) {
+			String line;
+			while ((line = verbReader.readLine()) != null) { 
+				String[] cols = line.split("\\|\\|\\|");
+				verbList.put(cols[0].trim(), cols[1].trim());
+			}
+			//for (String key : list.keySet()) System.out.println(key + "\t" + list.get(key));
+		}
 	}
 
 	public Map<String, String> getList() {
@@ -41,6 +52,14 @@ public class CausalSignalList extends SignalList{
 
 	public void setList(Map<String, String> list) {
 		this.list = list;
+	}
+
+	public Map<String, String> getVerbList() {
+		return verbList;
+	}
+
+	public void setVerbList(Map<String, String> verbList) {
+		this.verbList = verbList;
 	}
 
 }

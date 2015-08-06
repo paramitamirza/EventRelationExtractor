@@ -16,13 +16,13 @@ import model.feature.FeatureEnum.Feature;
 
 public class EventEventFeatureVector extends FeatureVector{
 
-	public EventEventFeatureVector(Document doc, Entity e1, Entity e2, String label, SignalList signalList) {
-		super(doc, e1, e2, label, signalList);
+	public EventEventFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
 	}
 	
 	public EventEventFeatureVector(FeatureVector fv) {
-		super(fv.getDoc(), fv.getE1(), fv.getE2(), fv.getVectors(), fv.getLabel(), fv.getSignalList());
+		super(fv.getDoc(), fv.getE1(), fv.getE2(), fv.getVectors(), fv.getLabel(), fv.getTempSignalList(), fv.getCausalSignalList());
 		orderPair();
 	}
 	
@@ -196,37 +196,23 @@ public class EventEventFeatureVector extends FeatureVector{
 		return mainVerbs;
 	}
 	
-	public ArrayList<String> getTemporalSignal() throws IOException {
-		ArrayList<String> tSignals = new ArrayList<String>();
-		Marker me1 = super.getTemporalSignal(e1);
-		Marker me2 = super.getTemporalSignal(e2);
-		tSignals.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
-		tSignals.add(me1.getDepRel());
-		tSignals.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
-		tSignals.add(me2.getDepRel());
-		return tSignals;
+	public ArrayList<String> getTemporalMarker() throws IOException {
+		ArrayList<String> tMarkers = new ArrayList<String>();
+		Marker m = super.getTemporalConnective();
+		if (m.getText().equals("O")) m = super.getTemporalSignal();
+		tMarkers.add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
+		tMarkers.add(m.getDepRelE1() + "|" + m.getDepRelE2());
+		return tMarkers;
 	}
 	
-	public ArrayList<String> getTemporalSignalCluster() throws IOException {
-		ArrayList<String> tSignals = new ArrayList<String>();
-		Marker me1 = super.getTemporalSignal(e1);
-		Marker me2 = super.getTemporalSignal(e2);
-		tSignals.add(me1.getCluster().replace(" ", "_") + "|" + me1.getPosition());
-		tSignals.add(me1.getDepRel());
-		tSignals.add(me2.getCluster().replace(" ", "_") + "|" + me2.getPosition());
-		tSignals.add(me2.getDepRel());
-		return tSignals;
-	}
-	
-	public ArrayList<String> getTemporalConnective() {
-		ArrayList<String> tSignals = new ArrayList<String>();
-		Marker me1 = super.getTemporalConnective(e1);
-		Marker me2 = super.getTemporalConnective(e2);
-		tSignals.add(me1.getText().replace(" ", "_") + "|" + me1.getPosition());
-		tSignals.add(me1.getDepRel());
-		tSignals.add(me2.getText().replace(" ", "_") + "|" + me2.getPosition());
-		tSignals.add(me2.getDepRel());
-		return tSignals;
+	public ArrayList<String> getCausalMarker() throws IOException {
+		ArrayList<String> tMarkers = new ArrayList<String>();
+		Marker m = super.getCausalConnective();
+		if (m.getText().equals("O")) m = super.getCausalSignal();
+		if (m.getText().equals("O")) m = super.getCausalVerb();
+		tMarkers.add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
+		tMarkers.add(m.getDepRelE1() + "|" + m.getDepRelE2());
+		return tMarkers;
 	}
 
 }

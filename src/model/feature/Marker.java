@@ -5,17 +5,19 @@ public class Marker {
 	private String txt;
 	private String cluster;
 	private String position;
-	private String depRel;
+	private String depRelE1;
+	private String depRelE2;
 	
 	public Marker() {
 		
 	}
 	
-	public Marker(String txt, String cluster, String position, String depRel) {
+	public Marker(String txt, String cluster, String position, String depRelE1, String depRelE2) {
 		this.setText(txt);
 		this.setCluster(cluster);
 		this.setPosition(position);
-		this.setDepRel(depRel);
+		this.setDepRelE1(depRelE1);
+		this.setDepRelE2(depRelE2);
 	}
 	
 	public String getText() {
@@ -33,14 +35,6 @@ public class Marker {
 	public void setPosition(String position) {
 		this.position = position;
 	}
-	
-	public String getDepRel() {
-		return depRel;
-	}
-	
-	public void setDepRel(String depRel) {
-		this.depRel = depRel;
-	}
 
 	public String getCluster() {
 		return cluster;
@@ -48,6 +42,22 @@ public class Marker {
 
 	public void setCluster(String cluster) {
 		this.cluster = cluster;
+	}
+
+	public String getDepRelE1() {
+		return depRelE1;
+	}
+
+	public void setDepRelE1(String depRelE1) {
+		this.depRelE1 = depRelE1;
+	}
+
+	public String getDepRelE2() {
+		return depRelE2;
+	}
+
+	public void setDepRelE2(String depRelE2) {
+		this.depRelE2 = depRelE2;
 	}
 
 }
