@@ -11,7 +11,7 @@ import parser.entities.*;
 
 public class testFeatureVector {
 	
-	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList, PrintWriter event, PrintWriter timex) throws IOException {
+	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList) throws IOException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -20,7 +20,7 @@ public class testFeatureVector {
 		for (File file : files_TXP) {
 			if (file.isDirectory()){
 				
-				getFeatureVector(parser, file.getPath(), tsignalList, csignalList, event, timex);
+				getFeatureVector(parser, file.getPath(), tsignalList, csignalList);
 				
 			} else if (file.isFile()) {				
 				Document doc = parser.parseDocument(file.getPath());
@@ -33,8 +33,7 @@ public class testFeatureVector {
 								doc.getEntities().get(entArr[j]) instanceof Timex) {
 							TimexTimexRelationRule tt = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
 									((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
-							System.out.println(entArr[i] + "\t" + entArr[j] + "\t" + 
-									tt.getRelType());
+							//System.out.println(entArr[i] + "\t" + entArr[j] + "\t" + tt.getRelType());
 						}
 					}
 				}
@@ -47,74 +46,86 @@ public class testFeatureVector {
 						Entity e1 = doc.getEntities().get(tlink.getSourceID());
 						Entity e2 = doc.getEntities().get(tlink.getTargetID());
 						
-						FeatureVector fv = new FeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList, csignalList);		
+						PairFeatureVector fv = new PairFeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList, csignalList);		
 						if (fv.getPairType().equals(PairType.event_event)) {
 							fv = new EventEventFeatureVector(fv);
 						} else if (fv.getPairType().equals(PairType.event_timex)) {
 							fv = new EventTimexFeatureVector(fv);
 						}
 						
-						fv.getVectors().add(fv.getE1().getID());
-						fv.getVectors().add(fv.getE2().getID());
+						fv.addToVector(Feature.id);
 						
 						//token attribute features
-						fv.getVectors().addAll(fv.getTokenAttribute(Feature.token));
-						fv.getVectors().addAll(fv.getTokenAttribute(Feature.lemma));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.pos));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.mainpos));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.chunk));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.ner));
-						fv.getVectors().add(fv.isSameTokenAttribute(Feature.pos) ? "TRUE" : "FALSE");
-						fv.getVectors().add(fv.isSameTokenAttribute(Feature.mainpos) ? "TRUE" : "FALSE");
+						fv.addToVector(Feature.token);
+						fv.addToVector(Feature.lemma);
+						fv.addToVector(Feature.pos);
+						fv.addToVector(Feature.mainpos);
+						fv.addToVector(Feature.chunk);
+						fv.addToVector(Feature.ner);
+						fv.addToVector(Feature.samePos);
+						fv.addToVector(Feature.sameMainPos);
 						
 						//context features
-						fv.getVectors().add(fv.getEntityDistance().toString());
-						fv.getVectors().add(fv.getSentenceDistance().toString());
+						fv.addToVector(Feature.entDistance);
+						fv.addToVector(Feature.sentDistance);
 						
 						if (fv instanceof EventEventFeatureVector) {
-							//WordNet similarity
-							fv.getVectors().add(((EventEventFeatureVector) fv).getWordSimilarity().toString());
-							
 							//Entity attributes
-							//fv.getVectors().addAll(((EventEventFeatureVector) fv).getEntityAttributes());
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getCombinedEntityAttributes());
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getSameEntityAttributes());
+							fv.addToVector(Feature.eventClass);
+							fv.addToVector(Feature.tense);
+							fv.addToVector(Feature.aspect);
+							fv.addToVector(Feature.polarity);
+							fv.addToVector(Feature.sameEventClass);
+							fv.addToVector(Feature.sameTense);
+							fv.addToVector(Feature.sameAspect);
+							fv.addToVector(Feature.samePolarity);
 							
 							//dependency information
-							fv.getVectors().add(((EventEventFeatureVector) fv).getMateDependencyPath());
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getMateMainVerb());
+							fv.addToVector(Feature.depPath);
+							fv.addToVector(Feature.mainVerb);
 							
-							//temporal/causal signal & connective
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getTemporalMarker());
-							fv.getVectors().addAll(((EventEventFeatureVector) fv).getCausalMarker());
+							//temporal connective/signal
+							fv.addToVector(Feature.tempMarker);
+							
+							//causal connective/signal/verb
+							fv.addToVector(Feature.causMarker);
 							
 							//event co-reference
-							fv.getVectors().add(((EventEventFeatureVector) fv).isCoreference() ? "COREF" : "NOCOREF");
+							fv.addToVector(Feature.coref);
+							
+							//WordNet similarity
+							fv.addToVector(Feature.wnSim);
 							
 						} else if (fv instanceof EventTimexFeatureVector) {
-							fv.getVectors().add(fv.getOrder());
+							fv.addToVector(Feature.entOrder);
 							
 							//Entity attributes
-							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getEntityAttributes());
+							fv.addToVector(Feature.eventClass);
+							fv.addToVector(Feature.tense);
+							fv.addToVector(Feature.aspect);
+							fv.addToVector(Feature.polarity);
+							fv.addToVector(Feature.timexType);
+							fv.addToVector(Feature.timexValueTemplate);
+							fv.addToVector(Feature.dct);
 							
 							//dependency information
-							fv.getVectors().add(((EventTimexFeatureVector) fv).getMateDependencyPath());
-							fv.getVectors().add(((EventTimexFeatureVector) fv).getMateMainVerb());
+							fv.addToVector(Feature.depPath);
+							fv.addToVector(Feature.mainVerb);
 							
-							//temporal signal & connective
-							fv.getVectors().addAll(((EventTimexFeatureVector) fv).getTemporalMarker());
+							//temporal connective/signal
+							fv.addToVector(Feature.tempMarker);
 							
 							//timex rule type
-							fv.getVectors().add(((EventTimexFeatureVector) fv).getTimexRule());
+							fv.addToVector(Feature.timexRule);
 						}
 						
-						fv.getVectors().add(fv.getLabel());
+						fv.addToVector(Feature.label);
 						
-						if (fv instanceof EventEventFeatureVector) {
-							event.println(fv.printVectors());
-						} else if (fv instanceof EventTimexFeatureVector) {
-							timex.println(fv.printVectors());
-						}
+						//if (fv instanceof EventEventFeatureVector) {
+						//	System.out.println(fv.printVectors());
+						//} else if (fv instanceof EventTimexFeatureVector) {
+						//	System.out.println(fv.printVectors());
+						//}
 					}
 				}
 			}
@@ -138,13 +149,16 @@ public class testFeatureVector {
 			TemporalSignalList tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
 			CausalSignalList csignalList = new CausalSignalList(EntityEnum.Language.EN);
 			
-			PrintWriter event = new PrintWriter("data/event-event.tlink", "UTF-8");
-			PrintWriter timex = new PrintWriter("data/event-timex.tlink", "UTF-8");
+			getFeatureVector(parser, args[0], tsignalList, csignalList);
 			
-			getFeatureVector(parser, args[0], tsignalList, csignalList, event, timex);
+			for (String s : EventEventFeatureVector.fields) {
+				System.out.println(s);
+			}
 			
-			event.close();
-			timex.close();
+			for (String s : EventTimexFeatureVector.fields) {
+				System.out.println(s);
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

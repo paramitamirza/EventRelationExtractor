@@ -2,6 +2,7 @@ package model.feature;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import model.feature.FeatureEnum.Feature;
@@ -12,16 +13,20 @@ import parser.entities.Sentence;
 import parser.entities.TemporalRelation;
 import parser.entities.Timex;
 
-public class EventTimexFeatureVector extends FeatureVector{
+public class EventTimexFeatureVector extends PairFeatureVector{
+	
+	public static List<String> fields;
 
 	public EventTimexFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
+		fields = Arrays.asList(new String[50]);
 	}
 	
-	public EventTimexFeatureVector(FeatureVector fv) {
+	public EventTimexFeatureVector(PairFeatureVector fv) {
 		super(fv.getDoc(), fv.getE1(), fv.getE2(), fv.getVectors(), fv.getLabel(), fv.getTempSignalList(), fv.getCausalSignalList());
 		orderPair();
+		fields = Arrays.asList(new String[50]);
 	}
 	
 	public void orderPair() {
@@ -34,26 +39,17 @@ public class EventTimexFeatureVector extends FeatureVector{
 		}
 	}
 	
-	protected String getEntityAttribute(Entity e, Feature feature) {
-		if (e instanceof Event) {
-			return ((Event)e).getAttribute(feature);
-		} else if (e instanceof Timex){
-			return ((Timex)e).getAttribute(feature);
-		}
-		return null;
-	}
-	
 	public ArrayList<String> getEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e1, Feature.aspect));
+		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "|" + getEntityAttribute(e1, Feature.aspect));
 		entityAttrs.add(getEntityAttribute(e1, Feature.polarity));
 		
-		entityAttrs.add(getEntityAttribute(e2, Feature.timexType));
-		entityAttrs.add(getEntityAttribute(e2, Feature.timexValue));
-		entityAttrs.add(getEntityAttribute(e2, Feature.timexValueTemplate));
+		entityAttrs.add(getEntityAttribute(e2, Feature.timexType) + "|" + 
+				getEntityAttribute(e2, Feature.timexValueTemplate));
+		//entityAttrs.add(getEntityAttribute(e2, Feature.timexValue));
+		//entityAttrs.add(getEntityAttribute(e2, Feature.timexValueTemplate));
 		entityAttrs.add(getEntityAttribute(e2, Feature.dct));
 		
 		return entityAttrs;
@@ -101,8 +97,6 @@ public class EventTimexFeatureVector extends FeatureVector{
 		//Assuming that the pair is already in event-timex order
 		if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
 			!isSameSentence()) {
-			tMarkers.add("O|O");
-			tMarkers.add("O");
 			tMarkers.add("O|O");
 			tMarkers.add("O");
 		} else {	

@@ -2,6 +2,7 @@ package model.feature;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import parser.entities.Document;
@@ -14,16 +15,20 @@ import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Lin;
 import model.feature.FeatureEnum.Feature;
 
-public class EventEventFeatureVector extends FeatureVector{
+public class EventEventFeatureVector extends PairFeatureVector{
+	
+	public static List<String> fields;
 
 	public EventEventFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
+		fields = Arrays.asList(new String[50]);
 	}
 	
-	public EventEventFeatureVector(FeatureVector fv) {
+	public EventEventFeatureVector(PairFeatureVector fv) {
 		super(fv.getDoc(), fv.getE1(), fv.getE2(), fv.getVectors(), fv.getLabel(), fv.getTempSignalList(), fv.getCausalSignalList());
 		orderPair();
+		fields = Arrays.asList(new String[50]);
 	}
 	
 	public void orderPair() {
@@ -40,26 +45,6 @@ public class EventEventFeatureVector extends FeatureVector{
 		ILexicalDatabase db = new NictWordNet();
 		RelatednessCalculator rc = new Lin(db);
 		return rc.calcRelatednessOfWords(getTokenAttribute(e1, Feature.lemma), getTokenAttribute(e2, Feature.lemma));
-	}
-	
-	protected String getEntityAttribute(Entity e, Feature feature) {
-		if ((feature == Feature.tense || feature == Feature.aspect || feature == Feature.polarity) && 
-				((Event)e).getAttribute(feature).equals("O")) {
-			String relatedTid = null;
-			if (doc.getTokens().get(e.getStartTokID()).getMainPos().equals("n")) {
-				relatedTid = getMateVerbFromSbjNoun(e.getStartTokID());
-				if (relatedTid == null) relatedTid = getMateVerbFromObjNoun(e.getStartTokID());
-			} else if (doc.getTokens().get(e.getStartTokID()).getMainPos().equals("adj")) {
-				relatedTid = getMateVerbFromAdj(e.getStartTokID());
-			}
-			if (relatedTid != null) {
-				if (feature == Feature.tense) return doc.getTokens().get(relatedTid).getTense();
-				else if (feature == Feature.aspect) return doc.getTokens().get(relatedTid).getAspect();
-				else if (feature == Feature.polarity) return doc.getTokens().get(relatedTid).getPolarity();
-			}
-		}
-		if (((Event)e).getAttribute(feature).equals("O")) return "NONE";
-		else return ((Event)e).getAttribute(feature);
 	}
 	
 	public ArrayList<String> getEntityAttributes() {
@@ -87,8 +72,7 @@ public class EventEventFeatureVector extends FeatureVector{
 	public ArrayList<String> getSameEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
+		entityAttrs.add((getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect)).equals(getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
 		entityAttrs.add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
 		return entityAttrs;
 	}
@@ -189,11 +173,8 @@ public class EventEventFeatureVector extends FeatureVector{
 		return "O";
 	}
 	
-	public ArrayList<String> getMateMainVerb() {
-		ArrayList<String> mainVerbs = new ArrayList<String>();
-		mainVerbs.add(super.getMateMainVerb(e1));
-		mainVerbs.add(super.getMateMainVerb(e2));
-		return mainVerbs;
+	public String getMateMainVerb() {
+		return super.getMateMainVerb(e1) + "|" + super.getMateMainVerb(e2);
 	}
 	
 	public ArrayList<String> getTemporalMarker() throws IOException {
