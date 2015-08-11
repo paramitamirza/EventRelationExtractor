@@ -122,9 +122,11 @@ public class TempEval3Task {
 						tt.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + 
 								tlink.getRelType() + "\t" + TemporalRelation.getInverseRelation(ttlinks.get(ts)));
 					}
+					continue;
 				} else if (fv.getPairType().equals(PairType.event_event) && ((EventEventFeatureVector) fv).isCoreference()) {
 					eeCoref.println(fv.getE1().getID() + "\t" + fv.getE2().getID() + "\t" + 
 							"COREF\tIDENTITY");
+					continue;
 				} else {	
 					fv.addToVector(Feature.id);
 					
@@ -348,7 +350,7 @@ public class TempEval3Task {
 	}
 	
 	public void evaluateTE3(TXPParser parser, TimeMLParser tmlParser) throws ParserConfigurationException, SAXException, IOException, TransformerException, JSchException, SftpException {
-		File dir_TXP = new File(testDirPath);
+		File dir_TXP = new File("data/example_TXP");
 		File[] files_TXP = dir_TXP.listFiles();
 		
 		for (File file : files_TXP) {
@@ -392,6 +394,7 @@ public class TempEval3Task {
 						+ " < ~/data/"+name+"-et-eval.tlinks "
 						+ " | cut -f1,2," + (etFeatLen) + "," + (etFeatLen+1);
 						//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
+				System.out.println(cmdTestEE);
 				List<String> eeResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestEE);
 				List<String> etResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestET);
 				
