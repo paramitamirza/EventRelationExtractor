@@ -216,40 +216,19 @@ On the advice of both their attorneys, father and son have not been in <EVENT cl
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei2" lid="2" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei3" lid="3" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei5" lid="4" relType="AFTER" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei5" lid="5" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei6" lid="6" relType="AFTER" relatedToEventInstance="ei10"/>
-<TLINK eventInstanceID="ei6" lid="7" relType="AFTER" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei8" lid="8" relType="BEFORE" relatedToEventInstance="ei10"/>
-<TLINK eventInstanceID="ei10" lid="9" relType="BEFORE" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei10" lid="10" relType="AFTER" relatedToEventInstance="ei11"/>
-<TLINK eventInstanceID="ei12" lid="11" relType="BEFORE" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei13" lid="12" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei13" lid="13" relType="AFTER" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei13" lid="14" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei13" lid="15" relType="BEFORE" relatedToEventInstance="ei16"/>
-<TLINK eventInstanceID="ei17" lid="16" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei19" lid="17" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei20" lid="18" relType="AFTER" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei20" lid="19" relType="SIMULTANEOUS" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei23" lid="20" relType="BEFORE" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei24" lid="21" relType="BEFORE" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei25" lid="22" relType="INCLUDES" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei26" lid="23" relType="INCLUDES" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei2" lid="24" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei3" lid="25" relType="IS_INCLUDED" relatedToTime="t2"/>
-<TLINK eventInstanceID="ei6" lid="26" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei6" lid="27" relType="IS_INCLUDED" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei7" lid="28" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei8" lid="29" relType="IS_INCLUDED" relatedToTime="t4"/>
-<TLINK eventInstanceID="ei9" lid="30" relType="IS_INCLUDED" relatedToTime="t4"/>
-<TLINK eventInstanceID="ei10" lid="31" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei12" lid="32" relType="IS_INCLUDED" relatedToTime="t2000"/>
-<TLINK eventInstanceID="ei13" lid="33" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei21" lid="34" relType="IS_INCLUDED" relatedToTime="t5"/>
-<TLINK eventInstanceID="ei21" lid="35" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei23" lid="36" relType="IS_INCLUDED" relatedToTime="t6"/>
+<TLINK eventInstanceID="ei5" lid="1" relType="IDENTITY" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei13" lid="2" relType="IDENTITY" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei13" lid="3" relType="IDENTITY" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei20" lid="4" relType="IDENTITY" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei24" lid="5" relType="IDENTITY" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei30" lid="6" relType="IDENTITY" relatedToEventInstance="ei34"/>
+<TLINK eventInstanceID="ei45" lid="7" relType="IDENTITY" relatedToEventInstance="ei46"/>
+<TLINK eventInstanceID="ei53" lid="8" relType="IDENTITY" relatedToEventInstance="ei57"/>
+<TLINK eventInstanceID="ei50" lid="9" relType="IDENTITY" relatedToEventInstance="ei53"/>
+<TLINK eventInstanceID="ei55" lid="10" relType="IDENTITY" relatedToEventInstance="ei57"/>
+<TLINK eventInstanceID="ei56" lid="11" relType="IDENTITY" relatedToEventInstance="ei57"/>
+<TLINK eventInstanceID="ei57" lid="12" relType="IDENTITY" relatedToEventInstance="ei59"/>
+<TLINK eventInstanceID="ei59" lid="13" relType="IDENTITY" relatedToEventInstance="ei63"/>
+<TLINK lid="14" relType="SIMULTANEOUS" relatedToTime="t2004" timeID="t9"/>
+<TLINK lid="15" relType="BEFORE" relatedToTime="t0" timeID="t12"/>
 </TimeML>

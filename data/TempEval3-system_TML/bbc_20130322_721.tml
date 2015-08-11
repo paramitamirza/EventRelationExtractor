@@ -91,32 +91,6 @@ He <EVENT class="I_ACTION" eid="e21">insisted</EVENT> that the NGO law "will not
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei2"/>
-<TLINK eventInstanceID="ei1" lid="2" relType="IS_INCLUDED" relatedToEventInstance="ei1000018"/>
-<TLINK eventInstanceID="ei2" lid="3" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei2" lid="4" relType="AFTER" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei4" lid="5" relType="BEFORE" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei4" lid="6" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei5" lid="7" relType="AFTER" relatedToEventInstance="ei1000"/>
-<TLINK eventInstanceID="ei11" lid="8" relType="BEFORE" relatedToEventInstance="ei1000017"/>
-<TLINK eventInstanceID="ei12" lid="9" relType="BEFORE" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei13" lid="10" relType="IS_INCLUDED" relatedToEventInstance="ei1000018"/>
-<TLINK eventInstanceID="ei12" lid="11" relType="AFTER" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei14" lid="12" relType="IS_INCLUDED" relatedToEventInstance="ei1000018"/>
-<TLINK eventInstanceID="ei15" lid="13" relType="AFTER" relatedToEventInstance="ei16"/>
-<TLINK eventInstanceID="ei17" lid="14" relType="SIMULTANEOUS" relatedToEventInstance="ei18"/>
-<TLINK eventInstanceID="ei18" lid="15" relType="BEFORE" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei18" lid="16" relType="AFTER" relatedToEventInstance="ei19"/>
-<TLINK eventInstanceID="ei21" lid="17" relType="BEFORE" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei21" lid="18" relType="BEFORE" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei21" lid="19" relType="BEFORE" relatedToEventInstance="ei22"/>
-<TLINK eventInstanceID="ei23" lid="20" relType="AFTER" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei24" lid="21" relType="AFTER" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei1" lid="22" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei6" lid="23" relType="IS_INCLUDED" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei10" lid="24" relType="AFTER" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei12" lid="25" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei13" lid="26" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei14" lid="27" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei14" lid="28" relType="IS_INCLUDED" relatedToTime="t2"/>
+<TLINK eventInstanceID="ei4" lid="1" relType="IDENTITY" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei24" lid="2" relType="IDENTITY" relatedToEventInstance="ei25"/>
 </TimeML>

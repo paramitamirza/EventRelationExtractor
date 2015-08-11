@@ -76,7 +76,7 @@ public class TempEval3Task {
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
 	}
 	
-	public void getFeatureVectorPerFile(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt) throws IOException {
+	public void getFeatureVectorPerFile(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt, PrintWriter eeCoref) throws IOException {
 		Doc doc = parser.parseDocument(filepath);
 		
 		Object[] entArr = doc.getEntities().keySet().toArray();
@@ -106,12 +106,13 @@ public class TempEval3Task {
 				Entity e1 = doc.getEntities().get(tlink.getSourceID());
 				Entity e2 = doc.getEntities().get(tlink.getTargetID());
 				
-				PairFeatureVector fv = new PairFeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList, csignalList);		
+				PairFeatureVector fv = new PairFeatureVector(doc, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				if (fv.getPairType().equals(PairType.event_event)) {
 					fv = new EventEventFeatureVector(fv);
 				} else if (fv.getPairType().equals(PairType.event_timex)) {
 					fv = new EventTimexFeatureVector(fv);
-				} else if (fv.getPairType().equals(PairType.timex_timex)) {
+				}
+				if (fv.getPairType().equals(PairType.timex_timex)) {
 					Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
 					Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
 					if (ttlinks.containsKey(st)) {
@@ -121,89 +122,87 @@ public class TempEval3Task {
 						tt.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + 
 								tlink.getRelType() + "\t" + TemporalRelation.getInverseRelation(ttlinks.get(ts)));
 					}
-					break;
-				}
-				
-				fv.addToVector(Feature.id);
-				
-				//token attribute features
-				fv.addToVector(Feature.token);
-				fv.addToVector(Feature.lemma);
-				fv.addToVector(Feature.pos);
-				fv.addToVector(Feature.mainpos);
-				fv.addToVector(Feature.chunk);
-				fv.addToVector(Feature.ner);
-				fv.addToVector(Feature.samePos);
-				//fv.addToVector(Feature.sameMainPos);
-				
-				//context features
-				fv.addToVector(Feature.entDistance);
-				fv.addToVector(Feature.sentDistance);
-				
-				if (fv instanceof EventEventFeatureVector) {
-					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					fv.addToVector(Feature.tenseAspect);
-					//fv.addToVector(Feature.aspect);
-					fv.addToVector(Feature.polarity);
-					fv.addToVector(Feature.sameEventClass);
-					fv.addToVector(Feature.sameTense);
-					fv.addToVector(Feature.sameAspect);
-					fv.addToVector(Feature.samePolarity);
+				} else if (fv.getPairType().equals(PairType.event_event) && ((EventEventFeatureVector) fv).isCoreference()) {
+					eeCoref.println(fv.getE1().getID() + "\t" + fv.getE2().getID() + "\t" + 
+							"COREF\tIDENTITY");
+				} else {	
+					fv.addToVector(Feature.id);
 					
-					//dependency information
-					fv.addToVector(Feature.depPath);
-					fv.addToVector(Feature.mainVerb);
+					//token attribute features
+					fv.addToVector(Feature.token);
+					fv.addToVector(Feature.lemma);
+					fv.addToVector(Feature.pos);
+					fv.addToVector(Feature.mainpos);
+					fv.addToVector(Feature.chunk);
+					fv.addToVector(Feature.ner);
+					fv.addToVector(Feature.samePos);
+					//fv.addToVector(Feature.sameMainPos);
 					
-					//temporal connective/signal
-					fv.addToVector(Feature.tempMarker);
+					//context features
+					fv.addToVector(Feature.entDistance);
+					fv.addToVector(Feature.sentDistance);
 					
-					//causal connective/signal/verb
-					fv.addToVector(Feature.causMarker);
-					
-					//event co-reference
-					//fv.addToVector(Feature.coref);
-					
-					//WordNet similarity
-					fv.addToVector(Feature.wnSim);
-					
-				} else if (fv instanceof EventTimexFeatureVector) {
-					fv.addToVector(Feature.entOrder);
-					
-					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					fv.addToVector(Feature.tense);
-					fv.addToVector(Feature.aspect);
-					fv.addToVector(Feature.polarity);
-					fv.addToVector(Feature.timexType);
-					fv.addToVector(Feature.timexValueTemplate);
-					fv.addToVector(Feature.dct);	//no improv
-					
-					//dependency information
-					fv.addToVector(Feature.depPath);
-					fv.addToVector(Feature.mainVerb);
-					
-					//temporal connective/signal
-					fv.addToVector(Feature.tempMarker);
-					
-					//timex rule type
-					fv.addToVector(Feature.timexRule);
-				}
-				
-				fv.addToVector(Feature.label);
-				
-				if (fv instanceof EventEventFeatureVector) {
-					ee.println(fv.printVectors());
-				} else if (fv instanceof EventTimexFeatureVector) {
-					et.println(fv.printVectors());
+					if (fv instanceof EventEventFeatureVector) {
+						//Entity attributes
+						fv.addToVector(Feature.eventClass);
+						fv.addToVector(Feature.tenseAspect);
+						//fv.addToVector(Feature.aspect);
+						fv.addToVector(Feature.polarity);
+						fv.addToVector(Feature.sameEventClass);
+						fv.addToVector(Feature.sameTense);
+						fv.addToVector(Feature.sameAspect);
+						fv.addToVector(Feature.samePolarity);
+						
+						//dependency information
+						fv.addToVector(Feature.depPath);
+						fv.addToVector(Feature.mainVerb);
+						
+						//temporal connective/signal
+						fv.addToVector(Feature.tempMarker);
+						
+						//causal connective/signal/verb
+						fv.addToVector(Feature.causMarker);
+						
+						//event co-reference
+						//fv.addToVector(Feature.coref);
+						
+						//WordNet similarity
+						fv.addToVector(Feature.wnSim);
+						
+						fv.addToVector(Feature.label);
+						ee.println(fv.printVectors());
+						
+					} else if (fv instanceof EventTimexFeatureVector) {
+						fv.addToVector(Feature.entOrder);
+						
+						//Entity attributes
+						fv.addToVector(Feature.eventClass);
+						fv.addToVector(Feature.tense);
+						fv.addToVector(Feature.aspect);
+						fv.addToVector(Feature.polarity);
+						fv.addToVector(Feature.timexType);
+						fv.addToVector(Feature.timexValueTemplate);
+						fv.addToVector(Feature.dct);	//no improv
+						
+						//dependency information
+						fv.addToVector(Feature.depPath);
+						fv.addToVector(Feature.mainVerb);
+						
+						//temporal connective/signal
+						fv.addToVector(Feature.tempMarker);
+						
+						//timex rule type
+						fv.addToVector(Feature.timexRule);
+						
+						fv.addToVector(Feature.label);
+						et.println(fv.printVectors());
+					}
 				}
 			}
 		}
-		ee.println();
-		et.println();
 	}
 	
-	public void getFeatureVector(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt) throws IOException {
+	public void getFeatureVector(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt, PrintWriter eeCoref) throws IOException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -211,9 +210,11 @@ public class TempEval3Task {
 		
 		for (File file : files_TXP) {
 			if (file.isDirectory()){				
-				this.getFeatureVector(parser, file.getPath(), ee, et, tt);				
+				this.getFeatureVector(parser, file.getPath(), ee, et, tt, eeCoref);				
 			} else if (file.isFile()) {				
-				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt);
+				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt, eeCoref);
+				ee.println();
+				et.println();
 			}
 		}		
 	}
@@ -224,10 +225,13 @@ public class TempEval3Task {
 		PrintWriter ee = new PrintWriter("data/" + name + "-ee-train.tlinks", "UTF-8");
 		PrintWriter et = new PrintWriter("data/" + name + "-et-train.tlinks", "UTF-8");
 		PrintWriter tt = new PrintWriter("data/" + name + "-tt-train.tlinks", "UTF-8");
-		getFeatureVector(parser, trainDirPath, ee, et, tt);
+		PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-train.tlinks", "UTF-8");
+		getFeatureVector(parser, trainDirPath, ee, et, tt, eeCoref);
 		ee.close();
 		et.close();
 		tt.close();
+		eeCoref.close();
+		
 		System.out.println("event-event features:");
 		String fields = "";
 		eeFeatLen = 0;
@@ -291,10 +295,12 @@ public class TempEval3Task {
 		PrintWriter ee = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
 		PrintWriter et = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
 		PrintWriter tt = new PrintWriter("data/" + name + "-tt-eval.tlinks", "UTF-8");
-		getFeatureVector(parser, testDirPath, ee, et, tt);
+		PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-eval.tlinks", "UTF-8");
+		getFeatureVector(parser, testDirPath, ee, et, tt, eeCoref);
 		ee.close();
 		et.close();
 		tt.close();
+		eeCoref.close();
 		
 		eeFeatLen = 0;
 		for (String s : EventEventFeatureVector.fields) {
@@ -347,14 +353,19 @@ public class TempEval3Task {
 		
 		for (File file : files_TXP) {
 			if (file.isFile()) {	
+				System.out.println("Test " + file.getName() + "...");
 				System.setProperty("line.separator", "\n");
 				PrintWriter ee = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
 				PrintWriter et = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
 				PrintWriter tt = new PrintWriter("data/" + name + "-tt-eval.tlinks", "UTF-8");
-				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt);
+				PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-eval.tlinks", "UTF-8");
+				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt, eeCoref);
+				ee.println();
+				et.println();
 				ee.close();
 				et.close();
 				tt.close();
+				eeCoref.close();
 				
 				eeFeatLen = 0;
 				for (String s : EventEventFeatureVector.fields) {
@@ -365,14 +376,12 @@ public class TempEval3Task {
 					if (s!= null) etFeatLen += 1;
 				}
 				
-				System.out.println("Copy testing data...");
 				File eeFile = new File("data/" + name + "-ee-eval.tlinks");
 				File etFile = new File("data/" + name + "-et-eval.tlinks");
 				File[] files = {eeFile, etFile};
 				RemoteServer rs = new RemoteServer();
 				rs.copyFiles(files, "data/");
 				
-				System.out.println("Test models...");
 				String cmdCd = "cd tools/yamcha-0.33/";
 				
 				String cmdTestEE = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee.model"
@@ -383,13 +392,19 @@ public class TempEval3Task {
 						+ " < ~/data/"+name+"-et-eval.tlinks "
 						+ " | cut -f1,2," + (etFeatLen) + "," + (etFeatLen+1);
 						//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
-				
 				List<String> eeResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestEE);
 				List<String> etResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestET);
 				
-				BufferedReader br = new BufferedReader(new FileReader("data/" + name + "-tt-eval.tlinks"));
-				List<String> ttResult = new ArrayList<String>();
+				BufferedReader br = new BufferedReader(new FileReader("data/" + name + "-ee-coref-eval.tlinks"));
 				String line;
+				List<String> eeCorefResult = new ArrayList<String>();
+				while ((line = br.readLine()) != null) { 
+					eeCorefResult.add(line);
+				}
+				br.close();
+				
+				br = new BufferedReader(new FileReader("data/" + name + "-tt-eval.tlinks"));
+				List<String> ttResult = new ArrayList<String>();
 				while ((line = br.readLine()) != null) { 
 					ttResult.add(line);
 				}
@@ -409,6 +424,7 @@ public class TempEval3Task {
 				int linkId = 1;
 				TemporalRelation tlink = new TemporalRelation();
 				for (String eeStr : eeResult) {
+					System.out.println(eeStr);
 					if (!eeStr.isEmpty()) {
 						String[] cols = eeStr.split("\t");
 						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
@@ -428,6 +444,18 @@ public class TempEval3Task {
 						tlink.setRelType(cols[3]);
 						tlink.setSourceType("Event");
 						tlink.setTargetType("Timex");
+						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
+						linkId += 1;
+					}
+				}
+				for (String eeCStr : eeCorefResult) {
+					if (!eeCStr.isEmpty()) {
+						String[] cols = eeCStr.split("\t");
+						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
+						tlink.setTargetID(dTml.getInstancesInv().get(cols[1]).replace("tmx", "t"));
+						tlink.setRelType(cols[3]);
+						tlink.setSourceType("Event");
+						tlink.setTargetType("Event");
 						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
 						linkId += 1;
 					}

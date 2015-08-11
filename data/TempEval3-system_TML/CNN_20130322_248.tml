@@ -80,5 +80,8 @@ By congressional mandate, the FAA must <EVENT class="OCCURRENCE" eid="e16">cut</
 
 
 
-<TLINK lid="1" relType="SIMULTANEOUS" relatedToTime="t0" timeID="t1"/>
+<TLINK eventInstanceID="ei1" lid="1" relType="IDENTITY" relatedToEventInstance="ei7"/>
+<TLINK lid="2" relType="SIMULTANEOUS" relatedToTime="t0" timeID="t1"/>
+<TLINK lid="3" relType="SIMULTANEOUS" relatedToTime="t0" timeID="t3"/>
+<TLINK lid="4" relType="INCLUDES" relatedToTime="t0" timeID="t4"/>
 </TimeML>

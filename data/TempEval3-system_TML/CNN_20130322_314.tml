@@ -106,45 +106,4 @@ Turkey had been <EVENT class="OCCURRENCE" eid="e23">prosecuting</EVENT> four Isr
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei1" lid="2" relType="AFTER" relatedToEventInstance="ei2"/>
-<TLINK eventInstanceID="ei2" lid="3" relType="AFTER" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei1" lid="4" relType="AFTER" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei1" lid="5" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei2" lid="6" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei1" lid="7" relType="AFTER" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei5" lid="8" relType="IS_INCLUDED" relatedToEventInstance="ei100"/>
-<TLINK eventInstanceID="ei1" lid="9" relType="AFTER" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei1" lid="10" relType="AFTER" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei8" lid="11" relType="BEFORE" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei9" lid="12" relType="BEFORE" relatedToEventInstance="ei10"/>
-<TLINK eventInstanceID="ei5" lid="13" relType="BEFORE" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei10" lid="14" relType="BEFORE" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei5" lid="15" relType="BEFORE" relatedToEventInstance="ei10"/>
-<TLINK eventInstanceID="ei10" lid="16" relType="IS_INCLUDED" relatedToEventInstance="ei11"/>
-<TLINK eventInstanceID="ei10" lid="17" relType="BEFORE" relatedToEventInstance="ei12"/>
-<TLINK eventInstanceID="ei10" lid="18" relType="BEFORE" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei14" lid="19" relType="INCLUDES" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei15" lid="20" relType="BEFORE" relatedToEventInstance="ei18"/>
-<TLINK eventInstanceID="ei15" lid="21" relType="AFTER" relatedToEventInstance="ei16"/>
-<TLINK eventInstanceID="ei15" lid="22" relType="AFTER" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei18" lid="23" relType="BEFORE" relatedToEventInstance="ei19"/>
-<TLINK eventInstanceID="ei18" lid="24" relType="AFTER" relatedToEventInstance="ei100"/>
-<TLINK eventInstanceID="ei19" lid="25" relType="BEFORE" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei19" lid="26" relType="INCLUDES" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei19" lid="27" relType="AFTER" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei19" lid="28" relType="AFTER" relatedToEventInstance="ei22"/>
-<TLINK eventInstanceID="ei23" lid="29" relType="SIMULTANEOUS" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei24" lid="30" relType="AFTER" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei24" lid="31" relType="AFTER" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei1" lid="32" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei1" lid="33" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei2" lid="34" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei6" lid="35" relType="IS_INCLUDED" relatedToTime="t2"/>
-<TLINK eventInstanceID="ei10" lid="36" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei29" lid="37" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei12" lid="38" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei14" lid="39" relType="IS_INCLUDED" relatedToTime="t4"/>
-<TLINK eventInstanceID="ei19" lid="40" relType="AFTER" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei21" lid="41" relType="BEFORE" relatedToTime="t0"/>
 </TimeML>

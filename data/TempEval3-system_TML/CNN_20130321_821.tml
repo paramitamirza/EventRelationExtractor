@@ -45,10 +45,5 @@ Obama's humor is often delivered the way a comedian dealing with a heckler would
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei4" lid="2" relType="AFTER" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei5" lid="3" relType="BEFORE" relatedToEventInstance="ei8"/>
-<TLINK eventInstanceID="ei1" lid="4" relType="INCLUDES" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei4" lid="5" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei5" lid="6" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei1" lid="1" relType="IDENTITY" relatedToEventInstance="ei4"/>
 </TimeML>

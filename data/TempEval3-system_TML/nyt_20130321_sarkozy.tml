@@ -63,26 +63,6 @@ Former President Nicolas Sarkozy was <EVENT class="REPORTING" eid="e1">informed<
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei1" lid="2" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei1" lid="3" relType="BEFORE" relatedToEventInstance="ei2"/>
-<TLINK eventInstanceID="ei21" lid="4" relType="BEFORE" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei1" lid="5" relType="BEFORE" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei1" lid="6" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei5" lid="7" relType="AFTER" relatedToEventInstance="ei8"/>
-<TLINK eventInstanceID="ei5" lid="8" relType="BEFORE" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei8" lid="9" relType="SIMULTANEOUS" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei8" lid="10" relType="AFTER" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei8" lid="11" relType="SIMULTANEOUS" relatedToEventInstance="ei11"/>
-<TLINK eventInstanceID="ei13" lid="12" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei13" lid="13" relType="BEFORE" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei15" lid="14" relType="BEFORE" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei15" lid="15" relType="INCLUDES" relatedToEventInstance="ei18"/>
-<TLINK eventInstanceID="ei15" lid="16" relType="BEFORE" relatedToEventInstance="ei19"/>
-<TLINK eventInstanceID="ei15" lid="17" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei1" lid="18" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei1" lid="19" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei1000" lid="20" relType="IS_INCLUDED" relatedToTime="t1000"/>
-<TLINK eventInstanceID="ei23" lid="21" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei17" lid="22" relType="IS_INCLUDED" relatedToTime="t2"/>
+<TLINK eventInstanceID="ei8" lid="1" relType="IDENTITY" relatedToEventInstance="ei13"/>
+<TLINK eventInstanceID="ei8" lid="2" relType="IDENTITY" relatedToEventInstance="ei9"/>
 </TimeML>

@@ -140,42 +140,8 @@ The report <EVENT class="REPORTING" eid="e41">estimated</EVENT> that the number 
 
 
 
-<TLINK eventInstanceID="ei1" lid="1" relType="BEFORE" relatedToEventInstance="ei2"/>
-<TLINK eventInstanceID="ei2" lid="2" relType="AFTER" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei2" lid="3" relType="AFTER" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei4" lid="4" relType="SIMULTANEOUS" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei4" lid="5" relType="AFTER" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei4" lid="6" relType="AFTER" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei8" lid="7" relType="BEFORE" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei10" lid="8" relType="AFTER" relatedToEventInstance="ei11"/>
-<TLINK eventInstanceID="ei10" lid="9" relType="AFTER" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei14" lid="10" relType="BEFORE" relatedToEventInstance="ei22"/>
-<TLINK eventInstanceID="ei14" lid="11" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei14" lid="12" relType="BEFORE" relatedToEventInstance="ei16"/>
-<TLINK eventInstanceID="ei14" lid="13" relType="BEFORE" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei14" lid="14" relType="AFTER" relatedToEventInstance="ei19"/>
-<TLINK eventInstanceID="ei14" lid="15" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei21" lid="16" relType="BEFORE" relatedToEventInstance="ei22"/>
-<TLINK eventInstanceID="ei22" lid="17" relType="BEFORE" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei22" lid="18" relType="AFTER" relatedToEventInstance="ei23"/>
-<TLINK eventInstanceID="ei24" lid="19" relType="AFTER" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei28" lid="20" relType="BEFORE" relatedToEventInstance="ei30"/>
-<TLINK eventInstanceID="ei43" lid="21" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei1" lid="22" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei1" lid="23" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei2" lid="24" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei2" lid="25" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei4" lid="26" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei4" lid="27" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei8" lid="28" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei11" lid="29" relType="IS_INCLUDED" relatedToTime="t2"/>
-<TLINK eventInstanceID="ei21" lid="30" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei22" lid="31" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei23" lid="32" relType="IS_INCLUDED" relatedToTime="t4"/>
-<TLINK eventInstanceID="ei23" lid="33" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei24" lid="34" relType="AFTER" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei25" lid="35" relType="IS_INCLUDED" relatedToTime="t5"/>
-<TLINK eventInstanceID="ei25" lid="36" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei28" lid="37" relType="IS_INCLUDED" relatedToTime="t0"/>
-<TLINK lid="38" relType="BEFORE" relatedToTime="t0" timeID="t6"/>
+<TLINK eventInstanceID="ei14" lid="1" relType="IDENTITY" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei22" lid="2" relType="IDENTITY" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei34" lid="3" relType="IDENTITY" relatedToEventInstance="ei38"/>
+<TLINK lid="4" relType="BEFORE" relatedToTime="t0" timeID="t6"/>
 </TimeML>
