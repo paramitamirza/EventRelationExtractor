@@ -44,7 +44,17 @@ public class RemoteServer {
 		channel.disconnect();
 	}
 	
-	public List<String> executeYamchaCommand(String cmd) throws JSchException, IOException {
+	public void copyFile(File file, String dirRemote) throws JSchException, SftpException, FileNotFoundException {
+		ChannelSftp channel = null;
+		channel = (ChannelSftp)session.openChannel("sftp");
+		channel.connect();
+		channel.cd(dirRemote);
+		File localFile = new File(file.getAbsolutePath());
+		channel.put(new FileInputStream(localFile),localFile.getName());
+		channel.disconnect();
+	}
+	
+	public List<String> executeCommand(String cmd) throws JSchException, IOException {
 		ChannelExec channelExec = (ChannelExec)session.openChannel("exec");
 		InputStream in = channelExec.getInputStream();
 		channelExec.setCommand(cmd);

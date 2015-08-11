@@ -75,7 +75,7 @@ public class TimeMLParser {
 						sourceType = "Event";
 						break;
 					case "timeID":
-						source = attrs.item(i).getNodeValue();
+						source = attrs.item(i).getNodeValue().replace("t", "tmx");
 						sourceType = "Timex";
 						break;
 					case "relatedToEventInstance":
@@ -83,7 +83,7 @@ public class TimeMLParser {
 						targetType = "Event";
 						break;
 					case "relatedToTime":
-						target = attrs.item(i).getNodeValue();
+						target = attrs.item(i).getNodeValue().replace("t", "tmx");
 						targetType = "Timex";
 						break;
 					case "relType":

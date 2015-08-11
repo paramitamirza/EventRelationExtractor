@@ -50,10 +50,11 @@ public class TempEval3Task {
 	private ArrayList<String> eeFeatures;
 	private ArrayList<String> etFeatures;
 	private String name;
-	private String trainDirPath;
-	private String testDirPath;
-	private String goldDirPath;
-	private String systemDirPath;
+	private String trainTXPPath;
+	private String trainTMLPath;
+	private String evalTXPPath;
+	private String evalTMLPath;
+	private String systemTMLPath;
 	TemporalSignalList tsignalList;
 	CausalSignalList csignalList;
 	private int eeFeatLen;
@@ -61,12 +62,13 @@ public class TempEval3Task {
 	
 	public TempEval3Task() throws IOException {
 		name = "te3";
-		trainDirPath = "data/TempEval3-train_TXP";
-		testDirPath = "data/TempEval3-eval_TXP";
-		goldDirPath = "data/TempEval3-eval_TML";
-		systemDirPath = "data/TempEval3-system_TML";
+		trainTXPPath = "data/TempEval3-train_TXP";
+		trainTMLPath = "data/TempEval3-train_TML";
+		evalTXPPath = "data/TempEval3-eval_TXP";
+		evalTMLPath = "data/TempEval3-eval_TML";
+		systemTMLPath = "data/TempEval3-system_TML";
 		
-		File sysDir = new File(systemDirPath);
+		File sysDir = new File(systemTMLPath);
 		// if the directory does not exist, create it
 		if (!sysDir.exists()) {
 			sysDir.mkdir();
@@ -76,8 +78,10 @@ public class TempEval3Task {
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
 	}
 	
-	public void getFeatureVectorPerFile(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt, PrintWriter eeCoref) throws IOException {
-		Doc doc = parser.parseDocument(filepath);
+	public void getFeatureVectorPerFile(TXPParser parser, TimeMLParser tmlParser, 
+			File file, PrintWriter ee, PrintWriter et, PrintWriter tt, 
+			PrintWriter eeCoref) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+		Doc doc = parser.parseDocument(file.getPath());
 		
 		Object[] entArr = doc.getEntities().keySet().toArray();
 		
@@ -97,7 +101,12 @@ public class TempEval3Task {
 			}
 		}
 		
-		for (TemporalRelation tlink : doc.getTlinks()) {
+		String tmlPath = file.getPath().replace("TXP", "TML");
+		tmlPath = tmlPath.replace(".txp", "");
+		Doc dTml = tmlParser.parseDocument(tmlPath);
+		
+		//for (TemporalRelation tlink : doc.getTlinks()) {
+		for (TemporalRelation tlink : dTml.getTlinks()) {
 			if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
 					doc.getEntities().containsKey(tlink.getSourceID()) &&
 					doc.getEntities().containsKey(tlink.getTargetID()) &&
@@ -112,6 +121,77 @@ public class TempEval3Task {
 				} else if (fv.getPairType().equals(PairType.event_timex)) {
 					fv = new EventTimexFeatureVector(fv);
 				}
+				fv.addToVector(Feature.id);
+				
+				//token attribute features
+				fv.addToVector(Feature.token);
+				fv.addToVector(Feature.lemma);
+				fv.addToVector(Feature.pos);
+				fv.addToVector(Feature.mainpos);
+				fv.addToVector(Feature.chunk);
+				fv.addToVector(Feature.ner);
+				fv.addToVector(Feature.samePos);
+				//fv.addToVector(Feature.sameMainPos);
+				
+				//context features
+				fv.addToVector(Feature.entDistance);
+				fv.addToVector(Feature.sentDistance);
+				
+				if (fv instanceof EventEventFeatureVector) {
+					//Entity attributes
+					fv.addToVector(Feature.eventClass);
+					fv.addToVector(Feature.tenseAspect);
+					//fv.addToVector(Feature.tense);
+					//fv.addToVector(Feature.aspect);
+					fv.addToVector(Feature.polarity);
+					fv.addToVector(Feature.sameEventClass);
+					fv.addToVector(Feature.sameTense);
+					fv.addToVector(Feature.sameAspect);
+					fv.addToVector(Feature.samePolarity);
+					
+					//dependency information
+					fv.addToVector(Feature.depPath);
+					fv.addToVector(Feature.mainVerb);
+					
+					//temporal connective/signal
+					fv.addToVector(Feature.tempMarker);
+					
+					//causal connective/signal/verb
+					fv.addToVector(Feature.causMarker);
+					
+					//event co-reference
+					fv.addToVector(Feature.coref);
+					
+					//WordNet similarity
+					fv.addToVector(Feature.wnSim);
+					
+					fv.addToVector(Feature.label);
+				} else if (fv instanceof EventTimexFeatureVector) {
+					fv.addToVector(Feature.entOrder);
+					
+					//Entity attributes
+					fv.addToVector(Feature.eventClass);
+					fv.addToVector(Feature.tense);
+					fv.addToVector(Feature.aspect);
+					//fv.addToVector(Feature.polarity);
+					fv.addToVector(Feature.timexType);
+					fv.addToVector(Feature.timexValueTemplate);
+					//fv.addToVector(Feature.dct);	//no improv
+					
+					//dependency information
+					fv.addToVector(Feature.depPath);
+					//fv.addToVector(Feature.mainVerb);
+					
+					//temporal connective/signal
+					fv.addToVector(Feature.tempMarker);
+					
+					//timex rule type
+					fv.addToVector(Feature.timexRule);
+					
+					fv.addToVector(Feature.label);
+				}
+				
+				
 				if (fv.getPairType().equals(PairType.timex_timex)) {
 					Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
 					Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
@@ -122,89 +202,22 @@ public class TempEval3Task {
 						tt.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + 
 								tlink.getRelType() + "\t" + TemporalRelation.getInverseRelation(ttlinks.get(ts)));
 					}
-					continue;
-				} else if (fv.getPairType().equals(PairType.event_event) && ((EventEventFeatureVector) fv).isCoreference()) {
-					eeCoref.println(fv.getE1().getID() + "\t" + fv.getE2().getID() + "\t" + 
-							"COREF\tIDENTITY");
-					continue;
-				} else {	
-					fv.addToVector(Feature.id);
-					
-					//token attribute features
-					fv.addToVector(Feature.token);
-					fv.addToVector(Feature.lemma);
-					fv.addToVector(Feature.pos);
-					fv.addToVector(Feature.mainpos);
-					fv.addToVector(Feature.chunk);
-					fv.addToVector(Feature.ner);
-					fv.addToVector(Feature.samePos);
-					//fv.addToVector(Feature.sameMainPos);
-					
-					//context features
-					fv.addToVector(Feature.entDistance);
-					fv.addToVector(Feature.sentDistance);
-					
-					if (fv instanceof EventEventFeatureVector) {
-						//Entity attributes
-						fv.addToVector(Feature.eventClass);
-						fv.addToVector(Feature.tenseAspect);
-						//fv.addToVector(Feature.aspect);
-						fv.addToVector(Feature.polarity);
-						fv.addToVector(Feature.sameEventClass);
-						fv.addToVector(Feature.sameTense);
-						fv.addToVector(Feature.sameAspect);
-						fv.addToVector(Feature.samePolarity);
-						
-						//dependency information
-						fv.addToVector(Feature.depPath);
-						fv.addToVector(Feature.mainVerb);
-						
-						//temporal connective/signal
-						fv.addToVector(Feature.tempMarker);
-						
-						//causal connective/signal/verb
-						fv.addToVector(Feature.causMarker);
-						
-						//event co-reference
-						//fv.addToVector(Feature.coref);
-						
-						//WordNet similarity
-						fv.addToVector(Feature.wnSim);
-						
-						fv.addToVector(Feature.label);
+				} else if (fv instanceof EventEventFeatureVector) {
+//					if (((EventEventFeatureVector) fv).isCoreference()) {
+//						eeCoref.println(fv.getE1().getID() + "\t" + fv.getE2().getID() + "\t" + 
+//								"COREF\tIDENTITY");
+//					} else {
 						ee.println(fv.printVectors());
-						
-					} else if (fv instanceof EventTimexFeatureVector) {
-						fv.addToVector(Feature.entOrder);
-						
-						//Entity attributes
-						fv.addToVector(Feature.eventClass);
-						fv.addToVector(Feature.tense);
-						fv.addToVector(Feature.aspect);
-						fv.addToVector(Feature.polarity);
-						fv.addToVector(Feature.timexType);
-						fv.addToVector(Feature.timexValueTemplate);
-						fv.addToVector(Feature.dct);	//no improv
-						
-						//dependency information
-						fv.addToVector(Feature.depPath);
-						fv.addToVector(Feature.mainVerb);
-						
-						//temporal connective/signal
-						fv.addToVector(Feature.tempMarker);
-						
-						//timex rule type
-						fv.addToVector(Feature.timexRule);
-						
-						fv.addToVector(Feature.label);
-						et.println(fv.printVectors());
-					}
+//					}
+				} else if (fv instanceof EventTimexFeatureVector) {
+					et.println(fv.printVectors());
 				}
 			}
 		}
 	}
 	
-	public void getFeatureVector(TXPParser parser, String filepath, PrintWriter ee, PrintWriter et, PrintWriter tt, PrintWriter eeCoref) throws IOException {
+	public void getFeatureVector(TXPParser parser, TimeMLParser tmlParser, String filepath, 
+			PrintWriter ee, PrintWriter et, PrintWriter tt, PrintWriter eeCoref) throws IOException, ParserConfigurationException, SAXException, TransformerException {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -212,23 +225,23 @@ public class TempEval3Task {
 		
 		for (File file : files_TXP) {
 			if (file.isDirectory()){				
-				this.getFeatureVector(parser, file.getPath(), ee, et, tt, eeCoref);				
+				this.getFeatureVector(parser, tmlParser, file.getPath(), ee, et, tt, eeCoref);				
 			} else if (file.isFile()) {				
-				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt, eeCoref);
+				getFeatureVectorPerFile(parser, tmlParser, file, ee, et, tt, eeCoref);
 				ee.println();
 				et.println();
 			}
 		}		
 	}
 	
-	public void train(TXPParser parser) throws IOException, SftpException, JSchException {
+	public void train(TXPParser parser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
 		System.out.println("Building training data...");
 		System.setProperty("line.separator", "\n");
 		PrintWriter ee = new PrintWriter("data/" + name + "-ee-train.tlinks", "UTF-8");
 		PrintWriter et = new PrintWriter("data/" + name + "-et-train.tlinks", "UTF-8");
 		PrintWriter tt = new PrintWriter("data/" + name + "-tt-train.tlinks", "UTF-8");
 		PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-train.tlinks", "UTF-8");
-		getFeatureVector(parser, trainDirPath, ee, et, tt, eeCoref);
+		getFeatureVector(parser, tmlParser, trainTXPPath, ee, et, tt, eeCoref);
 		ee.close();
 		et.close();
 		tt.close();
@@ -267,12 +280,12 @@ public class TempEval3Task {
 		String cmdTrainEE = "make CORPUS=~/data/"+name+"-ee-train.tlinks "
 				+ "MODEL=~/models/"+name+"-ee "
 				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
+				+ "SVM_PARAM=\"-t1 -d4 -c1 -m 512\" train";
 		String cmdTrainET = "make CORPUS=~/data/"+name+"-et-train.tlinks "
 				+ "MODEL=~/models/"+name+"-et "
 				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		rs.executeYamchaCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
+				+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
+		rs.executeCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
 		
 		rs.disconnect();
 		
@@ -291,14 +304,14 @@ public class TempEval3Task {
 		return (double)eeCorrect/(double)eeInstance;
 	}
 	
-	public void evaluate(TXPParser parser) throws IOException, SftpException, JSchException {
+	public void evaluate(TXPParser parser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
 		System.out.println("Building testing data...");
 		System.setProperty("line.separator", "\n");
 		PrintWriter ee = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
 		PrintWriter et = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
 		PrintWriter tt = new PrintWriter("data/" + name + "-tt-eval.tlinks", "UTF-8");
 		PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-eval.tlinks", "UTF-8");
-		getFeatureVector(parser, testDirPath, ee, et, tt, eeCoref);
+		getFeatureVector(parser, tmlParser, evalTXPPath, ee, et, tt, eeCoref);
 		ee.close();
 		et.close();
 		tt.close();
@@ -331,12 +344,20 @@ public class TempEval3Task {
 				+ " < ~/data/"+name+"-et-eval.tlinks "
 				+ " | cut -f1,2," + (etFeatLen) + "," + (etFeatLen+1);
 				//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
-		List<String> eeResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestEE);
-		List<String> etResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestET);
+		List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
+		List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
 		
-		BufferedReader br = new BufferedReader(new FileReader("data/" + name + "-tt-eval.tlinks"));
-		List<String> ttResult = new ArrayList<String>();
+		BufferedReader br = new BufferedReader(new FileReader("data/" + name + "-ee-coref-eval.tlinks"));
 		String line;
+		List<String> eeCorefResult = new ArrayList<String>();
+		while ((line = br.readLine()) != null) { 
+			eeCorefResult.add(line);
+		}
+		br.close();
+		eeResult.addAll(eeCorefResult);
+		
+		br = new BufferedReader(new FileReader("data/" + name + "-tt-eval.tlinks"));
+		List<String> ttResult = new ArrayList<String>();
 		while ((line = br.readLine()) != null) { 
 			ttResult.add(line);
 		}
@@ -350,8 +371,15 @@ public class TempEval3Task {
 	}
 	
 	public void evaluateTE3(TXPParser parser, TimeMLParser tmlParser) throws ParserConfigurationException, SAXException, IOException, TransformerException, JSchException, SftpException {
-		File dir_TXP = new File("data/example_TXP");
+		File dir_TXP = new File(evalTXPPath);
 		File[] files_TXP = dir_TXP.listFiles();
+		
+		RemoteServer rs = new RemoteServer();
+		
+		rs.executeCommand("rm -rf ~/data/gold/ && mkdir ~/data/gold/");
+		rs.executeCommand("rm -rf ~/data/system/ && mkdir ~/data/system/");
+		
+		File sysTmlFile, goldTmlFile;
 		
 		for (File file : files_TXP) {
 			if (file.isFile()) {	
@@ -361,7 +389,7 @@ public class TempEval3Task {
 				PrintWriter et = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
 				PrintWriter tt = new PrintWriter("data/" + name + "-tt-eval.tlinks", "UTF-8");
 				PrintWriter eeCoref = new PrintWriter("data/" + name + "-ee-coref-eval.tlinks", "UTF-8");
-				getFeatureVectorPerFile(parser, file.getPath(), ee, et, tt, eeCoref);
+				getFeatureVectorPerFile(parser, tmlParser, file, ee, et, tt, eeCoref);
 				ee.println();
 				et.println();
 				ee.close();
@@ -381,7 +409,6 @@ public class TempEval3Task {
 				File eeFile = new File("data/" + name + "-ee-eval.tlinks");
 				File etFile = new File("data/" + name + "-et-eval.tlinks");
 				File[] files = {eeFile, etFile};
-				RemoteServer rs = new RemoteServer();
 				rs.copyFiles(files, "data/");
 				
 				String cmdCd = "cd tools/yamcha-0.33/";
@@ -394,9 +421,9 @@ public class TempEval3Task {
 						+ " < ~/data/"+name+"-et-eval.tlinks "
 						+ " | cut -f1,2," + (etFeatLen) + "," + (etFeatLen+1);
 						//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
-				System.out.println(cmdTestEE);
-				List<String> eeResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestEE);
-				List<String> etResult = rs.executeYamchaCommand(cmdCd + " && " + cmdTestET);
+				
+				List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
+				List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
 				
 				BufferedReader br = new BufferedReader(new FileReader("data/" + name + "-ee-coref-eval.tlinks"));
 				String line;
@@ -405,6 +432,7 @@ public class TempEval3Task {
 					eeCorefResult.add(line);
 				}
 				br.close();
+				eeResult.addAll(eeCorefResult);
 				
 				br = new BufferedReader(new FileReader("data/" + name + "-tt-eval.tlinks"));
 				List<String> ttResult = new ArrayList<String>();
@@ -417,17 +445,14 @@ public class TempEval3Task {
 //				System.out.println("Accuracy event-timex: " + String.format( "%.2f", accuracy(etResult)*100) + "%");
 //				System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
 				
-				rs.disconnect();
-				
-				Doc dTml = tmlParser.parseDocument(goldDirPath + "/" + file.getName().replace(".txp", ""));
+				Doc dTml = tmlParser.parseDocument(evalTMLPath + "/" + file.getName().replace(".txp", ""));
 				Doc dTxp = parser.parseDocument(file.getPath());
-				TimeMLDoc tml = new TimeMLDoc(goldDirPath + "/" + file.getName().replace(".txp", ""));
+				TimeMLDoc tml = new TimeMLDoc(evalTMLPath + "/" + file.getName().replace(".txp", ""));
 				tml.removeLinks();
 				
 				int linkId = 1;
 				TemporalRelation tlink = new TemporalRelation();
 				for (String eeStr : eeResult) {
-					System.out.println(eeStr);
 					if (!eeStr.isEmpty()) {
 						String[] cols = eeStr.split("\t");
 						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
@@ -451,18 +476,6 @@ public class TempEval3Task {
 						linkId += 1;
 					}
 				}
-				for (String eeCStr : eeCorefResult) {
-					if (!eeCStr.isEmpty()) {
-						String[] cols = eeCStr.split("\t");
-						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
-						tlink.setTargetID(dTml.getInstancesInv().get(cols[1]).replace("tmx", "t"));
-						tlink.setRelType(cols[3]);
-						tlink.setSourceType("Event");
-						tlink.setTargetType("Event");
-						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
-						linkId += 1;
-					}
-				}
 				for (String ttStr : ttResult) {
 					if (!ttStr.isEmpty()) {
 						String[] cols = ttStr.split("\t");
@@ -476,13 +489,28 @@ public class TempEval3Task {
 					}
 				}
 				
-				PrintWriter sysTML = new PrintWriter(systemDirPath + "/" + file.getName().replace(".txp", ""));
+				sysTmlFile = new File(systemTMLPath + "/" + file.getName().replace(".txp", ""));
+				goldTmlFile = new File(evalTMLPath + "/" + file.getName().replace(".txp", ""));
+				PrintWriter sysTML = new PrintWriter(sysTmlFile.getPath());
 				sysTML.write(tml.toString());
 				sysTML.close();
+				
+				rs.copyFile(goldTmlFile, "data/gold/");
+				rs.copyFile(sysTmlFile, "data/system/");
 			}
 		}
 		
-		TempEval3 te3 = new TempEval3(goldDirPath, systemDirPath);
+		String cdTE3 = "cd ~/tools/TempEval3-evaluation-tool/";
+		String shTE3 = "sh TempEval3-eval.sh";
+		List<String> te3Result = rs.executeCommand(cdTE3 + " && " + shTE3);
+		for (String te3Str : te3Result) {
+			if (!te3Str.isEmpty()) {
+				System.out.println(te3Str);
+			}
+		}
+		
+		rs.disconnect();
+		TempEval3 te3 = new TempEval3(evalTMLPath, systemTMLPath);
 		te3.evaluate();		
 	}
 	
@@ -495,13 +523,14 @@ public class TempEval3Task {
 				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
 		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
 		
+		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
+		
 		//dir_TXP <-- data/example_TXP
 		try {
 			TempEval3Task task = new TempEval3Task();
-			//task.train(parser);			
-			//task.evaluate(parser);
+			//task.train(parser, tmlParser);			
 			
-			TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
+			//task.evaluate(parser, tmlParser);
 			task.evaluateTE3(parser, tmlParser);
 			
 			
