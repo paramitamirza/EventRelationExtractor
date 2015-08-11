@@ -16,7 +16,7 @@ import model.feature.FeatureEnum.Feature;
 import model.feature.FeatureEnum.PairType;
 import parser.TXPParser;
 import parser.TXPParser.Field;
-import parser.entities.Document;
+import parser.entities.Doc;
 import parser.entities.Entity;
 import parser.entities.EntityEnum;
 import parser.entities.TemporalRelation;
@@ -36,7 +36,7 @@ public class TE3FeatureVectorCSV {
 				getFeatureVector(parser, file.getPath(), tsignalList, csignalList, ee, et, tt);
 				
 			} else if (file.isFile()) {				
-				Document doc = parser.parseDocument(file.getPath());
+				Doc doc = parser.parseDocument(file.getPath());
 				
 				Object[] entArr = doc.getEntities().keySet().toArray();
 				

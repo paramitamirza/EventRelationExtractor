@@ -35,9 +35,9 @@ public class TXPParser {
 		this.fields = fields;
 	}
 	
-	public Document parseDocument(String filepath) throws IOException {
+	public Doc parseDocument(String filepath) throws IOException {
 		File f = new File(filepath);
-		Document doc = new Document(this.language, f.getName());
+		Doc doc = new Doc(this.language, f.getName());
 		
 		BufferedReader reader = new BufferedReader(new FileReader(filepath));	
 		
@@ -123,7 +123,7 @@ public class TXPParser {
         return null;
 	}
 	
-	public void parseLine(String s, Document doc) {
+	public void parseLine(String s, Doc doc) {
 		ArrayList<String> cols = new ArrayList<String>(Arrays.asList(s.split("\t")));
 		//System.out.println(cols.get(0));
 		

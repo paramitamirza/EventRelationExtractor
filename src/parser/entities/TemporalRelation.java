@@ -3,10 +3,19 @@ package parser.entities;
 import java.util.Arrays;
 import java.util.List;
 
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+
 public class TemporalRelation extends Relation{
 	
 	private String relType;
 	private String signal;
+	
+	public TemporalRelation() {
+		
+	}
 
 	public TemporalRelation(String source, String target) {
 		super(source, target);
@@ -45,5 +54,35 @@ public class TemporalRelation extends Relation{
         else {
             return relType;
         }
+	}
+	
+	public Node toTimeMLNode(Document doc, int idx) {
+		Element tlink = doc.createElement("TLINK");
+		Attr source = null, target = null, rel = null, id = null;
+		if (sourceType.equals("Event")) {
+			source = doc.createAttribute("eventInstanceID");
+		    source.setValue(sourceID);
+		} else if (sourceType.equals("Timex")) {
+			source = doc.createAttribute("timeID");
+		    source.setValue(sourceID);
+		}
+		if (targetType.equals("Event")) {
+			target = doc.createAttribute("relatedToEventInstance");
+			target.setValue(targetID);
+		} else if (targetType.equals("Timex")) {
+			target = doc.createAttribute("relatedToTime");
+			target.setValue(targetID);
+		}
+		rel = doc.createAttribute("relType");
+		rel.setValue(relType);
+		id = doc.createAttribute("lid");
+		id.setValue(String.valueOf(idx));
+		
+		tlink.setAttributeNode(id);
+		tlink.setAttributeNode(source);
+		tlink.setAttributeNode(target);
+		tlink.setAttributeNode(rel);
+		
+		return tlink;
 	}
 }

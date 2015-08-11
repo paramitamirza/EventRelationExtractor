@@ -23,7 +23,7 @@ public class testFeatureVector {
 				getFeatureVector(parser, file.getPath(), tsignalList, csignalList);
 				
 			} else if (file.isFile()) {				
-				Document doc = parser.parseDocument(file.getPath());
+				Doc doc = parser.parseDocument(file.getPath());
 				
 				Object[] entArr = doc.getEntities().keySet().toArray();
 				

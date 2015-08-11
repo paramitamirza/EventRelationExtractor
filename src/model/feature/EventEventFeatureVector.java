@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import parser.entities.Document;
+import parser.entities.Doc;
 import parser.entities.Entity;
 import parser.entities.Event;
 import parser.entities.TemporalRelation;
@@ -19,7 +19,7 @@ public class EventEventFeatureVector extends PairFeatureVector{
 	
 	public static List<String> fields;
 
-	public EventEventFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+	public EventEventFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
 		fields = Arrays.asList(new String[50]);

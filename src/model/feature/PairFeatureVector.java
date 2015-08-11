@@ -13,7 +13,7 @@ import parser.entities.*;
 
 public class PairFeatureVector {
 	
-	protected Document doc;
+	protected Doc doc;
 	private ArrayList<String> vectors;
 	protected Entity e1;
 	protected Entity e2;
@@ -22,7 +22,7 @@ public class PairFeatureVector {
 	private TemporalSignalList tempSignalList;
 	private CausalSignalList causalSignalList;
 	
-	public PairFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
 		this.setE2(e2);
@@ -40,7 +40,7 @@ public class PairFeatureVector {
 		this.setCausalSignalList(causalSignalList);
 	}
 	
-	public PairFeatureVector(Document doc, Entity e1, Entity e2, ArrayList<String> vectors, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+	public PairFeatureVector(Doc doc, Entity e1, Entity e2, ArrayList<String> vectors, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
 		this.setE2(e2);
@@ -58,11 +58,11 @@ public class PairFeatureVector {
 		this.setCausalSignalList(causalSignalList);
 	}
 
-	public Document getDoc() {
+	public Doc getDoc() {
 		return doc;
 	}
 
-	public void setDoc(Document doc) {
+	public void setDoc(Doc doc) {
 		this.doc = doc;
 	}
 

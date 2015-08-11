@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import model.feature.FeatureEnum.Feature;
-import parser.entities.Document;
+import parser.entities.Doc;
 import parser.entities.Entity;
 import parser.entities.Event;
 import parser.entities.Sentence;
@@ -17,7 +17,7 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 	
 	public static List<String> fields;
 
-	public EventTimexFeatureVector(Document doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+	public EventTimexFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
 		fields = Arrays.asList(new String[50]);

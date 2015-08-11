@@ -25,7 +25,7 @@ public class testParser {
 			if (file.isFile()) {
 				
 				try {
-					Document doc = parser.parseDocument(file.getPath());
+					Doc doc = parser.parseDocument(file.getPath());
 					
 					//array of tokens
 					for (String tid : doc.getTokenArr()) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Document {
+public class Doc {
 	
 	private String filename;
 	private EntityEnum.Language lang;
@@ -18,12 +18,14 @@ public class Document {
 	private ArrayList<TemporalRelation> tlinks;
 	private ArrayList<CausalRelation> clinks;
 	private Timex dct;
+	private Map<String, String> instances;
+	private Map<String, String> instancesInv;
 	
 	private int tokIdx;
 	private int sentIdx;
 	private int entIdx;
 	
-	public Document() {
+	public Doc() {
 		this.setLang(EntityEnum.Language.EN);
 		setTokens(new HashMap<String, Token>());
 		setSentences(new HashMap<String, Sentence>());
@@ -37,9 +39,11 @@ public class Document {
 		setCausalSignals(new HashMap<String, CausalSignal>());
 		setTlinks(new ArrayList<TemporalRelation>());
 		setClinks(new ArrayList<CausalRelation>());
+		setInstances(new HashMap<String, String>());
+		setInstancesInv(new HashMap<String, String>());
 	}
 	
-	public Document(EntityEnum.Language lang) {
+	public Doc(EntityEnum.Language lang) {
 		this.setLang(lang);
 		setTokens(new HashMap<String, Token>());
 		setSentences(new HashMap<String, Sentence>());
@@ -53,9 +57,11 @@ public class Document {
 		setCausalSignals(new HashMap<String, CausalSignal>());
 		setTlinks(new ArrayList<TemporalRelation>());
 		setClinks(new ArrayList<CausalRelation>());
+		setInstances(new HashMap<String, String>());
+		setInstancesInv(new HashMap<String, String>());
 	}
 	
-	public Document(EntityEnum.Language lang, String filename) {
+	public Doc(EntityEnum.Language lang, String filename) {
 		this.setLang(lang);
 		this.setFilename(filename);
 		setTokens(new HashMap<String, Token>());
@@ -70,6 +76,8 @@ public class Document {
 		setCausalSignals(new HashMap<String, CausalSignal>());
 		setTlinks(new ArrayList<TemporalRelation>());
 		setClinks(new ArrayList<CausalRelation>());
+		setInstances(new HashMap<String, String>());
+		setInstancesInv(new HashMap<String, String>());
 	}
 
 	public String getFilename() {
@@ -190,5 +198,21 @@ public class Document {
 
 	public void setDct(Timex dct) {
 		this.dct = dct;
+	}
+
+	public Map<String, String> getInstances() {
+		return instances;
+	}
+
+	public void setInstances(Map<String, String> instances) {
+		this.instances = instances;
+	}
+
+	public Map<String, String> getInstancesInv() {
+		return instancesInv;
+	}
+
+	public void setInstancesInv(Map<String, String> instancesInv) {
+		this.instancesInv = instancesInv;
 	}
 }

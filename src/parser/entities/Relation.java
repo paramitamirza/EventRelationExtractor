@@ -2,8 +2,14 @@ package parser.entities;
 
 public class Relation {
 	
-	private String sourceID;
-	private String targetID;
+	protected String sourceID;
+	protected String targetID;
+	protected String sourceType;
+	protected String targetType;
+	
+	public Relation() {
+		
+	}
 	
 	public Relation(String source, String target) {
 		this.setSourceID(source);
@@ -37,6 +43,22 @@ public class Relation {
 	    final Relation other = (Relation) obj;
 	    return (this.sourceID.equals(other.sourceID) && 
 	    	this.targetID.equals(other.targetID));
+	}
+
+	public String getSourceType() {
+		return sourceType;
+	}
+
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
+
+	public String getTargetType() {
+		return targetType;
+	}
+
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
 	}
 
 }
