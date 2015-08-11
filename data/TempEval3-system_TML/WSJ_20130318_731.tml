@@ -93,8 +93,36 @@ The Windows-ready Kinect sensor, which would be necessary for any business that 
 
 
 
-<TLINK eventInstanceID="ei11" lid="1" relType="IDENTITY" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei14" lid="2" relType="IDENTITY" relatedToEventInstance="ei18"/>
-<TLINK eventInstanceID="ei19" lid="3" relType="IDENTITY" relatedToEventInstance="ei20"/>
-<TLINK lid="4" relType="BEFORE" relatedToTime="t0" timeID="t1"/>
+<TLINK eventInstanceID="ei23" lid="1" relType="BEFORE" relatedToEventInstance="ei25"/>
+<TLINK eventInstanceID="ei22" lid="2" relType="BEFORE" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei21" lid="3" relType="BEFORE" relatedToEventInstance="ei22"/>
+<TLINK eventInstanceID="ei19" lid="4" relType="BEFORE" relatedToEventInstance="ei21"/>
+<TLINK eventInstanceID="ei19" lid="5" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei18" lid="6" relType="BEFORE" relatedToEventInstance="ei19"/>
+<TLINK eventInstanceID="ei14" lid="7" relType="BEFORE" relatedToEventInstance="ei18"/>
+<TLINK eventInstanceID="ei14" lid="8" relType="BEFORE" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei14" lid="9" relType="BEFORE" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei11" lid="10" relType="AFTER" relatedToEventInstance="ei14"/>
+<TLINK eventInstanceID="ei11" lid="11" relType="BEFORE" relatedToEventInstance="ei13"/>
+<TLINK eventInstanceID="ei11" lid="12" relType="AFTER" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei10" lid="13" relType="BEFORE" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei9" lid="14" relType="BEFORE" relatedToEventInstance="ei10"/>
+<TLINK eventInstanceID="ei7" lid="15" relType="BEFORE" relatedToEventInstance="ei9"/>
+<TLINK eventInstanceID="ei9" lid="16" relType="BEFORE" relatedToEventInstance="ei1000"/>
+<TLINK eventInstanceID="ei7" lid="17" relType="BEFORE" relatedToEventInstance="ei8"/>
+<TLINK eventInstanceID="ei6" lid="18" relType="BEFORE" relatedToEventInstance="ei7"/>
+<TLINK eventInstanceID="ei1" lid="19" relType="BEFORE" relatedToEventInstance="ei7"/>
+<TLINK eventInstanceID="ei2" lid="20" relType="AFTER" relatedToEventInstance="ei3"/>
+<TLINK eventInstanceID="ei1" lid="21" relType="AFTER" relatedToEventInstance="ei2"/>
+<TLINK eventInstanceID="ei19" lid="22" relType="IS_INCLUDED" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei18" lid="23" relType="IS_INCLUDED" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei13" lid="24" relType="IS_INCLUDED" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei10" lid="25" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei10" lid="26" relType="IS_INCLUDED" relatedToTime="t2"/>
+<TLINK eventInstanceID="ei9" lid="27" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei7" lid="28" relType="IS_INCLUDED" relatedToTime="t1000"/>
+<TLINK eventInstanceID="ei7" lid="29" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei1" lid="30" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei2" lid="31" relType="IS_INCLUDED" relatedToTime="t1"/>
+<TLINK lid="32" relType="BEFORE" relatedToTime="t0" timeID="t1"/>
 </TimeML>
