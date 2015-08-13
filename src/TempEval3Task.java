@@ -136,10 +136,10 @@ public class TempEval3Task {
 				//token attribute features
 				fv.addToVector(Feature.token);
 				fv.addToVector(Feature.lemma);
-				fv.addToVector(Feature.pos);
-				fv.addToVector(Feature.mainpos);
-				fv.addToVector(Feature.chunk);
-				fv.addToVector(Feature.ner);
+				fv.addToVector(Feature.posCombined);
+				fv.addToVector(Feature.mainposCombined);
+				fv.addToVector(Feature.chunkCombined);
+				fv.addToVector(Feature.nerCombined);
 				fv.addToVector(Feature.samePos);
 				//fv.addToVector(Feature.sameMainPos);
 				
@@ -149,11 +149,11 @@ public class TempEval3Task {
 				
 				if (fv instanceof EventEventFeatureVector) {
 					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					fv.addToVector(Feature.tenseAspect);
-					//fv.addToVector(Feature.tense);
-					//fv.addToVector(Feature.aspect);
-					fv.addToVector(Feature.polarity);
+					fv.addToVector(Feature.eventClassCombined);
+					fv.addToVector(Feature.tenseAspectCombined);
+					//fv.addToVector(Feature.tenseCombined);
+					//fv.addToVector(Feature.aspectCombined);
+					fv.addToVector(Feature.polarityCombined);
 					fv.addToVector(Feature.sameEventClass);
 					fv.addToVector(Feature.sameTense);
 					fv.addToVector(Feature.sameAspect);
@@ -180,10 +180,10 @@ public class TempEval3Task {
 					fv.addToVector(Feature.entOrder);
 					
 					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					fv.addToVector(Feature.tense);
-					fv.addToVector(Feature.aspect);
-					//fv.addToVector(Feature.polarity);
+					fv.addToVector(Feature.eventClassCombined);
+					fv.addToVector(Feature.tenseCombined);
+					fv.addToVector(Feature.aspectCombined);
+					//fv.addToVector(Feature.polarityCombined);
 					fv.addToVector(Feature.timexType);
 					fv.addToVector(Feature.timexValueTemplate);
 					//fv.addToVector(Feature.dct);	//no improv
@@ -268,6 +268,8 @@ public class TempEval3Task {
 		getFeatureVector(txpParser, tmlParser, trainTXPPath, ee, et, tt, eeCoref, etRule);
 		
 		//Field/column titles of features
+		eeFeatures.clear();
+		etFeatures.clear();
 		for (String s : EventEventFeatureVector.fields) {
 			if (s!= null) eeFeatures.add(s);
 		}
@@ -334,6 +336,8 @@ public class TempEval3Task {
 		getFeatureVector(txpParser, tmlParser, evalTXPPath, ee, et, tt, eeCoref, etRule);
 		
 		//Field/column titles of features
+		eeFeatures.clear();
+		etFeatures.clear();
 		for (String s : EventEventFeatureVector.fields) {
 			if (s!= null) eeFeatures.add(s);
 		}
@@ -404,9 +408,6 @@ public class TempEval3Task {
 			if (file.isFile()) {	
 				System.out.println("Test " + file.getName() + "...");
 				
-				eeFeatures.clear();
-				etFeatures.clear();
-				
 				StringBuilder ee = new StringBuilder();
 				StringBuilder et = new StringBuilder();
 				StringBuilder tt  = new StringBuilder();
@@ -415,6 +416,8 @@ public class TempEval3Task {
 				getFeatureVectorPerFile(txpParser, tmlParser, file, ee, et, tt, eeCoref, etRule);
 				
 				//Field/column titles of features
+				eeFeatures.clear();
+				etFeatures.clear();
 				for (String s : EventEventFeatureVector.fields) {
 					if (s!= null) eeFeatures.add(s);
 				}

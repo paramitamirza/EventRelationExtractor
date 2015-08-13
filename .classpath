@@ -4,5 +4,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/ws4j-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jsch-0.1.53.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="lib" path="lib/LibSVM.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
