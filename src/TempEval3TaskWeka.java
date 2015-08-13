@@ -47,7 +47,7 @@ import parser.entities.Timex;
 import server.RemoteServer;
 
 
-public class TempEval3Task {
+public class TempEval3TaskWeka {
 	
 	private ArrayList<String> eeFeatures;
 	private ArrayList<String> etFeatures;
@@ -60,7 +60,7 @@ public class TempEval3Task {
 	TemporalSignalList tsignalList;
 	CausalSignalList csignalList;
 	
-	public TempEval3Task() throws IOException {
+	public TempEval3TaskWeka() throws IOException {
 		name = "te3";
 		trainTXPPath = "data/TempEval3-train_TXP";
 		trainTMLPath = "data/TempEval3-train_TML";
@@ -134,8 +134,11 @@ public class TempEval3Task {
 				fv.addToVector(Feature.id);
 				
 				//token attribute features
-				fv.addToVector(Feature.token);
-				fv.addToVector(Feature.lemma);
+//				fv.addToVector(Feature.token);
+//				fv.addToVector(Feature.lemma);
+				
+				//TODO addToVector phrase embedding for token and lemma
+				
 				fv.addToVector(Feature.pos);
 				fv.addToVector(Feature.mainpos);
 				fv.addToVector(Feature.chunk);
@@ -163,11 +166,13 @@ public class TempEval3Task {
 					fv.addToVector(Feature.depPath);
 					fv.addToVector(Feature.mainVerb);
 					
-					//temporal connective/signal
-					fv.addToVector(Feature.tempMarker);
+//					//temporal connective/signal
+//					fv.addToVector(Feature.tempMarker);
+//					
+//					//causal connective/signal/verb
+//					fv.addToVector(Feature.causMarker);
 					
-					//causal connective/signal/verb
-					fv.addToVector(Feature.causMarker);
+					//TODO addToVector phrase embedding for temporal & causal signal
 					
 					//event co-reference
 					fv.addToVector(Feature.coref);
@@ -192,8 +197,10 @@ public class TempEval3Task {
 					fv.addToVector(Feature.depPath);
 					//fv.addToVector(Feature.mainVerb);
 					
-					//temporal connective/signal
-					fv.addToVector(Feature.tempMarker);
+//					//temporal connective/signal
+//					fv.addToVector(Feature.tempMarker);
+					
+					//TODO addToVector phrase embedding for temporal signal
 					
 					//timex rule type
 					fv.addToVector(Feature.timexRule);
@@ -218,7 +225,7 @@ public class TempEval3Task {
 //						eeCoref.append(fv.getE1().getID() + "\t" + fv.getE2().getID() + "\t" + 
 //								tlink.getRelType() + "\t" + "IDENTITY" + "\n");
 //					} else {
-						ee.append(fv.printVectors() + "\n");
+						ee.append(fv.printCSVVectors() + "\n");
 //					}
 				} else if (fv instanceof EventTimexFeatureVector) {
 //					String timexRule = ((EventTimexFeatureVector) fv).getTimexRule();
@@ -232,7 +239,7 @@ public class TempEval3Task {
 //									tlink.getRelType() + "\t" + "ENDED_BY" + "\n");
 //						}
 //					} else {
-						et.append(fv.printVectors() + "\n");
+						et.append(fv.printCSVVectors() + "\n");
 //					}
 				}
 			}
@@ -267,6 +274,10 @@ public class TempEval3Task {
 		StringBuilder etRule = new StringBuilder();
 		getFeatureVector(txpParser, tmlParser, trainTXPPath, ee, et, tt, eeCoref, etRule);
 		
+		//For training, only ee and et are needed
+		System.setProperty("line.separator", "\n");
+		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train.csv", "UTF-8");
+		PrintWriter etPW = new PrintWriter("data/" + name + "-et-train.csv", "UTF-8");
 		//Field/column titles of features
 		for (String s : EventEventFeatureVector.fields) {
 			if (s!= null) eeFeatures.add(s);
@@ -274,40 +285,14 @@ public class TempEval3Task {
 		for (String s : EventTimexFeatureVector.fields) {
 			if (s!= null) etFeatures.add(s);
 		}
-		System.out.println("event-event features: " + String.join(",", eeFeatures));
-		System.out.println("event-timex features: " + String.join(",", etFeatures));
-		
-		//For training, only ee and et are needed
-		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train.tlinks", "UTF-8");
-		PrintWriter etPW = new PrintWriter("data/" + name + "-et-train.tlinks", "UTF-8");
+		eePW.write(String.join(",", eeFeatures) + "\n");
+		etPW.write(String.join(",", etFeatures) + "\n");
 		eePW.write(ee.toString());
 		etPW.write(et.toString());
 		eePW.close();
 		etPW.close();
 		
-		//Copy training data to server
-		System.out.println("Copy training data...");
-		File eeFile = new File("data/" + name + "-ee-train.tlinks");
-		File etFile = new File("data/" + name + "-et-train.tlinks");
-		File[] files = {eeFile, etFile};
-		RemoteServer rs = new RemoteServer();
-		rs.copyFiles(files, "data/");
-		
-		//Train models using YamCha + TinySVM
-		System.out.println("Train models...");
-		String cmdCd = "cd tools/yamcha-0.33/";
-		String cmdTrainEE = "make CORPUS=~/data/"+name+"-ee-train.tlinks "
-				+ "MODEL=~/models/"+name+"-ee "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d4 -c1 -m 512\" train";
-		String cmdTrainET = "make CORPUS=~/data/"+name+"-et-train.tlinks "
-				+ "MODEL=~/models/"+name+"-et "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
-		rs.executeCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
-		
-		rs.disconnect();
+		//TODO: train with Weka
 		
 	}
 	
@@ -343,48 +328,31 @@ public class TempEval3Task {
 		
 		//For training, only ee and et are needed
 		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
-		PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
+		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.csv", "UTF-8");
+		PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.csv", "UTF-8");
 		eePW.write(ee.toString());
 		etPW.write(et.toString());
 		eePW.close();
 		etPW.close();		
 		
-		System.out.println("Copy testing data...");
-		File eeFile = new File("data/" + name + "-ee-eval.tlinks");
-		File etFile = new File("data/" + name + "-et-eval.tlinks");
-		File[] files = {eeFile, etFile};
-		RemoteServer rs = new RemoteServer();
-		rs.copyFiles(files, "data/");
+		//TODO classify with Weka
+
 		
-		System.out.println("Test models...");
-		String cmdCd = "cd tools/yamcha-0.33/";
-		
-		String cmdTestEE = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee.model"
-				+ " < ~/data/"+name+"-ee-eval.tlinks "
-				+ " | cut -f1,2," + (this.eeFeatures.size()) + "," + (this.eeFeatures.size()+1);
-				//+ " > ~/data/"+name+"-ee-eval-tagged.tlinks";
-		String cmdTestET = "./usr/local/bin/yamcha -m ~/models/"+name+"-et.model"
-				+ " < ~/data/"+name+"-et-eval.tlinks "
-				+ " | cut -f1,2," + (this.etFeatures.size()) + "," + (this.etFeatures.size()+1);
-				//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
-		List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
-		List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
-		
-		String[] eeCorefArr = eeCoref.toString().split("\\r?\\n");
-		eeResult.addAll(Arrays.asList(eeCorefArr));
-		
-		String[] etRuleArr = etRule.toString().split("\\r?\\n");
-		etResult.addAll(Arrays.asList(etRuleArr));
-		
-		String[] ttArr = tt.toString().split("\\r?\\n");
-		List<String> ttResult = Arrays.asList(ttArr);
-		
-		System.out.println("Accuracy event-event: " + String.format( "%.2f", accuracy(eeResult)*100) + "%");
-		System.out.println("Accuracy event-timex: " + String.format( "%.2f", accuracy(etResult)*100) + "%");
-		System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
-		
-		rs.disconnect();
+//		List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
+//		List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
+//		
+//		String[] eeCorefArr = eeCoref.toString().split("\\r?\\n");
+//		eeResult.addAll(Arrays.asList(eeCorefArr));
+//		
+//		String[] etRuleArr = etRule.toString().split("\\r?\\n");
+//		etResult.addAll(Arrays.asList(etRuleArr));
+//		
+//		String[] ttArr = tt.toString().split("\\r?\\n");
+//		List<String> ttResult = Arrays.asList(ttArr);
+//		
+//		System.out.println("Accuracy event-event: " + String.format( "%.2f", accuracy(eeResult)*100) + "%");
+//		System.out.println("Accuracy event-timex: " + String.format( "%.2f", accuracy(etResult)*100) + "%");
+//		System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
 	}
 	
 	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws ParserConfigurationException, SAXException, IOException, TransformerException, JSchException, SftpException {
@@ -424,8 +392,8 @@ public class TempEval3Task {
 				
 				//For training, only ee and et are needed
 				System.setProperty("line.separator", "\n");
-				PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
-				PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.tlinks", "UTF-8");
+				PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.csv", "UTF-8");
+				PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.csv", "UTF-8");
 				eePW.write(ee.toString());
 				etPW.write(et.toString());
 				eePW.println();
@@ -433,32 +401,19 @@ public class TempEval3Task {
 				eePW.close();
 				etPW.close();	
 				
-				File eeFile = new File("data/" + name + "-ee-eval.tlinks");
-				File etFile = new File("data/" + name + "-et-eval.tlinks");
-				File[] files = {eeFile, etFile};
-				rs.copyFiles(files, "data/");
+				//TODO classify with Weka
 				
-				String cmdCd = "cd tools/yamcha-0.33/";
-				
-				String cmdTestEE = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee.model"
-						+ " < ~/data/"+name+"-ee-eval.tlinks "
-						+ " | cut -f1,2," + (this.eeFeatures.size()) + "," + (this.eeFeatures.size()+1);
-						//+ " > ~/data/"+name+"-ee-eval-tagged.tlinks";
-				String cmdTestET = "./usr/local/bin/yamcha -m ~/models/"+name+"-et.model"
-						+ " < ~/data/"+name+"-et-eval.tlinks "
-						+ " | cut -f1,2," + (this.etFeatures.size()) + "," + (this.etFeatures.size()+1);
-						//+ " > ~/data/"+name+"-et-eval-tagged.tlinks";
-				List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
-				List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
-				
-				String[] eeCorefArr = eeCoref.toString().split("\\r?\\n");
-				eeResult.addAll(Arrays.asList(eeCorefArr));
-				
-				String[] etRuleArr = etRule.toString().split("\\r?\\n");
-				etResult.addAll(Arrays.asList(etRuleArr));
-				
-				String[] ttArr = tt.toString().split("\\r?\\n");
-				List<String> ttResult = Arrays.asList(ttArr);
+//				List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
+//				List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
+//				
+//				String[] eeCorefArr = eeCoref.toString().split("\\r?\\n");
+//				eeResult.addAll(Arrays.asList(eeCorefArr));
+//				
+//				String[] etRuleArr = etRule.toString().split("\\r?\\n");
+//				etResult.addAll(Arrays.asList(etRuleArr));
+//				
+//				String[] ttArr = tt.toString().split("\\r?\\n");
+//				List<String> ttResult = Arrays.asList(ttArr);
 				
 				//Write the TimeML document with new TLINKs
 				Doc dTml = tmlParser.parseDocument(evalTMLPath + "/" + file.getName().replace(".txp", ""));
@@ -467,42 +422,42 @@ public class TempEval3Task {
 				
 				int linkId = 1;
 				TemporalRelation tlink = new TemporalRelation();
-				for (String eeStr : eeResult) {
-					if (!eeStr.isEmpty()) {
-						String[] cols = eeStr.split("\t");
-						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
-						tlink.setTargetID(dTml.getInstancesInv().get(cols[1]).replace("tmx", "t"));
-						tlink.setRelType(cols[3]);
-						tlink.setSourceType("Event");
-						tlink.setTargetType("Event");
-						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
-						linkId += 1;
-					}
-				}
-				for (String etStr : etResult) {
-					if (!etStr.isEmpty()) {
-						String[] cols = etStr.split("\t");
-						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
-						tlink.setTargetID(cols[1].replace("tmx", "t"));
-						tlink.setRelType(cols[3]);
-						tlink.setSourceType("Event");
-						tlink.setTargetType("Timex");
-						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
-						linkId += 1;
-					}
-				}
-				for (String ttStr : ttResult) {
-					if (!ttStr.isEmpty()) {
-						String[] cols = ttStr.split("\t");
-						tlink.setSourceID(cols[0].replace("tmx", "t"));
-						tlink.setTargetID(cols[1].replace("tmx", "t"));
-						tlink.setRelType(cols[3]);
-						tlink.setSourceType("Timex");
-						tlink.setTargetType("Timex");
-						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
-						linkId += 1;
-					}
-				}
+//				for (String eeStr : eeResult) {
+//					if (!eeStr.isEmpty()) {
+//						String[] cols = eeStr.split("\t");
+//						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
+//						tlink.setTargetID(dTml.getInstancesInv().get(cols[1]).replace("tmx", "t"));
+//						tlink.setRelType(cols[3]);
+//						tlink.setSourceType("Event");
+//						tlink.setTargetType("Event");
+//						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
+//						linkId += 1;
+//					}
+//				}
+//				for (String etStr : etResult) {
+//					if (!etStr.isEmpty()) {
+//						String[] cols = etStr.split("\t");
+//						tlink.setSourceID(dTml.getInstancesInv().get(cols[0]).replace("tmx", "t"));
+//						tlink.setTargetID(cols[1].replace("tmx", "t"));
+//						tlink.setRelType(cols[3]);
+//						tlink.setSourceType("Event");
+//						tlink.setTargetType("Timex");
+//						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
+//						linkId += 1;
+//					}
+//				}
+//				for (String ttStr : ttResult) {
+//					if (!ttStr.isEmpty()) {
+//						String[] cols = ttStr.split("\t");
+//						tlink.setSourceID(cols[0].replace("tmx", "t"));
+//						tlink.setTargetID(cols[1].replace("tmx", "t"));
+//						tlink.setRelType(cols[3]);
+//						tlink.setSourceType("Timex");
+//						tlink.setTargetType("Timex");
+//						tml.addLink(tlink.toTimeMLNode(tml.getDoc(), linkId));
+//						linkId += 1;
+//					}
+//				}
 				
 				sysTmlPath = new File(systemTMLPath + "/" + file.getName().replace(".txp", ""));
 				PrintWriter sysTML = new PrintWriter(sysTmlPath.getPath());
@@ -529,11 +484,11 @@ public class TempEval3Task {
 		
 		//dir_TXP <-- data/example_TXP
 		try {
-			TempEval3Task task = new TempEval3Task();
-			//task.train(parser, tmlParser);			
+			TempEval3TaskWeka task = new TempEval3TaskWeka();
+			task.train(parser, tmlParser);			
 			
-			//task.evaluate(parser, tmlParser);
-			task.evaluateTE3(parser, tmlParser);
+			task.evaluate(parser, tmlParser);
+			//task.evaluateTE3(parser, tmlParser);
 			
 			
 		} catch (IOException e) {

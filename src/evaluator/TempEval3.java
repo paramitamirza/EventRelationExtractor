@@ -1,8 +1,15 @@
 package evaluator;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+
+import com.jcraft.jsch.JSchException;
+import com.jcraft.jsch.SftpException;
+
+import server.RemoteServer;
 
 public class TempEval3 {
 	
@@ -14,18 +21,25 @@ public class TempEval3 {
 		this.setSystemPath(system);
 	}
 	
-	public void evaluate() throws IOException {
-		ProcessBuilder pb = new ProcessBuilder("python", 
-				"tools/TempEval3-evaluation-tool/TE3-evaluation.py", 
-				goldPath, 
-				systemPath);
-		Process p = pb.start();
+	public void evaluate() throws IOException, JSchException, SftpException {
+		RemoteServer rs = new RemoteServer();
 		
-		BufferedReader in = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		String line;
-		while ((line = in.readLine()) != null) { 
-			System.out.println(line);
+		//Copy gold and system files to remote server
+		File[] gold = new File(goldPath).listFiles();
+		File[] system = new File(systemPath).listFiles();
+		rs.copyFiles(gold, "data/gold/");
+		rs.copyFiles(system, "data/system/");
+		
+		//Run the TempEval3 evaluation tool in remote server
+		String cdTE3 = "cd ~/tools/TempEval3-evaluation-tool/";
+		String shTE3 = "sh TempEval3-eval.sh";
+		List<String> te3Result = rs.executeCommand(cdTE3 + " && " + shTE3);
+		for (String te3Str : te3Result) {
+			if (!te3Str.isEmpty()) {
+				System.out.println(te3Str);
+			}
 		}
+		rs.disconnect();
 	}
 
 	public String getGoldPath() {
