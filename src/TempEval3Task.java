@@ -115,7 +115,7 @@ public class TempEval3Task {
 		//Determine the relation type of every timex-timex pair in the document via rules 
 		Map<Pair<String,String>,String> ttlinks = getTimexTimexRuleRelation(docTxp);
 		
-		//for (TemporalRelation tlink : doc.getTlinks()) {	//for every TLINK in TXP file: candidate pairs
+		//for (TemporalRelation tlink : docTxp.getTlinks()) {	//for every TLINK in TXP file: candidate pairs
 		for (TemporalRelation tlink : docTml.getTlinks()) {	//for every TLINK in TML file: gold annotated pairs
 			if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
 					docTxp.getEntities().containsKey(tlink.getSourceID()) &&
@@ -136,12 +136,12 @@ public class TempEval3Task {
 				//token attribute features
 				fv.addToVector(Feature.token);
 				fv.addToVector(Feature.lemma);
-				fv.addToVector(Feature.posCombined);
-				fv.addToVector(Feature.mainposCombined);
-				fv.addToVector(Feature.chunkCombined);
-				fv.addToVector(Feature.nerCombined);
+				fv.addToVector(Feature.pos);
+				fv.addToVector(Feature.mainpos);
+				fv.addToVector(Feature.chunk);
+				//fv.addToVector(Feature.ner);
 				fv.addToVector(Feature.samePos);
-				//fv.addToVector(Feature.sameMainPos);
+				fv.addToVector(Feature.sameMainPos);
 				
 				//context features
 				fv.addToVector(Feature.entDistance);
@@ -149,11 +149,11 @@ public class TempEval3Task {
 				
 				if (fv instanceof EventEventFeatureVector) {
 					//Entity attributes
-					fv.addToVector(Feature.eventClassCombined);
-					fv.addToVector(Feature.tenseAspectCombined);
-					//fv.addToVector(Feature.tenseCombined);
-					//fv.addToVector(Feature.aspectCombined);
-					fv.addToVector(Feature.polarityCombined);
+					fv.addToVector(Feature.eventClass);
+					//fv.addToVector(Feature.tenseAspect);
+					fv.addToVector(Feature.tense);
+					fv.addToVector(Feature.aspect);
+					fv.addToVector(Feature.polarity);
 					fv.addToVector(Feature.sameEventClass);
 					fv.addToVector(Feature.sameTense);
 					fv.addToVector(Feature.sameAspect);
@@ -533,10 +533,10 @@ public class TempEval3Task {
 		//dir_TXP <-- data/example_TXP
 		try {
 			TempEval3Task task = new TempEval3Task();
-			//task.train(parser, tmlParser);			
+			task.train(parser, tmlParser);			
 			
-			//task.evaluate(parser, tmlParser);
-			task.evaluateTE3(parser, tmlParser);
+			task.evaluate(parser, tmlParser);
+			//task.evaluateTE3(parser, tmlParser);
 			
 			
 		} catch (IOException e) {

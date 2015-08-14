@@ -181,7 +181,7 @@ The report <EVENT class="REPORTING" eid="e41">estimated</EVENT> that the number 
 <TLINK eventInstanceID="ei23" lid="39" relType="IS_INCLUDED" relatedToTime="t3"/>
 <TLINK eventInstanceID="ei43" lid="40" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK eventInstanceID="ei4" lid="41" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei2" lid="42" relType="BEFORE" relatedToTime="t1"/>
+<TLINK eventInstanceID="ei2" lid="42" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK eventInstanceID="ei41" lid="43" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei42" lid="44" relType="IS_INCLUDED" relatedToTime="t9"/>
 <TLINK eventInstanceID="ei38" lid="45" relType="BEFORE" relatedToTime="t0"/>

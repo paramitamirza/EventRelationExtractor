@@ -1,0 +1,1155 @@
+<Document doc_name="wsj_0981.tml">
+  <Markables>
+    <TIMEX3 m_id="1" type="DATE" value="1989-10-26" />
+    <EVENT_MENTION aspect="PERFECTIVE" class="I_STATE" m_id="2" polarity="pos" pred="agree" tense="PRESENT">
+      <token_anchor t_id="5" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="3" polarity="pos" pred="pay" tense="INFINITIVE">
+      <token_anchor t_id="7" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="4" polarity="pos" pred="buy" tense="INFINITIVE">
+      <token_anchor t_id="18" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="5" polarity="pos" pred="pay" tense="PAST">
+      <token_anchor t_id="66" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="6" polarity="pos" pred="buy" tense="INFINITIVE">
+      <token_anchor t_id="68" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="7" polarity="pos" pred="acquire" tense="PASTPART">
+      <token_anchor t_id="90" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="8" polarity="pos" pred="disclose" tense="PAST">
+      <token_anchor t_id="135" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="9" polarity="pos" pred="issue" tense="PASTPART">
+      <token_anchor t_id="140" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="10" type="DATE" value="1989-10">
+      <token_anchor t_id="176" />
+      <token_anchor t_id="177" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="11" polarity="pos" pred="announce" tense="PAST">
+      <token_anchor t_id="178" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_STATE" m_id="12" pred="agreement">
+      <token_anchor t_id="180" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="13" polarity="pos" pred="acquire" tense="INFINITIVE">
+      <token_anchor t_id="182" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="14" pred="disclose">
+      <token_anchor t_id="189" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_ACTION" m_id="15" pred="offering">
+      <token_anchor t_id="197" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="16" pred="issuance">
+      <token_anchor t_id="199" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="17" polarity="pos" pred="bring" tense="FUTURE">
+      <token_anchor t_id="213" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="STATE" m_id="18" polarity="pos" pred="own" tense="FUTURE">
+      <token_anchor t_id="230" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="REPORTING" m_id="19" pred="accord">
+      <token_anchor t_id="237" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="20" pred="trading">
+      <token_anchor t_id="244" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="21" polarity="pos" pred="bid" tense="PAST">
+      <token_anchor t_id="249" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="22" polarity="pos" pred="expect" tense="PRESENT">
+      <token_anchor t_id="261" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="23" polarity="pos" pred="use" tense="INFINITIVE">
+      <token_anchor t_id="264" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="24" polarity="pos" pred="remodel" tense="PRESPART">
+      <token_anchor t_id="266" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="25" polarity="pos" pred="refurbishing" tense="PRESPART">
+      <token_anchor t_id="277" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="26" polarity="pos" pred="acquire" tense="INFINITIVE">
+      <token_anchor t_id="289" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="27" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="299" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="28" polarity="pos" pred="estimate" tense="PRESENT">
+      <token_anchor t_id="301" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="STATE" m_id="29" polarity="pos" pred="cost" tense="FUTURE">
+      <token_anchor t_id="307" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="30" pred="refurbishment">
+      <token_anchor t_id="315" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="31" polarity="pos" pred="cost" tense="FUTURE">
+      <token_anchor t_id="329" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="32" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="337" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="33" polarity="neg" pred="cover" tense="PRESENT">
+      <token_anchor t_id="344" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="34" polarity="pos" pred="build" tense="PRESPART">
+      <token_anchor t_id="353" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="35" polarity="pos" pred="add" tense="PAST">
+      <token_anchor t_id="362" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="36" polarity="pos" pred="need" tense="FUTURE">
+      <token_anchor t_id="365" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="37" polarity="pos" pred="seek" tense="INFINITIVE">
+      <token_anchor t_id="367" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="38" type="DATE" value="FUTURE_REF">
+      <token_anchor t_id="382" />
+      <token_anchor t_id="383" />
+      <token_anchor t_id="384" />
+    </TIMEX3>
+    <EVENT_MENTION class="OCCURRENCE" m_id="39" pred="construction">
+      <token_anchor t_id="386" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="STATE" m_id="40" polarity="pos" pred="set" tense="PRESENT">
+      <token_anchor t_id="388" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="ASPECTUAL" m_id="41" polarity="pos" pred="begin" tense="INFINITIVE">
+      <token_anchor t_id="390" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="42" type="DATE" value="1991">
+      <token_anchor t_id="392" />
+      <token_anchor t_id="393" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="43" polarity="pos" pred="market" tense="FUTURE">
+      <token_anchor t_id="426" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="44" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="446" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="STATE" m_id="45" pred="include">
+      <token_anchor t_id="452" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="46" polarity="pos" pred="release" tense="PASTPART">
+      <token_anchor t_id="466" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="47" type="DATE" value="1989-10">
+      <token_anchor t_id="467" />
+      <token_anchor t_id="468" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="48" polarity="pos" pred="show" tense="PRESENT">
+      <token_anchor t_id="470" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="STATE" m_id="49" polarity="pos" pred="feature" tense="PRESENT">
+      <token_anchor t_id="474" />
+    </EVENT_MENTION>
+  </Markables>
+  <Relations>
+    <TLINK r_id="50" reltype="AFTER">
+      <source m_id="1" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="51" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="3" />
+    </TLINK>
+    <TLINK r_id="52" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="53" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="54" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="55" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="56" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="57" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="3" />
+    </TLINK>
+    <TLINK r_id="58" reltype="IS_INCLUDED">
+      <source m_id="6" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="59" reltype="NONE">
+      <source m_id="6" />
+      <target m_id="5" />
+    </TLINK>
+    <TLINK r_id="60" reltype="IS_INCLUDED">
+      <source m_id="7" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="61" reltype="IS_INCLUDED">
+      <source m_id="8" />
+      <target m_id="9" />
+    </TLINK>
+    <TLINK r_id="62" reltype="NONE">
+      <source m_id="8" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="63" reltype="NONE">
+      <source m_id="8" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="64" reltype="BEFORE">
+      <source m_id="9" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="65" reltype="BEFORE">
+      <source m_id="11" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="66" reltype="IS_INCLUDED">
+      <source m_id="11" />
+      <target m_id="10" />
+    </TLINK>
+    <TLINK r_id="67" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="12" />
+    </TLINK>
+    <TLINK r_id="68" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="69" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="70" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="71" reltype="NONE">
+      <source m_id="12" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="72" reltype="NONE">
+      <source m_id="12" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="73" reltype="NONE">
+      <source m_id="12" />
+      <target m_id="10" />
+    </TLINK>
+    <TLINK r_id="74" reltype="NONE">
+      <source m_id="13" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="75" reltype="NONE">
+      <source m_id="13" />
+      <target m_id="10" />
+    </TLINK>
+    <TLINK r_id="76" reltype="BEFORE">
+      <source m_id="14" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="77" reltype="IS_INCLUDED">
+      <source m_id="14" />
+      <target m_id="10" />
+    </TLINK>
+    <TLINK r_id="78" reltype="NONE">
+      <source m_id="14" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="79" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="16" />
+    </TLINK>
+    <TLINK r_id="80" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="17" />
+    </TLINK>
+    <TLINK r_id="81" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="18" />
+    </TLINK>
+    <TLINK r_id="82" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="83" reltype="NONE">
+      <source m_id="16" />
+      <target m_id="17" />
+    </TLINK>
+    <TLINK r_id="84" reltype="NONE">
+      <source m_id="16" />
+      <target m_id="18" />
+    </TLINK>
+    <TLINK r_id="85" reltype="NONE">
+      <source m_id="16" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="86" reltype="NONE">
+      <source m_id="17" />
+      <target m_id="18" />
+    </TLINK>
+    <TLINK r_id="87" reltype="NONE">
+      <source m_id="17" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="88" reltype="NONE">
+      <source m_id="17" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="89" reltype="NONE">
+      <source m_id="17" />
+      <target m_id="11" />
+    </TLINK>
+    <TLINK r_id="90" reltype="NONE">
+      <source m_id="18" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="91" reltype="NONE">
+      <source m_id="18" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="92" reltype="SIMULTANEOUS">
+      <source m_id="19" />
+      <target m_id="9" />
+    </TLINK>
+    <TLINK r_id="93" reltype="BEFORE">
+      <source m_id="19" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="94" reltype="INCLUDES">
+      <source m_id="20" />
+      <target m_id="21" />
+    </TLINK>
+    <TLINK r_id="95" reltype="NONE">
+      <source m_id="21" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="96" reltype="NONE">
+      <source m_id="21" />
+      <target m_id="17" />
+    </TLINK>
+    <TLINK r_id="97" reltype="INCLUDES">
+      <source m_id="22" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="98" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="23" />
+    </TLINK>
+    <TLINK r_id="99" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="24" />
+    </TLINK>
+    <TLINK r_id="100" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="101" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="102" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="21" />
+    </TLINK>
+    <TLINK r_id="103" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="24" />
+    </TLINK>
+    <TLINK r_id="104" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="105" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="106" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="22" />
+    </TLINK>
+    <TLINK r_id="107" reltype="NONE">
+      <source m_id="24" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="108" reltype="NONE">
+      <source m_id="24" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="109" reltype="NONE">
+      <source m_id="25" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="110" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="28" />
+    </TLINK>
+    <TLINK r_id="111" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="29" />
+    </TLINK>
+    <TLINK r_id="112" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="113" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="114" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="115" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="23" />
+    </TLINK>
+    <TLINK r_id="116" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="29" />
+    </TLINK>
+    <TLINK r_id="117" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="118" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="119" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="120" reltype="NONE">
+      <source m_id="29" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="121" reltype="NONE">
+      <source m_id="29" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="122" reltype="NONE">
+      <source m_id="29" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="123" reltype="AFTER">
+      <source m_id="31" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="124" reltype="NONE">
+      <source m_id="31" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="125" reltype="SIMULTANEOUS">
+      <source m_id="32" />
+      <target m_id="27" />
+    </TLINK>
+    <TLINK r_id="126" reltype="BEFORE">
+      <source m_id="32" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="127" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="33" />
+    </TLINK>
+    <TLINK r_id="128" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="34" />
+    </TLINK>
+    <TLINK r_id="129" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="130" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="131" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="132" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="34" />
+    </TLINK>
+    <TLINK r_id="133" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="35" />
+    </TLINK>
+    <TLINK r_id="134" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="135" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="136" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="137" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="138" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="35" />
+    </TLINK>
+    <TLINK r_id="139" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="140" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="141" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="142" reltype="IS_INCLUDED">
+      <source m_id="35" />
+      <target m_id="32" />
+    </TLINK>
+    <TLINK r_id="143" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="144" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="145" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="146" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="147" reltype="IS_INCLUDED">
+      <source m_id="36" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="148" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="149" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="150" reltype="NONE">
+      <source m_id="37" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="151" reltype="IS_INCLUDED">
+      <source m_id="39" />
+      <target m_id="42" />
+    </TLINK>
+    <TLINK r_id="152" reltype="NONE">
+      <source m_id="39" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="153" reltype="NONE">
+      <source m_id="39" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="154" reltype="INCLUDES">
+      <source m_id="40" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="155" reltype="NONE">
+      <source m_id="40" />
+      <target m_id="42" />
+    </TLINK>
+    <TLINK r_id="156" reltype="NONE">
+      <source m_id="40" />
+      <target m_id="32" />
+    </TLINK>
+    <TLINK r_id="157" reltype="IS_INCLUDED">
+      <source m_id="41" />
+      <target m_id="42" />
+    </TLINK>
+    <TLINK r_id="158" reltype="NONE">
+      <source m_id="41" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="159" reltype="AFTER">
+      <source m_id="43" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="160" reltype="NONE">
+      <source m_id="43" />
+      <target m_id="44" />
+    </TLINK>
+    <TLINK r_id="161" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="162" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="163" reltype="INCLUDES">
+      <source m_id="45" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="164" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="46" />
+    </TLINK>
+    <TLINK r_id="165" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="166" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="167" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="168" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="44" />
+    </TLINK>
+    <TLINK r_id="169" reltype="IS_INCLUDED">
+      <source m_id="46" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="170" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="171" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="172" reltype="INCLUDES">
+      <source m_id="48" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="173" reltype="NONE">
+      <source m_id="48" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="174" reltype="NONE">
+      <source m_id="48" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="175" reltype="NONE">
+      <source m_id="49" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="176" reltype="NONE">
+      <source m_id="49" />
+      <target m_id="1" />
+    </TLINK>
+  </Relations>
+  <token number="0" sentence="1" t_id="1">MGM</token>
+  <token number="1" sentence="1" t_id="2">Grand</token>
+  <token number="2" sentence="1" t_id="3">Inc.</token>
+  <token number="3" sentence="1" t_id="4">has</token>
+  <token number="4" sentence="1" t_id="5">agreed</token>
+  <token number="5" sentence="1" t_id="6">to</token>
+  <token number="6" sentence="1" t_id="7">pay</token>
+  <token number="7" sentence="1" t_id="8">$</token>
+  <token number="8" sentence="1" t_id="9">93</token>
+  <token number="9" sentence="1" t_id="10">million</token>
+  <token number="10" sentence="1" t_id="11">and</token>
+  <token number="11" sentence="1" t_id="12">nearly</token>
+  <token number="12" sentence="1" t_id="13">1.8</token>
+  <token number="13" sentence="1" t_id="14">million</token>
+  <token number="14" sentence="1" t_id="15">common</token>
+  <token number="15" sentence="1" t_id="16">shares</token>
+  <token number="16" sentence="1" t_id="17">to</token>
+  <token number="17" sentence="1" t_id="18">buy</token>
+  <token number="18" sentence="1" t_id="19">117</token>
+  <token number="19" sentence="1" t_id="20">acres</token>
+  <token number="20" sentence="1" t_id="21">of</token>
+  <token number="21" sentence="1" t_id="22">land</token>
+  <token number="22" sentence="1" t_id="23">along</token>
+  <token number="23" sentence="1" t_id="24">the</token>
+  <token number="24" sentence="1" t_id="25">Las</token>
+  <token number="25" sentence="1" t_id="26">Vegas</token>
+  <token number="26" sentence="1" t_id="27">,</token>
+  <token number="27" sentence="1" t_id="28">Nev.</token>
+  <token number="28" sentence="1" t_id="29">,</token>
+  <token number="29" sentence="1" t_id="30">Strip</token>
+  <token number="30" sentence="1" t_id="31">as</token>
+  <token number="31" sentence="1" t_id="32">a</token>
+  <token number="32" sentence="1" t_id="33">site</token>
+  <token number="33" sentence="1" t_id="34">for</token>
+  <token number="34" sentence="1" t_id="35">its</token>
+  <token number="35" sentence="1" t_id="36">planned</token>
+  <token number="36" sentence="1" t_id="37">movie-studio</token>
+  <token number="37" sentence="1" t_id="38">and</token>
+  <token number="38" sentence="1" t_id="39">theme-park</token>
+  <token number="39" sentence="1" t_id="40">resort</token>
+  <token number="40" sentence="1" t_id="41">.</token>
+  <token number="41" sentence="2" t_id="42">Of</token>
+  <token number="42" sentence="2" t_id="43">the</token>
+  <token number="43" sentence="2" t_id="44">total</token>
+  <token number="44" sentence="2" t_id="45">purchase</token>
+  <token number="45" sentence="2" t_id="46">price</token>
+  <token number="46" sentence="2" t_id="47">,</token>
+  <token number="47" sentence="2" t_id="48">$</token>
+  <token number="48" sentence="2" t_id="49">50</token>
+  <token number="49" sentence="2" t_id="50">million</token>
+  <token number="50" sentence="2" t_id="51">cash</token>
+  <token number="51" sentence="2" t_id="52">and</token>
+  <token number="52" sentence="2" t_id="53">$</token>
+  <token number="53" sentence="2" t_id="54">30</token>
+  <token number="54" sentence="2" t_id="55">million</token>
+  <token number="55" sentence="2" t_id="56">in</token>
+  <token number="56" sentence="2" t_id="57">stock</token>
+  <token number="57" sentence="2" t_id="58">(</token>
+  <token number="58" sentence="2" t_id="59">nearly</token>
+  <token number="59" sentence="2" t_id="60">1.8</token>
+  <token number="60" sentence="2" t_id="61">million</token>
+  <token number="61" sentence="2" t_id="62">shares</token>
+  <token number="62" sentence="2" t_id="63">)</token>
+  <token number="63" sentence="2" t_id="64">would</token>
+  <token number="64" sentence="2" t_id="65">be</token>
+  <token number="65" sentence="2" t_id="66">paid</token>
+  <token number="66" sentence="2" t_id="67">to</token>
+  <token number="67" sentence="2" t_id="68">buy</token>
+  <token number="68" sentence="2" t_id="69">the</token>
+  <token number="69" sentence="2" t_id="70">existing</token>
+  <token number="70" sentence="2" t_id="71">700-room</token>
+  <token number="71" sentence="2" t_id="72">Marina</token>
+  <token number="72" sentence="2" t_id="73">Hotel</token>
+  <token number="73" sentence="2" t_id="74">amp</token>
+  <token number="74" sentence="2" t_id="75">Casino</token>
+  <token number="75" sentence="2" t_id="76">from</token>
+  <token number="76" sentence="2" t_id="77">Southwest</token>
+  <token number="77" sentence="2" t_id="78">Securities</token>
+  <token number="78" sentence="2" t_id="79">,</token>
+  <token number="79" sentence="2" t_id="80">a</token>
+  <token number="80" sentence="2" t_id="81">Nevada</token>
+  <token number="81" sentence="2" t_id="82">limited</token>
+  <token number="82" sentence="2" t_id="83">partnership</token>
+  <token number="83" sentence="2" t_id="84">.</token>
+  <token number="84" sentence="3" t_id="85">The</token>
+  <token number="85" sentence="3" t_id="86">remaining</token>
+  <token number="86" sentence="3" t_id="87">properties</token>
+  <token number="87" sentence="3" t_id="88">to</token>
+  <token number="88" sentence="3" t_id="89">be</token>
+  <token number="89" sentence="3" t_id="90">acquired</token>
+  <token number="90" sentence="3" t_id="91">are</token>
+  <token number="91" sentence="3" t_id="92">the</token>
+  <token number="92" sentence="3" t_id="93">Tropicana</token>
+  <token number="93" sentence="3" t_id="94">Country</token>
+  <token number="94" sentence="3" t_id="95">Club</token>
+  <token number="95" sentence="3" t_id="96">amp</token>
+  <token number="96" sentence="3" t_id="97">Golf</token>
+  <token number="97" sentence="3" t_id="98">Course</token>
+  <token number="98" sentence="3" t_id="99">,</token>
+  <token number="99" sentence="3" t_id="100">a</token>
+  <token number="100" sentence="3" t_id="101">facility</token>
+  <token number="101" sentence="3" t_id="102">jointly</token>
+  <token number="102" sentence="3" t_id="103">owned</token>
+  <token number="103" sentence="3" t_id="104">by</token>
+  <token number="104" sentence="3" t_id="105">Ramada</token>
+  <token number="105" sentence="3" t_id="106">Inc.</token>
+  <token number="106" sentence="3" t_id="107">,</token>
+  <token number="107" sentence="3" t_id="108">of</token>
+  <token number="108" sentence="3" t_id="109">Phoenix</token>
+  <token number="109" sentence="3" t_id="110">,</token>
+  <token number="110" sentence="3" t_id="111">Ariz.</token>
+  <token number="111" sentence="3" t_id="112">,</token>
+  <token number="112" sentence="3" t_id="113">and</token>
+  <token number="113" sentence="3" t_id="114">the</token>
+  <token number="114" sentence="3" t_id="115">Jaffe</token>
+  <token number="115" sentence="3" t_id="116">family</token>
+  <token number="116" sentence="3" t_id="117">,</token>
+  <token number="117" sentence="3" t_id="118">and</token>
+  <token number="118" sentence="3" t_id="119">a</token>
+  <token number="119" sentence="3" t_id="120">small</token>
+  <token number="120" sentence="3" t_id="121">parcel</token>
+  <token number="121" sentence="3" t_id="122">owned</token>
+  <token number="122" sentence="3" t_id="123">by</token>
+  <token number="123" sentence="3" t_id="124">MGM</token>
+  <token number="124" sentence="3" t_id="125">Grand</token>
+  <token number="125" sentence="3" t_id="126">director</token>
+  <token number="126" sentence="3" t_id="127">James</token>
+  <token number="127" sentence="3" t_id="128">D.</token>
+  <token number="128" sentence="3" t_id="129">Aljian</token>
+  <token number="129" sentence="3" t_id="130">.</token>
+  <token number="130" sentence="4" t_id="131">The</token>
+  <token number="131" sentence="4" t_id="132">purchase</token>
+  <token number="132" sentence="4" t_id="133">price</token>
+  <token number="133" sentence="4" t_id="134">was</token>
+  <token number="134" sentence="4" t_id="135">disclosed</token>
+  <token number="135" sentence="4" t_id="136">in</token>
+  <token number="136" sentence="4" t_id="137">a</token>
+  <token number="137" sentence="4" t_id="138">preliminary</token>
+  <token number="138" sentence="4" t_id="139">prospectus</token>
+  <token number="139" sentence="4" t_id="140">issued</token>
+  <token number="140" sentence="4" t_id="141">in</token>
+  <token number="141" sentence="4" t_id="142">connection</token>
+  <token number="142" sentence="4" t_id="143">with</token>
+  <token number="143" sentence="4" t_id="144">MGM</token>
+  <token number="144" sentence="4" t_id="145">Grand</token>
+  <token number="145" sentence="4" t_id="146">'s</token>
+  <token number="146" sentence="4" t_id="147">planned</token>
+  <token number="147" sentence="4" t_id="148">offering</token>
+  <token number="148" sentence="4" t_id="149">of</token>
+  <token number="149" sentence="4" t_id="150">six</token>
+  <token number="150" sentence="4" t_id="151">million</token>
+  <token number="151" sentence="4" t_id="152">common</token>
+  <token number="152" sentence="4" t_id="153">shares</token>
+  <token number="153" sentence="4" t_id="154">.</token>
+  <token number="154" sentence="5" t_id="155">The</token>
+  <token number="155" sentence="5" t_id="156">luxury</token>
+  <token number="156" sentence="5" t_id="157">airline</token>
+  <token number="157" sentence="5" t_id="158">and</token>
+  <token number="158" sentence="5" t_id="159">casino</token>
+  <token number="159" sentence="5" t_id="160">company</token>
+  <token number="160" sentence="5" t_id="161">,</token>
+  <token number="161" sentence="5" t_id="162">98.6</token>
+  <token number="162" sentence="5" t_id="163">%</token>
+  <token number="163" sentence="5" t_id="164">-</token>
+  <token number="164" sentence="5" t_id="165">owned</token>
+  <token number="165" sentence="5" t_id="166">by</token>
+  <token number="166" sentence="5" t_id="167">investor</token>
+  <token number="167" sentence="5" t_id="168">Kirk</token>
+  <token number="168" sentence="5" t_id="169">Kerkorian</token>
+  <token number="169" sentence="5" t_id="170">and</token>
+  <token number="170" sentence="5" t_id="171">his</token>
+  <token number="171" sentence="5" t_id="172">Tracinda</token>
+  <token number="172" sentence="5" t_id="173">Corp.</token>
+  <token number="173" sentence="5" t_id="174">,</token>
+  <token number="174" sentence="5" t_id="175">earlier</token>
+  <token number="175" sentence="5" t_id="176">this</token>
+  <token number="176" sentence="5" t_id="177">month</token>
+  <token number="177" sentence="5" t_id="178">announced</token>
+  <token number="178" sentence="5" t_id="179">its</token>
+  <token number="179" sentence="5" t_id="180">agreements</token>
+  <token number="180" sentence="5" t_id="181">to</token>
+  <token number="181" sentence="5" t_id="182">acquire</token>
+  <token number="182" sentence="5" t_id="183">the</token>
+  <token number="183" sentence="5" t_id="184">properties</token>
+  <token number="184" sentence="5" t_id="185">,</token>
+  <token number="185" sentence="5" t_id="186">but</token>
+  <token number="186" sentence="5" t_id="187">did</token>
+  <token number="187" sentence="5" t_id="188">n't</token>
+  <token number="188" sentence="5" t_id="189">disclose</token>
+  <token number="189" sentence="5" t_id="190">the</token>
+  <token number="190" sentence="5" t_id="191">purchase</token>
+  <token number="191" sentence="5" t_id="192">price</token>
+  <token number="192" sentence="5" t_id="193">.</token>
+  <token number="193" sentence="6" t_id="194">The</token>
+  <token number="194" sentence="6" t_id="195">proposed</token>
+  <token number="195" sentence="6" t_id="196">stock</token>
+  <token number="196" sentence="6" t_id="197">offering</token>
+  <token number="197" sentence="6" t_id="198">and</token>
+  <token number="198" sentence="6" t_id="199">issuance</token>
+  <token number="199" sentence="6" t_id="200">of</token>
+  <token number="200" sentence="6" t_id="201">nearly</token>
+  <token number="201" sentence="6" t_id="202">1.8</token>
+  <token number="202" sentence="6" t_id="203">million</token>
+  <token number="203" sentence="6" t_id="204">common</token>
+  <token number="204" sentence="6" t_id="205">shares</token>
+  <token number="205" sentence="6" t_id="206">in</token>
+  <token number="206" sentence="6" t_id="207">connection</token>
+  <token number="207" sentence="6" t_id="208">with</token>
+  <token number="208" sentence="6" t_id="209">the</token>
+  <token number="209" sentence="6" t_id="210">land</token>
+  <token number="210" sentence="6" t_id="211">purchase</token>
+  <token number="211" sentence="6" t_id="212">will</token>
+  <token number="212" sentence="6" t_id="213">bring</token>
+  <token number="213" sentence="6" t_id="214">MGM</token>
+  <token number="214" sentence="6" t_id="215">Grand</token>
+  <token number="215" sentence="6" t_id="216">'s</token>
+  <token number="216" sentence="6" t_id="217">total</token>
+  <token number="217" sentence="6" t_id="218">shares</token>
+  <token number="218" sentence="6" t_id="219">outstanding</token>
+  <token number="219" sentence="6" t_id="220">to</token>
+  <token number="220" sentence="6" t_id="221">28.7</token>
+  <token number="221" sentence="6" t_id="222">million</token>
+  <token number="222" sentence="6" t_id="223">,</token>
+  <token number="223" sentence="6" t_id="224">of</token>
+  <token number="224" sentence="6" t_id="225">which</token>
+  <token number="225" sentence="6" t_id="226">72</token>
+  <token number="226" sentence="6" t_id="227">%</token>
+  <token number="227" sentence="6" t_id="228">will</token>
+  <token number="228" sentence="6" t_id="229">be</token>
+  <token number="229" sentence="6" t_id="230">owned</token>
+  <token number="230" sentence="6" t_id="231">by</token>
+  <token number="231" sentence="6" t_id="232">Mr.</token>
+  <token number="232" sentence="6" t_id="233">Kerkorian</token>
+  <token number="233" sentence="6" t_id="234">and</token>
+  <token number="234" sentence="6" t_id="235">Tracinda</token>
+  <token number="235" sentence="6" t_id="236">,</token>
+  <token number="236" sentence="6" t_id="237">according</token>
+  <token number="237" sentence="6" t_id="238">to</token>
+  <token number="238" sentence="6" t_id="239">the</token>
+  <token number="239" sentence="6" t_id="240">prospectus</token>
+  <token number="240" sentence="6" t_id="241">.</token>
+  <token number="241" sentence="7" t_id="242">In</token>
+  <token number="242" sentence="7" t_id="243">over-the-counter</token>
+  <token number="243" sentence="7" t_id="244">trading</token>
+  <token number="244" sentence="7" t_id="245">,</token>
+  <token number="245" sentence="7" t_id="246">MGM</token>
+  <token number="246" sentence="7" t_id="247">Grand</token>
+  <token number="247" sentence="7" t_id="248">was</token>
+  <token number="248" sentence="7" t_id="249">bid</token>
+  <token number="249" sentence="7" t_id="250">at</token>
+  <token number="250" sentence="7" t_id="251">$</token>
+  <token number="251" sentence="7" t_id="252">17.50</token>
+  <token number="252" sentence="7" t_id="253">a</token>
+  <token number="253" sentence="7" t_id="254">share</token>
+  <token number="254" sentence="7" t_id="255">.</token>
+  <token number="255" sentence="8" t_id="256">Proceeds</token>
+  <token number="256" sentence="8" t_id="257">from</token>
+  <token number="257" sentence="8" t_id="258">the</token>
+  <token number="258" sentence="8" t_id="259">offering</token>
+  <token number="259" sentence="8" t_id="260">are</token>
+  <token number="260" sentence="8" t_id="261">expected</token>
+  <token number="261" sentence="8" t_id="262">to</token>
+  <token number="262" sentence="8" t_id="263">be</token>
+  <token number="263" sentence="8" t_id="264">used</token>
+  <token number="264" sentence="8" t_id="265">for</token>
+  <token number="265" sentence="8" t_id="266">remodeling</token>
+  <token number="266" sentence="8" t_id="267">the</token>
+  <token number="267" sentence="8" t_id="268">company</token>
+  <token number="268" sentence="8" t_id="269">'s</token>
+  <token number="269" sentence="8" t_id="270">Desert</token>
+  <token number="270" sentence="8" t_id="271">Inn</token>
+  <token number="271" sentence="8" t_id="272">resort</token>
+  <token number="272" sentence="8" t_id="273">in</token>
+  <token number="273" sentence="8" t_id="274">Las</token>
+  <token number="274" sentence="8" t_id="275">Vegas</token>
+  <token number="275" sentence="8" t_id="276">,</token>
+  <token number="276" sentence="8" t_id="277">refurbishing</token>
+  <token number="277" sentence="8" t_id="278">certain</token>
+  <token number="278" sentence="8" t_id="279">aircraft</token>
+  <token number="279" sentence="8" t_id="280">of</token>
+  <token number="280" sentence="8" t_id="281">the</token>
+  <token number="281" sentence="8" t_id="282">MGM</token>
+  <token number="282" sentence="8" t_id="283">Grand</token>
+  <token number="283" sentence="8" t_id="284">Air</token>
+  <token number="284" sentence="8" t_id="285">unit</token>
+  <token number="285" sentence="8" t_id="286">,</token>
+  <token number="286" sentence="8" t_id="287">and</token>
+  <token number="287" sentence="8" t_id="288">to</token>
+  <token number="288" sentence="8" t_id="289">acquire</token>
+  <token number="289" sentence="8" t_id="290">the</token>
+  <token number="290" sentence="8" t_id="291">property</token>
+  <token number="291" sentence="8" t_id="292">for</token>
+  <token number="292" sentence="8" t_id="293">the</token>
+  <token number="293" sentence="8" t_id="294">new</token>
+  <token number="294" sentence="8" t_id="295">resort</token>
+  <token number="295" sentence="8" t_id="296">.</token>
+  <token number="296" sentence="9" t_id="297">The</token>
+  <token number="297" sentence="9" t_id="298">company</token>
+  <token number="298" sentence="9" t_id="299">said</token>
+  <token number="299" sentence="9" t_id="300">it</token>
+  <token number="300" sentence="9" t_id="301">estimates</token>
+  <token number="301" sentence="9" t_id="302">the</token>
+  <token number="302" sentence="9" t_id="303">Desert</token>
+  <token number="303" sentence="9" t_id="304">Inn</token>
+  <token number="304" sentence="9" t_id="305">remodeling</token>
+  <token number="305" sentence="9" t_id="306">will</token>
+  <token number="306" sentence="9" t_id="307">cost</token>
+  <token number="307" sentence="9" t_id="308">about</token>
+  <token number="308" sentence="9" t_id="309">$</token>
+  <token number="309" sentence="9" t_id="310">32</token>
+  <token number="310" sentence="9" t_id="311">million</token>
+  <token number="311" sentence="9" t_id="312">,</token>
+  <token number="312" sentence="9" t_id="313">and</token>
+  <token number="313" sentence="9" t_id="314">the</token>
+  <token number="314" sentence="9" t_id="315">refurbishment</token>
+  <token number="315" sentence="9" t_id="316">of</token>
+  <token number="316" sentence="9" t_id="317">the</token>
+  <token number="317" sentence="9" t_id="318">three</token>
+  <token number="318" sentence="9" t_id="319">DC-8-62</token>
+  <token number="319" sentence="9" t_id="320">aircraft</token>
+  <token number="320" sentence="9" t_id="321">,</token>
+  <token number="321" sentence="9" t_id="322">made</token>
+  <token number="322" sentence="9" t_id="323">by</token>
+  <token number="323" sentence="9" t_id="324">McDonnell</token>
+  <token number="324" sentence="9" t_id="325">Douglas</token>
+  <token number="325" sentence="9" t_id="326">Corp.</token>
+  <token number="326" sentence="9" t_id="327">,</token>
+  <token number="327" sentence="9" t_id="328">will</token>
+  <token number="328" sentence="9" t_id="329">cost</token>
+  <token number="329" sentence="9" t_id="330">around</token>
+  <token number="330" sentence="9" t_id="331">$</token>
+  <token number="331" sentence="9" t_id="332">24.5</token>
+  <token number="332" sentence="9" t_id="333">million</token>
+  <token number="333" sentence="9" t_id="334">.</token>
+  <token number="334" sentence="10" t_id="335">MGM</token>
+  <token number="335" sentence="10" t_id="336">Grand</token>
+  <token number="336" sentence="10" t_id="337">said</token>
+  <token number="337" sentence="10" t_id="338">the</token>
+  <token number="338" sentence="10" t_id="339">latest</token>
+  <token number="339" sentence="10" t_id="340">stock</token>
+  <token number="340" sentence="10" t_id="341">offering</token>
+  <token number="341" sentence="10" t_id="342">wo</token>
+  <token number="342" sentence="10" t_id="343">n't</token>
+  <token number="343" sentence="10" t_id="344">cover</token>
+  <token number="344" sentence="10" t_id="345">the</token>
+  <token number="345" sentence="10" t_id="346">$</token>
+  <token number="346" sentence="10" t_id="347">600</token>
+  <token number="347" sentence="10" t_id="348">million</token>
+  <token number="348" sentence="10" t_id="349">or</token>
+  <token number="349" sentence="10" t_id="350">more</token>
+  <token number="350" sentence="10" t_id="351">cost</token>
+  <token number="351" sentence="10" t_id="352">of</token>
+  <token number="352" sentence="10" t_id="353">building</token>
+  <token number="353" sentence="10" t_id="354">the</token>
+  <token number="354" sentence="10" t_id="355">proposed</token>
+  <token number="355" sentence="10" t_id="356">resort</token>
+  <token number="356" sentence="10" t_id="357">and</token>
+  <token number="357" sentence="10" t_id="358">theme</token>
+  <token number="358" sentence="10" t_id="359">park</token>
+  <token number="359" sentence="10" t_id="360">,</token>
+  <token number="360" sentence="10" t_id="361">and</token>
+  <token number="361" sentence="10" t_id="362">added</token>
+  <token number="362" sentence="10" t_id="363">it</token>
+  <token number="363" sentence="10" t_id="364">will</token>
+  <token number="364" sentence="10" t_id="365">need</token>
+  <token number="365" sentence="10" t_id="366">to</token>
+  <token number="366" sentence="10" t_id="367">seek</token>
+  <token number="367" sentence="10" t_id="368">additional</token>
+  <token number="368" sentence="10" t_id="369">financing</token>
+  <token number="369" sentence="10" t_id="370">,</token>
+  <token number="370" sentence="10" t_id="371">either</token>
+  <token number="371" sentence="10" t_id="372">through</token>
+  <token number="372" sentence="10" t_id="373">bank</token>
+  <token number="373" sentence="10" t_id="374">borrowings</token>
+  <token number="374" sentence="10" t_id="375">or</token>
+  <token number="375" sentence="10" t_id="376">debt</token>
+  <token number="376" sentence="10" t_id="377">and</token>
+  <token number="377" sentence="10" t_id="378">equity</token>
+  <token number="378" sentence="10" t_id="379">offerings</token>
+  <token number="379" sentence="10" t_id="380">,</token>
+  <token number="380" sentence="10" t_id="381">at</token>
+  <token number="381" sentence="10" t_id="382">a</token>
+  <token number="382" sentence="10" t_id="383">later</token>
+  <token number="383" sentence="10" t_id="384">date</token>
+  <token number="384" sentence="10" t_id="385">.</token>
+  <token number="385" sentence="11" t_id="386">Construction</token>
+  <token number="386" sentence="11" t_id="387">is</token>
+  <token number="387" sentence="11" t_id="388">set</token>
+  <token number="388" sentence="11" t_id="389">to</token>
+  <token number="389" sentence="11" t_id="390">begin</token>
+  <token number="390" sentence="11" t_id="391">in</token>
+  <token number="391" sentence="11" t_id="392">early</token>
+  <token number="392" sentence="11" t_id="393">1991</token>
+  <token number="393" sentence="11" t_id="394">.</token>
+  <token number="394" sentence="12" t_id="395">The</token>
+  <token number="395" sentence="12" t_id="396">resort</token>
+  <token number="396" sentence="12" t_id="397">will</token>
+  <token number="397" sentence="12" t_id="398">include</token>
+  <token number="398" sentence="12" t_id="399">the</token>
+  <token number="399" sentence="12" t_id="400">MGM</token>
+  <token number="400" sentence="12" t_id="401">Grand</token>
+  <token number="401" sentence="12" t_id="402">Hotel</token>
+  <token number="402" sentence="12" t_id="403">,</token>
+  <token number="403" sentence="12" t_id="404">a</token>
+  <token number="404" sentence="12" t_id="405">multi-spired</token>
+  <token number="405" sentence="12" t_id="406">,</token>
+  <token number="406" sentence="12" t_id="407">castle-like</token>
+  <token number="407" sentence="12" t_id="408">facility</token>
+  <token number="408" sentence="12" t_id="409">that</token>
+  <token number="409" sentence="12" t_id="410">will</token>
+  <token number="410" sentence="12" t_id="411">include</token>
+  <token number="411" sentence="12" t_id="412">5,000</token>
+  <token number="412" sentence="12" t_id="413">rooms</token>
+  <token number="413" sentence="12" t_id="414">and</token>
+  <token number="414" sentence="12" t_id="415">85,000</token>
+  <token number="415" sentence="12" t_id="416">square</token>
+  <token number="416" sentence="12" t_id="417">feet</token>
+  <token number="417" sentence="12" t_id="418">of</token>
+  <token number="418" sentence="12" t_id="419">casino</token>
+  <token number="419" sentence="12" t_id="420">space</token>
+  <token number="420" sentence="12" t_id="421">.</token>
+  <token number="421" sentence="13" t_id="422">The</token>
+  <token number="422" sentence="13" t_id="423">facility</token>
+  <token number="423" sentence="13" t_id="424">will</token>
+  <token number="424" sentence="13" t_id="425">be</token>
+  <token number="425" sentence="13" t_id="426">marketed</token>
+  <token number="426" sentence="13" t_id="427">toward</token>
+  <token number="427" sentence="13" t_id="428">families</token>
+  <token number="428" sentence="13" t_id="429">,</token>
+  <token number="429" sentence="13" t_id="430">and</token>
+  <token number="430" sentence="13" t_id="431">room</token>
+  <token number="431" sentence="13" t_id="432">rates</token>
+  <token number="432" sentence="13" t_id="433">will</token>
+  <token number="433" sentence="13" t_id="434">be</token>
+  <token number="434" sentence="13" t_id="435">between</token>
+  <token number="435" sentence="13" t_id="436">$</token>
+  <token number="436" sentence="13" t_id="437">35</token>
+  <token number="437" sentence="13" t_id="438">and</token>
+  <token number="438" sentence="13" t_id="439">$</token>
+  <token number="439" sentence="13" t_id="440">55</token>
+  <token number="440" sentence="13" t_id="441">a</token>
+  <token number="441" sentence="13" t_id="442">night</token>
+  <token number="442" sentence="13" t_id="443">,</token>
+  <token number="443" sentence="13" t_id="444">MGM</token>
+  <token number="444" sentence="13" t_id="445">Grand</token>
+  <token number="445" sentence="13" t_id="446">said</token>
+  <token number="446" sentence="13" t_id="447">.</token>
+  <token number="447" sentence="14" t_id="448">The</token>
+  <token number="448" sentence="14" t_id="449">prospectus</token>
+  <token number="449" sentence="14" t_id="450">did</token>
+  <token number="450" sentence="14" t_id="451">n't</token>
+  <token number="451" sentence="14" t_id="452">include</token>
+  <token number="452" sentence="14" t_id="453">many</token>
+  <token number="453" sentence="14" t_id="454">details</token>
+  <token number="454" sentence="14" t_id="455">about</token>
+  <token number="455" sentence="14" t_id="456">the</token>
+  <token number="456" sentence="14" t_id="457">studio</token>
+  <token number="457" sentence="14" t_id="458">and</token>
+  <token number="458" sentence="14" t_id="459">theme</token>
+  <token number="459" sentence="14" t_id="460">park</token>
+  <token number="460" sentence="14" t_id="461">,</token>
+  <token number="461" sentence="14" t_id="462">although</token>
+  <token number="462" sentence="14" t_id="463">conceptual</token>
+  <token number="463" sentence="14" t_id="464">drawings</token>
+  <token number="464" sentence="14" t_id="465">,</token>
+  <token number="465" sentence="14" t_id="466">released</token>
+  <token number="466" sentence="14" t_id="467">this</token>
+  <token number="467" sentence="14" t_id="468">month</token>
+  <token number="468" sentence="14" t_id="469">,</token>
+  <token number="469" sentence="14" t_id="470">show</token>
+  <token number="470" sentence="14" t_id="471">that</token>
+  <token number="471" sentence="14" t_id="472">it</token>
+  <token number="472" sentence="14" t_id="473">may</token>
+  <token number="473" sentence="14" t_id="474">feature</token>
+  <token number="474" sentence="14" t_id="475">several</token>
+  <token number="475" sentence="14" t_id="476">``</token>
+  <token number="476" sentence="14" t_id="477">themed</token>
+  <token number="477" sentence="14" t_id="478">''</token>
+  <token number="478" sentence="14" t_id="479">areas</token>
+  <token number="479" sentence="14" t_id="480">similar</token>
+  <token number="480" sentence="14" t_id="481">to</token>
+  <token number="481" sentence="14" t_id="482">those</token>
+  <token number="482" sentence="14" t_id="483">found</token>
+  <token number="483" sentence="14" t_id="484">at</token>
+  <token number="484" sentence="14" t_id="485">parks</token>
+  <token number="485" sentence="14" t_id="486">built</token>
+  <token number="486" sentence="14" t_id="487">by</token>
+  <token number="487" sentence="14" t_id="488">Walt</token>
+  <token number="488" sentence="14" t_id="489">Disney</token>
+  <token number="489" sentence="14" t_id="490">Co.</token>
+  <token number="490" sentence="14" t_id="491">.</token>
+</Document>

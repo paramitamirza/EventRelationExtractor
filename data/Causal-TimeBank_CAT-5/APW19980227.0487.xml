@@ -1,0 +1,1215 @@
+<Document doc_name="APW19980227.0487.tml">
+  <Markables>
+    <TIMEX3 m_id="1" type="TIME" value="1998-02-27T08:09:00" />
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="2" polarity="pos" pred="take" tense="PRESPART">
+      <token_anchor t_id="6" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="3" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="21" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="4" type="DATE" value="1998-02-27">
+      <token_anchor t_id="22" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="5" polarity="pos" pred="regret" tense="PAST">
+      <token_anchor t_id="25" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="6" polarity="pos" pred="call" tense="PRESPART">
+      <token_anchor t_id="26" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="7" polarity="pos" pred="pray" tense="PRESPART">
+      <token_anchor t_id="33" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="8" pred="death">
+      <token_anchor t_id="36" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="PERFECTIVE" class="I_ACTION" m_id="9" polarity="pos" pred="plead" tense="PRESENT">
+      <token_anchor t_id="44" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_ACTION" m_id="10" pred="charge">
+      <token_anchor t_id="47" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="11" polarity="pos" pred="fail" tense="PAST">
+      <token_anchor t_id="50" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="12" polarity="pos" pred="report" tense="INFINITIVE">
+      <token_anchor t_id="52" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_STATE" m_id="13" pred="plan">
+      <token_anchor t_id="56" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="14" polarity="pos" pred="kill" tense="INFINITIVE">
+      <token_anchor t_id="58" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="15" polarity="pos" pred="take" tense="PAST">
+      <token_anchor t_id="62" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="16" type="DURATION" value="PT4H">
+      <token_anchor t_id="66" />
+      <token_anchor t_id="67" />
+      <token_anchor t_id="68" />
+      <token_anchor t_id="69" />
+    </TIMEX3>
+    <TIMEX3 m_id="17" type="DATE" value="1998-02-27">
+      <token_anchor t_id="70" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="PROGRESSIVE" class="STATE" m_id="18" polarity="pos" pred="serve" tense="PRESENT">
+      <token_anchor t_id="84" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="19" type="DATE" value="1995-11">
+      <token_anchor t_id="90" />
+      <token_anchor t_id="91" />
+    </TIMEX3>
+    <EVENT_MENTION class="OCCURRENCE" m_id="20" pred="assassination">
+      <token_anchor t_id="92" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="21" pred="rally">
+      <token_anchor t_id="100" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="PERFECTIVE" class="REPORTING" m_id="22" polarity="pos" pred="say" tense="PRESENT">
+      <token_anchor t_id="105" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="23" polarity="pos" pred="infatuate" tense="PAST">
+      <token_anchor t_id="108" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="24" polarity="pos" pred="try" tense="PRESPART">
+      <token_anchor t_id="115" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="25" polarity="pos" pred="impress" tense="INFINITIVE">
+      <token_anchor t_id="117" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="26" polarity="pos" pred="kill" tense="PRESPART">
+      <token_anchor t_id="120" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="27" polarity="pos" pred="acknowledge" tense="PAST">
+      <token_anchor t_id="126" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="28" polarity="pos" pred="tell" tense="PAST">
+      <token_anchor t_id="128" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="STATE" m_id="29" pred="traitor">
+      <token_anchor t_id="135" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="30" polarity="pos" pred="pray" tense="PAST">
+      <token_anchor t_id="139" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="31" pred="die">
+      <token_anchor t_id="148" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="32" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="151" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="33" pred="murder">
+      <token_anchor t_id="154" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="34" polarity="pos" pred="report" tense="PAST">
+      <token_anchor t_id="170" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="35" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="173" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="PERCEPTION" m_id="36" polarity="pos" pred="hear" tense="PAST">
+      <token_anchor t_id="175" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="37" polarity="pos" pred="talk" tense="PRESENT">
+      <token_anchor t_id="177" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="38" pred="kill">
+      <token_anchor t_id="179" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="REPORTING" m_id="39" pred="tell">
+      <token_anchor t_id="184" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_STATE" m_id="40" pred="believe">
+      <token_anchor t_id="191" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="STATE" m_id="41" pred="serious">
+      <token_anchor t_id="194" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="42" polarity="pos" pred="turn" tense="PAST">
+      <token_anchor t_id="199" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="43" polarity="pos" pred="tell" tense="PAST">
+      <token_anchor t_id="214" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="44" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="223" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="45" polarity="pos" pred="call" tense="PASTPART">
+      <token_anchor t_id="224" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="OCCURRENCE" m_id="46" pred="talk">
+      <token_anchor t_id="226" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="47" polarity="pos" pred="kill" tense="PRESPART">
+      <token_anchor t_id="228" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="48" polarity="neg" pred="say" tense="PAST">
+      <token_anchor t_id="235" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_STATE" m_id="49" polarity="pos" pred="prohibit" tense="PRESENT">
+      <token_anchor t_id="238" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="50" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="247" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="51" polarity="pos" pred="describe" tense="PAST">
+      <token_anchor t_id="250" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="52" polarity="pos" pred="deny" tense="PAST">
+      <token_anchor t_id="269" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="I_ACTION" m_id="53" pred="accusation">
+      <token_anchor t_id="270" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="54" polarity="pos" pred="make" tense="PASTPART">
+      <token_anchor t_id="271" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="55" polarity="pos" pred="join" tense="PAST">
+      <token_anchor t_id="281" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="56" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="288" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="57" polarity="pos" pred="give" tense="PAST">
+      <token_anchor t_id="290" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="58" polarity="pos" pred="ask" tense="PAST">
+      <token_anchor t_id="307" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="I_ACTION" m_id="59" polarity="pos" pred="help" tense="PRESENT">
+      <token_anchor t_id="310" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="60" polarity="pos" pred="organize" tense="PRESENT">
+      <token_anchor t_id="311" />
+    </EVENT_MENTION>
+  </Markables>
+  <Relations>
+    <TLINK r_id="61" reltype="INCLUDES">
+      <source m_id="2" />
+      <target m_id="3" />
+    </TLINK>
+    <TLINK r_id="62" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="63" reltype="IS_INCLUDED">
+      <source m_id="3" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="64" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="5" />
+    </TLINK>
+    <TLINK r_id="65" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="66" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="7" />
+    </TLINK>
+    <TLINK r_id="67" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="68" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="69" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="70" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="7" />
+    </TLINK>
+    <TLINK r_id="71" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="72" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="73" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="74" reltype="NONE">
+      <source m_id="6" />
+      <target m_id="7" />
+    </TLINK>
+    <TLINK r_id="75" reltype="NONE">
+      <source m_id="6" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="76" reltype="NONE">
+      <source m_id="6" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="77" reltype="NONE">
+      <source m_id="7" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="78" reltype="NONE">
+      <source m_id="7" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="79" reltype="NONE">
+      <source m_id="8" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="80" reltype="IS_INCLUDED">
+      <source m_id="9" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="81" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="10" />
+    </TLINK>
+    <TLINK r_id="82" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="11" />
+    </TLINK>
+    <TLINK r_id="83" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="12" />
+    </TLINK>
+    <TLINK r_id="84" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="85" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="86" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="87" reltype="NONE">
+      <source m_id="9" />
+      <target m_id="3" />
+    </TLINK>
+    <TLINK r_id="88" reltype="IS_INCLUDED">
+      <source m_id="10" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="89" reltype="NONE">
+      <source m_id="10" />
+      <target m_id="11" />
+    </TLINK>
+    <TLINK r_id="90" reltype="NONE">
+      <source m_id="10" />
+      <target m_id="12" />
+    </TLINK>
+    <TLINK r_id="91" reltype="NONE">
+      <source m_id="10" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="92" reltype="NONE">
+      <source m_id="10" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="93" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="12" />
+    </TLINK>
+    <TLINK r_id="94" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="95" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="96" reltype="NONE">
+      <source m_id="11" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="97" reltype="NONE">
+      <source m_id="12" />
+      <target m_id="13" />
+    </TLINK>
+    <TLINK r_id="98" reltype="NONE">
+      <source m_id="12" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="99" reltype="NONE">
+      <source m_id="13" />
+      <target m_id="14" />
+    </TLINK>
+    <TLINK r_id="100" reltype="IS_INCLUDED">
+      <source m_id="15" />
+      <target m_id="16" />
+    </TLINK>
+    <TLINK r_id="101" reltype="IS_INCLUDED">
+      <source m_id="15" />
+      <target m_id="17" />
+    </TLINK>
+    <TLINK r_id="102" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="103" reltype="NONE">
+      <source m_id="15" />
+      <target m_id="9" />
+    </TLINK>
+    <TLINK r_id="104" reltype="INCLUDES">
+      <source m_id="18" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="105" reltype="NONE">
+      <source m_id="18" />
+      <target m_id="21" />
+    </TLINK>
+    <TLINK r_id="106" reltype="NONE">
+      <source m_id="18" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="107" reltype="NONE">
+      <source m_id="18" />
+      <target m_id="15" />
+    </TLINK>
+    <TLINK r_id="108" reltype="IS_INCLUDED">
+      <source m_id="20" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="109" reltype="BEFORE">
+      <source m_id="20" />
+      <target m_id="18" />
+    </TLINK>
+    <TLINK r_id="110" reltype="INCLUDES">
+      <source m_id="21" />
+      <target m_id="20" />
+    </TLINK>
+    <TLINK r_id="111" reltype="NONE">
+      <source m_id="21" />
+      <target m_id="19" />
+    </TLINK>
+    <TLINK r_id="112" reltype="BEFORE">
+      <source m_id="22" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="113" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="23" />
+    </TLINK>
+    <TLINK r_id="114" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="24" />
+    </TLINK>
+    <TLINK r_id="115" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="116" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="117" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="118" reltype="NONE">
+      <source m_id="22" />
+      <target m_id="18" />
+    </TLINK>
+    <TLINK r_id="119" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="24" />
+    </TLINK>
+    <TLINK r_id="120" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="121" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="122" reltype="NONE">
+      <source m_id="23" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="123" reltype="NONE">
+      <source m_id="24" />
+      <target m_id="25" />
+    </TLINK>
+    <TLINK r_id="124" reltype="NONE">
+      <source m_id="24" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="125" reltype="AFTER">
+      <source m_id="25" />
+      <target m_id="26" />
+    </TLINK>
+    <TLINK r_id="126" reltype="IS_INCLUDED">
+      <source m_id="27" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="127" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="28" />
+    </TLINK>
+    <TLINK r_id="128" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="29" />
+    </TLINK>
+    <TLINK r_id="129" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="130" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="131" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="132" reltype="NONE">
+      <source m_id="27" />
+      <target m_id="22" />
+    </TLINK>
+    <TLINK r_id="133" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="29" />
+    </TLINK>
+    <TLINK r_id="134" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="135" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="136" reltype="NONE">
+      <source m_id="28" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="137" reltype="NONE">
+      <source m_id="29" />
+      <target m_id="30" />
+    </TLINK>
+    <TLINK r_id="138" reltype="NONE">
+      <source m_id="29" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="139" reltype="NONE">
+      <source m_id="30" />
+      <target m_id="31" />
+    </TLINK>
+    <TLINK r_id="140" reltype="NONE">
+      <source m_id="30" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="141" reltype="NONE">
+      <source m_id="31" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="142" reltype="IS_INCLUDED">
+      <source m_id="32" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="143" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="33" />
+    </TLINK>
+    <TLINK r_id="144" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="34" />
+    </TLINK>
+    <TLINK r_id="145" reltype="NONE">
+      <source m_id="32" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="146" reltype="NONE">
+      <source m_id="33" />
+      <target m_id="34" />
+    </TLINK>
+    <TLINK r_id="147" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="148" reltype="NONE">
+      <source m_id="34" />
+      <target m_id="27" />
+    </TLINK>
+    <TLINK r_id="149" reltype="IS_INCLUDED">
+      <source m_id="35" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="150" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="151" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="152" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="153" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="39" />
+    </TLINK>
+    <TLINK r_id="154" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="155" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="156" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="157" reltype="NONE">
+      <source m_id="35" />
+      <target m_id="34" />
+    </TLINK>
+    <TLINK r_id="158" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="159" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="160" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="39" />
+    </TLINK>
+    <TLINK r_id="161" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="162" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="163" reltype="NONE">
+      <source m_id="36" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="164" reltype="NONE">
+      <source m_id="37" />
+      <target m_id="38" />
+    </TLINK>
+    <TLINK r_id="165" reltype="NONE">
+      <source m_id="37" />
+      <target m_id="39" />
+    </TLINK>
+    <TLINK r_id="166" reltype="NONE">
+      <source m_id="37" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="167" reltype="NONE">
+      <source m_id="37" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="168" reltype="NONE">
+      <source m_id="38" />
+      <target m_id="39" />
+    </TLINK>
+    <TLINK r_id="169" reltype="NONE">
+      <source m_id="38" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="170" reltype="NONE">
+      <source m_id="38" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="171" reltype="NONE">
+      <source m_id="38" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="172" reltype="NONE">
+      <source m_id="39" />
+      <target m_id="40" />
+    </TLINK>
+    <TLINK r_id="173" reltype="NONE">
+      <source m_id="39" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="174" reltype="NONE">
+      <source m_id="39" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="175" reltype="NONE">
+      <source m_id="40" />
+      <target m_id="41" />
+    </TLINK>
+    <TLINK r_id="176" reltype="NONE">
+      <source m_id="40" />
+      <target m_id="1" />
+    </TLINK>
+    <CLINK r_id="177">
+      <source m_id="40" />
+      <target m_id="39" />
+    </CLINK>
+    <TLINK r_id="178" reltype="SIMULTANEOUS">
+      <source m_id="41" />
+      <target m_id="37" />
+    </TLINK>
+    <TLINK r_id="179" reltype="AFTER">
+      <source m_id="42" />
+      <target m_id="36" />
+    </TLINK>
+    <TLINK r_id="180" reltype="NONE">
+      <source m_id="42" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="181" reltype="NONE">
+      <source m_id="42" />
+      <target m_id="35" />
+    </TLINK>
+    <TLINK r_id="182" reltype="AFTER">
+      <source m_id="43" />
+      <target m_id="42" />
+    </TLINK>
+    <TLINK r_id="183" reltype="NONE">
+      <source m_id="43" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="184" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="45" />
+    </TLINK>
+    <TLINK r_id="185" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="46" />
+    </TLINK>
+    <TLINK r_id="186" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="187" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="188" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="189" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="190" reltype="NONE">
+      <source m_id="44" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="191" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="46" />
+    </TLINK>
+    <TLINK r_id="192" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="193" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="194" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="195" reltype="NONE">
+      <source m_id="45" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="196" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="47" />
+    </TLINK>
+    <TLINK r_id="197" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="198" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="199" reltype="NONE">
+      <source m_id="46" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="200" reltype="NONE">
+      <source m_id="47" />
+      <target m_id="48" />
+    </TLINK>
+    <TLINK r_id="201" reltype="NONE">
+      <source m_id="47" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="202" reltype="NONE">
+      <source m_id="47" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="203" reltype="NONE">
+      <source m_id="48" />
+      <target m_id="49" />
+    </TLINK>
+    <TLINK r_id="204" reltype="NONE">
+      <source m_id="48" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="205" reltype="NONE">
+      <source m_id="48" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="206" reltype="NONE">
+      <source m_id="49" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="207" reltype="NONE">
+      <source m_id="49" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="208" reltype="NONE">
+      <source m_id="50" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="209" reltype="NONE">
+      <source m_id="50" />
+      <target m_id="42" />
+    </TLINK>
+    <TLINK r_id="210" reltype="IS_INCLUDED">
+      <source m_id="51" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="211" reltype="NONE">
+      <source m_id="51" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="212" reltype="NONE">
+      <source m_id="51" />
+      <target m_id="50" />
+    </TLINK>
+    <TLINK r_id="213" reltype="IS_INCLUDED">
+      <source m_id="52" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="214" reltype="NONE">
+      <source m_id="52" />
+      <target m_id="53" />
+    </TLINK>
+    <TLINK r_id="215" reltype="NONE">
+      <source m_id="52" />
+      <target m_id="54" />
+    </TLINK>
+    <TLINK r_id="216" reltype="NONE">
+      <source m_id="52" />
+      <target m_id="55" />
+    </TLINK>
+    <TLINK r_id="217" reltype="NONE">
+      <source m_id="52" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="218" reltype="NONE">
+      <source m_id="52" />
+      <target m_id="51" />
+    </TLINK>
+    <TLINK r_id="219" reltype="NONE">
+      <source m_id="53" />
+      <target m_id="54" />
+    </TLINK>
+    <TLINK r_id="220" reltype="NONE">
+      <source m_id="53" />
+      <target m_id="55" />
+    </TLINK>
+    <TLINK r_id="221" reltype="NONE">
+      <source m_id="55" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="222" reltype="AFTER">
+      <source m_id="56" />
+      <target m_id="58" />
+    </TLINK>
+    <TLINK r_id="223" reltype="IS_INCLUDED">
+      <source m_id="56" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="224" reltype="NONE">
+      <source m_id="56" />
+      <target m_id="57" />
+    </TLINK>
+    <TLINK r_id="225" reltype="NONE">
+      <source m_id="56" />
+      <target m_id="59" />
+    </TLINK>
+    <TLINK r_id="226" reltype="NONE">
+      <source m_id="56" />
+      <target m_id="60" />
+    </TLINK>
+    <TLINK r_id="227" reltype="NONE">
+      <source m_id="56" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="228" reltype="NONE">
+      <source m_id="56" />
+      <target m_id="52" />
+    </TLINK>
+    <TLINK r_id="229" reltype="NONE">
+      <source m_id="57" />
+      <target m_id="58" />
+    </TLINK>
+    <TLINK r_id="230" reltype="NONE">
+      <source m_id="57" />
+      <target m_id="59" />
+    </TLINK>
+    <TLINK r_id="231" reltype="NONE">
+      <source m_id="57" />
+      <target m_id="60" />
+    </TLINK>
+    <TLINK r_id="232" reltype="NONE">
+      <source m_id="57" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="233" reltype="NONE">
+      <source m_id="58" />
+      <target m_id="59" />
+    </TLINK>
+    <TLINK r_id="234" reltype="NONE">
+      <source m_id="58" />
+      <target m_id="60" />
+    </TLINK>
+    <TLINK r_id="235" reltype="NONE">
+      <source m_id="58" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="236" reltype="NONE">
+      <source m_id="59" />
+      <target m_id="60" />
+    </TLINK>
+    <TLINK r_id="237" reltype="NONE">
+      <source m_id="59" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="238" reltype="NONE">
+      <source m_id="60" />
+      <target m_id="1" />
+    </TLINK>
+  </Relations>
+  <token number="0" sentence="1" t_id="1">JERUSALEM</token>
+  <token number="1" sentence="1" t_id="2">(</token>
+  <token number="2" sentence="1" t_id="3">AP</token>
+  <token number="3" sentence="1" t_id="4">)</token>
+  <token number="4" sentence="1" t_id="5">_</token>
+  <token number="5" sentence="1" t_id="6">Taking</token>
+  <token number="6" sentence="1" t_id="7">the</token>
+  <token number="7" sentence="1" t_id="8">stand</token>
+  <token number="8" sentence="1" t_id="9">in</token>
+  <token number="9" sentence="1" t_id="10">her</token>
+  <token number="10" sentence="1" t_id="11">own</token>
+  <token number="11" sentence="1" t_id="12">defense</token>
+  <token number="12" sentence="1" t_id="13">,</token>
+  <token number="13" sentence="1" t_id="14">a</token>
+  <token number="14" sentence="1" t_id="15">friend</token>
+  <token number="15" sentence="1" t_id="16">of</token>
+  <token number="16" sentence="1" t_id="17">Yitzhak</token>
+  <token number="17" sentence="1" t_id="18">Rabin</token>
+  <token number="18" sentence="1" t_id="19">'s</token>
+  <token number="19" sentence="1" t_id="20">assassin</token>
+  <token number="20" sentence="1" t_id="21">said</token>
+  <token number="21" sentence="1" t_id="22">Friday</token>
+  <token number="22" sentence="1" t_id="23">that</token>
+  <token number="23" sentence="1" t_id="24">she</token>
+  <token number="24" sentence="1" t_id="25">regretted</token>
+  <token number="25" sentence="1" t_id="26">calling</token>
+  <token number="26" sentence="1" t_id="27">the</token>
+  <token number="27" sentence="1" t_id="28">prime</token>
+  <token number="28" sentence="1" t_id="29">minister</token>
+  <token number="29" sentence="1" t_id="30">a</token>
+  <token number="30" sentence="1" t_id="31">traitor</token>
+  <token number="31" sentence="1" t_id="32">and</token>
+  <token number="32" sentence="1" t_id="33">praying</token>
+  <token number="33" sentence="1" t_id="34">for</token>
+  <token number="34" sentence="1" t_id="35">his</token>
+  <token number="35" sentence="1" t_id="36">death</token>
+  <token number="36" sentence="1" t_id="37">.</token>
+  <token number="37" sentence="2" t_id="38">Margalit</token>
+  <token number="38" sentence="2" t_id="39">Har-Shefi</token>
+  <token number="39" sentence="2" t_id="40">,</token>
+  <token number="40" sentence="2" t_id="41">22</token>
+  <token number="41" sentence="2" t_id="42">,</token>
+  <token number="42" sentence="2" t_id="43">has</token>
+  <token number="43" sentence="2" t_id="44">pleaded</token>
+  <token number="44" sentence="2" t_id="45">innocent</token>
+  <token number="45" sentence="2" t_id="46">to</token>
+  <token number="46" sentence="2" t_id="47">charges</token>
+  <token number="47" sentence="2" t_id="48">that</token>
+  <token number="48" sentence="2" t_id="49">she</token>
+  <token number="49" sentence="2" t_id="50">failed</token>
+  <token number="50" sentence="2" t_id="51">to</token>
+  <token number="51" sentence="2" t_id="52">report</token>
+  <token number="52" sentence="2" t_id="53">Yigal</token>
+  <token number="53" sentence="2" t_id="54">Amir</token>
+  <token number="54" sentence="2" t_id="55">'s</token>
+  <token number="55" sentence="2" t_id="56">plan</token>
+  <token number="56" sentence="2" t_id="57">to</token>
+  <token number="57" sentence="2" t_id="58">kill</token>
+  <token number="58" sentence="2" t_id="59">Rabin</token>
+  <token number="59" sentence="2" t_id="60">.</token>
+  <token number="60" sentence="3" t_id="61">She</token>
+  <token number="61" sentence="3" t_id="62">took</token>
+  <token number="62" sentence="3" t_id="63">the</token>
+  <token number="63" sentence="3" t_id="64">stand</token>
+  <token number="64" sentence="3" t_id="65">for</token>
+  <token number="65" sentence="3" t_id="66">more</token>
+  <token number="66" sentence="3" t_id="67">than</token>
+  <token number="67" sentence="3" t_id="68">four</token>
+  <token number="68" sentence="3" t_id="69">hours</token>
+  <token number="69" sentence="3" t_id="70">Friday</token>
+  <token number="70" sentence="3" t_id="71">in</token>
+  <token number="71" sentence="3" t_id="72">a</token>
+  <token number="72" sentence="3" t_id="73">Tel</token>
+  <token number="73" sentence="3" t_id="74">Aviv</token>
+  <token number="74" sentence="3" t_id="75">magistrate</token>
+  <token number="75" sentence="3" t_id="76">'s</token>
+  <token number="76" sentence="3" t_id="77">court</token>
+  <token number="77" sentence="3" t_id="78">.</token>
+  <token number="78" sentence="4" t_id="79">Amir</token>
+  <token number="79" sentence="4" t_id="80">,</token>
+  <token number="80" sentence="4" t_id="81">27</token>
+  <token number="81" sentence="4" t_id="82">,</token>
+  <token number="82" sentence="4" t_id="83">is</token>
+  <token number="83" sentence="4" t_id="84">serving</token>
+  <token number="84" sentence="4" t_id="85">a</token>
+  <token number="85" sentence="4" t_id="86">life</token>
+  <token number="86" sentence="4" t_id="87">sentence</token>
+  <token number="87" sentence="4" t_id="88">for</token>
+  <token number="88" sentence="4" t_id="89">the</token>
+  <token number="89" sentence="4" t_id="90">November</token>
+  <token number="90" sentence="4" t_id="91">1995</token>
+  <token number="91" sentence="4" t_id="92">assassination</token>
+  <token number="92" sentence="4" t_id="93">of</token>
+  <token number="93" sentence="4" t_id="94">Rabin</token>
+  <token number="94" sentence="4" t_id="95">at</token>
+  <token number="95" sentence="4" t_id="96">a</token>
+  <token number="96" sentence="4" t_id="97">Tel</token>
+  <token number="97" sentence="4" t_id="98">Aviv</token>
+  <token number="98" sentence="4" t_id="99">peace</token>
+  <token number="99" sentence="4" t_id="100">rally</token>
+  <token number="100" sentence="4" t_id="101">.</token>
+  <token number="101" sentence="5" t_id="102">Newspaper</token>
+  <token number="102" sentence="5" t_id="103">reports</token>
+  <token number="103" sentence="5" t_id="104">have</token>
+  <token number="104" sentence="5" t_id="105">said</token>
+  <token number="105" sentence="5" t_id="106">Amir</token>
+  <token number="106" sentence="5" t_id="107">was</token>
+  <token number="107" sentence="5" t_id="108">infatuated</token>
+  <token number="108" sentence="5" t_id="109">with</token>
+  <token number="109" sentence="5" t_id="110">Har-Shefi</token>
+  <token number="110" sentence="5" t_id="111">and</token>
+  <token number="111" sentence="5" t_id="112">may</token>
+  <token number="112" sentence="5" t_id="113">have</token>
+  <token number="113" sentence="5" t_id="114">been</token>
+  <token number="114" sentence="5" t_id="115">trying</token>
+  <token number="115" sentence="5" t_id="116">to</token>
+  <token number="116" sentence="5" t_id="117">impress</token>
+  <token number="117" sentence="5" t_id="118">her</token>
+  <token number="118" sentence="5" t_id="119">by</token>
+  <token number="119" sentence="5" t_id="120">killing</token>
+  <token number="120" sentence="5" t_id="121">the</token>
+  <token number="121" sentence="5" t_id="122">prime</token>
+  <token number="122" sentence="5" t_id="123">minister</token>
+  <token number="123" sentence="5" t_id="124">.</token>
+  <token number="124" sentence="6" t_id="125">Har-Shefi</token>
+  <token number="125" sentence="6" t_id="126">acknowledged</token>
+  <token number="126" sentence="6" t_id="127">she</token>
+  <token number="127" sentence="6" t_id="128">told</token>
+  <token number="128" sentence="6" t_id="129">police</token>
+  <token number="129" sentence="6" t_id="130">interrogators</token>
+  <token number="130" sentence="6" t_id="131">that</token>
+  <token number="131" sentence="6" t_id="132">Rabin</token>
+  <token number="132" sentence="6" t_id="133">was</token>
+  <token number="133" sentence="6" t_id="134">a</token>
+  <token number="134" sentence="6" t_id="135">traitor</token>
+  <token number="135" sentence="6" t_id="136">and</token>
+  <token number="136" sentence="6" t_id="137">that</token>
+  <token number="137" sentence="6" t_id="138">she</token>
+  <token number="138" sentence="6" t_id="139">prayed</token>
+  <token number="139" sentence="6" t_id="140">for</token>
+  <token number="140" sentence="6" t_id="141">him</token>
+  <token number="141" sentence="6" t_id="142">to</token>
+  <token number="142" sentence="6" t_id="143">have</token>
+  <token number="143" sentence="6" t_id="144">a</token>
+  <token number="144" sentence="6" t_id="145">heart</token>
+  <token number="145" sentence="6" t_id="146">attack</token>
+  <token number="146" sentence="6" t_id="147">and</token>
+  <token number="147" sentence="6" t_id="148">die</token>
+  <token number="148" sentence="6" t_id="149">.</token>
+  <token number="149" sentence="7" t_id="150">She</token>
+  <token number="150" sentence="7" t_id="151">said</token>
+  <token number="151" sentence="7" t_id="152">Rabin</token>
+  <token number="152" sentence="7" t_id="153">'s</token>
+  <token number="153" sentence="7" t_id="154">murder</token>
+  <token number="154" sentence="7" t_id="155">was</token>
+  <token number="155" sentence="7" t_id="156">``</token>
+  <token number="156" sentence="7" t_id="157">a</token>
+  <token number="157" sentence="7" t_id="158">black</token>
+  <token number="158" sentence="7" t_id="159">stain</token>
+  <token number="159" sentence="7" t_id="160">on</token>
+  <token number="160" sentence="7" t_id="161">Israel</token>
+  <token number="161" sentence="7" t_id="162">,</token>
+  <token number="162" sentence="7" t_id="163">''</token>
+  <token number="163" sentence="7" t_id="164">Israel</token>
+  <token number="164" sentence="7" t_id="165">radio</token>
+  <token number="165" sentence="7" t_id="166">and</token>
+  <token number="166" sentence="7" t_id="167">Israel</token>
+  <token number="167" sentence="7" t_id="168">army</token>
+  <token number="168" sentence="7" t_id="169">radio</token>
+  <token number="169" sentence="7" t_id="170">reported</token>
+  <token number="170" sentence="7" t_id="171">.</token>
+  <token number="171" sentence="8" t_id="172">Har-Shefi</token>
+  <token number="172" sentence="8" t_id="173">said</token>
+  <token number="173" sentence="8" t_id="174">she</token>
+  <token number="174" sentence="8" t_id="175">heard</token>
+  <token number="175" sentence="8" t_id="176">Amir</token>
+  <token number="176" sentence="8" t_id="177">talk</token>
+  <token number="177" sentence="8" t_id="178">about</token>
+  <token number="178" sentence="8" t_id="179">killing</token>
+  <token number="179" sentence="8" t_id="180">Rabin</token>
+  <token number="180" sentence="8" t_id="181">but</token>
+  <token number="181" sentence="8" t_id="182">did</token>
+  <token number="182" sentence="8" t_id="183">not</token>
+  <token number="183" sentence="8" t_id="184">tell</token>
+  <token number="184" sentence="8" t_id="185">the</token>
+  <token number="185" sentence="8" t_id="186">police</token>
+  <token number="186" sentence="8" t_id="187">because</token>
+  <token number="187" sentence="8" t_id="188">she</token>
+  <token number="188" sentence="8" t_id="189">did</token>
+  <token number="189" sentence="8" t_id="190">not</token>
+  <token number="190" sentence="8" t_id="191">believe</token>
+  <token number="191" sentence="8" t_id="192">he</token>
+  <token number="192" sentence="8" t_id="193">was</token>
+  <token number="193" sentence="8" t_id="194">serious</token>
+  <token number="194" sentence="8" t_id="195">.</token>
+  <token number="195" sentence="9" t_id="196">Instead</token>
+  <token number="196" sentence="9" t_id="197">,</token>
+  <token number="197" sentence="9" t_id="198">she</token>
+  <token number="198" sentence="9" t_id="199">turned</token>
+  <token number="199" sentence="9" t_id="200">to</token>
+  <token number="200" sentence="9" t_id="201">her</token>
+  <token number="201" sentence="9" t_id="202">community</token>
+  <token number="202" sentence="9" t_id="203">rabbi</token>
+  <token number="203" sentence="9" t_id="204">in</token>
+  <token number="204" sentence="9" t_id="205">the</token>
+  <token number="205" sentence="9" t_id="206">Jewish</token>
+  <token number="206" sentence="9" t_id="207">West</token>
+  <token number="207" sentence="9" t_id="208">Bank</token>
+  <token number="208" sentence="9" t_id="209">settlement</token>
+  <token number="209" sentence="9" t_id="210">of</token>
+  <token number="210" sentence="9" t_id="211">Beit</token>
+  <token number="211" sentence="9" t_id="212">El</token>
+  <token number="212" sentence="9" t_id="213">and</token>
+  <token number="213" sentence="9" t_id="214">told</token>
+  <token number="214" sentence="9" t_id="215">him</token>
+  <token number="215" sentence="9" t_id="216">about</token>
+  <token number="216" sentence="9" t_id="217">Amir</token>
+  <token number="217" sentence="9" t_id="218">'s</token>
+  <token number="218" sentence="9" t_id="219">statements</token>
+  <token number="219" sentence="9" t_id="220">.</token>
+  <token number="220" sentence="10" t_id="221">The</token>
+  <token number="221" sentence="10" t_id="222">rabbi</token>
+  <token number="222" sentence="10" t_id="223">said</token>
+  <token number="223" sentence="10" t_id="224">called</token>
+  <token number="224" sentence="10" t_id="225">the</token>
+  <token number="225" sentence="10" t_id="226">talk</token>
+  <token number="226" sentence="10" t_id="227">about</token>
+  <token number="227" sentence="10" t_id="228">killing</token>
+  <token number="228" sentence="10" t_id="229">Rabin</token>
+  <token number="229" sentence="10" t_id="230">``</token>
+  <token number="230" sentence="10" t_id="231">nonsense</token>
+  <token number="231" sentence="10" t_id="232">,</token>
+  <token number="232" sentence="10" t_id="233">''</token>
+  <token number="233" sentence="10" t_id="234">and</token>
+  <token number="234" sentence="10" t_id="235">said</token>
+  <token number="235" sentence="10" t_id="236">Jews</token>
+  <token number="236" sentence="10" t_id="237">are</token>
+  <token number="237" sentence="10" t_id="238">prohibited</token>
+  <token number="238" sentence="10" t_id="239">from</token>
+  <token number="239" sentence="10" t_id="240">killing</token>
+  <token number="240" sentence="10" t_id="241">one</token>
+  <token number="241" sentence="10" t_id="242">another</token>
+  <token number="242" sentence="10" t_id="243">,</token>
+  <token number="243" sentence="10" t_id="244">the</token>
+  <token number="244" sentence="10" t_id="245">radio</token>
+  <token number="245" sentence="10" t_id="246">reports</token>
+  <token number="246" sentence="10" t_id="247">said</token>
+  <token number="247" sentence="10" t_id="248">.</token>
+  <token number="248" sentence="11" t_id="249">Har-Shefi</token>
+  <token number="249" sentence="11" t_id="250">described</token>
+  <token number="250" sentence="11" t_id="251">Amir</token>
+  <token number="251" sentence="11" t_id="252">as</token>
+  <token number="252" sentence="11" t_id="253">an</token>
+  <token number="253" sentence="11" t_id="254">``</token>
+  <token number="254" sentence="11" t_id="255">original</token>
+  <token number="255" sentence="11" t_id="256">thinker</token>
+  <token number="256" sentence="11" t_id="257">,</token>
+  <token number="257" sentence="11" t_id="258">''</token>
+  <token number="258" sentence="11" t_id="259">as</token>
+  <token number="259" sentence="11" t_id="260">well</token>
+  <token number="260" sentence="11" t_id="261">as</token>
+  <token number="261" sentence="11" t_id="262">delusional</token>
+  <token number="262" sentence="11" t_id="263">and</token>
+  <token number="263" sentence="11" t_id="264">a</token>
+  <token number="264" sentence="11" t_id="265">liar</token>
+  <token number="265" sentence="11" t_id="266">.</token>
+  <token number="266" sentence="12" t_id="267">She</token>
+  <token number="267" sentence="12" t_id="268">also</token>
+  <token number="268" sentence="12" t_id="269">denied</token>
+  <token number="269" sentence="12" t_id="270">accusations</token>
+  <token number="270" sentence="12" t_id="271">made</token>
+  <token number="271" sentence="12" t_id="272">by</token>
+  <token number="272" sentence="12" t_id="273">Amir</token>
+  <token number="273" sentence="12" t_id="274">'s</token>
+  <token number="274" sentence="12" t_id="275">brother</token>
+  <token number="275" sentence="12" t_id="276">,</token>
+  <token number="276" sentence="12" t_id="277">Hagai</token>
+  <token number="277" sentence="12" t_id="278">,</token>
+  <token number="278" sentence="12" t_id="279">that</token>
+  <token number="279" sentence="12" t_id="280">she</token>
+  <token number="280" sentence="12" t_id="281">joined</token>
+  <token number="281" sentence="12" t_id="282">an</token>
+  <token number="282" sentence="12" t_id="283">anti-Arab</token>
+  <token number="283" sentence="12" t_id="284">underground</token>
+  <token number="284" sentence="12" t_id="285">movement</token>
+  <token number="285" sentence="12" t_id="286">.</token>
+  <token number="286" sentence="13" t_id="287">She</token>
+  <token number="287" sentence="13" t_id="288">said</token>
+  <token number="288" sentence="13" t_id="289">she</token>
+  <token number="289" sentence="13" t_id="290">gave</token>
+  <token number="290" sentence="13" t_id="291">the</token>
+  <token number="291" sentence="13" t_id="292">Amir</token>
+  <token number="292" sentence="13" t_id="293">brothers</token>
+  <token number="293" sentence="13" t_id="294">false</token>
+  <token number="294" sentence="13" t_id="295">information</token>
+  <token number="295" sentence="13" t_id="296">regarding</token>
+  <token number="296" sentence="13" t_id="297">the</token>
+  <token number="297" sentence="13" t_id="298">location</token>
+  <token number="298" sentence="13" t_id="299">of</token>
+  <token number="299" sentence="13" t_id="300">a</token>
+  <token number="300" sentence="13" t_id="301">weapons</token>
+  <token number="301" sentence="13" t_id="302">and</token>
+  <token number="302" sentence="13" t_id="303">ammunition</token>
+  <token number="303" sentence="13" t_id="304">cache</token>
+  <token number="304" sentence="13" t_id="305">when</token>
+  <token number="305" sentence="13" t_id="306">they</token>
+  <token number="306" sentence="13" t_id="307">asked</token>
+  <token number="307" sentence="13" t_id="308">her</token>
+  <token number="308" sentence="13" t_id="309">to</token>
+  <token number="309" sentence="13" t_id="310">help</token>
+  <token number="310" sentence="13" t_id="311">organize</token>
+  <token number="311" sentence="13" t_id="312">such</token>
+  <token number="312" sentence="13" t_id="313">a</token>
+  <token number="313" sentence="13" t_id="314">movement</token>
+  <token number="314" sentence="13" t_id="315">.</token>
+</Document>

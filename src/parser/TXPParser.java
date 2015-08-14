@@ -16,7 +16,7 @@ public class TXPParser {
 		token, token_id, sent_id, pos, lemma, 
 		deps, tmx_id, tmx_type, tmx_value, ner, ev_class, 
 		ev_id, role1, role2, role3, is_arg_pred, has_semrole, 
-		chunk, main_verb, connective, morpho, supersense,
+		chunk, main_verb, connective, morpho, supersense, ss_ner,
 		tense_aspect_pol, tense, aspect, pol, coref_event, 
 		tlink, clink, tsignal, csignal;
 	}
@@ -212,7 +212,7 @@ public class TXPParser {
 			String tmx_id = cols.get(getIndex(Field.tmx_id));
 			String ev_id = cols.get(getIndex(Field.ev_id));
 			String tsig_id = null, csig_id = null;
-			if (getIndex(Field.csignal) != -1) {
+			if (getIndex(Field.tsignal) != -1) {
 				tsig_id = cols.get(getIndex(Field.tsignal));
 			} else if (getIndex(Field.csignal) != -1) {
 				csig_id = cols.get(getIndex(Field.csignal));

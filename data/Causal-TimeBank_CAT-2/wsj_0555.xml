@@ -1,0 +1,169 @@
+<Document doc_name="wsj_0555.tml">
+  <Markables>
+    <TIMEX3 m_id="1" type="DATE" value="1989-10-30" />
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="2" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="4" />
+    </EVENT_MENTION>
+    <EVENT_MENTION class="STATE" m_id="3" pred="due">
+      <token_anchor t_id="19" />
+    </EVENT_MENTION>
+    <TIMEX3 m_id="4" type="DATE" value="2007-03-15">
+      <token_anchor t_id="20" />
+      <token_anchor t_id="21" />
+      <token_anchor t_id="22" />
+      <token_anchor t_id="23" />
+    </TIMEX3>
+    <EVENT_MENTION aspect="PERFECTIVE" class="I_ACTION" m_id="5" polarity="pos" pred="elect" tense="PRESENT">
+      <token_anchor t_id="26" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="OCCURRENCE" m_id="6" polarity="pos" pred="convert" tense="INFINITIVE">
+      <token_anchor t_id="28" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="REPORTING" m_id="7" polarity="pos" pred="say" tense="PAST">
+      <token_anchor t_id="48" />
+    </EVENT_MENTION>
+    <EVENT_MENTION aspect="NONE" class="STATE" m_id="8" polarity="pos" pred="represent" tense="PRESENT">
+      <token_anchor t_id="51" />
+    </EVENT_MENTION>
+  </Markables>
+  <Relations>
+    <TLINK r_id="9" reltype="BEFORE">
+      <source m_id="2" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="10" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="3" />
+    </TLINK>
+    <TLINK r_id="11" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="12" reltype="NONE">
+      <source m_id="2" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="13" reltype="ENDED_BY">
+      <source m_id="3" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="14" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="5" />
+    </TLINK>
+    <TLINK r_id="15" reltype="NONE">
+      <source m_id="3" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="16" reltype="BEFORE">
+      <source m_id="5" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="17" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="6" />
+    </TLINK>
+    <TLINK r_id="18" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="19" reltype="NONE">
+      <source m_id="5" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="20" reltype="NONE">
+      <source m_id="6" />
+      <target m_id="4" />
+    </TLINK>
+    <TLINK r_id="21" reltype="NONE">
+      <source m_id="7" />
+      <target m_id="8" />
+    </TLINK>
+    <TLINK r_id="22" reltype="NONE">
+      <source m_id="7" />
+      <target m_id="1" />
+    </TLINK>
+    <TLINK r_id="23" reltype="NONE">
+      <source m_id="7" />
+      <target m_id="2" />
+    </TLINK>
+    <TLINK r_id="24" reltype="NONE">
+      <source m_id="8" />
+      <target m_id="1" />
+    </TLINK>
+  </Relations>
+  <token number="0" sentence="1" t_id="1">Waxman</token>
+  <token number="1" sentence="1" t_id="2">Industries</token>
+  <token number="2" sentence="1" t_id="3">Inc.</token>
+  <token number="3" sentence="1" t_id="4">said</token>
+  <token number="4" sentence="1" t_id="5">holders</token>
+  <token number="5" sentence="1" t_id="6">of</token>
+  <token number="6" sentence="1" t_id="7">$</token>
+  <token number="7" sentence="1" t_id="8">6,542,000</token>
+  <token number="8" sentence="1" t_id="9">face</token>
+  <token number="9" sentence="1" t_id="10">amount</token>
+  <token number="10" sentence="1" t_id="11">of</token>
+  <token number="11" sentence="1" t_id="12">its</token>
+  <token number="12" sentence="1" t_id="13">6_1/4</token>
+  <token number="13" sentence="1" t_id="14">%</token>
+  <token number="14" sentence="1" t_id="15">convertible</token>
+  <token number="15" sentence="1" t_id="16">subordinated</token>
+  <token number="16" sentence="1" t_id="17">debentures</token>
+  <token number="17" sentence="1" t_id="18">,</token>
+  <token number="18" sentence="1" t_id="19">due</token>
+  <token number="19" sentence="1" t_id="20">March</token>
+  <token number="20" sentence="1" t_id="21">15</token>
+  <token number="21" sentence="1" t_id="22">,</token>
+  <token number="22" sentence="1" t_id="23">2007</token>
+  <token number="23" sentence="1" t_id="24">,</token>
+  <token number="24" sentence="1" t_id="25">have</token>
+  <token number="25" sentence="1" t_id="26">elected</token>
+  <token number="26" sentence="1" t_id="27">to</token>
+  <token number="27" sentence="1" t_id="28">convert</token>
+  <token number="28" sentence="1" t_id="29">the</token>
+  <token number="29" sentence="1" t_id="30">debt</token>
+  <token number="30" sentence="1" t_id="31">into</token>
+  <token number="31" sentence="1" t_id="32">about</token>
+  <token number="32" sentence="1" t_id="33">683,000</token>
+  <token number="33" sentence="1" t_id="34">common</token>
+  <token number="34" sentence="1" t_id="35">shares</token>
+  <token number="35" sentence="1" t_id="36">.</token>
+  <token number="36" sentence="2" t_id="37">The</token>
+  <token number="37" sentence="2" t_id="38">conversion</token>
+  <token number="38" sentence="2" t_id="39">price</token>
+  <token number="39" sentence="2" t_id="40">is</token>
+  <token number="40" sentence="2" t_id="41">$</token>
+  <token number="41" sentence="2" t_id="42">9.58</token>
+  <token number="42" sentence="2" t_id="43">a</token>
+  <token number="43" sentence="2" t_id="44">share</token>
+  <token number="44" sentence="2" t_id="45">.</token>
+  <token number="45" sentence="3" t_id="46">The</token>
+  <token number="46" sentence="3" t_id="47">company</token>
+  <token number="47" sentence="3" t_id="48">said</token>
+  <token number="48" sentence="3" t_id="49">the</token>
+  <token number="49" sentence="3" t_id="50">holders</token>
+  <token number="50" sentence="3" t_id="51">represent</token>
+  <token number="51" sentence="3" t_id="52">52</token>
+  <token number="52" sentence="3" t_id="53">%</token>
+  <token number="53" sentence="3" t_id="54">of</token>
+  <token number="54" sentence="3" t_id="55">the</token>
+  <token number="55" sentence="3" t_id="56">face</token>
+  <token number="56" sentence="3" t_id="57">amount</token>
+  <token number="57" sentence="3" t_id="58">of</token>
+  <token number="58" sentence="3" t_id="59">the</token>
+  <token number="59" sentence="3" t_id="60">debentures</token>
+  <token number="60" sentence="3" t_id="61">.</token>
+  <token number="61" sentence="4" t_id="62">Waxman</token>
+  <token number="62" sentence="4" t_id="63">sells</token>
+  <token number="63" sentence="4" t_id="64">a</token>
+  <token number="64" sentence="4" t_id="65">variety</token>
+  <token number="65" sentence="4" t_id="66">of</token>
+  <token number="66" sentence="4" t_id="67">hardware</token>
+  <token number="67" sentence="4" t_id="68">products</token>
+  <token number="68" sentence="4" t_id="69">for</token>
+  <token number="69" sentence="4" t_id="70">the</token>
+  <token number="70" sentence="4" t_id="71">home</token>
+  <token number="71" sentence="4" t_id="72">repair</token>
+  <token number="72" sentence="4" t_id="73">market</token>
+  <token number="73" sentence="4" t_id="74">.</token>
+</Document>

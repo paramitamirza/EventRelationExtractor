@@ -984,6 +984,12 @@ public class PairFeatureVector {
 					getVectors().add(getTokenAttribute(e2, Feature.ner));
 					fields.set(getVectors().size()-1, "ner2");
 					break;
+				case supersense:
+					getVectors().add(getTokenAttribute(e1, Feature.supersense));
+					fields.set(getVectors().size()-1, "supersense1");
+					getVectors().add(getTokenAttribute(e2, Feature.supersense));
+					fields.set(getVectors().size()-1, "supersense2");
+					break;
 				case posCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.pos));
 					fields.set(getVectors().size()-1, "pos");
@@ -999,6 +1005,10 @@ public class PairFeatureVector {
 				case nerCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.ner));
 					fields.set(getVectors().size()-1, "ner");
+					break;
+				case supersenseCombined:
+					getVectors().add(getCombinedTokenAttribute(Feature.supersense));
+					fields.set(getVectors().size()-1, "supersense");
 					break;
 				case samePos:
 					getVectors().add(isSameTokenAttribute(Feature.pos) ? "TRUE" : "FALSE");
