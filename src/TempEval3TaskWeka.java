@@ -114,7 +114,7 @@ public class TempEval3TaskWeka {
 	
 	public void getFeatureVectorPerFile(TXPParser txpParser, TimeMLParser tmlParser, 
 			File file, StringBuilder ee, StringBuilder et, StringBuilder tt, 
-			StringBuilder eeCoref, StringBuilder etRule) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+			StringBuilder eeCoref, StringBuilder etRule) throws Exception {
 		
 		Doc docTxp = txpParser.parseDocument(file.getPath());
 		String tmlPath = file.getPath().replace("TXP", "TML");
@@ -140,90 +140,82 @@ public class TempEval3TaskWeka {
 				} else if (fv.getPairType().equals(PairType.event_timex)) {
 					fv = new EventTimexFeatureVector(fv);
 				}
-//				fv.addToVector(Feature.id);
+//				fv.addBinaryFeatureToVector(Feature.id);
 				
-				//token attribute features
-				fv.addToVector(Feature.tokenSpace);
-				fv.addToVector(Feature.lemmaSpace);
+				//TODO: get phrase embedding for these
+//				//token attribute features
+//				fv.addToVector(Feature.tokenSpace);
+//				fv.addToVector(Feature.lemmaSpace);
+				fv.addToVector(Feature.tokenChunk);
 				
 				//TODO addToVector phrase embedding for token and lemma
 				
-				fv.addToVector(Feature.pos);
-				fv.addToVector(Feature.mainpos);
-				fv.addToVector(Feature.chunk);
-				//fv.addToVector(Feature.ner);
-				fv.addToVector(Feature.samePos);
-				//fv.addToVector(Feature.sameMainPos);
-				
-				//context features
-				fv.addToVector(Feature.entDistance);
-				fv.addToVector(Feature.sentDistance);
+//				fv.addBinaryFeatureToVector(Feature.pos);
+//				fv.addBinaryFeatureToVector(Feature.mainpos);
+//				fv.addBinaryFeatureToVector(Feature.chunk);
+//				fv.addBinaryFeatureToVector(Feature.samePos);
+//				fv.addBinaryFeatureToVector(Feature.sameMainPos);
+//				
+//				//context features
+//				fv.addBinaryFeatureToVector(Feature.entDistance);
+//				fv.addBinaryFeatureToVector(Feature.sentDistance);
 				
 				if (fv instanceof EventEventFeatureVector) {
 					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					//fv.addToVector(Feature.tenseAspect);
-					fv.addToVector(Feature.tense);
-					fv.addToVector(Feature.aspect);
-					fv.addToVector(Feature.polarity);
-					fv.addToVector(Feature.sameEventClass);
-					fv.addToVector(Feature.sameTense);
-					fv.addToVector(Feature.sameAspect);
-					fv.addToVector(Feature.samePolarity);
-					
-					//dependency information
-					fv.addToVector(Feature.depPath);
-					fv.addToVector(Feature.mainVerb);
-					
-					//temporal connective/signal
-					//fv.addToVector(Feature.tempMarker);
-					fv.addToVector(Feature.tempMarkerClusText);
-					fv.addToVector(Feature.tempMarkerPos);
-					fv.addToVector(Feature.tempMarkerDep1Dep2);
-					
-					//causal connective/signal/verb
-					//fv.addToVector(Feature.causMarker);
-					fv.addToVector(Feature.causMarkerClusText);
-					fv.addToVector(Feature.causMarkerPos);
-					fv.addToVector(Feature.causMarkerDep1Dep2);
-					
+//					fv.addBinaryFeatureToVector(Feature.eventClass);
+//					fv.addBinaryFeatureToVector(Feature.tense);
+//					fv.addBinaryFeatureToVector(Feature.aspect);
+//					fv.addBinaryFeatureToVector(Feature.polarity);
+//					fv.addBinaryFeatureToVector(Feature.sameEventClass);
+//					fv.addBinaryFeatureToVector(Feature.sameTense);
+//					fv.addBinaryFeatureToVector(Feature.sameAspect);
+//					fv.addBinaryFeatureToVector(Feature.samePolarity);
+//					
+//					//dependency information
+//					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
+//					fv.addBinaryFeatureToVector(Feature.mainVerb);
+//					
 					//TODO addToVector phrase embedding for temporal & causal signal
+					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
+//					fv.addToVector(Feature.tempMarkerText);					
+//					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
+//					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
+//					
+//					fv.addToVector(Feature.causMarkerText);
+//					fv.addBinaryFeatureToVector(Feature.causMarkerPos);
+					//fv.addToVector(Feature.causMarkerDep1Dep2);	//TODO dependency path to binary feature?
+//					
+//					//event co-reference
+//					fv.addBinaryFeatureToVector(Feature.coref);
+//					
+//					//WordNet similarity
+//					fv.addBinaryFeatureToVector(Feature.wnSim);
 					
-					//event co-reference
-					fv.addToVector(Feature.coref);
+					fv.addBinaryFeatureToVector(Feature.label);
 					
-					//WordNet similarity
-					fv.addToVector(Feature.wnSim);
-					
-					fv.addToVector(Feature.label);
 				} else if (fv instanceof EventTimexFeatureVector) {
-					fv.addToVector(Feature.entOrder);
-					
-					//Entity attributes
-					fv.addToVector(Feature.eventClass);
-					fv.addToVector(Feature.tense);
-					fv.addToVector(Feature.aspect);
-					//fv.addToVector(Feature.polarity);
-					fv.addToVector(Feature.timexType);
-					fv.addToVector(Feature.timexValueTemplate);
-					//fv.addToVector(Feature.dct);	//no improv
-					
-					//dependency information
-					fv.addToVector(Feature.depPath);
-					//fv.addToVector(Feature.mainVerb);
-					
-					//temporal connective/signal
-					//fv.addToVector(Feature.tempMarker);
-					fv.addToVector(Feature.tempMarkerClusText);
-					fv.addToVector(Feature.tempMarkerPos);
-					fv.addToVector(Feature.tempMarkerDep1Dep2);
+//					fv.addBinaryFeatureToVector(Feature.entOrder);
+//					
+//					//Entity attributes
+//					fv.addBinaryFeatureToVector(Feature.eventClass);
+//					fv.addBinaryFeatureToVector(Feature.tense);
+//					fv.addBinaryFeatureToVector(Feature.aspect);
+//					fv.addBinaryFeatureToVector(Feature.polarity);
+//					fv.addBinaryFeatureToVector(Feature.timexType);
+//					
+//					//dependency information
+//					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
+//					fv.addBinaryFeatureToVector(Feature.mainVerb);
 					
 					//TODO addToVector phrase embedding for temporal signal
+//					fv.addToVector(Feature.tempMarkerText);					
+//					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
+					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
+//					
+//					//timex rule type
+//					fv.addBinaryFeatureToVector(Feature.timexRule);
 					
-					//timex rule type
-					fv.addToVector(Feature.timexRule);
-					
-					fv.addToVector(Feature.label);
+					fv.addBinaryFeatureToVector(Feature.label);
 				}
 				
 				
@@ -266,7 +258,7 @@ public class TempEval3TaskWeka {
 	
 	public void getFeatureVector(TXPParser parser, TimeMLParser tmlParser, String filepath, 
 			StringBuilder ee, StringBuilder et, StringBuilder tt, StringBuilder eeCoref, StringBuilder etRule) 
-					throws IOException, ParserConfigurationException, SAXException, TransformerException {
+					throws Exception {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -275,13 +267,14 @@ public class TempEval3TaskWeka {
 		for (File file : files_TXP) {
 			if (file.isDirectory()){				
 				this.getFeatureVector(parser, tmlParser, file.getPath(), ee, et, tt, eeCoref, etRule);				
-			} else if (file.isFile()) {				
+			} else if (file.isFile()) {		
+				//System.out.println(file.getName());
 				getFeatureVectorPerFile(parser, tmlParser, file, ee, et, tt, eeCoref, etRule);
 			}
 		}		
 	}
 	
-	public void train(TXPParser txpParser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void train(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		System.out.println("Building training data...");
 		StringBuilder ee = new StringBuilder();
 		StringBuilder et = new StringBuilder();
@@ -326,7 +319,7 @@ public class TempEval3TaskWeka {
 		return (double)eeCorrect/(double)eeInstance;
 	}
 	
-	public void evaluate(TXPParser txpParser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void evaluate(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		System.out.println("Building testing data...");
 		StringBuilder ee = new StringBuilder();
 		StringBuilder et = new StringBuilder();
@@ -375,7 +368,7 @@ public class TempEval3TaskWeka {
 //		System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
 	}
 	
-	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws ParserConfigurationException, SAXException, IOException, TransformerException, JSchException, SftpException {
+	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		File dir_TXP = new File(evalTXPPath);
 		File[] files_TXP = dir_TXP.listFiles();
 		

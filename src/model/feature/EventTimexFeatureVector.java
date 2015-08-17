@@ -20,13 +20,15 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 	public EventTimexFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		super(doc, e1, e2, label, tempSignalList, causalSignalList);
 		orderPair();
-		fields = Arrays.asList(new String[50]);
+		//fields = Arrays.asList(new String[50]);
+		fields = new ArrayList<String>();
 	}
 	
 	public EventTimexFeatureVector(PairFeatureVector fv) {
 		super(fv.getDoc(), fv.getE1(), fv.getE2(), fv.getVectors(), fv.getLabel(), fv.getTempSignalList(), fv.getCausalSignalList());
 		orderPair();
-		fields = Arrays.asList(new String[50]);
+		//fields = Arrays.asList(new String[50]);
+		fields = new ArrayList<String>();
 	}
 	
 	public void orderPair() {

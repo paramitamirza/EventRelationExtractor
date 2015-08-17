@@ -1,6 +1,14 @@
 package model.feature;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -21,6 +29,23 @@ public class PairFeatureVector {
 	private PairType pairType;
 	private TemporalSignalList tempSignalList;
 	private CausalSignalList causalSignalList;
+	
+	private String[] pos = {"AJ0", "AJC", "AJS", "AT0", "AV0", "AVP", "AVQ", "CJC", "CJS", "CJT", "CRD", 
+			"DPS", "DT0", "DTQ", "EX0", "ITJ", "NN0", "NN1", "NN2", "NP0", "ORD", "PNI", "PNP", "PNQ", 
+			"PNX", "POS", "PRF", "PRP", "PUL", "PUN", "PUQ", "PUR", "TO0", "UNC", "VBB", "VBD", "VBG", 
+			"VBI", "VBN", "VBZ", "VDB", "VDD", "VDG", "VDI", "VDN", "VDZ", "VHB", "VHD", "VHG", "VHI", 
+			"VHN", "VHZ", "VM0", "VVB", "VVD", "VVG", "VVI", "VVN", "VVZ", "XX0", "ZZ0"};
+	private String[] main_pos = {"v", "n", "art", "det", "adj", "adv", "conj", "crd", "ord", "pron",
+			"prep", "to", "pos", "punc", "neg"};
+	private String[] chunk = {"B-VP", "I-VP", "B-NP", "I-NP", "B-ADJP", "I-ADJP", "B-ADVP", "I-ADVP", 
+			"B-PP", "I-PP", "B-SBAR", "I-SBAR"};
+	private String[] ent_order = {"BEFORE", "AFTER"};
+	private String[] ev_class = {"REPORTING", "PERCEPTION", "ASPECTUAL", "I_ACTION", "I_STATE", "STATE", "OCCURRENCE"};
+	private String[] ev_tense = {"PAST", "PRESENT", "FUTURE", "NONE", "INFINITIVE", "PRESPART", "PASTPART"};
+	private String[] ev_aspect = {"PROGRESSIVE", "PERFECTIVE", "PERFECTIVE_PROGRESSIVE", "NONE"};
+	private String[] tmx_type = {"DATE", "TIME", "DURATION", "SET"};
+	private String[] marker_position = {"BETWEEN", "BEFORE", "AFTER", "BEGIN", "BEGIN-BETWEEN", "BEGIN-BEFORE"};
+	private String[] timex_rule = {"TMX-BEGIN", "TMX-END"};
 	
 	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
@@ -107,6 +132,7 @@ public class PairFeatureVector {
 		for (String col : vectors) {
 			String s = col.replace(",", "COMMA");
 			s = s.replace("'", "QUOT");
+			s = s.replace("`", "QUOT");
 			csv += s + ",";
 		}
 		return csv.substring(0, csv.length()-1);
@@ -166,6 +192,68 @@ public class PairFeatureVector {
 				return String.join(" ", attrList);
 			else
 				return String.join("_", attrList);
+		}
+	}
+	
+	protected String getWholeChunkToken(Entity e) {
+		if (e instanceof Timex) {
+			if (((Timex)e).isDct() || ((Timex)e).isEmptyTag()) {
+				return "O";
+			} else {
+				return getTokenAttribute(e, Feature.token);
+			}
+		} else {
+			List<String> chunkText = new ArrayList<String>();
+			
+			Token currToken = doc.getTokens().get(e.getStartTokID());
+			String currChunk = currToken.getTokenAttribute(Feature.chunk);
+			if (currChunk.contains("B-") || currChunk.contains("I-")) {
+				String currPhrase = currChunk.substring(2);
+				if (currChunk.contains("B-")) {
+					chunkText.add(currToken.getTokenAttribute(Feature.token));
+					Token nextToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()+1));
+					String nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					String nextPhrase;
+					while (nextChunk.contains("I-")) {
+						nextPhrase = nextChunk.substring(2);
+						if (nextPhrase.equals(currPhrase))
+							chunkText.add(nextToken.getTokenAttribute(Feature.token));
+						nextToken = doc.getTokens().get(doc.getTokenArr().get(nextToken.getIndex()+1));
+						nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					}
+				} else if (currChunk.contains("I-")) {
+					chunkText.add(currToken.getTokenAttribute(Feature.token));
+					Token nextToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()+1));
+					String nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					String nextPhrase;
+					while (nextChunk.contains("I-")) {
+						nextPhrase = nextChunk.substring(2);
+						if (nextPhrase.equals(currPhrase))
+							chunkText.add(nextToken.getTokenAttribute(Feature.token));
+						nextToken = doc.getTokens().get(doc.getTokenArr().get(nextToken.getIndex()+1));
+						nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					}
+					Token beforeToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()-1));
+					String beforeChunk = beforeToken.getTokenAttribute(Feature.chunk);
+					String beforePhrase;
+					while (beforeChunk.contains("I-")) {
+						beforePhrase = beforeChunk.substring(2);
+						if (beforePhrase.equals(currPhrase))
+							chunkText.add(0, beforeToken.getTokenAttribute(Feature.token));
+						beforeToken = doc.getTokens().get(doc.getTokenArr().get(beforeToken.getIndex()-1));
+						beforeChunk = beforeToken.getTokenAttribute(Feature.chunk);
+					}
+					if (beforeChunk.contains("B-")) {
+						beforePhrase = beforeChunk.substring(2);
+						if (beforePhrase.equals(currPhrase))
+							chunkText.add(0, beforeToken.getTokenAttribute(Feature.token));
+					}
+				}
+			} else {
+				chunkText.add(currToken.getTokenAttribute(Feature.token));
+			}
+			
+			return String.join(" ", chunkText);
 		}
 	}
 	
@@ -920,7 +1008,33 @@ public class PairFeatureVector {
 		return null;
 	}
 	
-	public void addToVector(Feature feature) throws IOException {
+	public Marker getTemporalMarkerFeature() throws IOException {
+		Marker m = null;
+		if (this instanceof EventTimexFeatureVector) {
+			//Assuming that the pair is already in event-timex order
+			if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+				!isSameSentence()) {
+				m = new Marker("O", "O", "O", "O", "O");
+			} else {	
+				m = getTemporalConnective();
+				if (m.getText().equals("O")) m = getTemporalSignal();
+			}
+		} else if (this instanceof EventEventFeatureVector) {
+			m = getTemporalConnective();
+			if (m.getText().equals("O")) m = getTemporalSignal();
+		}
+		return m;
+	}
+	
+	public Marker getCausalMarkerFeature() throws IOException {
+		Marker m = null;
+		m = getCausalConnective();
+		if (m.getText().equals("O")) m = getCausalSignal();
+		if (m.getText().equals("O")) m = getCausalVerb();
+		return m;
+	}
+	
+	public void addToVector(Feature feature) throws Exception {
 		List<String> fields = null;
 		if (this instanceof EventEventFeatureVector) {
 			fields = EventEventFeatureVector.fields;
@@ -932,483 +1046,685 @@ public class PairFeatureVector {
 			switch(feature) {
 				case id: 	
 					getVectors().add(e1.getID());
-					fields.set(getVectors().size()-1, "id1");
+					fields.add("id1");
 					getVectors().add(e2.getID());
-					fields.set(getVectors().size()-1, "id2");
+					fields.add("id2");
 					break;
 				case token: 	
 					getVectors().add(getTokenAttribute(e1, Feature.token).replace(" ", "_"));
-					fields.set(getVectors().size()-1, "token1");
+					fields.add("token1");
 					getVectors().add(getTokenAttribute(e2, Feature.token).replace(" ", "_"));
-					fields.set(getVectors().size()-1, "token2");
+					fields.add("token2");
 					break;
 				case lemma: 	
 					getVectors().add(getTokenAttribute(e1, Feature.lemma).replace(" ", "_"));
-					fields.set(getVectors().size()-1, "lemma1");
+					fields.add("lemma1");
 					getVectors().add(getTokenAttribute(e2, Feature.lemma).replace(" ", "_"));
-					fields.set(getVectors().size()-1, "lemma2");
+					fields.add("lemma2");
 					break;
 				case tokenSpace: 	
 					getVectors().add(getTokenAttribute(e1, Feature.token));
-					fields.set(getVectors().size()-1, "token1");
+					fields.add("token1");
 					getVectors().add(getTokenAttribute(e2, Feature.token));
-					fields.set(getVectors().size()-1, "token2");
+					fields.add("token2");
 					break;
 				case lemmaSpace: 	
 					getVectors().add(getTokenAttribute(e1, Feature.lemma));
-					fields.set(getVectors().size()-1, "lemma1");
+					fields.add("lemma1");
 					getVectors().add(getTokenAttribute(e2, Feature.lemma));
-					fields.set(getVectors().size()-1, "lemma2");
+					fields.add("lemma2");
+					break;
+				case tokenChunk: 	
+					getVectors().add(getWholeChunkToken(e1));
+					fields.add("tokenchunk1");
+					getVectors().add(getWholeChunkToken(e2));
+					fields.add("tokenchunk2");
 					break;
 				case pos:
 					getVectors().add(getTokenAttribute(e1, Feature.pos));
-					fields.set(getVectors().size()-1, "pos1");
+					fields.add("pos1");
 					getVectors().add(getTokenAttribute(e2, Feature.pos));
-					fields.set(getVectors().size()-1, "pos2");
+					fields.add("pos2");
 					break;
 				case mainpos:
 					getVectors().add(getTokenAttribute(e1, Feature.mainpos));
-					fields.set(getVectors().size()-1, "mainpos1");
+					fields.add("mainpos1");
 					getVectors().add(getTokenAttribute(e2, Feature.mainpos));
-					fields.set(getVectors().size()-1, "mainpos2");
+					fields.add("mainpos2");
 					break;
 				case chunk:
 					getVectors().add(getTokenAttribute(e1, Feature.chunk));
-					fields.set(getVectors().size()-1, "chunk1");
+					fields.add("chunk1");
 					getVectors().add(getTokenAttribute(e2, Feature.chunk));
-					fields.set(getVectors().size()-1, "chunk2");
+					fields.add("chunk2");
 					break;
 				case ner:
 					getVectors().add(getTokenAttribute(e1, Feature.ner));
-					fields.set(getVectors().size()-1, "ner1");
+					fields.add("ner1");
 					getVectors().add(getTokenAttribute(e2, Feature.ner));
-					fields.set(getVectors().size()-1, "ner2");
+					fields.add("ner2");
 					break;
 				case supersense:
 					getVectors().add(getTokenAttribute(e1, Feature.supersense));
-					fields.set(getVectors().size()-1, "supersense1");
+					fields.add("supersense1");
 					getVectors().add(getTokenAttribute(e2, Feature.supersense));
-					fields.set(getVectors().size()-1, "supersense2");
+					fields.add("supersense2");
 					break;
 				case posCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.pos));
-					fields.set(getVectors().size()-1, "pos");
+					fields.add("pos");
 					break;
 				case mainposCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.mainpos));
-					fields.set(getVectors().size()-1, "mainpos");
+					fields.add("mainpos");
 					break;
 				case chunkCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.chunk));
-					fields.set(getVectors().size()-1, "chunk");
+					fields.add("chunk");
 					break;
 				case nerCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.ner));
-					fields.set(getVectors().size()-1, "ner");
+					fields.add("ner");
 					break;
 				case supersenseCombined:
 					getVectors().add(getCombinedTokenAttribute(Feature.supersense));
-					fields.set(getVectors().size()-1, "supersense");
+					fields.add("supersense");
 					break;
 				case samePos:
 					getVectors().add(isSameTokenAttribute(Feature.pos) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "samePos");
+					fields.add("samePos");
 					break;
 				case sameMainPos:
 					getVectors().add(isSameTokenAttribute(Feature.mainpos) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "sameMainPos");
+					fields.add("sameMainPos");
 					break;
 				case entDistance:
 					getVectors().add(getEntityDistance().toString());
-					fields.set(getVectors().size()-1, "entDistance");
+					fields.add("entDistance");
 					break;
 				case sentDistance:
 					getVectors().add(getSentenceDistance().toString());
-					fields.set(getVectors().size()-1, "sentDistance");
+					fields.add("sentDistance");
 					break;
 				case entOrder:
 					getVectors().add(getOrder());
-					fields.set(getVectors().size()-1, "entOrder");
+					fields.add("entOrder");
 					break;					
 				case eventClass:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.eventClass));
-						fields.set(getVectors().size()-1, "eventClass1");
+						fields.add("eventClass1");
 						getVectors().add(getEntityAttribute(e2, Feature.eventClass));
-						fields.set(getVectors().size()-1, "eventClass2");
+						fields.add("eventClass2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						this.getVectors().add(getEntityAttribute(e1, Feature.eventClass));
-						fields.set(getVectors().size()-1, "eventClass");
+						fields.add("eventClass");
 					}
 					break;
 				case tense:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense));
-						fields.set(getVectors().size()-1, "tense1");
+						fields.add("tense1");
 						getVectors().add(getEntityAttribute(e2, Feature.tense));
-						fields.set(getVectors().size()-1, "tense2");
+						fields.add("tense2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense));
-						fields.set(getVectors().size()-1, "tense");
+						fields.add("tense");
 					}
 					break;
 				case aspect:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "aspect1");
+						fields.add("aspect1");
 						getVectors().add(getEntityAttribute(e2, Feature.aspect));
-						fields.set(getVectors().size()-1, "aspect2");
+						fields.add("aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "aspect");
+						fields.add("aspect");
 					}
 					break;
 				case tenseAspect:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "tense-aspect1");
+						fields.add("tense-aspect1");
 						getVectors().add(getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
-						fields.set(getVectors().size()-1, "tense-aspect2");
+						fields.add("tense-aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "tense-aspect");
+						fields.add("tense-aspect");
 					}
 					break;
 				case polarity:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.polarity));
-						fields.set(getVectors().size()-1, "polarity1");
+						fields.add("polarity1");
 						getVectors().add(getEntityAttribute(e2, Feature.polarity));
-						fields.set(getVectors().size()-1, "polarity2");
+						fields.add("polarity2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.polarity));
-						fields.set(getVectors().size()-1, "polarity");
+						fields.add("polarity");
 					}
 					break;
 				case eventClassCombined:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.eventClass) + "|" + 
 								getEntityAttribute(e2, Feature.eventClass));
-						fields.set(getVectors().size()-1, "eventClass1|eventClass2");
+						fields.add("eventClass1|eventClass2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						this.getVectors().add(getEntityAttribute(e1, Feature.eventClass));
-						fields.set(getVectors().size()-1, "eventClass");
+						fields.add("eventClass");
 					}
 					break;
 				case tenseCombined:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense) + "|" + 
 								getEntityAttribute(e2, Feature.tense));
-						fields.set(getVectors().size()-1, "tense1|tense2");
+						fields.add("tense1|tense2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense));
-						fields.set(getVectors().size()-1, "tense");
+						fields.add("tense");
 					}
 					break;
 				case aspectCombined:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.aspect) + "|" + 
 								getEntityAttribute(e2, Feature.aspect));
-						fields.set(getVectors().size()-1, "aspect1|aspect2");
+						fields.add("aspect1|aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "aspect");
+						fields.add("aspect");
 					}
 					break;
 				case tenseAspectCombined:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect) + "|" + 
 								getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
-						fields.set(getVectors().size()-1, "tense-aspect1|tense-aspect2");
+						fields.add("tense-aspect1|tense-aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
-						fields.set(getVectors().size()-1, "tense-aspect");
+						fields.add("tense-aspect");
 					}
 					break;
 				case polarityCombined:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.polarity) + "|" + 
 								getEntityAttribute(e2, Feature.polarity));
-						fields.set(getVectors().size()-1, "polarity1|polarity2");
+						fields.add("polarity1|polarity2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(getEntityAttribute(e1, Feature.polarity));
-						fields.set(getVectors().size()-1, "polarity");
+						fields.add("polarity");
 					}
 					break;
 				case sameEventClass:
 					getVectors().add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "sameEventClass");
+					fields.add("sameEventClass");
 					break;
 				case sameTense:
 					getVectors().add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "sameTense");
+					fields.add("sameTense");
 					break;
 				case sameAspect:
 					getVectors().add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "sameAspect");
+					fields.add("sameAspect");
 					break;
 				case sameTenseAspect:
 					getVectors().add((getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) &&
 							getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect))) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "sameTenseAspect");
+					fields.add("sameTenseAspect");
 					break;
 				case samePolarity:
 					getVectors().add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
-					fields.set(getVectors().size()-1, "samePolarity");
+					fields.add("samePolarity");
 					break;
 				case timexType:
 					getVectors().add(getEntityAttribute(e2, Feature.timexType));
-					fields.set(getVectors().size()-1, "timexType");
+					fields.add("timexType");
 					break;
 				case timexValue:
 					getVectors().add(getEntityAttribute(e2, Feature.timexValue));
-					fields.set(getVectors().size()-1, "timexValue");
+					fields.add("timexValue");
 					break;
 				case timexValueTemplate:
 					getVectors().add(getEntityAttribute(e2, Feature.timexValueTemplate));
-					fields.set(getVectors().size()-1, "timexValueTemplate");
+					fields.add("timexValueTemplate");
 					break;
 				case timexTypeValueTemplate:
 					getVectors().add(getEntityAttribute(e2, Feature.timexType) + "|" + 
 							getEntityAttribute(e2, Feature.timexValueTemplate));
-					fields.set(getVectors().size()-1, "timexValueTemplate");
+					fields.add("timexValueTemplate");
 					break;
 				case dct:
 					getVectors().add(getEntityAttribute(e2, Feature.dct));
-					fields.set(getVectors().size()-1, "dct");
+					fields.add("dct");
 					break;
 				case mainVerb:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(((EventEventFeatureVector) this).getMateMainVerb());
-						fields.set(getVectors().size()-1, "mainVerb1|mainVerb2");
+						fields.add("mainVerb1|mainVerb2");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(((EventTimexFeatureVector) this).getMateMainVerb());
-						fields.set(getVectors().size()-1, "mainVerb");
+						fields.add("mainVerb");
 					}
 					break;
 				case depPath:
 					if (this instanceof EventEventFeatureVector) {
 						getVectors().add(((EventEventFeatureVector) this).getMateDependencyPath());
-						fields.set(getVectors().size()-1, "depPath");
+						fields.add("depPath");
 					} else if (this instanceof EventTimexFeatureVector) {
 						getVectors().add(((EventTimexFeatureVector) this).getMateDependencyPath());
-						fields.set(getVectors().size()-1, "depPath");
+						fields.add("depPath");
 					}
 					break;
 				case tempMarker:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerText-Position");
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
-							fields.set(getVectors().size()-1, "tempMarkerClusText-Position");
-							getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-							fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
-						fields.set(getVectors().size()-1, "tempMarkerClusText-Position");
-						getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-						fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
+					fields.add("tempMarkerClusText-Position");
+					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
+					fields.add("tempMarkerDep1-Dep2");
 					break;
 				case tempMarkerText:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerText");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getText());
-							fields.set(getVectors().size()-1, "tempMarkerText");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getText());
-						fields.set(getVectors().size()-1, "tempMarkerText");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getText());
+					fields.add("tempMarkerText");
 					break;
 				case tempMarkerClusText:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerClusText");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getCluster());
-							fields.set(getVectors().size()-1, "tempMarkerClusText");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getCluster());
-						fields.set(getVectors().size()-1, "tempMarkerClusText");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getCluster());
+					fields.add("tempMarkerClusText");
 					break;
 				case tempMarkerPos:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerPos");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getPosition());
-							fields.set(getVectors().size()-1, "tempMarkerPos");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getPosition());
-						fields.set(getVectors().size()-1, "tempMarkerPos");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getPosition());
+					fields.add("tempMarkerPos");
 					break;
 				case tempMarkerDep1:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerDep1");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getDepRelE1());
-							fields.set(getVectors().size()-1, "tempMarkerDep1");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getDepRelE1());
-						fields.set(getVectors().size()-1, "tempMarkerDep1");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getDepRelE1());
+					fields.add("tempMarkerDep1");
 					break;
 				case tempMarkerDep2:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerDep2");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getDepRelE2());
-							fields.set(getVectors().size()-1, "tempMarkerDep2");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getDepRelE2());
-						fields.set(getVectors().size()-1, "tempMarkerDep2");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getDepRelE2());
+					fields.add("tempMarkerDep2");
 					break;
 				case tempMarkerDep1Dep2:
-					if (this instanceof EventTimexFeatureVector) {
-						//Assuming that the pair is already in event-timex order
-						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
-							!isSameSentence()) {
-							getVectors().add("O");
-							fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-						} else {	
-							m = getTemporalConnective();
-							if (m.getText().equals("O")) m = getTemporalSignal();
-							getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-							fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-						}
-					} else if (this instanceof EventEventFeatureVector) {
-						m = getTemporalConnective();
-						if (m.getText().equals("O")) m = getTemporalSignal();
-						getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-						fields.set(getVectors().size()-1, "tempMarkerDep1-Dep2");
-					}
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
+					fields.add("tempMarkerDep1-Dep2");
 					break;
 				case causMarker:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
-					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
-					fields.set(getVectors().size()-1, "causMarkerClusText-Position");
+					m = getCausalMarkerFeature();
+					fields.add("causMarkerClusText-Position");
 					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-					fields.set(getVectors().size()-1, "causMarkerDep1-Dep2");
+					fields.add("causMarkerDep1-Dep2");
 					break;
 				case causMarkerText:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getText());
-					fields.set(getVectors().size()-1, "causMarkerText");
+					fields.add("causMarkerText");
 					break;
 				case causMarkerClusText:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getCluster());
-					fields.set(getVectors().size()-1, "causMarkerClusTex");
+					fields.add("causMarkerClusTex");
 					break;
 				case causMarkerPos:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getPosition());
-					fields.set(getVectors().size()-1, "causMarkerPos");
+					fields.add("causMarkerPos");
 					break;
 				case causMarkerDep1:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getDepRelE1());
-					fields.set(getVectors().size()-1, "causMarkerDep1");
+					fields.add("causMarkerDep1");
 					break;
 				case causMarkerDep2:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getDepRelE2());
-					fields.set(getVectors().size()-1, "causMarkerDep2");
+					fields.add("causMarkerDep2");
 					break;
 				case causMarkerDep1Dep2:
-					m = getCausalConnective();
-					if (m.getText().equals("O")) m = getCausalSignal();
-					if (m.getText().equals("O")) m = getCausalVerb();
+					m = getCausalMarkerFeature();
 					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
-					fields.set(getVectors().size()-1, "causMarkerDep1-Dep2");
+					fields.add("causMarkerDep1-Dep2");
 					break;
 				case coref:
 					getVectors().add(((EventEventFeatureVector) this).isCoreference() ? "COREF" : "NOCOREF");
-					fields.set(getVectors().size()-1, "coref");
+					fields.add("coref");
 					break;
 				case wnSim:
 					getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
-					fields.set(getVectors().size()-1, "wnSim");
+					fields.add("wnSim");
 					break;
 				case timexRule:
 					getVectors().add(((EventTimexFeatureVector) this).getTimexRule());
-					fields.set(getVectors().size()-1, "timexRule");
+					fields.add("timexRule");
 					break;
 				case label:
 					getVectors().add(getLabel());
-					fields.set(getVectors().size()-1, "label");
+					fields.add("label");
 					break;
 			}
 		}
+	}
+	
+	public void addBinaryFeatureToVector(Feature feature) throws Exception {
+		List<String> fields = null;
+		if (this instanceof EventEventFeatureVector) {
+			fields = EventEventFeatureVector.fields;
+		} else if (this instanceof EventTimexFeatureVector) {
+			fields = EventTimexFeatureVector.fields;
+		}
+		Marker m = null;
+		if (fields != null) {
+			switch(feature) {
+				case id: 	
+					getVectors().add(e1.getID());
+					fields.add("id1");
+					getVectors().add(e2.getID());
+					fields.add("id2");
+					break;
+				case pos:
+					String[] e1Pos = getTokenAttribute(e1, Feature.pos).split("_");
+					String[] e2Pos = getTokenAttribute(e2, Feature.pos).split("_");
+					for (String s : this.pos) {
+						fields.add("pos1_" + s);
+						getVectors().add("0");
+					}
+					for (String e1_pos : e1Pos) {
+						if (fields.contains("pos1_" + e1_pos)) {
+							getVectors().set(fields.indexOf("pos1_" + e1_pos), "1");
+						}
+					}
+					for (String s : this.pos) {
+						fields.add("pos2_" + s);
+						getVectors().add("0");
+					}
+					for (String e2_pos : e2Pos) {
+						if (fields.contains("pos2_" + e2_pos)) {
+							getVectors().set(fields.indexOf("pos2_" + e2_pos), "1");
+						}
+					}
+					break;
+				case mainpos:
+					String[] e1Mpos = getTokenAttribute(e1, Feature.mainpos).split("_");
+					String[] e2Mpos = getTokenAttribute(e2, Feature.mainpos).split("_");
+					for (String s : this.main_pos) {
+						fields.add("mainpos1_" + s);
+						getVectors().add("0");
+					}
+					for (String e1_mpos : e1Mpos) {
+						if (fields.contains("mainpos1_" + e1_mpos)) {
+							getVectors().set(fields.indexOf("mainpos1_" + e1_mpos), "1");
+						}
+					}
+					for (String s : this.main_pos) {
+						fields.add("mainpos2_" + s);
+						getVectors().add("0");
+					}
+					for (String e2_mpos : e2Mpos) {
+						if (fields.contains("mainpos2_" + e2_mpos)) {
+							getVectors().set(fields.indexOf("mainpos2_" + e2_mpos), "1");
+						}
+					}
+					break;
+				case chunk:
+					String[] e1Chunk = getTokenAttribute(e1, Feature.chunk).split("_");
+					String[] e2Chunk = getTokenAttribute(e2, Feature.chunk).split("_");
+					for (String s : this.chunk) {
+						fields.add("chunk1_" + s);
+						getVectors().add("0");
+					}
+					for (String e1_ch : e1Chunk) {
+						if (fields.contains("chunk1_" + e1_ch)) {
+							getVectors().set(fields.indexOf("chunk1_" + e1_ch), "1");
+						}
+					}
+					for (String s : this.chunk) {
+						fields.add("chunk2_" + s);
+						getVectors().add("0");
+					}
+					for (String e2_ch : e2Chunk) {
+						if (fields.contains("chunk2_" + e2_ch)) {
+							getVectors().set(fields.indexOf("chunk2_" + e2_ch), "1");
+						}
+					}
+					break;
+				case samePos:
+					getVectors().add(isSameTokenAttribute(Feature.pos) ? "1" : "0");
+					fields.add("samePos");
+					break;
+				case sameMainPos:
+					getVectors().add(isSameTokenAttribute(Feature.mainpos) ? "1" : "0");
+					fields.add("sameMainPos");
+					break;
+				case entDistance:
+					getVectors().add(getEntityDistance().toString());
+					fields.add("entDistance");
+					break;
+				case sentDistance:
+					getVectors().add(getSentenceDistance().toString());
+					fields.add("sentDistance");
+					break;
+				case entOrder:
+					for (String s : this.ent_order) {
+						if (s.equals(getOrder())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("entOrder_" + s);
+					}
+					break;					
+				case eventClass:
+					if (this instanceof EventEventFeatureVector) {
+						for (String s : this.ev_class) {
+							if (s.equals(getEntityAttribute(e1, Feature.eventClass))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e1class_" + s);
+						}
+						for (String s : this.ev_class) {
+							if (s.equals(getEntityAttribute(e2, Feature.eventClass))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e2class_" + s);
+						}
+					} else if (this instanceof EventTimexFeatureVector) {
+						for (String s : this.ev_class) {
+							if (s.equals(getEntityAttribute(e1, Feature.eventClass))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("eclass_" + s);
+						}
+					}
+					break;
+				case tense:
+					if (this instanceof EventEventFeatureVector) {
+						for (String s : this.ev_tense) {
+							if (s.equals(getEntityAttribute(e1, Feature.tense))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e1tense_" + s);
+						}
+						for (String s : this.ev_tense) {
+							if (s.equals(getEntityAttribute(e2, Feature.tense))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e2tense_" + s);
+						}
+					} else if (this instanceof EventTimexFeatureVector) {
+						for (String s : this.ev_tense) {
+							if (s.equals(getEntityAttribute(e1, Feature.tense))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("etense_" + s);
+						}
+					}
+					break;
+				case aspect:
+					if (this instanceof EventEventFeatureVector) {
+						for (String s : this.ev_aspect) {
+							if (s.equals(getEntityAttribute(e1, Feature.aspect))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e1aspect_" + s);
+						}
+						for (String s : this.ev_aspect) {
+							if (s.equals(getEntityAttribute(e2, Feature.aspect))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("e2aspect_" + s);
+						}
+					} else if (this instanceof EventTimexFeatureVector) {
+						for (String s : this.ev_aspect) {
+							if (s.equals(getEntityAttribute(e1, Feature.aspect))) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("easpect_" + s);
+						}
+					}
+					break;
+				case polarity:
+					if (this instanceof EventEventFeatureVector) {
+						if (getEntityAttribute(e1, Feature.polarity).equals("neg")) getVectors().add("0");
+						else getVectors().add("1");
+						fields.add("e1polarity");
+						if (getEntityAttribute(e2, Feature.polarity).equals("neg")) getVectors().add("0");
+						else getVectors().add("1");
+						fields.add("e2polarity");
+					} else if (this instanceof EventTimexFeatureVector) {
+						if (getEntityAttribute(e1, Feature.polarity).equals("neg")) getVectors().add("0");
+						else getVectors().add("1");
+						fields.add("epolarity");
+					}
+					break;
+				case sameEventClass:
+					getVectors().add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "1" : "0");
+					fields.add("sameEventClass");
+					break;
+				case sameTense:
+					getVectors().add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "1" : "0");
+					fields.add("sameTense");
+					break;
+				case sameAspect:
+					getVectors().add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "1" : "0");
+					fields.add("sameAspect");
+					break;
+				case sameTenseAspect:
+					getVectors().add((getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) &&
+							getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect))) ? "1" : "0");
+					fields.add("sameTenseAspect");
+					break;
+				case samePolarity:
+					getVectors().add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "1" : "0");
+					fields.add("samePolarity");
+					break;
+				case timexType:
+					for (String s : this.tmx_type) {
+						if (s.equals(getEntityAttribute(e2, Feature.timexType))) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("ttype_" + s);
+					}
+					break;
+				case mainVerb:
+					if (this instanceof EventEventFeatureVector) {
+						if (getMateMainVerb(e1).equals("MAIN")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("e1_mainverb");
+						if (getMateMainVerb(e2).equals("MAIN")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("e2_mainverb");
+					} else if (this instanceof EventTimexFeatureVector) {
+						if (getMateMainVerb(e1).equals("MAIN")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("e_mainverb");
+					}
+					break;
+				case tempMarkerPos:
+					m = getTemporalMarkerFeature();
+					for (String s : this.marker_position) {
+						if (s.equals(m.getPosition())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("tempmarkerpos_" + s);
+					}
+					break;
+				case causMarkerPos:
+					m = getCausalMarkerFeature();
+					for (String s : this.marker_position) {
+						if (s.equals(m.getPosition())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("causmarkerpos_" + s);
+					}
+					break;
+				case coref:
+					getVectors().add(((EventEventFeatureVector) this).isCoreference() ? "1" : "0");
+					fields.add("coref");
+					break;
+				case wnSim:
+					getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
+					fields.add("wnSim");
+					break;
+				case timexRule:
+					for (String s : this.timex_rule) {
+						if (s.equals(((EventTimexFeatureVector) this).getTimexRule())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("timexrule_" + s);
+					}
+					break;
+				case label:
+					getVectors().add(getLabel());
+					fields.add("label");
+					break;				
+			}
+		}
+	}
+	
+	public void addPhraseFeatureToVector(Feature feature) throws Exception {
+		List<String> fields = null;
+		if (this instanceof EventEventFeatureVector) {
+			fields = EventEventFeatureVector.fields;
+		} else if (this instanceof EventTimexFeatureVector) {
+			fields = EventTimexFeatureVector.fields;
+		}
+		Marker m = null;
+		if (fields != null) {
+			switch(feature) {
+				case tempMarkerTextPhrase:
+					m = getTemporalMarkerFeature();
+					System.out.println(m.getText());
+					if (!m.getText().equals("O")) {
+						String[] markers = {m.getText()};
+						System.out.println(getPhraseEmbedding("http://137.132.82.174:8080/", markers));
+					}
+					break;
+			}
+		}
+	}
+	
+	public static String getPhraseEmbedding(String urlStr, String[] phrases) throws Exception {
+		URL url = new URL(urlStr);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setDoInput(true);
+		conn.setUseCaches(false);
+		conn.setAllowUserInteraction(false);
+		conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+		// Create the form content
+		OutputStream out = conn.getOutputStream();
+		Writer writer = new OutputStreamWriter(out, "UTF-8");
+		for (int i = 0; i < phrases.length; i++) {
+			writer.write("sentence=");
+			writer.write(URLEncoder.encode(phrases[i], "UTF-8"));
+			writer.write("&");
+		}
+		writer.close();
+		out.close();
+
+		if (conn.getResponseCode() != 200) {
+			throw new IOException(conn.getResponseMessage());
+		}
+
+		// Buffer the result into a string
+		BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+		StringBuilder sb = new StringBuilder();
+		String line;
+		while ((line = rd.readLine()) != null) {
+			sb.append(line);
+		}
+		rd.close();
+
+		conn.disconnect();
+		return sb.toString();
 	}
 }

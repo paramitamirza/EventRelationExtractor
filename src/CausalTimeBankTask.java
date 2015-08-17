@@ -140,7 +140,7 @@ public class CausalTimeBankTask {
 	}
 	
 	public void getFeatureVectorPerFile(TXPParser txpParser, File file, StringBuilder ee) 
-			throws IOException, ParserConfigurationException, SAXException, TransformerException {
+			throws Exception {
 		
 		Doc docTxp = txpParser.parseDocument(file.getPath());
 		Map<Pair<String,String>,String> candidates = getCandidatePairs(docTxp);
@@ -201,7 +201,7 @@ public class CausalTimeBankTask {
 	}
 	
 	public void getFeatureVector(TXPParser parser, String filepath, StringBuilder ee) 
-			throws IOException, ParserConfigurationException, SAXException, TransformerException {
+			throws Exception {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -217,7 +217,7 @@ public class CausalTimeBankTask {
 		}		
 	}
 	
-	public void train(TXPParser txpParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void train(TXPParser txpParser) throws Exception {
 		System.out.println("Building training data...");
 		StringBuilder ee1 = new StringBuilder();
 		StringBuilder ee2 = new StringBuilder();
@@ -308,7 +308,7 @@ public class CausalTimeBankTask {
 		rs.disconnect();
 	}
 	
-	public void evaluate(TXPParser txpParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void evaluate(TXPParser txpParser) throws Exception {
 		System.out.println("Building testing data...");
 		StringBuilder ee1 = new StringBuilder();
 		StringBuilder ee2 = new StringBuilder();
@@ -425,6 +425,9 @@ public class CausalTimeBankTask {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

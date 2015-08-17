@@ -24,7 +24,7 @@ import parser.entities.Timex;
 
 public class TE3FeatureVectorCSV {
 	public static void getFeatureVector(TXPParser parser, String filepath, TemporalSignalList tsignalList, CausalSignalList csignalList, 
-			StringBuilder ee, StringBuilder et, StringBuilder tt) throws IOException {
+			StringBuilder ee, StringBuilder et, StringBuilder tt) throws Exception {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -204,6 +204,9 @@ public class TE3FeatureVectorCSV {
 			etFile.close();
 			ttFile.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

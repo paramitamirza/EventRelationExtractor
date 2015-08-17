@@ -105,7 +105,7 @@ public class TempEval3Task {
 	
 	public void getFeatureVectorPerFile(TXPParser txpParser, TimeMLParser tmlParser, 
 			File file, StringBuilder ee, StringBuilder et, StringBuilder tt, 
-			StringBuilder eeCoref, StringBuilder etRule) throws IOException, ParserConfigurationException, SAXException, TransformerException {
+			StringBuilder eeCoref, StringBuilder etRule) throws Exception {
 		
 		Doc docTxp = txpParser.parseDocument(file.getPath());
 		String tmlPath = file.getPath().replace("TXP", "TML");
@@ -241,7 +241,7 @@ public class TempEval3Task {
 	
 	public void getFeatureVector(TXPParser parser, TimeMLParser tmlParser, String filepath, 
 			StringBuilder ee, StringBuilder et, StringBuilder tt, StringBuilder eeCoref, StringBuilder etRule) 
-					throws IOException, ParserConfigurationException, SAXException, TransformerException {
+					throws Exception {
 		File dir_TXP = new File(filepath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -258,7 +258,7 @@ public class TempEval3Task {
 		}		
 	}
 	
-	public void train(TXPParser txpParser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void train(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		System.out.println("Building training data...");
 		StringBuilder ee = new StringBuilder();
 		StringBuilder et = new StringBuilder();
@@ -326,7 +326,7 @@ public class TempEval3Task {
 		return (double)eeCorrect/(double)eeInstance;
 	}
 	
-	public void evaluate(TXPParser txpParser, TimeMLParser tmlParser) throws IOException, SftpException, JSchException, ParserConfigurationException, SAXException, TransformerException {
+	public void evaluate(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		System.out.println("Building testing data...");
 		StringBuilder ee = new StringBuilder();
 		StringBuilder et = new StringBuilder();
@@ -391,7 +391,7 @@ public class TempEval3Task {
 		rs.disconnect();
 	}
 	
-	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws ParserConfigurationException, SAXException, IOException, TransformerException, JSchException, SftpException {
+	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		File dir_TXP = new File(evalTXPPath);
 		File[] files_TXP = dir_TXP.listFiles();
 		
@@ -555,6 +555,9 @@ public class TempEval3Task {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 

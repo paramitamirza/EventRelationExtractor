@@ -1,0 +1,5233 @@
+tokenchunk1,tokenchunk2,label
+said,O,BEFORE
+refused to identify,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+went,Friday,INCLUDES
+exploded,Friday,IS_INCLUDED
+said,O,BEFORE
+has claimed,O,ENDED_BY
+said,O,BEFORE
+blew,O,BEFORE
+The blast,Friday,IS_INCLUDED
+has claimed,Saturday,IS_INCLUDED
+appears to have been,Saturday,IS_INCLUDED
+The suspected car bombings,Friday,IS_INCLUDED
+said,Saturday,IS_INCLUDED
+was expected to rise,Saturday,IS_INCLUDED
+missing,Saturday,IS_INCLUDED
+broke,Saturday,IS_INCLUDED
+said,Saturday,IS_INCLUDED
+more than 1COMMA700 injured,Friday,IS_INCLUDED
+were killed,Friday,IS_INCLUDED
+rescuers cleared,Saturday,IS_INCLUDED
+Terrorist bombings,Friday,IS_INCLUDED
+shook,O,BEFORE
+plagues,Saturday,BEFORE
+swaying,Saturday,BEFORE
+said,Saturday,IS_INCLUDED
+may have prevented,Saturday,BEFORE
+shook,Saturday,IS_INCLUDED
+discharged :,Monday,BEFORE
+542 Treated,Monday,BEFORE
+12 Injured,Monday,BEFORE
+the bombings,Monday,BEFORE
+said,Tuesday,IS_INCLUDED
+extend,Tuesday,IS_INCLUDED
+offered,Tuesday,IS_INCLUDED
+the bombings,Tuesday,BEFORE
+condemned,Tuesday,IS_INCLUDED
+said,O,BEFORE
+adopted,O,BEFORE
+called,O,BEFORE
+condemned,O,BEFORE
+said,Thursday,IS_INCLUDED
+The incidents,Aug. 7,IS_INCLUDED
+attacks,Aug. 7,IS_INCLUDED
+A resolution,Thursday,BEFORE
+the bombing,Aug. 7,IS_INCLUDED
+condemned,Thursday,IS_INCLUDED
+been urged to leave,O,BEFORE
+denied,O,BEFORE
+said,O,BEFORE
+a joint news conference,O,BEFORE
+said,O,BEFORE
+helped hang,O,BEFORE
+were allowed,O,BEFORE
+handed,O,BEFORE
+laid,O,BEFORE
+was scheduled to lay,O,BEFORE
+Washington overheated,O,BEFORE
+spent,O,BEFORE
+arriving,O,BEFORE
+hoped,O,BEFORE
+arrived,O,BEFORE
+been urged to leave,today,IS_INCLUDED
+were flown,today,IS_INCLUDED
+_ left,today,IS_INCLUDED
+said,last week,IS_INCLUDED
+more arrests,Tuesday,BEFORE
+denied,Tuesday,IS_INCLUDED
+reported,now,BEFORE
+would not elaborate,now,IS_INCLUDED
+said,now,IS_INCLUDED
+m not going to draw,now,IS_INCLUDED
+said,Tuesday,IS_INCLUDED
+the FBI investigation,Tuesday,DURING
+a joint news conference,five hours,IS_INCLUDED
+are counting,Tuesday,IS_INCLUDED
+a five-hour visit,five-hour,IS_INCLUDED
+was scheduled to lay,Tuesday,BEFORE
+spent,five hours,IS_INCLUDED
+a 16-hour flight,16-hour,IS_INCLUDED
+questioning,three days,IS_INCLUDED
+said,Monday,IS_INCLUDED
+arrived,Tuesday,IS_INCLUDED
+bombing,Aug. 7,IS_INCLUDED
+a whirlwind visit,Tuesday,IS_INCLUDED
+said,O,BEFORE
+said,Friday,IS_INCLUDED
+has taken,Thursday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+launched,Thursday,IS_INCLUDED
+Retaliating,Thursday,IS_INCLUDED
+terrorist bombings,this month,IS_INCLUDED
+said,Friday,IS_INCLUDED
+terrorist actions,Aug. 7,IS_INCLUDED
+to defend,Friday,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+was hospitalized,O,BEFORE
+continued,O,BEFORE
+said,Wednesday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+the slated visit,September,IS_INCLUDED
+met,Wednesday,IS_INCLUDED
+ended,Aug. 7,IS_INCLUDED
+were interrupted,Aug. 7,IS_INCLUDED
+wrapped,Wednesday,IS_INCLUDED
+have said,O,BEFORE
+have been handed,O,BEFORE
+could not be reached,O,BEFORE
+searched,Sept. 2,IS_INCLUDED
+raided,Sept. 2,IS_INCLUDED
+share,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+have said,Friday,IS_INCLUDED
+refused to provide,Sunday,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+allege,Friday,IS_INCLUDED
+trial,Friday,AFTER
+have been handed,Friday,BEFORE
+the Kenya bombing,last month,IS_INCLUDED
+Nearly simultaneous bombings,last month,IS_INCLUDED
+could not be reached,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+were not disclosed,Friday,IS_INCLUDED
+the bombing,last month,IS_INCLUDED
+reported,Friday,IS_INCLUDED
+has contributed,O,BEFORE
+has requested,O,BEFORE
+said,O,BEFORE
+led,O,BEFORE
+planned to pay,Friday,IS_INCLUDED
+has contributed,Wednesday,BEFORE
+has requested,Wednesday,BEFORE
+said,Wednesday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+will consider helping set,Wednesday,AFTER
+meeting,Wednesday,IS_INCLUDED
+planned to leave,Thursday,IS_INCLUDED
+worked,1995,IS_INCLUDED
+a bombing,1995,IS_INCLUDED
+The bombings,Aug. 7,IS_INCLUDED
+future medical disasters,future,IS_INCLUDED
+prepare to meet,future,IS_INCLUDED
+the bombing,Wednesday,BEFORE
+a news conference,Wednesday,IS_INCLUDED
+led,Wednesday,IS_INCLUDED
+will serve,O,AFTER
+saying,O,BEFORE
+has been,O,BEFORE
+prepared to join,O,BEFORE
+prepared to join,April,IS_INCLUDED
+ending,Saturday,BEFORE
+planning,O,AFTER
+NATO strategy planning,O,AFTER
+joining,April,INCLUDES
+said,two-day,DURING_INV
+said,Saturday,IS_INCLUDED
+a two-day visit,two-day,IS_INCLUDED
+the NATO summit,April,IS_INCLUDED
+can participate,O,IS_INCLUDED
+marking,O,AFTER
+marking,April,IS_INCLUDED
+are expected to join,April,IS_INCLUDED
+are expected to join,O,IS_INCLUDED
+became,early this week,IS_INCLUDED
+said,Saturday,IS_INCLUDED
+said,Saturday,IS_INCLUDED
+have approved,O,BEFORE
+participate,O,IS_INCLUDED
+said,O,IS_INCLUDED
+had been,two weeks,DURING_INV
+said,O,IS_INCLUDED
+was discovered,last month,IS_INCLUDED
+was spotted,weeks,IS_INCLUDED
+said,O,IS_INCLUDED
+shows,O,INCLUDES
+have said,O,IS_INCLUDED
+leading,O,INCLUDES
+and have,O,INCLUDES
+the shooting,O,BEFORE
+was driven,O,BEFORE
+believe,O,INCLUDES
+have said,O,IS_INCLUDED
+the hunt,Last week,INCLUDES
+to join,Last week,BEGUN_BY
+asked,Last week,IS_INCLUDED
+an official visit,Last week,IS_INCLUDED
+fired,Friday,BEFORE
+stood,Friday,BEFORE
+believe,Friday,INCLUDES
+was found buried,Friday,BEFORE
+was found buried,Friday,BEFORE
+was,Friday,BEFORE
+reported,Friday,IS_INCLUDED
+stood,O,BEFORE
+killed,O,BEFORE
+is thought to have fired,O,BEFORE
+is thought to have fired,O,INCLUDES
+found,O,BEFORE
+was,O,BEFORE
+said,O,IS_INCLUDED
+added,O,IS_INCLUDED
+to establish,O,AFTER
+taken,O,AFTER
+would need to have,O,INCLUDES
+said,O,IS_INCLUDED
+to declare,O,AFTER
+could enable,O,AFTER
+found,O,BEFORE
+is conducting,O,INCLUDES
+requested,O,IS_INCLUDED
+this march,last three years,IS_INCLUDED
+or arrested,last three years,IS_INCLUDED
+a participant,last three years,IS_INCLUDED
+the annual March,O,IS_INCLUDED
+scanned,O,IS_INCLUDED
+assigned,O,INCLUDES
+extended,O,BEFORE
+The search,O,INCLUDES
+performed,O,BEFORE
+the Oct. 23 sniper shooting,Oct. 23,IS_INCLUDED
+obtained,O,BEFORE
+has eluded,O,INCLUDES
+did not exclude,O,IS_INCLUDED
+said,O,IS_INCLUDED
+lived,last year,INCLUDES
+found,O,BEFORE
+came,O,INCLUDES
+established,O,IS_INCLUDED
+said,Friday,IS_INCLUDED
+performed,O,BEFORE
+killed,O,BEFORE
+a sniper shot,O,BEFORE
+found,O,BEFORE
+link,O,IS_INCLUDED
+said,O,IS_INCLUDED
+to host,O,AFTER
+searching,O,INCLUDES
+a QUOTQUOT temporary setback,O,INCLUDES
+the move,O,BEFORE
+called,O,IS_INCLUDED
+violated,Friday,INCLUDES
+was informed,Friday,IS_INCLUDED
+said,O,IS_INCLUDED
+was knocked,O,BEFORE
+said,O,IS_INCLUDED
+has maintained,O,BEFORE
+was crossed,that same day,IS_INCLUDED
+was gunned,last October,IS_INCLUDED
+were killed COMMA,O,BEFORE
+appeared,O,BEFORE
+featured,O,INCLUDES
+included,O,INCLUDES
+said,O,IS_INCLUDED
+violating QUOTQUOT,Thursday,INCLUDES
+closed,Thursday,IS_INCLUDED
+provided,Thursday,BEFORE
+ruled,this week,IS_INCLUDED
+the suit,this week,INCLUDES
+was not,this week,INCLUDES
+verdict,this week,IS_INCLUDED
+led,this week,INCLUDES
+a federal court trial,this week,INCLUDES
+was,this week,INCLUDES
+would seek,Friday,AFTER
+said,Friday,IS_INCLUDED
+just a QUOTQUOT temporary setback,O,INCLUDES
+to shut,O,BEFORE
+a decision,O,BEFORE
+says,O,INCLUDES
+found to be,O,BEFORE
+said,O,IS_INCLUDED
+the creation,50 years ago,IS_INCLUDED
+the announcement,50 years ago,IS_INCLUDED
+was chosen to honor,March 12,BEFORE
+The ceremony,March 12,IS_INCLUDED
+the accession,March 12,BEFORE
+to mark,March 12,IS_INCLUDED
+a ceremony,March 12,IS_INCLUDED
+a ceremony,O,AFTER
+has invited,O,IS_INCLUDED
+came,O,INCLUDES
+discovered,O,BEFORE
+showed,O,INCLUDES
+said,O,IS_INCLUDED
+was found abandoned,December,BEFORE
+was found abandoned,December,IS_INCLUDED
+the shooting,O,BEFORE
+vanished,O,BEFORE
+the slaying,days,AFTER
+was seen,days,IS_INCLUDED
+said,O,IS_INCLUDED
+the shooting,O,BEFORE
+is being sought,O,INCLUDES
+was,O,BEFORE
+did not say,O,IS_INCLUDED
+a search,Thursday,IS_INCLUDED
+was unearthed,Thursday,IS_INCLUDED
+Buried,Thursday,BEFORE
+said,O,IS_INCLUDED
+can be traced,O,AFTER
+have,O,INCLUDES
+said,O,IS_INCLUDED
+to match,O,AFTER
+able,O,AFTER
+QUOTs not,O,INCLUDES
+was used to kill,O,BEFORE
+was used to kill,O,BEFORE
+to determine,O,AFTER
+was sent,O,BEFORE
+buried,Friday,BEFORE
+found,Friday,BEFORE
+said,Friday,IS_INCLUDED
+was killed,last fall,IS_INCLUDED
+trying to track,O,AFTER
+trying to track,O,INCLUDES
+may yield,O,AFTER
+found,O,BEFORE
+killed,1996,IS_INCLUDED
+the 1996 Olympic bombing,1996,IS_INCLUDED
+is charged,O,INCLUDES
+maimed,January 1998,IS_INCLUDED
+killed,January 1998,IS_INCLUDED
+the January 1998 bombing,January 1998,IS_INCLUDED
+has been,January 1998,BEGUN_BY
+a fatal attack,O,BEFORE
+being sought,O,INCLUDES
+is,O,INCLUDES
+did,Thursday,BEFORE
+face,Thursday,AFTER
+make,Thursday,AFTER
+to contact,Thursday,AFTER
+clear,Thursday,AFTER
+come,Thursday,AFTER
+would like to see,Thursday,AFTER
+would like to see,Thursday,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+was,O,BEFORE
+married,O,BEFORE
+said,O,IS_INCLUDED
+and was found abandoned,December,INCLUDES
+and was found abandoned,December,IS_INCLUDED
+the shooting,weeks,AFTER
+was spotted,weeks,IS_INCLUDED
+protesting,1990,INCLUDES
+had been arrested,1990,BEGUN_BY
+Nicknamed,O,BEFORE
+have said,O,IS_INCLUDED
+fired,O,BEFORE
+found,O,BEFORE
+has been linked,O,BEFORE
+fleeing,O,BEFORE
+reburying,O,BEFORE
+to fire,O,BEFORE
+digging,O,BEFORE
+the shooting,O,BEFORE
+may have been buried,O,BEFORE
+believe,O,INCLUDES
+have said,O,IS_INCLUDED
+was shot,O,BEFORE
+a major breakthrough,O,BEFORE
+represented,O,INCLUDES
+buried,O,BEFORE
+last month QUOTs discovery,O,BEFORE
+said,O,IS_INCLUDED
+would not divulge,O,IS_INCLUDED
+injured,November,IS_INCLUDED
+sniper shootings,November,IS_INCLUDED
+is,O,INCLUDES
+confirmed,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the ongoing international manhunt,O,INCLUDES
+will intensify,O,BEGUN_BY
+carries,O,INCLUDES
+carry,O,INCLUDES
+deadly force,O,BEFORE
+using,O,BEFORE
+violating,O,BEFORE
+faces,O,INCLUDES
+questioning,Thursday,AFTER
+wanted,Thursday,INCLUDES
+had described,Thursday,ENDED_BY
+have been searching,Oct. 23,AFTER
+the Oct. 23 slaying,Oct. 23,IS_INCLUDED
+said,O,IS_INCLUDED
+the death,O,BEFORE
+responsible,O,INCLUDES
+believe,O,INCLUDES
+have,O,INCLUDES
+are,O,INCLUDES
+were issued,O,IS_INCLUDED
+was charged,Thursday,IS_INCLUDED
+was cut,O,BEFORE
+the slaying,O,BEFORE
+an international manhunt,O,INCLUDES
+is,O,INCLUDES
+killed,1996,IS_INCLUDED
+the 1996 Olympic bombing,1996,IS_INCLUDED
+three Atlanta attacks,1996,INCLUDES
+is charged,O,INCLUDES
+a fatal attack,O,BEFORE
+being sought,O,INCLUDES
+is,O,INCLUDES
+maimed,January 1998,IS_INCLUDED
+killed,January 1998,IS_INCLUDED
+the January 1998 bombing,January 1998,IS_INCLUDED
+has been,January 1998,BEGUN_BY
+three non-fatal sniper attacks,1997,ENDED_BY
+three non-fatal sniper attacks,1994,BEGUN_BY
+has intensified,O,IS_INCLUDED
+The filing,O,IS_INCLUDED
+and was found abandoned,December,BEFORE
+and was found abandoned,December,IS_INCLUDED
+the shooting,weeks,AFTER
+was spotted,weeks,IS_INCLUDED
+protesting,1990,BEGUN_BY
+had been arrested,1990,BEGUN_BY
+Nicknamed,O,BEFORE
+have said,O,BEFORE
+fired,O,BEFORE
+found,O,BEFORE
+has been linked,O,BEFORE
+was shot,last month,BEFORE
+a major breakthrough,last month,IS_INCLUDED
+represented,last month,INCLUDES
+buried,last month,BEFORE
+last month QUOTs discovery,last month,IS_INCLUDED
+said,O,IS_INCLUDED
+would not divulge,O,IS_INCLUDED
+had not called,Thursday,BEGUN_BY
+questioning,Nov. 3,AFTER
+the hope,Nov. 3,INCLUDES
+the Slepian shooting,Nov. 3,BEFORE
+issued,Nov. 3,AFTER
+seen,Nov. 3,IS_INCLUDED
+remain,O,INCLUDES
+carries,O,INCLUDES
+carry,O,INCLUDES
+deadly force,Thursday,BEFORE
+using,Thursday,BEFORE
+violating,Thursday,BEFORE
+was charged,Thursday,IS_INCLUDED
+was called,November,IS_INCLUDED
+an international manhunt,November,INCLUDES
+became,November,IS_INCLUDED
+said,Today,IS_INCLUDED
+have,Today,INCLUDES
+to tell,Today,IS_INCLUDED
+the slaying,O,BEFORE
+have named,O,IS_INCLUDED
+is,O,INCLUDES
+a single shot,last fall,IS_INCLUDED
+was gunned,last fall,IS_INCLUDED
+was heating,last fall,IS_INCLUDED
+has used,O,BEFORE
+but has,O,INCLUDES
+abortion protests,O,BEFORE
+has been arrested,O,BEFORE
+said,O,IS_INCLUDED
+had traveled,O,BEFORE
+the Slepian QUOTs shooting,O,BEFORE
+fired,O,BEFORE
+was killed,O,BEFORE
+weighs,O,INCLUDES
+is,O,INCLUDES
+walks,O,INCLUDES
+wears,O,INCLUDES
+known,O,INCLUDES
+is,O,INCLUDES
+says,O,IS_INCLUDED
+is awaiting,O,INCLUDES
+not apprehended,O,INCLUDES
+have been charged,O,BEFORE
+are known to be,O,INCLUDES
+are known to be,O,INCLUDES
+said,O,IS_INCLUDED
+citizen assistance,1950,BEGUN_BY
+located COMMA,1950,BEGUN_BY
+have been taken,1950,BEGUN_BY
+began,1950,IS_INCLUDED
+to be placed,O,IS_INCLUDED
+are,O,INCLUDES
+murder and violations,O,BEFORE
+to commit,O,BEFORE
+are charged,O,INCLUDES
+to hand,April,IS_INCLUDED
+were removed,April,AFTER
+agreed,April,IS_INCLUDED
+killed,Dec. 21 COMMA 1988,IS_INCLUDED
+bombing,Dec. 21 COMMA 1988,IS_INCLUDED
+charged,O,INCLUDES
+replace,O,IS_INCLUDED
+has paid,O,BEFORE
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+continues to receive,O,INCLUDES
+QUOTQUOT to fight,O,INCLUDES
+the unwavering commitment,O,INCLUDES
+underscores,O,IS_INCLUDED
+placing,O,IS_INCLUDED
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+have been related,past 20 years,IS_INCLUDED
+has held,past 20 years,IS_INCLUDED
+be,O,INCLUDES
+Kopp purports,O,INCLUDES
+said,O,IS_INCLUDED
+crossed,O,BEFORE
+unknown,O,INCLUDES
+may have approached,O,BEFORE
+the case,O,INCLUDES
+has been,O,INCLUDES
+may be hiding,O,INCLUDES
+said,O,IS_INCLUDED
+unknown,O,INCLUDES
+have,O,INCLUDES
+using,O,BEFORE
+believes,O,INCLUDES
+have,O,INCLUDES
+said,O,IS_INCLUDED
+offered,O,BEFORE
+announced,O,IS_INCLUDED
+comes,O,IS_INCLUDED
+a listed fugitive QUOTs capture,O,AFTER
+leading,O,AFTER
+provided,last fall,INCLUDES
+gunning,last fall,IS_INCLUDED
+is charged,O,INCLUDES
+the arrest,O,AFTER
+leading,O,AFTER
+is being offered,O,INCLUDES
+offered,O,INCLUDES
+is,O,INCLUDES
+killed,Aug. 7 COMMA 1998,IS_INCLUDED
+The Aug. 7 COMMA 1998 COMMA bombings,Aug. 7 COMMA 1998,IS_INCLUDED
+the twin bombings,O,BEFORE
+indicted,O,BEFORE
+the arrest and conviction,O,AFTER
+the arrest and conviction,O,AFTER
+leads,O,AFTER
+is offering,O,INCLUDES
+said,O,IS_INCLUDED
+accused,Monday,INCLUDES
+put alleged,Monday,IS_INCLUDED
+went,O,BEFORE
+has been offered,O,BEFORE
+have been indicted,O,BEFORE
+reported,O,BEFORE
+said,O,BEFORE
+heads,O,INCLUDES
+was scheduled to appear,O,BEFORE
+was arrested,O,BEFORE
+was brought,O,BEFORE
+has been offered,today,BEFORE
+is accused,today,INCLUDES
+have been indicted,today,BEFORE
+reported,today,IS_INCLUDED
+arrested,Thursday morning,IS_INCLUDED
+said,today,IS_INCLUDED
+is investigating and prosecuting,today,IS_INCLUDED
+is investigating and prosecuting,today,IS_INCLUDED
+heads,today,INCLUDES
+was scheduled to appear,midday,IS_INCLUDED
+was scheduled to appear,midday,BEFORE
+U.S. Embassy blasts,last year,IS_INCLUDED
+was arrested,today,BEFORE
+risked,O,BEFORE
+said,O,IS_INCLUDED
+served,O,BEFORE
+paid,O,BEFORE
+have been killed,O,BEFORE
+spoke,O,IS_INCLUDED
+has,O,INCLUDES
+the Alabama clinic bombing,O,BEFORE
+operations,O,BEFORE
+has undergone,O,BEFORE
+listened,O,IS_INCLUDED
+abortion-related violence,1993,BEGUN_BY
+injured,1993,BEGUN_BY
+killed,1993,BEGUN_BY
+the lighting,Sunday,IS_INCLUDED
+included,Sunday,IS_INCLUDED
+the lighting,Sunday,IS_INCLUDED
+the lighting,Sunday,IS_INCLUDED
+commemorates,Sunday,INCLUDES
+a Jewish ceremony,Sunday,IS_INCLUDED
+Sunday QUOTs yahrtzeit service,Sunday,IS_INCLUDED
+very scary,O,INCLUDES
+said,O,IS_INCLUDED
+out there,O,INCLUDES
+knowing,O,INCLUDES
+very frustrating,O,INCLUDES
+is,O,INCLUDES
+do nQUOTt know,O,INCLUDES
+a worldwide search,O,INCLUDES
+admit,O,IS_INCLUDED
+remains,O,INCLUDES
+the slaying,May 6,BEFORE
+was charged,May 6,IS_INCLUDED
+assassination,Earlier that day,INCLUDES
+might be targeted,Earlier that day,INCLUDES
+were warned,Earlier that day,INCLUDES
+explaining,Earlier that day,IS_INCLUDED
+a fax,Earlier that day,IS_INCLUDED
+sent,Earlier that day,IS_INCLUDED
+a sniper hiding,Oct. 23 COMMA 1999,IS_INCLUDED
+was killed,Oct. 23 COMMA 1999,IS_INCLUDED
+were leaked,Saturday,IS_INCLUDED
+was canceled,Saturday,IS_INCLUDED
+planned,Saturday,IS_INCLUDED
+A memorial service,Saturday,IS_INCLUDED
+worried,tonight,IS_INCLUDED
+the ceremony,O,IS_INCLUDED
+said,O,IS_INCLUDED
+is,O,IS_INCLUDED
+were scattered,O,IS_INCLUDED
+watch outside,O,IS_INCLUDED
+the interfaith ceremony,O,IS_INCLUDED
+attended,O,IS_INCLUDED
+among,O,IS_INCLUDED
+the 1998 abortion clinic bombing,1998,IS_INCLUDED
+injured,1998,IS_INCLUDED
+attended,one year,ENDS
+was killed,one year,BEGINS
+performed,Sunday,BEFORE
+a Sunday night memorial service,Sunday,IS_INCLUDED
+attended,Sunday,IS_INCLUDED
+contained,O,BEFORE
+are expected,O,INCLUDES
+warned QUOTQUOT,O,BEFORE
+saying,O,BEFORE
+disputed,O,BEFORE
+have complained,O,BEFORE
+was designed,O,BEFORE
+is scheduled to spend,O,BEFORE
+leaving,O,BEFORE
+said,last week,IS_INCLUDED
+said,Monday,IS_INCLUDED
+arrived,the weekend,IS_INCLUDED
+the Nairobi bombing,the weekend,BEFORE
+came,Sunday,IS_INCLUDED
+ordered,Sunday,IS_INCLUDED
+warned QUOTQUOT,Sunday,IS_INCLUDED
+fresh threats,Sunday,BEFORE
+the Aug. 7 bombings,Aug. 7,IS_INCLUDED
+issued,Sunday,IS_INCLUDED
+trip,one-day,IS_INCLUDED
+the tragedy,Friday,BEFORE
+lifted,Friday,IS_INCLUDED
+set,Friday,IS_INCLUDED
+have complained,Monday,BEFORE
+Albright QUOTs visit,Tuesday,IS_INCLUDED
+her first stop,five hours,IS_INCLUDED
+is scheduled to spend,five hours,IS_INCLUDED
+her first stop,Tuesday morning,IS_INCLUDED
+a 16-hour flight,16-hour,IS_INCLUDED
+leaving,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+seeking to demonstrate,Tuesday,IS_INCLUDED
+headed,Tuesday,IS_INCLUDED
+has not appeared,O,BEFORE
+said,O,BEFORE
+have fought to keep,O,BEFORE
+have fought to keep,O,INCLUDES
+died trying to get,O,BEFORE
+appealed to world,O,BEFORE
+exhorted,O,BEFORE
+warned,O,BEFORE
+must be returned,Jan. 14,IS_INCLUDED
+announced,Wednesday,IS_INCLUDED
+have fought to keep,Wednesday,BEFORE
+wants,now,IS_INCLUDED
+died trying to get,late November,IS_INCLUDED
+an international custody battle,late November,AFTER
+Found,late November,IS_INCLUDED
+appealed to world,now,IS_INCLUDED
+can not stop mobilizing,one minute,INCLUDES
+must not stop,one minute,INCLUDES
+exhorted,now,IS_INCLUDED
+QUOTQUOT proceed,now,IS_INCLUDED
+a pro-Elian rally,Wednesday night,IS_INCLUDED
+read,Wednesday night,IS_INCLUDED
+said,Wednesday night,IS_INCLUDED
+warned,Wednesday,IS_INCLUDED
+return,Wednesday,AFTER
+the U.S. government decision,late November,AFTER
+the U.S. government decision,Wednesday,BEFORE
+could be located,O,BEFORE
+has not appeared,O,BEFORE
+saying,O,BEFORE
+a boating accident,O,BEFORE
+has become,O,BEFORE
+said,O,BEFORE
+exhorted,O,BEFORE
+blocked,O,BEFORE
+called,O,BEFORE
+showed,O,BEFORE
+said,O,BEFORE
+has held,O,ENDED_BY
+appeared aimed,O,BEFORE
+protests,O,BEFORE
+urged,O,BEFORE
+state-run television broadcast footage,O,BEFORE
+was announced,Wednesday,IS_INCLUDED
+wants,now,IS_INCLUDED
+died,Nov. 25,BEFORE
+Rescued,Nov. 25,IS_INCLUDED
+several thousand rallying Cuban scientists,Wednesday night,IS_INCLUDED
+must not stop,one minute,INCLUDES
+said,Wednesday night,IS_INCLUDED
+QUOTQUOT proceed,now,IS_INCLUDED
+predicted,Wednesday,IS_INCLUDED
+to repatriate,Jan. 14,BEFORE
+Wednesday QUOTs ruling,Wednesday,IS_INCLUDED
+Elian QUOTs return,Wednesday,AFTER
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+has held,daily,IS_INCLUDED
+such rallies,daily,IS_INCLUDED
+attended,Thursday,IS_INCLUDED
+state-run television broadcast footage,Jan. 14,BEFORE
+state-run television broadcast footage,Thursday,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+began weeping,O,BEFORE
+said,O,BEFORE
+called,O,BEFORE
+has said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+is expected,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+spoke,O,BEFORE
+said,O,BEFORE
+protests,O,BEFORE
+was placed,O,BEFORE
+a news conference,O,BEFORE
+appeared,O,BEFORE
+consider,O,INCLUDES
+said,O,BEFORE
+sought to become,O,BEFORE
+tells,Friday,IS_INCLUDED
+played,Friday,IS_INCLUDED
+were planning to drive,Monday,IS_INCLUDED
+a large demonstration,Saturday,IS_INCLUDED
+marched,Friday night,IS_INCLUDED
+called,Friday night,IS_INCLUDED
+were forced to use,Thursday,IS_INCLUDED
+were arrested,Thursday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+asked,Friday,IS_INCLUDED
+flew,Friday,IS_INCLUDED
+accompanied,Friday,IS_INCLUDED
+rallied,Friday night,IS_INCLUDED
+is expected,early next week,IS_INCLUDED
+would comment,early next week,BEFORE
+filed,Friday,IS_INCLUDED
+said,now,IS_INCLUDED
+said,Friday,IS_INCLUDED
+is affording,Friday,IS_INCLUDED
+spoke,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+the 1959 trade embargo,1959,IS_INCLUDED
+strengthened,1996,IS_INCLUDED
+named,1996,IS_INCLUDED
+The decision,Wednesday,IS_INCLUDED
+must be returned,Jan. 14,BEFORE
+ruled,Wednesday,IS_INCLUDED
+was found,Thanksgiving Day,IS_INCLUDED
+consider,Friday,AFTER
+testify,Feb. 10,IS_INCLUDED
+sought to become,Friday,IS_INCLUDED
+subpoenaed,Friday,IS_INCLUDED
+say,O,BEFORE
+oppose,O,INCLUDES
+saying,O,BEFORE
+is fighting to keep,O,INCLUDES
+said,O,BEFORE
+allowed,O,BEFORE
+the dispute,O,INCLUDES
+his sea rescue,O,BEFORE
+said,O,BEFORE
+told,O,BEFORE
+said,O,BEFORE
+have counseled,O,BEFORE
+said,O,BEFORE
+dismissed,O,BEFORE
+said,O,BEFORE
+told,O,BEFORE
+and set,O,BEFORE
+marked,O,BEFORE
+estimated,O,BEFORE
+QUOTQUOT pushing,O,BEFORE
+marched,O,BEFORE
+a massive demonstration,O,BEFORE
+expressed,O,BEFORE
+said,O,BEFORE
+is fighting to keep,Nov. 25,BEGUN_BY
+is fighting to keep,Friday,IS_INCLUDED
+to hear,March 6,IS_INCLUDED
+allowed,Friday,IS_INCLUDED
+ideological battle,decades-long,IS_INCLUDED
+would go,one minute,IS_INCLUDED
+told,this week,IS_INCLUDED
+lifted,this week,IS_INCLUDED
+his repatriation,Friday,IS_INCLUDED
+was found clinging,Nov. 25,IS_INCLUDED
+the triumph,41 years ago,IS_INCLUDED
+brought,41 years ago,IS_INCLUDED
+the revolution,41 years ago,IS_INCLUDED
+the larger demonstrations,early December,IS_INCLUDED
+a massive demonstration,Friday,IS_INCLUDED
+expressed,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+could be located,O,BEFORE
+has not appeared,O,BEFORE
+have said,O,BEFORE
+have fought to keep,O,BEFORE
+died,O,BEFORE
+has become,O,BEFORE
+said,O,BEFORE
+exhorted,O,BEFORE
+blocked,O,BEFORE
+has written,O,BEFORE
+said,O,BEFORE
+has held,O,BEFORE
+the U.S. government QUOTs decision,O,BEFORE
+protests,O,BEFORE
+state-run television broadcast footage,O,BEFORE
+was announced,Wednesday,IS_INCLUDED
+wants,now,IS_INCLUDED
+died,Nov. 25,BEFORE
+Rescued,Nov. 25,IS_INCLUDED
+several thousand rallying Cuban scientists,Wednesday night,IS_INCLUDED
+must not stop,one minute,INCLUDES
+said,Wednesday night,IS_INCLUDED
+QUOTQUOT proceed,now,IS_INCLUDED
+predicted,Wednesday,IS_INCLUDED
+to repatriate,Jan. 14,BEFORE
+Wednesday QUOTs ruling,Wednesday,IS_INCLUDED
+Elian QUOTs return,Wednesday,AFTER
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+invasions COMMA sabotage and attempts,40 years,IS_INCLUDED
+has held,daily,IS_INCLUDED
+such rallies,daily,IS_INCLUDED
+attended,Thursday,IS_INCLUDED
+state-run television broadcast footage,Jan. 14,BEFORE
+state-run television broadcast footage,Thursday,BEFORE
+Kopp QUOTs arrest,O,AFTER
+leading,O,AFTER
+is being offered,O,INCLUDES
+said,O,IS_INCLUDED
+citizen assistance,1950,INCLUDES
+located COMMA,1950,BEGUN_BY
+have been taken,1950,BEGUN_BY
+began,1950,IS_INCLUDED
+be placed,O,BEFORE
+was,O,BEFORE
+has used,O,BEFORE
+says,O,IS_INCLUDED
+abortion protests,O,BEFORE
+has been arrested,O,BEFORE
+said,last year,IS_INCLUDED
+have been related,past 20 years,IS_INCLUDED
+has held,past 20 years,IS_INCLUDED
+to be,O,INCLUDES
+Kopp purports,O,INCLUDES
+fired,O,BEFORE
+was killed,O,BEFORE
+the shooting,O,BEFORE
+is wanted,O,INCLUDES
+the October 1998 shooting death,October 1998,IS_INCLUDED
+was indicted,last year,IS_INCLUDED
+said,O,IS_INCLUDED
+is wanted,O,INCLUDES
+say,O,AFTER
+to spread,O,AFTER
+allows,O,IS_INCLUDED
+the attack,1995,IS_INCLUDED
+survived,1995,INCLUDES
+was wounded,1995,IS_INCLUDED
+the 1995 shooting,1995,IS_INCLUDED
+charged,Monday,IS_INCLUDED
+issued,Monday,IS_INCLUDED
+performed,O,BEFORE
+at least two other shootings,O,BEFORE
+is wanted,O,INCLUDES
+an alleged anti-abortion murder,O,BEFORE
+on,O,INCLUDES
+issued,Monday,IS_INCLUDED
+said,O,BEFORE
+an interview,O,BEFORE
+received,O,BEFORE
+said,O,BEFORE
+its condemnation,O,INCLUDES
+kept,O,BEFORE
+is fighting,O,INCLUDES
+trying to reach,O,BEFORE
+such traditional political events,O,BEFORE
+marched,O,BEFORE
+were held,O,BEFORE
+marched,O,BEFORE
+wore,O,BEFORE
+said,O,BEFORE
+compared,O,BEFORE
+recited,O,BEFORE
+rescue,O,BEFORE
+flooded,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+quoted,O,BEFORE
+had amassed QUOTQUOT,O,BEFORE
+engaged,O,BEFORE
+drove,O,BEFORE
+the ill-fated journey,O,BEFORE
+say,O,INCLUDES
+a conference,O,BEFORE
+survived,O,BEFORE
+wreck,O,BEFORE
+an interview,Friday,IS_INCLUDED
+the encounter,Friday,BEFORE
+received,Friday,BEFORE
+offered,Friday,IS_INCLUDED
+read,Friday,IS_INCLUDED
+Wednesday QUOTs meeting,Wednesday,IS_INCLUDED
+backed,the past two months,IS_INCLUDED
+has demanded,the past two months,IS_INCLUDED
+clinging,Nov. 25,IS_INCLUDED
+was rescued,Nov. 25,IS_INCLUDED
+to draw,every day,IS_INCLUDED
+has been using,every day,IS_INCLUDED
+wore,Friday morning,IS_INCLUDED
+marched,Friday morning,IS_INCLUDED
+Similar events,Friday morning,IS_INCLUDED
+began,Friday morning,IS_INCLUDED
+wore,this year,IS_INCLUDED
+fought,1898,IS_INCLUDED
+held,annually,IS_INCLUDED
+compared,Friday,IS_INCLUDED
+rescue,two months ago,IS_INCLUDED
+an international custody battle,Friday,INCLUDES
+rallies,Friday,IS_INCLUDED
+celebrated,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+practically kidnapped,Nov. 25,IS_INCLUDED
+returned,later that year,IS_INCLUDED
+had fled,later that year,BEFORE
+had fled,June 1998,IS_INCLUDED
+quoted,Friday,BEFORE
+called,Friday,IS_INCLUDED
+placed,Friday,IS_INCLUDED
+say,Friday,BEFORE
+a conference,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+say,O,BEFORE
+dismissed,O,BEFORE
+said,O,BEFORE
+told,O,BEFORE
+has been found,O,BEFORE
+show,O,INCLUDES
+was found,O,BEFORE
+show,O,INCLUDES
+said,O,BEFORE
+the Miami relatives battle,O,INCLUDES
+has ruled,O,BEFORE
+was placed,O,BEFORE
+said,O,BEFORE
+requested,O,BEFORE
+said,O,BEFORE
+learning,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+a news conference,O,BEFORE
+withdraw,O,BEFORE
+has permitted and,O,BEFORE
+objected,O,BEFORE
+considering,O,INCLUDES
+said,O,BEFORE
+is reviewing,O,BEFORE
+said,Feb. 4,IS_INCLUDED
+published,daily,IS_INCLUDED
+published,Thursday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+told,Wednesday,IS_INCLUDED
+joining,the future,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+was found,1997,IS_INCLUDED
+was found,1991,IS_INCLUDED
+show,Thursday,IS_INCLUDED
+said COMMA,now,BEFORE
+said,now,IS_INCLUDED
+QUOTll have to look,now,AFTER
+was placed,last Thanksgiving,IS_INCLUDED
+requested,Thursday,IS_INCLUDED
+revolution,1991,BEFORE
+revolution,Thursday,BEFORE
+extolled,Thursday,IS_INCLUDED
+denounced,Thursday,IS_INCLUDED
+a daily public rally,daily,IS_INCLUDED
+has become,Thursday,BEFORE
+a packed auditorium,Thursday,IS_INCLUDED
+joined,Thursday,IS_INCLUDED
+met,Thursday,BEFORE
+the decision,future,BEFORE
+introduced,this month,IS_INCLUDED
+told,Thursday,IS_INCLUDED
+would help keep,Thursday,AFTER
+sought,Thursday,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+agreed,this week,IS_INCLUDED
+reemerged,Thursday,IS_INCLUDED
+a meeting,Thursday,AFTER
+a request,last week,IS_INCLUDED
+considering,Thursday,IS_INCLUDED
+asked,Thursday,IS_INCLUDED
+is reviewing,Thursday,IS_INCLUDED
+have moved to dismiss,O,BEFORE
+have moved to dismiss,O,BEFORE
+said,O,BEFORE
+maintains,O,INCLUDES
+say,O,INCLUDES
+is fighting to keep,O,INCLUDES
+an international custody battle,O,INCLUDES
+an attempt,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+wrote,O,BEFORE
+are fighting to keep,O,INCLUDES
+no immediate response,O,BEFORE
+published,O,BEFORE
+wrote,O,BEFORE
+said,O,BEFORE
+ruled,last month,IS_INCLUDED
+filed,Monday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+say,Wednesday,IS_INCLUDED
+is fighting to keep,Wednesday,IS_INCLUDED
+was found,Nov. 25,IS_INCLUDED
+said,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+object,Monday,IS_INCLUDED
+dated,Monday,IS_INCLUDED
+was published,Tuesday,IS_INCLUDED
+wrote,this week,IS_INCLUDED
+is subjected,Wednesday,IS_INCLUDED
+is subjected,daily,IS_INCLUDED
+his prolonged kidnapping,Wednesday,BEFORE
+published,Wednesday,IS_INCLUDED
+have moved to dismiss,O,BEFORE
+said,O,BEFORE
+maintains,O,INCLUDES
+died to give,O,BEFORE
+say,O,INCLUDES
+is fighting to keep,O,INCLUDES
+sank,O,BEFORE
+an international custody battle,O,INCLUDES
+an attempt,O,INCLUDES
+had written,O,BEFORE
+sitting,O,BEFORE
+support,O,INCLUDES
+the revolution,O,BEFORE
+have said,O,BEFORE
+are fighting to keep,O,INCLUDES
+no immediate response,O,BEFORE
+wrote,O,BEFORE
+said,O,BEFORE
+ruled,last month,IS_INCLUDED
+filed,Monday,IS_INCLUDED
+must not have written,Wednesday,BEFORE
+said,Wednesday,IS_INCLUDED
+was found,Nov. 25,IS_INCLUDED
+said,Monday,IS_INCLUDED
+dated,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+was published,Tuesday,IS_INCLUDED
+had written,this week,IS_INCLUDED
+called,Wednesday night,IS_INCLUDED
+sitting,Wednesday night,IS_INCLUDED
+gathered,Wednesday night,IS_INCLUDED
+the revolution,42 years ago,IS_INCLUDED
+is subjected,daily,IS_INCLUDED
+lack,Wednesday,IS_INCLUDED
+published,daily,IS_INCLUDED
+published,Wednesday,IS_INCLUDED
+his prolonged kidnapping,Wednesday,BEFORE
+published,Wednesday,IS_INCLUDED
+had been shared,O,BEFORE
+a speech,O,BEFORE
+said,O,BEFORE
+denied,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+their battle,O,INCLUDES
+lose,O,AFTER
+told,O,BEFORE
+revealed,Tuesday,IS_INCLUDED
+another live television appearance,Sunday night,IS_INCLUDED
+raised,Sunday night,IS_INCLUDED
+might take,Tuesday,AFTER
+said,Tuesday,IS_INCLUDED
+continued U.S. military presence,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+a crossing,O,BEFORE
+his calls,O,BEFORE
+said,O,BEFORE
+turned,O,BEFORE
+the communist government QUOTs battle,O,INCLUDES
+noted,O,BEFORE
+declaring,O,BEFORE
+followed,O,BEFORE
+waved,O,BEFORE
+wearing,O,BEFORE
+declared,O,BEFORE
+likened,O,BEFORE
+launched,O,BEFORE
+paid,O,BEFORE
+perished,late November,IS_INCLUDED
+has cited,Saturday,BEFORE
+declaring,Jan. 1 COMMA 1959,IS_INCLUDED
+waged,years,IS_INCLUDED
+followed,years,IS_INCLUDED
+landed,Dec. 2 COMMA 1956,IS_INCLUDED
+the revolutionary battle,more than four decades ago,IS_INCLUDED
+a rally,Saturday,IS_INCLUDED
+launched,more than four decades ago,IS_INCLUDED
+paid,Saturday,IS_INCLUDED
+joked,O,BEFORE
+played,O,BEFORE
+had said,O,BEFORE
+said,O,BEFORE
+have refused to sign,O,BEFORE
+has given,O,BEFORE
+wants,O,INCLUDES
+has demanded,O,BEFORE
+saying,O,INCLUDES
+are fighting to keep,O,INCLUDES
+the attempted crossing,O,BEFORE
+died,O,BEFORE
+oppose returning,O,INCLUDES
+said,O,BEFORE
+has proposed,O,BEFORE
+announced,O,BEFORE
+another dramatic move,O,BEFORE
+are seeking to block,O,INCLUDES
+to stay,O,AFTER
+would not leave,O,BEFORE
+have proposed,O,BEFORE
+said,O,BEFORE
+has said,O,BEFORE
+said,O,BEFORE
+requests,O,BEFORE
+refused,O,BEFORE
+a state television station broadcast,O,BEFORE
+continued,O,BEFORE
+read,O,BEFORE
+signed,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+appeared,O,BEFORE
+said,O,BEFORE
+played,Sunday night,IS_INCLUDED
+have refused to sign,today,BEFORE
+to sign,9 a.m. Tuesday,BEFORE
+has given,9 a.m. Tuesday,BEFORE
+are fighting to keep,today,INCLUDES
+sank,late November,IS_INCLUDED
+died,late November,IS_INCLUDED
+was rescued,late November,IS_INCLUDED
+could take,a month,IS_INCLUDED
+another dramatic move,today,IS_INCLUDED
+to stay,today,AFTER
+would give,today,AFTER
+refused,Sunday,BEFORE
+read,Sunday,IS_INCLUDED
+continued,Sunday,IS_INCLUDED
+read,Sunday,IS_INCLUDED
+transport,tomorrow,IS_INCLUDED
+to leave,tomorrow,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+to leave,Tuesday,IS_INCLUDED
+said,today,IS_INCLUDED
+planned to apply,today,IS_INCLUDED
+said,today,IS_INCLUDED
+the campaign,today,INCLUDES
+to show,today,IS_INCLUDED
+delivered,O,BEFORE
+approved,O,BEFORE
+had asked,O,BEFORE
+the crossing,O,BEFORE
+sank,O,BEFORE
+insisted,O,BEFORE
+has demanded,O,BEFORE
+has been battling to keep,O,INCLUDES
+have been caring,O,BEFORE
+said,O,BEFORE
+his lightning trip,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+announced,O,BEFORE
+came,O,BEFORE
+his speech,O,BEFORE
+said,O,BEFORE
+told,O,BEFORE
+has served,the past four months,IS_INCLUDED
+had asked,this week,BEFORE
+his speech,Wednesday night,IS_INCLUDED
+was rescued,late November,IS_INCLUDED
+said,this week,IS_INCLUDED
+traveled,Wednesday,IS_INCLUDED
+to see,4 in the morning,IS_INCLUDED
+will leave,4 in the morning,IS_INCLUDED
+would be traveling,Thursday,IS_INCLUDED
+declared,Wednesday night,IS_INCLUDED
+said,O,BEFORE
+joined,O,BEFORE
+left,O,BEFORE
+said,O,BEFORE
+Pigs fiasco,O,BEFORE
+worried,O,BEFORE
+said,O,BEFORE
+dismissed,O,BEFORE
+comment,O,BEFORE
+have filed,O,BEFORE
+said,O,BEFORE
+wants to return,O,INCLUDES
+insisted,O,BEFORE
+has spoken,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+the custody battle,O,INCLUDES
+comes,O,BEFORE
+want,O,INCLUDES
+wants,O,INCLUDES
+have attempted to portray,O,BEFORE
+say,O,BEFORE
+has pushed,O,BEFORE
+sank,O,BEFORE
+was found clinging,O,BEFORE
+said,O,BEFORE
+has lived,O,BEFORE
+was growing,O,INCLUDES
+seeking,O,INCLUDES
+has said,O,BEFORE
+wants to return,O,INCLUDES
+his waiting father,O,INCLUDES
+has been asked,O,BEFORE
+deciding,O,INCLUDES
+the Elian Gonzalez custody battle,O,INCLUDES
+lobbed,O,BEFORE
+said,Sunday,IS_INCLUDED
+this fight,Sunday,INCLUDES
+tell,Sunday,IS_INCLUDED
+protesters prayed,Sunday,IS_INCLUDED
+left,1962,IS_INCLUDED
+said,today,IS_INCLUDED
+turned,today,AFTER
+were betrayed,today,BEFORE
+Pigs fiasco,today,BEFORE
+the 39th anniversary,today,IDENTITY
+would fail,today,IS_INCLUDED
+worried,today,IS_INCLUDED
+is claiming,today,IS_INCLUDED
+the show,Sunday,IS_INCLUDED
+the broadcast,Sunday,IS_INCLUDED
+have filed,Sunday,BEFORE
+arrived,April 6,IS_INCLUDED
+suffered,November,IS_INCLUDED
+said,Sunday night,IS_INCLUDED
+are doing,Sunday night,BEFORE
+have manipulated,Sunday night,BEFORE
+said,Sunday night,IS_INCLUDED
+lashed,Sunday night,IS_INCLUDED
+want,Thursday,AFTER
+issued,Thursday,IS_INCLUDED
+say,today,INCLUDES
+has pushed,today,BEFORE
+fleeing,November,IS_INCLUDED
+was found clinging,November,IS_INCLUDED
+was found clinging,November,IS_INCLUDED
+spent,Sunday night,IS_INCLUDED
+said,Sunday night,IS_INCLUDED
+might send,today,AFTER
+has lived,five months,IS_INCLUDED
+was growing,today,BEFORE
+has said,today,BEFORE
+his waiting father,today,IS_INCLUDED
+has been asked,today,BEFORE
+lobbed,today,BEFORE
+returned,today,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+did not expect,O,INCLUDES
+had received,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+has worked,O,BEFORE
+has gone,O,BEFORE
+actions,O,BEFORE
+has responded,O,BEFORE
+the opening,O,BEFORE
+said,O,BEFORE
+is accused,O,INCLUDES
+say,O,BEFORE
+the bombings,O,BEFORE
+can offer,O,INCLUDES
+suffered,O,BEFORE
+has finished gathering,O,AFTER
+is expected to be demolished,O,INCLUDES
+have gone,O,BEFORE
+issued,O,BEFORE
+has lifted,O,BEFORE
+targeted,O,BEFORE
+does not want to see,O,INCLUDES
+said,O,BEFORE
+report,O,BEFORE
+say,O,BEFORE
+beginning to reap,O,BEFORE
+have frightened,O,BEFORE
+The bombings,O,BEFORE
+has been sending,13 years,IS_INCLUDED
+jumped,last year,IS_INCLUDED
+jumped,1980,AFTER
+The bombing,last year,AFTER
+dropped,last year,IS_INCLUDED
+the opening,last year,BEFORE
+the bombings,now,BEFORE
+says,now,IS_INCLUDED
+suffered,Aug. 13,BEFORE
+put,Aug. 13,IS_INCLUDED
+the Aug. 7 Embassy bombings,Aug. 7,IS_INCLUDED
+The bombings,years-old,AFTER
+must not be allowed to succeed,O,AFTER
+want,O,INCLUDES
+willing,O,AFTER
+better protected,O,AFTER
+paid,O,BEFORE
+restricting,O,INCLUDES
+took,O,INCLUDES
+was,O,BEFORE
+declined,1992,ENDED_BY
+declined,1982,BEGUN_BY
+performed,O,INCLUDES
+have,O,INCLUDES
+obtain,O,INCLUDES
+have worked to make,O,INCLUDES
+have worked to make,O,INCLUDES
+ongoing campaigns,O,INCLUDES
+The increase,O,INCLUDES
+fuel,O,INCLUDES
+frequent accusations,O,INCLUDES
+Such incendiary rhetoric,O,INCLUDES
+a QUOTQUOT fatality,O,INCLUDES
+wounded,O,INCLUDES
+are QUOTQUOT working,O,INCLUDES
+indicating whether,O,INCLUDES
+says,O,INCLUDES
+lists,O,INCLUDES
+are warranted,O,INCLUDES
+to issue,O,AFTER
+seem,O,INCLUDES
+the bombings and shootings,O,BEFORE
+the bombings and shootings,O,BEFORE
+have denounced,O,BEFORE
+seeking to exercise,O,INCLUDES
+harassing,O,INCLUDES
+bombing,O,INCLUDES
+shooting,O,INCLUDES
+the attempt,O,INCLUDES
+is,O,INCLUDES
+political and judicial struggle,O,INCLUDES
+imposed,O,INCLUDES
+requiring,O,INCLUDES
+certain procedures,O,INCLUDES
+banning,O,INCLUDES
+are working to dismantle,O,INCLUDES
+is,O,INCLUDES
+make,O,INCLUDES
+have become,O,INCLUDES
+Arson and bombings,O,INCLUDES
+Arson and bombings,O,INCLUDES
+a dozen attempted murders,last five years,IS_INCLUDED
+have been,last five years,IS_INCLUDED
+have been murdered,1993,BEGUN_BY
+wounded,January,IS_INCLUDED
+killed,January,IS_INCLUDED
+bombing,January,IS_INCLUDED
+the 25th anniversary,week,BEFORE
+unsolved sniper shootings,1994,IS_INCLUDED
+to investigate,Last week,INCLUDES
+joined,Last week,IS_INCLUDED
+an assault,O,IS_INCLUDED
+be done,O,AFTER
+has to be stationed,O,AFTER
+the severest possible crackdown,O,AFTER
+must be met,O,AFTER
+Their repeated acts,O,BEFORE
+terrorism,O,INCLUDES
+has become,O,INCLUDES
+His death shows,O,INCLUDES
+tore,Friday,IS_INCLUDED
+could not stop,Friday,IS_INCLUDED
+to provide,O,BEFORE
+a principled commitment,O,BEFORE
+choose,O,INCLUDES
+persevered,O,BEFORE
+had become,past decade,IS_INCLUDED
+performed,O,BEFORE
+was,O,BEFORE
+to perform,O,INCLUDES
+risk,O,INCLUDES
+the latest depraved assault,O,BEFORE
+The murder,O,BEFORE
+said,Monday COMMA Oct. 26,IS_INCLUDED
+has gone,O,INCLUDES
+works,O,INCLUDES
+said,O,IS_INCLUDED
+are left are,O,INCLUDES
+are left are,O,INCLUDES
+have moved,O,BEFORE
+the 1992 protests,1992,IS_INCLUDED
+led,1992,IS_INCLUDED
+said,O,IS_INCLUDED
+remains COMMA,O,INCLUDES
+aroused,1990s,IS_INCLUDED
+aroused,1980s,IS_INCLUDED
+intended to shut,1992,IS_INCLUDED
+started,1992,IS_INCLUDED
+said,O,IS_INCLUDED
+the killing,O,BEFORE
+denounced,O,IS_INCLUDED
+were,O,INCLUDES
+said,O,IS_INCLUDED
+shooting,O,IS_INCLUDED
+drinking,O,IS_INCLUDED
+Men smoking cigars,O,IS_INCLUDED
+hoped,O,INCLUDES
+said,O,IS_INCLUDED
+the attack,O,BEFORE
+decried,O,IS_INCLUDED
+opposed,O,INCLUDES
+said,O,IS_INCLUDED
+call,O,INCLUDES
+said,O,IS_INCLUDED
+being,O,INCLUDES
+try to distinguish,O,INCLUDES
+think,O,INCLUDES
+violent attacks,O,BEFORE
+has helped lead,O,BEFORE
+has helped lead,O,INCLUDES
+said,O,IS_INCLUDED
+called,O,IS_INCLUDED
+assailed,O,IS_INCLUDED
+to defend,O,IS_INCLUDED
+was QUOTQUOT,O,BEFORE
+said,O,IS_INCLUDED
+condemned,O,IS_INCLUDED
+said,O,IS_INCLUDED
+called,Sunday,IS_INCLUDED
+called,Sunday,IS_INCLUDED
+the slaying,Sunday,BEFORE
+urged,Sunday,IS_INCLUDED
+called,Sunday,IS_INCLUDED
+condemned,O,IS_INCLUDED
+protected,O,BEFORE
+shot,O,BEFORE
+would want,O,INCLUDES
+released,O,IS_INCLUDED
+said,O,IS_INCLUDED
+ending,O,BEFORE
+described,O,IS_INCLUDED
+expressed,O,IS_INCLUDED
+was declared,over an hour,IAFTER
+tried to revive,O,BEFORE
+said,O,IS_INCLUDED
+were watching,O,BEFORE
+ricocheted,O,BEFORE
+bounced,O,BEFORE
+said,O,IS_INCLUDED
+occurred,O,BEFORE
+were,O,BEFORE
+emerged,Sunday,IS_INCLUDED
+said,O,IS_INCLUDED
+the slaying,O,BEFORE
+next week QUOTs election,next week,IS_INCLUDED
+not working,O,INCLUDES
+said,O,IS_INCLUDED
+can have,O,INCLUDES
+a homicide,Friday,IS_INCLUDED
+a homicide,O,BEFORE
+Trying to score,O,INCLUDES
+had to be done,O,INCLUDES
+to be made,O,AFTER
+might be,O,INCLUDES
+agreed,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the unfortunate murder,Friday,IS_INCLUDED
+the unfortunate murder,O,BEFORE
+to exploit,O,INCLUDES
+Eliot Spitzer QUOTs willingness,O,INCLUDES
+seen,O,INCLUDES
+to garner,O,INCLUDES
+the murder,Friday,IS_INCLUDED
+the murder,O,BEFORE
+attempting to capitalize,O,INCLUDES
+had QUOTQUOT sunk,O,INCLUDES
+said,O,IS_INCLUDED
+has,O,INCLUDES
+noting,O,IS_INCLUDED
+defended,O,IS_INCLUDED
+would surface,O,AFTER
+was QUOTQUOT,O,INCLUDES
+said,O,IS_INCLUDED
+elected,Election Day,IS_INCLUDED
+would do,first day,IS_INCLUDED
+vowing,Monday,IS_INCLUDED
+called,Monday,IS_INCLUDED
+became,O,BEFORE
+investigated,O,BEFORE
+dismantling,O,BEFORE
+criticized,O,IS_INCLUDED
+was replaced,1992,IS_INCLUDED
+removed,1992,IS_INCLUDED
+worked,1992,IS_INCLUDED
+was,1992,IS_INCLUDED
+had blocked,1992,IS_INCLUDED
+a court order,1992,IS_INCLUDED
+failing to enforce,1992,IS_INCLUDED
+attacked,Sunday,IS_INCLUDED
+Sunday QUOTs debate,Sunday,IS_INCLUDED
+is going to be,Election Day,ENDED_BY
+is going to be,O,BEGUN_BY
+is going to be,O,INCLUDES
+Stopping clinic violence,O,INCLUDES
+Stopping clinic violence,O,INCLUDES
+said,O,IS_INCLUDED
+is going to make,O,INCLUDES
+is going to make,O,INCLUDES
+was,O,IS_INCLUDED
+heightens,O,INCLUDES
+added COMMA QUOTQUOT,O,IS_INCLUDED
+said,O,IS_INCLUDED
+was,O,INCLUDES
+agree,O,INCLUDES
+planned to use,O,AFTER
+planned to refer,O,AFTER
+planned to use,O,INCLUDES
+planned to refer,O,INCLUDES
+would not talk,O,IS_INCLUDED
+the slaying,Friday,IS_INCLUDED
+the slaying,O,BEFORE
+would not comment,O,IS_INCLUDED
+an incident,Friday,IS_INCLUDED
+the shooting,Friday,IS_INCLUDED
+brings,O,INCLUDES
+to go,O,AFTER
+might not consider,O,INCLUDES
+to energize,O,INCLUDES
+an incident,O,BEFORE
+said : QUOTQUOT,O,IS_INCLUDED
+was COMMA,O,BEFORE
+is,O,INCLUDES
+said,O,IS_INCLUDED
+is not working,O,INCLUDES
+the shooting,O,BEFORE
+are,O,INCLUDES
+said,O,IS_INCLUDED
+would have been,O,INCLUDES
+is considering buying,O,INCLUDES
+will have,O,INCLUDES
+said,O,IS_INCLUDED
+attack or blockade,1994,INCLUDES
+attack or blockade,1994,INCLUDES
+made,1994,IS_INCLUDED
+sponsored,1994,IS_INCLUDED
+Clinic Entrances Act,1994,IS_INCLUDED
+is intended to spotlight,Tuesday,IS_INCLUDED
+is intended to spotlight,O,INCLUDES
+said,O,IS_INCLUDED
+the bombing,earlier this year,IS_INCLUDED
+wounded,earlier this year,IS_INCLUDED
+made,Friday,BEFORE
+died,Friday,IS_INCLUDED
+made,last week,IS_INCLUDED
+to screen,Tuesday,IS_INCLUDED
+a news conference,Tuesday,IS_INCLUDED
+plans to hold,Tuesday,IS_INCLUDED
+plans to hold,Tuesday,IS_INCLUDED
+opposed,Saturday,INCLUDES
+followed,Saturday,IS_INCLUDED
+Saturday night QUOTs debate,Saturday,IS_INCLUDED
+raised,Saturday,IS_INCLUDED
+was,Saturday,IS_INCLUDED
+the work,O,INCLUDES
+are doing,O,INCLUDES
+opposed,Saturday,INCLUDES
+knew,Saturday,INCLUDES
+did not know,Saturday,INCLUDES
+polled said,Saturday,IS_INCLUDED
+completed,Saturday,IS_INCLUDED
+was tyring to draw,Friday,INCLUDES
+was tyring to draw,Friday,BEFORE
+the killing,Friday,IS_INCLUDED
+running,O,INCLUDES
+have been identified,O,INCLUDES
+stood,Friday,IS_INCLUDED
+was shot,Friday,IS_INCLUDED
+puts,O,INCLUDES
+say,O,IS_INCLUDED
+has not raised,O,INCLUDES
+the tight race,O,INCLUDES
+to make,O,INCLUDES
+has moved,O,INCLUDES
+favors,O,INCLUDES
+the race,O,INCLUDES
+say,O,IS_INCLUDED
+has become,O,INCLUDES
+performed,O,BEFORE
+The killing,O,BEFORE
+Slepian QUOTs slaying,Oct. 23,IS_INCLUDED
+leading,O,AFTER
+is offering,O,INCLUDES
+Slepian and four others,four years,IS_INCLUDED
+the attack,Oct. 23,IS_INCLUDED
+is investigating,O,INCLUDES
+traveled,O,BEFORE
+may be,O,INCLUDES
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the murder,Oct. 23,IS_INCLUDED
+may have been,O,BEFORE
+quoted,O,IS_INCLUDED
+traveled,O,BEFORE
+want to question,O,INCLUDES
+said,O,IS_INCLUDED
+is,O,INCLUDES
+does not know,O,INCLUDES
+are pursuing,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+is wanted,O,INCLUDES
+says,O,IS_INCLUDED
+performed,O,BEFORE
+the Oct. 23 slaying,Oct. 23,IS_INCLUDED
+was spotted,Oct. 23,IS_INCLUDED
+has been,O,INCLUDES
+reported,Friday,IS_INCLUDED
+killed,Oct. 23,IS_INCLUDED
+a female associate crossing,days,IS_INCLUDED
+was seen,days,IS_INCLUDED
+may have fled,O,INCLUDES
+last month QUOTs shooting death,last month,IS_INCLUDED
+wanted,O,INCLUDES
+said,O,IS_INCLUDED
+does nQUOTt make,O,INCLUDES
+are interviewing,O,INCLUDES
+Slepian QUOTs death,O,BEFORE
+has been named,O,INCLUDES
+emphasized,O,IS_INCLUDED
+heard,O,INCLUDES
+said,O,IS_INCLUDED
+the shootings,O,BEFORE
+investigating,O,INCLUDES
+are believed to live,O,INCLUDES
+are believed to live,O,INCLUDES
+had been involved,O,BEFORE
+were not,O,INCLUDES
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the homicide,O,BEFORE
+were,O,BEFORE
+interviews,O,IS_INCLUDED
+were being sought,O,BEFORE
+said,O,IS_INCLUDED
+took,day,IS_INCLUDED
+had been sent,day,IS_INCLUDED
+were trying to attend,day,IS_INCLUDED
+were trying to attend,day,IS_INCLUDED
+his death,day,BEFORE
+showed,day,IS_INCLUDED
+said,O,IS_INCLUDED
+performed,O,BEFORE
+four other sniper attacks,O,BEFORE
+looking,O,INCLUDES
+performed,O,BEFORE
+was,O,BEFORE
+returned,Friday COMMA Oct. 23,IS_INCLUDED
+was shot,Friday COMMA Oct. 23,IS_INCLUDED
+declined to comment,Saturday,IS_INCLUDED
+declined to comment,Saturday,IS_INCLUDED
+is being sought,Friday,INCLUDES
+possible links,Friday,INCLUDES
+had indicated,Friday,INCLUDES
+quoted,Friday,IS_INCLUDED
+played,Saturday,IS_INCLUDED
+released,O,IS_INCLUDED
+interviewed,O,IS_INCLUDED
+had been located,O,IS_INCLUDED
+did not know,O,INCLUDES
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+are investigating,daily,IS_INCLUDED
+know,O,INCLUDES
+said,O,IS_INCLUDED
+interviews,day,IS_INCLUDED
+are doing,day,IS_INCLUDED
+the Oct. 23 killing,Oct. 23,IS_INCLUDED
+was involved,Oct. 23,INCLUDES
+were not termed,Thursday,IS_INCLUDED
+sent,Thursday,IS_INCLUDED
+were named,Thursday,IS_INCLUDED
+performed,last week,BEFORE
+the sniper slaying,last week,BEFORE
+were sought,last week,IS_INCLUDED
+released,O,IS_INCLUDED
+has interviewed,O,IS_INCLUDED
+Silence,Friday,IS_INCLUDED
+replied : QUOTQUOT,Friday,IS_INCLUDED
+a long pause,Friday,IS_INCLUDED
+were asked,Friday,IS_INCLUDED
+the ceremony,Friday,IS_INCLUDED
+said,last year,IS_INCLUDED
+to serve,O,AFTER
+want,O,INCLUDES
+to reassure,O,INCLUDES
+has gone,O,INCLUDES
+the reactions,O,INCLUDES
+has been,O,INCLUDES
+formalized,1997,IS_INCLUDED
+created,1997,IS_INCLUDED
+NATO expansion,1997,AFTER
+could live,1997,AFTER
+told,1997,IS_INCLUDED
+looked,July,INCLUDES
+vacillated,July,INCLUDES
+to deal,July,INCLUDES
+were turned,July,IS_INCLUDED
+to meet,July,INCLUDES
+had tried,July,BEFORE
+announced,July,IS_INCLUDED
+a summit,July,IS_INCLUDED
+remembered being asked to help QUOTQUOT turn,Friday,AFTER
+remembered being asked to help QUOTQUOT turn,Friday,BEGUN_BY
+remembered being asked to help QUOTQUOT turn,Friday,BEFORE
+remembered being asked to help QUOTQUOT turn,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+was,1993,INCLUDES
+the same dissuade,1993,AFTER
+to secure,1993,AFTER
+should be used,1993,AFTER
+the same message,1993,IS_INCLUDED
+brought,1993,IS_INCLUDED
+involved,1993,IS_INCLUDED
+the opening,1993,IS_INCLUDED
+took,1993,IS_INCLUDED
+are remembered,O,INCLUDES
+These conversations,1993,IS_INCLUDED
+was,1993,IS_INCLUDED
+met,1993,BEFORE
+the expansion,1993,BEGUN_BY
+embarked,1993,IS_INCLUDED
+reached,O,INCLUDES
+adding,1982,IS_INCLUDED
+adding,1955,IS_INCLUDED
+adding,1952,IS_INCLUDED
+has expanded,O,BEFORE
+was brought,O,BEFORE
+the collective defense,O,INCLUDES
+calls,O,INCLUDES
+Formed,O,BEFORE
+said,O,IS_INCLUDED
+created,April 4 COMMA 1949,IS_INCLUDED
+signed,April 4 COMMA 1949,IS_INCLUDED
+was founded,O,BEFORE
+to resonate,O,IS_INCLUDED
+the ceremony,O,IS_INCLUDED
+wanted,O,INCLUDES
+to choose,O,BEFORE
+decision,O,BEFORE
+is,O,INCLUDES
+was chosen,Friday QUOTs,BEFORE
+Friday QUOTs ceremony,Friday QUOTs,IS_INCLUDED
+said,O,IS_INCLUDED
+add,O,AFTER
+shall prove,O,AFTER
+carried,O,INCLUDES
+understood,O,INCLUDES
+emphasized,O,IS_INCLUDED
+said,O,IS_INCLUDED
+share,O,INCLUDES
+to rejoin,O,IS_INCLUDED
+has been,O,ENDED_BY
+was returning QUOTQUOT,O,IS_INCLUDED
+meant,O,BEGUN_BY
+said,O,IS_INCLUDED
+the 1956 uprising,1956,IS_INCLUDED
+remembers,O,INCLUDES
+said,O,IS_INCLUDED
+become,O,BEGUN_BY
+a guarantee,O,IS_INCLUDED
+Accession,O,IS_INCLUDED
+would become,O,IS_INCLUDED
+said COMMA,O,IS_INCLUDED
+dreamed,O,BEFORE
+fall,O,BEFORE
+believing,O,BEFORE
+his opposition work,O,BEFORE
+had remained,O,BEFORE
+said,O,IS_INCLUDED
+invaded,1968,IS_INCLUDED
+lived,1989,ENDED_BY
+lived,1968,BEGUN_BY
+comes,today,IS_INCLUDED
+said,O,IS_INCLUDED
+to win,O,BEFORE
+helped,O,BEFORE
+showed,O,INCLUDES
+won,1989,IS_INCLUDED
+had brought,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the Communist era,O,BEFORE
+was,O,BEFORE
+said,O,IS_INCLUDED
+belonged,O,INCLUDES
+returns,O,IS_INCLUDED
+stressed,O,IS_INCLUDED
+the spiritual homecoming,O,IS_INCLUDED
+to buy,coming years,IS_INCLUDED
+their armies and agree,O,BEFORE
+organize,O,BEFORE
+have had to cut,O,BEFORE
+have had to cut,O,BEFORE
+to meet,O,INCLUDES
+belonged,O,IS_INCLUDED
+does not agree,O,INCLUDES
+added COMMA referring,O,IS_INCLUDED
+added COMMA referring,O,IS_INCLUDED
+spelling,O,INCLUDES
+must be resolute,O,INCLUDES
+said,O,IS_INCLUDED
+make,O,INCLUDES
+has,O,INCLUDES
+is not,O,INCLUDES
+NATO-led enforcement,O,INCLUDES
+explaining,O,INCLUDES
+must be,O,INCLUDES
+enforce,O,INCLUDES
+was,O,INCLUDES
+insisted,O,IS_INCLUDED
+is resisting,O,INCLUDES
+posed,O,INCLUDES
+responds,next month,IS_INCLUDED
+an initiative,next month,IS_INCLUDED
+would produce,next month,IS_INCLUDED
+said,O,IS_INCLUDED
+The NATO summit,next month,IS_INCLUDED
+will be,O,AFTER
+face,O,INCLUDES
+know,O,INCLUDES
+to face QUOTQUOT,O,INCLUDES
+ready,O,INCLUDES
+said,O,IS_INCLUDED
+the aftermath,O,BEFORE
+and to defend,O,IS_INCLUDED
+will celebrate,next month,IS_INCLUDED
+to articulate,O,IS_INCLUDED
+her speech,O,IS_INCLUDED
+used,O,IS_INCLUDED
+drawn,O,BEFORE
+replacing,O,INCLUDES
+will continue erasing,O,INCLUDES
+will continue erasing,O,INCLUDES
+helped to do,O,BEFORE
+helped to do,O,BEFORE
+do QUOTQUOT,O,BEGUN_BY
+countered,O,IS_INCLUDED
+flanked,O,IS_INCLUDED
+sat,O,IS_INCLUDED
+her speech,O,IS_INCLUDED
+moved,Friday,IS_INCLUDED
+antagonize,O,INCLUDES
+would draw,O,INCLUDES
+welcoming,O,IS_INCLUDED
+argued,O,INCLUDES
+faced,O,INCLUDES
+the collapse,10 years ago,IS_INCLUDED
+the democratic gains,10 years ago,AFTER
+said COMMA to cement,10 years ago,BEGUN_BY
+said COMMA to cement,O,INCLUDES
+a desire,10 years ago,BEGUN_BY
+grew,10 years ago,BEGUN_BY
+has been,O,ENDED_BY
+The enlargement,O,IS_INCLUDED
+respects,O,INCLUDES
+been,O,ENDED_BY
+a statement,O,IS_INCLUDED
+said,O,IS_INCLUDED
+were raised,O,IS_INCLUDED
+were raised,O,IS_INCLUDED
+lit,O,IS_INCLUDED
+small-scale public celebrations,O,IS_INCLUDED
+was marked,O,IS_INCLUDED
+said,O,IS_INCLUDED
+To quote,O,IS_INCLUDED
+led,six year,IS_INCLUDED
+a six year trans-Atlantic diplomatic process,six year,IS_INCLUDED
+joining,six year,ENDS
+joining,O,IS_INCLUDED
+made,O,IS_INCLUDED
+the Communist takeover,1948,IS_INCLUDED
+fled,1948,AFTER
+was born,1948,BEFORE
+sign,O,IS_INCLUDED
+held,O,IS_INCLUDED
+signed,O,IS_INCLUDED
+watched,O,IS_INCLUDED
+a ceremony,O,IS_INCLUDED
+opening,Friday,IS_INCLUDED
+World War II,Friday,BEFORE
+the Soviet domination,Friday,ENDED_BY
+began,Friday,BEFORE
+ending,Friday,IS_INCLUDED
+embraced,Friday,IS_INCLUDED
+is,O,INCLUDES
+stood chatting,10 p.m.,IS_INCLUDED
+stood chatting,10 p.m.,IS_INCLUDED
+was shot,10 p.m.,IS_INCLUDED
+prohibit,O,INCLUDES
+was tied,O,AFTER
+to commit,O,BEFORE
+crossing,O,BEFORE
+an act,O,BEFORE
+the use,O,BEFORE
+abortion-related violence,O,BEFORE
+would be,O,AFTER
+said,O,IS_INCLUDED
+were being pursued,O,INCLUDES
+declined to discuss,O,IS_INCLUDED
+declined to discuss,O,IS_INCLUDED
+had been found,O,AFTER
+to prosecute,O,AFTER
+would make,O,AFTER
+prosecute,O,AFTER
+giving,O,AFTER
+precede,O,AFTER
+charged,O,AFTER
+is caught,O,AFTER
+were killed,1997,IS_INCLUDED
+were shot,1997,IS_INCLUDED
+perform,1997,INCLUDES
+were killed,1995,IS_INCLUDED
+were shot,1995,IS_INCLUDED
+perform,1995,INCLUDES
+were killed,1994,IS_INCLUDED
+were shot,1994,IS_INCLUDED
+perform,1994,INCLUDES
+were killed,days,IS_INCLUDED
+were shot,days,IS_INCLUDED
+perform,days,INCLUDES
+crossing,days,IS_INCLUDED
+crossing,1997,IS_INCLUDED
+crossing,1995,IS_INCLUDED
+crossing,1994,IS_INCLUDED
+the shooting,6 a.m. ten,AFTER
+spotted,6 a.m. ten,IS_INCLUDED
+matching,O,AFTER
+found,O,BEFORE
+includes,O,INCLUDES
+might present,O,AFTER
+said,O,IS_INCLUDED
+the slaying,O,BEFORE
+used,O,BEFORE
+resembles,O,INCLUDES
+have said,O,BEFORE
+is undergoing,O,INCLUDES
+April 8 buried one foot,April 8,INCLUDES
+was discovered,April 8,IS_INCLUDED
+his decision,O,IS_INCLUDED
+was,O,INCLUDES
+the finding,O,BEFORE
+said,O,IS_INCLUDED
+is,O,INCLUDES
+have,O,INCLUDES
+have admitted,O,INCLUDES
+would be,O,INCLUDES
+wanted,O,INCLUDES
+said,O,IS_INCLUDED
+is being sought,O,INCLUDES
+had been traveling,years,IS_INCLUDED
+has fallen,O,INCLUDES
+is,O,INCLUDES
+are not saying,O,INCLUDES
+a telephone interview,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+want to introduce,O,AFTER
+want to introduce,O,INCLUDES
+know,O,INCLUDES
+have gotten,O,INCLUDES
+to support,O,INCLUDES
+has amassed,O,INCLUDES
+suggests,O,IS_INCLUDED
+to begin presenting,O,AFTER
+to begin presenting,O,AFTER
+the decision,O,IS_INCLUDED
+was shot,Oct. 23,IS_INCLUDED
+was,Oct. 23,INCLUDES
+prohibit,O,INCLUDES
+the slaying,O,BEFORE
+been addressing,O,INCLUDES
+to begin presenting,next week,IS_INCLUDED
+to begin presenting,next week,IS_INCLUDED
+the October slaying,October,IS_INCLUDED
+have gathered,O,INCLUDES
+say,O,IS_INCLUDED
+the finding,11 days ago,IS_INCLUDED
+wrote,10 days,IS_INCLUDED
+would be parked,10 days,IS_INCLUDED
+curious,10 days,IS_INCLUDED
+the murder,Oct. 23,IS_INCLUDED
+the murder,10 days,AFTER
+observed,10 days,IS_INCLUDED
+observed,6 a.m.,IS_INCLUDED
+the slaying,Oct. 23,IS_INCLUDED
+the slaying,two weeks,BEFORE
+emerged,two weeks,IS_INCLUDED
+were,O,INCLUDES
+appears,O,INCLUDES
+the shooting,Oct. 23,IS_INCLUDED
+fled,Oct. 23,IS_INCLUDED
+reburied,Oct. 23,IS_INCLUDED
+to fire,Oct. 23,IS_INCLUDED
+unearthed,Oct. 23,IS_INCLUDED
+the shooting,days,AFTER
+buried,days,IS_INCLUDED
+the shooting,Oct. 23,IS_INCLUDED
+think,O,INCLUDES
+said,O,IS_INCLUDED
+buried,April 8,INCLUDES
+unearthed,April 8,IS_INCLUDED
+searched,April 8,IS_INCLUDED
+would be seen carrying,April 8,BEFORE
+would be seen carrying,April 8,BEFORE
+fearing,April 8,BEFORE
+could have emerged,April 8,BEFORE
+wondering,April 8,IS_INCLUDED
+was recovered,O,INCLUDES
+N.Y. chatting,Oct. 23,IS_INCLUDED
+stood,Oct. 23,IS_INCLUDED
+was shot,Oct. 23,IS_INCLUDED
+was,O,BEFORE
+could face,O,AFTER
+convicted,O,AFTER
+indicted,O,AFTER
+convicted,O,INCLUDES
+provides,O,INCLUDES
+could be charged,O,INCLUDES
+said,O,IS_INCLUDED
+is,O,INCLUDES
+be,Thursday,IS_INCLUDED
+a QUOTQUOT major development,O,IS_INCLUDED
+to announce,Thursday,IS_INCLUDED
+a news conference,Thursday,IS_INCLUDED
+has scheduled,O,IS_INCLUDED
+to upgrade,O,IS_INCLUDED
+the decision,O,IS_INCLUDED
+was,O,IS_INCLUDED
+could be held,O,INCLUDES
+had been issued,O,BEFORE
+been described,O,ENDED_BY
+had decided to issue,O,IS_INCLUDED
+had decided to issue,O,IS_INCLUDED
+said,O,IS_INCLUDED
+found,O,BEFORE
+found,O,BEFORE
+a match,O,INCLUDES
+the killing,October,IS_INCLUDED
+buried,April,INCLUDES
+found,April,IS_INCLUDED
+killed,October,IS_INCLUDED
+fired,October,IS_INCLUDED
+had concluded,Wednesday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+the INS ruling,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+the start,O,BEFORE
+has sought to distance,O,BEFORE
+want to provoke,O,INCLUDES
+said,O,BEFORE
+has indicated,O,BEFORE
+offered,O,BEFORE
+gave,O,BEFORE
+said,O,BEFORE
+said COMMA,O,BEFORE
+said,O,BEFORE
+gave,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+attempted to reach,O,BEFORE
+a news conference,O,BEFORE
+told,O,BEFORE
+decided,O,BEFORE
+theme-park visits,O,BEFORE
+has been wooed,O,BEFORE
+became,O,BEFORE
+said,Wednesday,IS_INCLUDED
+will pay,Wednesday,AFTER
+is forced to go,Wednesday,AFTER
+told,Wednesday,IS_INCLUDED
+was divorced,two days,BEFORE
+surviving two days,two days,IS_INCLUDED
+said,Today,IS_INCLUDED
+said,Today,IS_INCLUDED
+died,Today,BEFORE
+thronged,Wednesday,IS_INCLUDED
+a news conference,Wednesday,IS_INCLUDED
+told,Wednesday,IS_INCLUDED
+should go,Jan. 14,IS_INCLUDED
+decided,Wednesday,IS_INCLUDED
+or returning,Wednesday,AFTER
+theme-park visits,Wednesday,BEFORE
+has been wooed,Wednesday,BEFORE
+ruled,Wednesday,IS_INCLUDED
+became,Wednesday,IS_INCLUDED
+arrived,Wednesday,BEFORE
+a diplomatic struggle,O,INCLUDES
+have indicated,O,BEFORE
+decrying,O,BEFORE
+have indicated,O,BEFORE
+the decision,O,BEFORE
+announced,O,BEFORE
+decided,O,BEFORE
+argued,O,BEFORE
+released,O,BEFORE
+died COMMA,O,BEFORE
+were trying to cross,O,BEFORE
+allowed,O,BEFORE
+made,O,BEFORE
+will inflame,O,AFTER
+The decision,O,BEFORE
+made,O,BEFORE
+said,Wednesday,IS_INCLUDED
+divorced,six weeks ago,BEFORE
+was plucked,Thanksgiving Day,IS_INCLUDED
+clung,two days,IS_INCLUDED
+were trying to cross,six weeks ago,IS_INCLUDED
+a Jan. 14 return date,Jan. 14,IS_INCLUDED
+should be reunited,Wednesday,AFTER
+survived,Wednesday,BEFORE
+made,Wednesday,IS_INCLUDED
+says,Jan. 6,IS_INCLUDED
+appeared,the next morning,IS_INCLUDED
+court hearing,day before last Tuesday,IS_INCLUDED
+reconciliation,1990,BEGINS
+have become,1990,BEGUN_BY
+_ send,a year,IS_INCLUDED
+the crisis,early 1990s,IS_INCLUDED
+began to relax,early 1990s,IS_INCLUDED
+cut,post-1959,BEGUN_BY
+have managed to split,post-1959,AFTER
+said,now,IS_INCLUDED
+The family QUOTs experience,this week,BEFORE
+stayed,1984,AFTER
+followed,1984,IS_INCLUDED
+came,1983,IS_INCLUDED
+followed,1979,IS_INCLUDED
+was imprisoned,1960s,IS_INCLUDED
+arriving,1966,IS_INCLUDED
+to come,1966,IS_INCLUDED
+press reports,the week of March 6,BEFORE
+has passed,the week of March 6,BEFORE
+have come,the week of March 6,BEFORE
+high-profile public sparring _,the week of March 6,INCLUDES
+have lost,this week,BEFORE
+filed,this week,IS_INCLUDED
+expressing,this week,IS_INCLUDED
+have fled,this week,BEFORE
+was thrust,this week,INCLUDES
+be resolved,the week of March 6,IS_INCLUDED
+said : QUOTQUOT,O,BEFORE
+Castro QUOTs announcement,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+told,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,Wednesday,IS_INCLUDED
+continued to defy,Thursday morning,IS_INCLUDED
+did not plan to remove,Thursday morning,IS_INCLUDED
+built,Wednesday,BEFORE
+is heard,May,IS_INCLUDED
+lose,Wednesday evening,AFTER
+had not signed,Wednesday evening,BEFORE
+warned,Wednesday,IS_INCLUDED
+said,O,BEFORE
+insist,O,INCLUDES
+and said,O,BEFORE
+said,O,BEFORE
+to say,O,BEFORE
+went,O,BEFORE
+have issued,O,BEFORE
+said,O,BEFORE
+has become,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+is convinced COMMA,O,INCLUDES
+said,O,BEFORE
+cautioned,O,BEFORE
+has suggested,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+but was told,O,BEFORE
+became,O,BEFORE
+had threatened to revoke,O,BEFORE
+said,O,BEFORE
+crept,O,BEFORE
+said,O,BEFORE
+works,O,INCLUDES
+said,O,BEFORE
+say,O,INCLUDES
+hatched,O,BEFORE
+learned,O,BEFORE
+gather,O,INCLUDES
+pours,O,INCLUDES
+was born,1984,IS_INCLUDED
+have issued,Thursday,BEFORE
+sipping,Thursday,IS_INCLUDED
+cautioned,Thursday,IS_INCLUDED
+has suggested,Thursday,BEFORE
+issued,Thursday,BEFORE
+said,Thursday,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+asked,Thursday,IS_INCLUDED
+announced,Wednesday,IS_INCLUDED
+became,Wednesday,IS_INCLUDED
+had threatened to revoke,Tuesday morning,BEFORE
+said,Tuesday morning,IS_INCLUDED
+are monitoring,Tuesday morning,IS_INCLUDED
+postponed,Tuesday morning,IS_INCLUDED
+the Elian standoff,Thursday,INCLUDES
+works,Thursday,INCLUDES
+talk,Thursday,IS_INCLUDED
+keep,Thursday,INCLUDES
+said,O,BEFORE
+insist,O,INCLUDES
+shows,O,INCLUDES
+seem to agree,O,INCLUDES
+appear to be stymied COMMA,O,BEFORE
+had said,O,BEFORE
+refused to sign,O,BEFORE
+had threatened to revoke,O,BEFORE
+maintain,O,INCLUDES
+appealed,O,BEFORE
+filed,O,BEFORE
+a decision upheld,O,BEFORE
+placed,O,BEFORE
+drowned,O,BEFORE
+Cuba sank,O,BEFORE
+was found floating,O,BEFORE
+said,O,BEFORE
+has said,O,BEFORE
+would travel,O,AFTER
+would come,O,AFTER
+said,O,BEFORE
+but said,O,BEFORE
+emerged,O,BEFORE
+said,O,BEFORE
+some predicting bloodshed,O,BEFORE
+continued to vow,O,BEFORE
+had been approved,O,BEFORE
+said,O,BEFORE
+shows,Monday,IS_INCLUDED
+to keep,Monday,IS_INCLUDED
+their negotiating stance,Monday,IS_INCLUDED
+announced,last Wednesday,IS_INCLUDED
+refused to sign,two days,IS_INCLUDED
+extended,9 a.m. EST Tuesday,BEFORE
+sought to have,Last week,IS_INCLUDED
+maintain,Monday,IS_INCLUDED
+ruled,March,IS_INCLUDED
+ruled,January,IS_INCLUDED
+was found floating,Thanksgiving Day,IS_INCLUDED
+a four-month ordeal,four-month,IS_INCLUDED
+wants to accompany,Monday,IS_INCLUDED
+has said,Monday,BEFORE
+to continue,tomorrow,IS_INCLUDED
+said,Monday,IS_INCLUDED
+their third day-long meeting,day-long,IS_INCLUDED
+emerged,Monday,IS_INCLUDED
+practiced forming,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+continued to vow,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+could come,Tuesday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+a tense Miami waiting,Monday,IS_INCLUDED
+is doing,O,INCLUDES
+involved should be searching,O,INCLUDES
+gives,O,AFTER
+fails to compel,O,AFTER
+balk,O,AFTER
+have unreasonably demanded,O,BEFORE
+to stir,O,BEFORE
+have left,O,BEFORE
+comes,O,AFTER
+speculation,O,INCLUDES
+and to end,O,AFTER
+to dispel,O,AFTER
+has made,O,BEFORE
+is doing,now,IS_INCLUDED
+involved should be searching,now,IS_INCLUDED
+gives,Thursday,AFTER
+gather,daily,IS_INCLUDED
+ought not to rush to take,Thursday,AFTER
+defined,Thursday,BEFORE
+a court edict,Thursday,AFTER
+an appellate court ruling,next month,IS_INCLUDED
+is expected,next month,IS_INCLUDED
+The best outcome,Thursday,AFTER
+have unreasonably demanded,Thursday,BEFORE
+trumping,Thursday,AFTER
+to stir,Thursday,BEFORE
+relinquish,Thursday,AFTER
+have left,Thursday,BEFORE
+can argue,Thursday,IS_INCLUDED
+comes,Thursday,AFTER
+been clouded,Thursday,BEFORE
+unsubstantiated claims,Thursday,BEFORE
+to distort,Thursday,IS_INCLUDED
+has made,Thursday,IS_INCLUDED
+said,Thursday COMMA April 6,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+supports,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+does not speak,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+talking,O,BEFORE
+walked,O,BEFORE
+said,O,BEFORE
+frowned,O,BEFORE
+asked,O,BEFORE
+should be afforded,O,AFTER
+believes,O,INCLUDES
+said,O,BEFORE
+envelop,O,INCLUDES
+pushing,O,INCLUDES
+needs,Friday,IS_INCLUDED
+pray,every day,IS_INCLUDED
+said,Friday,IS_INCLUDED
+a resolution,Friday,AFTER
+pray,every day,IS_INCLUDED
+work,every day,IS_INCLUDED
+said,Friday,IS_INCLUDED
+supports,Friday,INCLUDES
+has not visited,Friday,BEFORE
+said,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+does not speak,Friday,BEFORE
+said,Friday,IS_INCLUDED
+this situation,Friday,INCLUDES
+speak to,Friday,INCLUDES
+walked,Friday,IS_INCLUDED
+a tragedy,now,IS_INCLUDED
+become,now,BEFORE
+has gone,now,BEFORE
+should have arrived,at least 72 hours,AFTER
+was found floating,at least 72 hours,BEFORE
+should have arrived,1961,AFTER
+should have arrived,the last week,BEFORE
+do think is,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+was being controlled,Friday,BEFORE
+asked,Friday,IS_INCLUDED
+should be afforded,Friday,AFTER
+should be worked,Friday,AFTER
+believes,Friday,IS_INCLUDED
+arrived,1961,IS_INCLUDED
+have forgotten,Friday,BEFORE
+think,Friday,IS_INCLUDED
+this tragedy,Friday,BEFORE
+has become,Friday,BEFORE
+said,Friday,IS_INCLUDED
+has dominated,five months,IS_INCLUDED
+has dominated,Friday,BEFORE
+envelop,Friday,IS_INCLUDED
+pushing,Friday,IS_INCLUDED
+should go,O,AFTER
+has developed,O,BEFORE
+learned,last November,IS_INCLUDED
+should not disqualify,O,IS_INCLUDED
+were enforcing,O,BEFORE
+the raid,O,BEFORE
+were treating,O,IS_INCLUDED
+the war,last November,AFTER
+the war,O,BEFORE
+getting,O,IS_INCLUDED
+was confirmed,the weekend,IS_INCLUDED
+returning,O,IS_INCLUDED
+a turning point,O,BEFORE
+failed to overthrow,O,BEFORE
+said,O,BEFORE
+called,O,BEFORE
+called,O,BEFORE
+read,O,BEFORE
+was announced,O,BEFORE
+was issued,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+released,O,BEFORE
+moved,O,BEFORE
+refused,O,BEFORE
+ordered,O,BEFORE
+arrived,O,BEFORE
+and obtained,O,BEFORE
+appealed,O,BEFORE
+upheld,O,BEFORE
+rejected,O,BEFORE
+traveled,O,BEFORE
+applied,O,BEFORE
+refused to return,O,BEFORE
+took,O,BEFORE
+survived,O,BEFORE
+died,O,BEFORE
+was rescued,O,BEFORE
+said COMMA QUOTQUOT,O,BEFORE
+said,O,BEFORE
+asked,O,BEFORE
+issued,O,BEFORE
+said,O,BEFORE
+praised,O,BEFORE
+said,O,BEFORE
+the battle,O,INCLUDES
+vowed to continue,O,BEFORE
+a request,O,BEFORE
+denied COMMA,O,BEFORE
+Naturalization Service QUOTs decision,O,BEFORE
+read,O,BEFORE
+wrote,O,BEFORE
+made,O,BEFORE
+separate attitudes,O,BEFORE
+died trying to smuggle,O,BEFORE
+instructed,O,BEFORE
+made,O,BEFORE
+issued,O,BEFORE
+said,O,BEFORE
+are seeking,O,INCLUDES
+called,Thursday,IS_INCLUDED
+rescues,Thursday,INCLUDES
+a statement,Thursday,IS_INCLUDED
+an appeal,14 days,IS_INCLUDED
+lived,a month,IS_INCLUDED
+lived,April 22,AFTER
+a pre-dawn raid,April 22,IS_INCLUDED
+took,April 22,IS_INCLUDED
+arrived,April 2,IS_INCLUDED
+capsized,last November,IS_INCLUDED
+was rescued,last November,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+Thursday QUOTs ruling,Thursday,IS_INCLUDED
+praised,Thursday,IS_INCLUDED
+wanted,Thursday,BEFORE
+vowed to continue,Thursday,IS_INCLUDED
+approves,Thursday,IS_INCLUDED
+wide-spread protests,six months,IS_INCLUDED
+The ruling,six months,AFTER
+instructed,Thursday,IS_INCLUDED
+no extensions,Thursday,AFTER
+Thursday QUOTs decision,14 days,BEGINS
+Thursday QUOTs decision,Thursday,IS_INCLUDED
+issued,Thursday,IS_INCLUDED
+Thursday QUOTs ruling,Thursday,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+are seeking,Thursday,INCLUDES
+could be forced to stay,Thursday,AFTER
+refused to order,two more weeks,BEFORE
+refused to order,Thursday,IS_INCLUDED
+said,O,BEFORE
+could be established,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+described,O,BEFORE
+Friday the bomb blasts,O,BEFORE
+could be established,August 7,IS_INCLUDED
+took,Friday morning,IS_INCLUDED
+an explosion,Friday morning,IS_INCLUDED
+were killed,Friday morning,IS_INCLUDED
+said,August 7,IS_INCLUDED
+would like to express,August 7,IS_INCLUDED
+described,August 7,IS_INCLUDED
+Friday the bomb blasts,Friday,IS_INCLUDED
+deplored,Friday,IS_INCLUDED
+were ordered to set,O,BEFORE
+sent,O,BEFORE
+have taken,O,BEFORE
+dispatched,O,BEFORE
+has sent,O,BEFORE
+were killed,O,BEFORE
+said,O,BEFORE
+were ordered to set,Saturday,BEFORE
+sent,Friday,BEFORE
+have taken,Saturday,BEFORE
+has sent,Saturday,BEFORE
+The Friday explosions,Friday,IS_INCLUDED
+said,Saturday,IS_INCLUDED
+To turn,Saturday,AFTER
+said,Saturday,IS_INCLUDED
+vowed to hunt,Saturday,IS_INCLUDED
+has claimed,O,BEFORE
+have died COMMA,O,BEFORE
+were sent,O,BEFORE
+extended,O,BEFORE
+condemned,O,BEFORE
+two terrorist bomb attacks,O,BEFORE
+has claimed,August 8,BEFORE
+a car bomb attack,Friday,IS_INCLUDED
+killed and at least 58 injured,Friday,IS_INCLUDED
+ripped,Friday morning,IS_INCLUDED
+have died COMMA,August 8,BEFORE
+were sent,August 8,BEFORE
+extended,August 8,IS_INCLUDED
+condemned,August 8,IS_INCLUDED
+two terrorist bomb attacks,Friday,IS_INCLUDED
+condemned,Saturday,IS_INCLUDED
+were wounded,O,IS_INCLUDED
+were killed,O,IS_INCLUDED
+exploded,Friday,IS_INCLUDED
+condemned,Friday,IS_INCLUDED
+has claimed,O,BEFORE
+have been killed,Friday,IS_INCLUDED
+expressed hope,O,IS_INCLUDED
+condemns,O,IS_INCLUDED
+said,O,IS_INCLUDED
+condemned,Saturday,IS_INCLUDED
+said,O,IS_INCLUDED
+condemned,O,IS_INCLUDED
+told,O,IS_INCLUDED
+announced,Monday,IS_INCLUDED
+said,Tuesday,IS_INCLUDED
+has dispatched,O,BEFORE
+said,O,IS_INCLUDED
+the help,recent days,IS_INCLUDED
+want to thank,O,IS_INCLUDED
+told,O,IS_INCLUDED
+last Friday QUOTs bombings,last Friday,IS_INCLUDED
+said,Tuesday,BEFORE
+will present,O,AFTER
+make,O,AFTER
+the Kenya embassy bombing,Wednesday,BEFORE
+met,Wednesday,IS_INCLUDED
+said,O,IS_INCLUDED
+echoing,O,IS_INCLUDED
+said,O,IS_INCLUDED
+the ceremony,O,IS_INCLUDED
+said,O,IS_INCLUDED
+condemned,Thursday,IS_INCLUDED
+was quoted,Friday,IS_INCLUDED
+complete and bombers,three months,IS_INCLUDED
+bombing,three months,AFTER
+said,O,IS_INCLUDED
+reported,Friday,IS_INCLUDED
+identified,Thursday,IS_INCLUDED
+hurled,Thursday,BEFORE
+said,Thursday,IS_INCLUDED
+Salaam Thursday and meeting,Thursday,IS_INCLUDED
+touring,Thursday,IS_INCLUDED
+said,O,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+flew,O,IS_INCLUDED
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+have gathered,O,BEFORE
+a press conference,O,IS_INCLUDED
+said,O,IS_INCLUDED
+proceeding,O,IS_INCLUDED
+the August 7 bombings,August 7,IS_INCLUDED
+the August 7 bombings,Friday,BEFORE
+said,Friday,IS_INCLUDED
+celebrates,April,IS_INCLUDED
+are scheduled to become,April,IS_INCLUDED
+are scheduled to become,O,INCLUDES
+accession talks,last year,INCLUDES
+to start,last year,INCLUDES
+to invite,last year,IS_INCLUDED
+last year QUOTs Madrid summit,last year,IS_INCLUDED
+decided,last year,IS_INCLUDED
+was followed,O,INCLUDES
+the ratification process,February,BEGUN_BY
+starting,February,IS_INCLUDED
+being,February,IS_INCLUDED
+began,February,IS_INCLUDED
+The ratification process,February,BEGUN_BY
+the enlargement move,Wednesday,IS_INCLUDED
+approved,October,IS_INCLUDED
+reaching,O,IS_INCLUDED
+the enlargement process,Wednesday,ENDED_BY
+agreed,Wednesday,IS_INCLUDED
+voted,Wednesday,IS_INCLUDED
+have been accepted,Wednesday,IS_INCLUDED
+gave,Wednesday,IS_INCLUDED
+concluded,Wednesday,IS_INCLUDED
+The ratification process,Wednesday,ENDED_BY
+applying,O,IS_INCLUDED
+ratified,Tuesday,IS_INCLUDED
+accession,Tuesday,AFTER
+have finished,Tuesday,IS_INCLUDED
+the Madrid summit,July 1997,IS_INCLUDED
+invited,July 1997,IS_INCLUDED
+added,Wednesday,IS_INCLUDED
+will include,25,INCLUDES
+will include,April 24,INCLUDES
+signing,25,INCLUDES
+signing,April 24,INCLUDES
+eligible,March,INCLUDES
+will enable,March,IS_INCLUDED
+The March accession,March,IS_INCLUDED
+the NATO Washington summit,25,INCLUDES
+the NATO Washington summit,April 24,INCLUDES
+be held,25,INCLUDES
+be held,April 24,INCLUDES
+a ceremonial accession,25,INCLUDES
+a ceremonial accession,April 24,INCLUDES
+added,Wednesday,IS_INCLUDED
+was fixed,Wednesday,IS_INCLUDED
+was planned,March,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+said,Wednesday,IS_INCLUDED
+has decided to admit,March,IS_INCLUDED
+has decided to admit,Wednesday,IS_INCLUDED
+to submit,March 12,IS_INCLUDED
+travel,March 12,IS_INCLUDED
+has invited,O,INCLUDES
+signed,February 10,IS_INCLUDED
+a ceremony,March 12,IS_INCLUDED
+join,March 12,IS_INCLUDED
+were invited to join,July 1997,IS_INCLUDED
+the ceremony,O,IS_INCLUDED
+were,O,IS_INCLUDED
+signed,O,IS_INCLUDED
+to become,O,INCLUDES
+broadcast,O,IS_INCLUDED
+simultaneous ceremonies,O,IS_INCLUDED
+have signed,O,IS_INCLUDED
+was QUOTQUOT,day,IS_INCLUDED
+said,day,IS_INCLUDED
+share,O,INCLUDES
+share,Friday,INCLUDES
+to rejoin,Friday,IS_INCLUDED
+has been,O,INCLUDES
+has been,Friday,INCLUDES
+QUOTQUOT saying : QUOTQUOT,Friday,IS_INCLUDED
+returning,O,INCLUDES
+returning,Friday,INCLUDES
+Hunragy QUOTs admission,Friday,IS_INCLUDED
+called,Friday,IS_INCLUDED
+become QUOTQUOT,O,INCLUDES
+become QUOTQUOT,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+saw,O,INCLUDES
+saw,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+the signing ceremony,Friday,IS_INCLUDED
+speeches,Friday,IS_INCLUDED
+signed,Friday,IS_INCLUDED
+held,Friday,IS_INCLUDED
+a ceremony,Friday,IS_INCLUDED
+joined,Friday,IS_INCLUDED
+bring,Friday,AFTER
+would be,Friday,AFTER
+Hungary QUOTs accession,Friday,IS_INCLUDED
+claiming,Friday,INCLUDES
+are,Friday,INCLUDES
+the country QUOTs NATO membership,Friday,INCLUDES
+supporting,Friday,IS_INCLUDED
+issued,Friday,IS_INCLUDED
+help eliminate,Friday,AFTER
+help eliminate,Friday,AFTER
+will consolidate,Friday,AFTER
+the three countries QUOT entry,Friday,IS_INCLUDED
+saying,Friday,IS_INCLUDED
+issued,Friday,IS_INCLUDED
+were,Friday,IS_INCLUDED
+to accede,Friday,IS_INCLUDED
+proves,Friday,INCLUDES
+a historic event QUOTQUOT,Friday,INCLUDES
+the entry,Friday,IS_INCLUDED
+described,Friday,IS_INCLUDED
+a televised address,Friday,IS_INCLUDED
+the country QUOTs entry,Friday,IS_INCLUDED
+to mark,Friday,IS_INCLUDED
+celebrations,Friday,IS_INCLUDED
+staged,Friday,IS_INCLUDED
+the embassy QUOTs mission,Friday,INCLUDES
+the end,Friday,IS_INCLUDED
+indicated,Friday,IS_INCLUDED
+the occasion,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+a NATO flag-lowering ceremony,Friday,IS_INCLUDED
+Addressing,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+World War II,O,BEFORE
+shattering,O,INCLUDES
+has brought,O,INCLUDES
+Hungary QUOTs accession,O,INCLUDES
+reduce,O,INCLUDES
+respond,O,INCLUDES
+to fulfill,O,INCLUDES
+has claimed,Friday,BEFORE
+reduce,Friday,INCLUDES
+respond,Friday,INCLUDES
+to fulfill,Friday,INCLUDES
+enhance,O,INCLUDES
+enhance,Friday,INCLUDES
+has said,Friday,INCLUDES
+the two world wars,Friday,BEFORE
+added COMMA referring,Friday,IS_INCLUDED
+added COMMA referring,Friday,IS_INCLUDED
+the disasters,this century COMMA,IS_INCLUDED
+has been,this century COMMA,IS_INCLUDED
+helps to stabilize,O,INCLUDES
+helps to stabilize,O,INCLUDES
+helps to stabilize,Friday,INCLUDES
+helps to stabilize,Friday,INCLUDES
+Extending membership,Friday,IS_INCLUDED
+is growing,O,INCLUDES
+is growing,Friday,INCLUDES
+is,O,INCLUDES
+is,Friday,INCLUDES
+the accession,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+the ceremony,Friday,IS_INCLUDED
+became,Friday,BEFORE
+fled,Friday,BEFORE
+exclaimed,Friday,IS_INCLUDED
+their formal entry,Friday,IS_INCLUDED
+marking,Friday,IS_INCLUDED
+accepted,Friday,IS_INCLUDED
+share,O,INCLUDES
+become QUOTQUOT,O,INCLUDES
+saw,O,INCLUDES
+was QUOTQUOT,day,IS_INCLUDED
+said,day,IS_INCLUDED
+share,Friday,INCLUDES
+to rejoin,Friday,IS_INCLUDED
+has been,Friday,INCLUDES
+QUOTQUOT saying : QUOTQUOT,Friday,IS_INCLUDED
+returning,Friday,IS_INCLUDED
+Hunragy QUOTs admission,Friday,IS_INCLUDED
+called,Friday,IS_INCLUDED
+become QUOTQUOT,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+saw,Friday,INCLUDES
+said,Friday,IS_INCLUDED
+the signing ceremony,Friday,IS_INCLUDED
+speeches,Friday,IS_INCLUDED
+signed,Friday,IS_INCLUDED
+held,Friday,IS_INCLUDED
+a ceremony,Friday,IS_INCLUDED
+joined,Friday,IS_INCLUDED
+fairly gloomy,week,DURING
+think,week,DURING
+QUOTs turning,O,IS_INCLUDED
+goes,O,DURING
+get,O,AFTER
+hold,O,AFTER
+are talking,ten years,ENDS
+boom,ten years,IS_INCLUDED
+can get,O,DURING
+have soared,the past three months,IS_INCLUDED
+have plunged,the past three months,IS_INCLUDED
+believe,O,DURING
+believe,O,BEFORE
+worth,now,DURING
+worth,October,IS_INCLUDED
+estimates,O,DURING
+ca nQUOTt find,O,DURING
+owns,O,DURING
+has crashed,O,ENDED_BY
+to break,O,ENDED_BY
+a three percent drop,the last twenty four hours,IS_INCLUDED
+hit,the last twenty four hours,IS_INCLUDED
+has lost,the last twenty four hours,IS_INCLUDED
+has fallen,the last twenty four hours,IS_INCLUDED
+calls,a minute and a half,ENDS
+the last conversation,a minute and a half,BEGINS
+released,today,IS_INCLUDED
+believe,O,AFTER
+says,O,BEFORE
+looking,O,INCLUDES
+has said,nearly forty years,DURING
+tried,O,BEFORE
+to come,O,AFTER
+invited,O,BEFORE
+sometimes outsmarted,O,BEFORE
+outlasted,O,BEFORE
+endures,O,INCLUDES
+has tried to hasten,O,BEFORE
+have predicted,O,BEFORE
+included,twenty years,ENDS
+were chosen,twenty years,BEGINS
+will be named,O,AFTER
+have flown,O,AFTER
+say,O,INCLUDES
+learned,today,IS_INCLUDED
+was picked,O,BEFORE
+were held,now,ENDED_BY
+the co-pilot,O,BEFORE
+a mission,December,IS_INCLUDED
+in,now,BEFORE
+has,O,DURING
+said,O,BEFORE
+are expected to be committed,weeks,IS_INCLUDED
+are expected to be committed,now,INCLUDES
+boasts,now,INCLUDES
+told,Tuesday,IS_INCLUDED
+have objected,O,BEFORE
+oil and imports,O,INCLUDES
+has provided,O,BEFORE
+conferred,Tuesday,IS_INCLUDED
+held,O,BEFORE
+would be traveling,this crucial moment,DURING
+was said to be carrying,O,BEFORE
+was asked,today,IS_INCLUDED
+will meet,Thursday,IS_INCLUDED
+met,Monday,IS_INCLUDED
+carrying,O,BEFORE
+rolled,Tuesday,IS_INCLUDED
+but according,O,BEFORE
+shut,O,BEFORE
+said,today,IS_INCLUDED
+already there,O,BEFORE
+arriving,Tuesday,IS_INCLUDED
+voted,O,BEFORE
+ordered,Aug. 6,IS_INCLUDED
+annexed,now,INCLUDES
+created,O,BEFORE
+said,Tuesday,IS_INCLUDED
+remained,O,INCLUDES
+was not identified,O,BEFORE
+said,O,BEFORE
+said,today,IS_INCLUDED
+has agreed to allow,O,BEFORE
+trapped,O,INCLUDES
+was assembling,today,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+quoted,O,BEFORE
+said,O,BEFORE
+a regular news briefing,today,IS_INCLUDED
+left,Tuesday,IS_INCLUDED
+said,O,BEFORE
+can call,up to 180 days,DURING
+said,O,BEFORE
+said,O,BEFORE
+dispatched,O,BEFORE
+criticized,O,BEFORE
+Iraq QUOTs invasion,Aug. 2,IS_INCLUDED
+had condemned,O,BEFORE
+seemed aimed,O,BEFORE
+the eight-year war,eight-year,IS_INCLUDED
+the August 1988 cease-fire,August 1988,IS_INCLUDED
+peace talks,August 1988,AFTER
+appeared to accept,O,BEFORE
+will begin withdrawing,Friday,IS_INCLUDED
+read,O,BEFORE
+camped,now,INCLUDES
+The U.S. military buildup,O,INCLUDES
+said,O,BEFORE
+delivered,O,BEFORE
+denounced,today,IS_INCLUDED
+said,today,IS_INCLUDED
+said,Tuesday,IS_INCLUDED
+the Persian Gulf crisis,O,INCLUDES
+seeking to mediate,today,IS_INCLUDED
+arrived,today,IS_INCLUDED
+captured,O,BEFORE
+sought,today,IS_INCLUDED
+facing,today,INCLUDES
+seeking,up to 180 days,BEGUN_BY
+according to,O,IS_INCLUDED
+would join,today,IS_INCLUDED
+says,O,INCLUDES
+flows QUOTQUOT,Tuesday,INCLUDES
+said,A day earlier,ENDS
+streamed north,A day earlier,BEGINS
+said,Thursday,IS_INCLUDED
+a 15-20 percent cutback,September,IS_INCLUDED
+denied,O,BEFORE
+called,Thursday,IS_INCLUDED
+had filed,Wednesday,ENDED_BY
+called,O,BEFORE
+met,this week,IS_INCLUDED
+comes,O,INCLUDES
+go,O,INCLUDES
+has tightened,now,IS_INCLUDED
+outlet,now,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+controls,now,IS_INCLUDED
+have rimmed,O,BEFORE
+say,O,SIMULTANEOUS
+said,O,BEFORE
+has,O,INCLUDES
+to stay,a fairly lengthy period,DURING
+said,O,BEFORE
+massed to defend,O,BEFORE
+massing,O,INCLUDES
+a long verbal attack,Thursday,IS_INCLUDED
+his Aug. 2 power-grab,Aug. 2,IS_INCLUDED
+said,O,BEFORE
+headed,O,INCLUDES
+called,O,BEFORE
+said,O,BEFORE
+grew,O,BEFORE
+a news conference,O,IBEFORE
+said,O,BEFORE
+being blocked,O,INCLUDES
+said,Thursday,IS_INCLUDED
+a two-hour meeting,two-hour,DURING
+commenting,O,BEFORE
+the two-week gulf crisis,two-week,DURING_INV
+took,Thursday,IS_INCLUDED
+showdown,O,INCLUDES
+calls,O,IS_INCLUDED
+hopes to staunch,O,IS_INCLUDED
+going,O,IS_INCLUDED
+has indicated,O,BEFORE
+has offered to help offset,O,BEFORE
+said,Thursday,IS_INCLUDED
+welcomed,O,BEFORE
+his unsuccessful 1996 campaign,1996,IS_INCLUDED
+rests,O,DURING
+has,almost a hundred years,DURING
+recognizes,O,DURING
+independent,1901,AFTER
+a republic increasing,O,DURING
+have shown,O,BEFORE
+will be seen,O,AFTER
+voted to support,Friday,IS_INCLUDED
+a national referendum,next year,IS_INCLUDED
+voted,Friday,IS_INCLUDED
+voted,210 years,ENDS
+Turning,O,BEFORE
+are owed,O,IS_INCLUDED
+said,Friday,IS_INCLUDED
+is becoming,O,IS_INCLUDED
+isolated,O,IS_INCLUDED
+said,Friday,BEFORE
+hope to have,O,IS_INCLUDED
+said COMMA QUOTQUOT,Friday,BEFORE
+hope to defeat,O,IS_INCLUDED
+said,Friday,BEFORE
+said,Friday,BEFORE
+said,Friday,IS_INCLUDED
+This move,a month,ENDS
+suspended,a month,BEGINS
+appoint,O,AFTER
+said,O,BEFORE
+will add,O,AFTER
+departing,August 6,BEGUN_BY
+departing,each Thursday,IS_INCLUDED
+would leave,March 30,BEGUN_BY
+would leave,March 30,BEGUN_BY
+announced,Friday,IS_INCLUDED
+the crippling Asian financial crisis,O,AFTER
+double,August,ENDED_BY
+have suffered,recent years,IS_INCLUDED
+broke,noon Thursday,SIMULTANEOUS
+was kidnapped,10 p.m. Wednesday,IS_INCLUDED
+found,Friday,IDENTITY
+kept,O,BEFORE
+said,O,IS_INCLUDED
+gave,O,IS_INCLUDED
+have been aided,O,BEFORE
+repeated intense attacks,O,BEFORE
+was arrested,June last year,IS_INCLUDED
+his capture,a week,IBEFORE
+had been buried,O,BEFORE
+has happened,O,BEFORE
+had been searching,O,BEFORE
+a coup dQUOT etat,last year,IS_INCLUDED
+presumed killed,almost two years ago,IS_INCLUDED
+staged,July last year,IS_INCLUDED
+a falling out,June last year,IS_INCLUDED
+began to fall,mid-1996,IS_INCLUDED
+held,the late 1970s,SIMULTANEOUS
+believed,now,INCLUDES
+said,Thursday,IS_INCLUDED
+discouraging,22 months,AFTER
+his capture,March 26 COMMA 1996,IS_INCLUDED
+died,weeks or months,IS_INCLUDED
+concluded,January this year,IS_INCLUDED
+was abducted,March 1996,IS_INCLUDED
+hopes to recover,the next two weeks,IS_INCLUDED
+kidnapped,almost two years ago,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+have formed,O,BEFORE
+presumed killed,O,IS_INCLUDED
+said,O,BEFORE
+will continue to do,O,INCLUDES
+has been pushing,Thursday,IS_INCLUDED
+appeared,Thursday,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+is considered,O,IS_INCLUDED
+continued to hold,mid-1996,IS_INCLUDED
+a successful coup dQUOT etat,July last year,IS_INCLUDED
+fled,July last year,IS_INCLUDED
+went,July last year,IS_INCLUDED
+have been built,February 1947,BEGUN_BY
+entered,February 1947,IS_INCLUDED
+designed,February 1947,BEFORE
+a news agency report,Friday,BEFORE
+filed,1995,IS_INCLUDED
+blowing,1988,IS_INCLUDED
+rejected,Friday,IS_INCLUDED
+said,O,BEFORE
+the November 1995 assassination,November 1995,IS_INCLUDED
+is serving,O,INCLUDES
+took,Friday,IS_INCLUDED
+took,more than four hours,DURING
+said,Friday,IS_INCLUDED
+has pleaded,Friday,IS_INCLUDED
+charges,Friday,IS_INCLUDED
+have said,Friday,BEFORE
+said,Friday,IS_INCLUDED
+is to be funded,O,AFTER
+and will finish,O,AFTER
+will be based,O,AFTER
+said,Friday,IS_INCLUDED
+assailed,Last year,IS_INCLUDED
+released,O,BEFORE
+ratified,O,BEFORE
+signed,Friday,IS_INCLUDED
+fell,1996,AFTER
+fell,last year,IS_INCLUDED
+state visit,four-day,SIMULTANEOUS
+claimed,the past,IS_INCLUDED
+to use,at least 20 more years,SIMULTANEOUS
+signed,last May.,IS_INCLUDED
+was ruled,centuries,SIMULTANEOUS
+signed,Friday,IS_INCLUDED
+claimed,Friday,BEFORE
+was quoted,Friday,BEFORE
+trying to tie,Friday,IS_INCLUDED
+has stalled,Friday,BEFORE
+opposed,Friday,BEFORE
+has said,Friday,BEFORE
+calls,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+planned to visit,Friday,AFTER
+sent,Sunday,IS_INCLUDED
+wants to withdraw,O,DURING
+a costly war,O,INCLUDES
+told,Sunday,IS_INCLUDED
+will cooperate,O,AFTER
+That 1978 resolution calls,O,DURING
+occupies,O,DURING
+said,Friday,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+to talk,today,IS_INCLUDED
+have gotten,O,AFTER
+has mounted,O,BEFORE
+has been faced,O,DURING_INV
+a growing grassroots movement calling,O,DURING
+created,1985,IS_INCLUDED
+have been killed fighting,1985,AFTER
+killed,Last week,IS_INCLUDED
+wounded,Last week,IS_INCLUDED
+suffered,last year,IS_INCLUDED
+were killed,last February,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+remarks,last week,IS_INCLUDED
+a lecture,last week,IS_INCLUDED
+left,Sunday,IS_INCLUDED
+have been cut,nearly two years,DURING
+a speech,six weeks ago,IS_INCLUDED
+saying,the time,IS_INCLUDED
+told,Sunday,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+suggested,Sunday,IS_INCLUDED
+told,Sunday,IS_INCLUDED
+the long-stalled peace talks,Sunday,BEFORE
+said,last week,IS_INCLUDED
+resumed,nearly two months,ENDS
+blocked,nearly two months,BEGINS
+was worked,O,BEFORE
+had moved,O,BEFORE
+Ritter QUOTs return,O,BEFORE
+signed,Feb. 23,IS_INCLUDED
+had placed,O,BEFORE
+alleged,O,BEFORE
+have resisted,Previously,IS_INCLUDED
+its 1990 invasion,1990,IS_INCLUDED
+to go,next week,IS_INCLUDED
+finished drafting,Friday,IS_INCLUDED
+appointed,Thursday,IS_INCLUDED
+said,Thursday,IS_INCLUDED
+laid,Feb. 23,IS_INCLUDED
+but said,Friday,IS_INCLUDED
+an inspection,Jan. 13,AFTER
+to last,over a week,SIMULTANEOUS
+arrived,Thursday,IS_INCLUDED
+a 10-hour tour,10-hour,SIMULTANEOUS
+resumed,Friday,IS_INCLUDED
+work,Friday,IS_INCLUDED
+said,O,BEFORE
+has charged,O,BEFORE
+had been allowed to carry,over a week,IS_INCLUDED
+stopped providing,Jan. 13,AFTER
+said,Friday,BEFORE
+is seen,Friday,AFTER
+said,Friday,BEFORE
+had argued,Friday,BEFORE
+said,Thursday,IS_INCLUDED
+has said,Friday,BEFORE
+clashes,recent days,IS_INCLUDED
+marched,Sunday,IS_INCLUDED
+say,O,IS_INCLUDED
+were reported killed,recent days,IS_INCLUDED
+arrested,Earlier Sunday,IS_INCLUDED
+cosponsor,O,INCLUDES
+two killings,Feb. 20,BEFORE
+clashed,Earlier Sunday,INCLUDES
+are not going to be left,this summer,IS_INCLUDED
+each others QUOT road-blocking protests,this summer,IS_INCLUDED
+have provoked,the past three summers,IS_INCLUDED
+rallied,Sunday,IS_INCLUDED
+has been ruled,1972,BEGUN_BY
+said,Sunday,IS_INCLUDED
+the talks,February,IS_INCLUDED
+pending meetings,last week,IS_INCLUDED
+pending meetings,10 days ago,IS_INCLUDED
+invited,two weeks ago,IS_INCLUDED
+are supposed to conclude,May,BEFORE
+found,Sunday,IS_INCLUDED
+was expelled,Feb. 20,IS_INCLUDED
+set to resume,Monday,IS_INCLUDED
+truce,8-month-old,DURING
+seized,Sunday,IS_INCLUDED
+the return,Sunday,AFTER
+peace talks,Sunday,AFTER
+said,O,BEFORE
+set to resume,O,BEFORE
+appeared to be,Sunday,IS_INCLUDED
+are supposed to conclude,O,IS_INCLUDED
+said,Sunday,IS_INCLUDED
+opposed,O,IS_INCLUDED
+wants,O,IS_INCLUDED
+is threatening to push,O,IS_INCLUDED
+said,O,BEFORE
+prevented,this summer,IS_INCLUDED
+said,Earlier Sunday,IS_INCLUDED
+cited,December,IS_INCLUDED
+was appointed,the following year,IS_INCLUDED
+was made,May 22 COMMA 1995,IS_INCLUDED
+is about to go,O,AFTER
+expressed,O,BEFORE
+part,October 1984,IS_INCLUDED
+spent,six days,DURING
+was sent,May 26 COMMA 1980,IS_INCLUDED
+will move,O,AFTER
+set,O,BEFORE
+said,O,BEFORE
+said,Saturday,IS_INCLUDED
+usage,O,DURING
+beginning to infiltrate,O,DURING
+have emerged bringing,O,AFTER
+experiencing,O,DURING
+fast overtaking,O,DURING
+becoming,O,DURING
+would prove,the future,IS_INCLUDED
+to be seen,O,AFTER
+has,O,DURING
+use,O,AFTER
+will create,O,AFTER
+developing,O,DURING
+reaching,O,DURING
+move,O,BEFORE
+has become,O,IS_INCLUDED
+elections,recently,IS_INCLUDED
+took,recently,IS_INCLUDED
+requires,O,INCLUDES
+having donated,1995,IS_INCLUDED
+said,Friday,IS_INCLUDED
+and hopes to win,this September,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+and hopes to win,O,IS_INCLUDED
+are approaching,O,BEFORE
+skyrocketed,O,BEFORE
+fairly intense,now,IS_INCLUDED
+think,now,SIMULTANEOUS
+are not used to,O,BEFORE
+responded,less than one hour,ENDS
+say,less than one hour,BEGINS
+to travel,next week,IS_INCLUDED
+planned,O,IS_INCLUDED
+feels,now,IS_INCLUDED
+sought to soften,Friday,IS_INCLUDED
+saying,Friday,IS_INCLUDED
+glossed,the day,IS_INCLUDED
+arrived,the day,IS_INCLUDED
+happens,today,IS_INCLUDED
+stern warnings,Thursday,IS_INCLUDED
+strikes to continue,the future,IS_INCLUDED
+say,O,IS_INCLUDED
+headed,O,BEFORE
+continues,O,INCLUDES
+says,O,IS_INCLUDED
+does nQUOTt stop building,O,BEFORE
+is not authorized to use,O,IS_INCLUDED
+open,no more than sixty days,DURING
+wrapped,today,IS_INCLUDED
+QUOTs expected to meet,later this afternoon,IS_INCLUDED
+Iraq QUOTs proposal,O,BEFORE
+a three hour meeting,three hour,DURING
+appears to be making,O,IS_INCLUDED
+QUOTs expected to meet,later this afternoon,IS_INCLUDED
+insists,later this afternoon,IS_INCLUDED
+a worldwide glut,O,DURING
+have been falling,O,DURING
+are seeing,today,DURING
+saw,the winter of nineteen ninety-four,IS_INCLUDED
+have come,O,BEFORE
+QUOTs built,O,BEFORE
+fell,the last two weeks,IS_INCLUDED
+will look to increase,O,AFTER
+That according,O,IS_INCLUDED
+say,O,INCLUDES
+ordered,this week,IS_INCLUDED
+assigned,this week,IS_INCLUDED
+continues,O,INCLUDES
+a nineteen ninety-seven attack,nineteen ninety-seven,IS_INCLUDED
+tells,O,IS_INCLUDED
+worked,O,BEFORE
+are investigating,Now,IS_INCLUDED
+been charged,O,BEFORE
+explodes,last month,IS_INCLUDED
+a bomb,January nineteen ninety-seven,IS_INCLUDED
+is suggesting,O,INCLUDES
+last month QUOTs explosion,last month,IS_INCLUDED
+bombing appear to match,O,IS_INCLUDED
+claim,O,IS_INCLUDED
+put,today,IS_INCLUDED
+began to promote,today,IS_INCLUDED
+began to arrive,Today,IS_INCLUDED
+are going to go,now,AFTER
+want to know,O,IS_INCLUDED
+the broadcast,O,IS_INCLUDED
+appears to believe,O,IS_INCLUDED
+has said,O,BEFORE
+began to promote,today,DURING
+are returning,O,IS_INCLUDED
+began to arrive,Today,DURING
+unfolding,Today,IS_INCLUDED
+wants,last night,AFTER
+wants,O,IS_INCLUDED
+wants,now,IS_INCLUDED
+were found,O,BEFORE
+reported,last night,IS_INCLUDED
+said,O,IS_INCLUDED
+said,today,IS_INCLUDED
+known,O,IS_INCLUDED
+continues to maintain,O,IS_INCLUDED
+to change,the next several days,IS_INCLUDED
+likely,O,IS_INCLUDED
+have been declared,O,BEFORE
+off,O,IS_INCLUDED
+out,O,IS_INCLUDED
+are flying,O,IS_INCLUDED
+are flying,today,IS_INCLUDED
+toured,Yesterday,IS_INCLUDED
+are going to have to live,O,AFTER
+are going to have to live,a while,SIMULTANEOUS
+do nQUOTt have,O,IS_INCLUDED
+added,today,DURING
+averaging,1997,IS_INCLUDED
+showed,O,BEFORE
+broke,O,BEFORE
+rose,O,BEFORE
+declined,December,IS_INCLUDED
+showed,O,BEFORE
+has been helped,O,BEFORE
+reflected not,O,BEFORE
+came,O,BEFORE
+reflects,O,INCLUDES
+accounting,December,AFTER
+has been creating,the first nine months,IS_INCLUDED
+extended,January,IS_INCLUDED
+has made,O,BEFORE
+left,a year earlier,AFTER
+rose,O,BEFORE
+drawing,O,INCLUDES
+declined,last month,IS_INCLUDED
+added,January,IS_INCLUDED
+a news conference,Friday,IS_INCLUDED
+have fallen,the last few months,IS_INCLUDED
+averaging,the first nine months,SIMULTANEOUS
+has been creating,the last three months,SIMULTANEOUS
+has been creating,the last four months,SIMULTANEOUS
+a small downward revision,Friday,IS_INCLUDED
+began,last fall,IS_INCLUDED
+to slow,coming months,IS_INCLUDED
+lost,the last decade,IS_INCLUDED
+to raise,last month,IS_INCLUDED
+remained,last month,DURING
+added,last month,IS_INCLUDED
+reported,Friday,IS_INCLUDED
+created,January,IS_INCLUDED
+reflected,O,BEFORE
+said,O,BEFORE
+extending,a year earlier,AFTER
+said,O,BEFORE
+is looming,O,AFTER
+expects,O,IS_INCLUDED
+said,O,BEFORE
+have suggested,O,BEFORE
+employment gains,last fall,IS_INCLUDED
+and have allowed,O,BEFORE
+have helped,O,BEFORE
+said,O,BEFORE
+expected to be,O,IS_INCLUDED
+is expected to lead,O,IS_INCLUDED
+said,O,BEFORE
+was pleased,Friday,IS_INCLUDED
+asked,Friday,BEFORE
+know,Friday,DURING
+dismayed,Friday,IS_INCLUDED
+am shocked,Friday,IS_INCLUDED
+want to be,Friday,IS_INCLUDED
+are not going to dignify,Thursday,IS_INCLUDED
+have been subjected,the past few weeks,INCLUDES
+stated unambiguously,this morning,IS_INCLUDED
+designed to mislead,the past few weeks,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+appeared,around 7:15 p.m.,IS_INCLUDED
+said,O,BEFORE
+was watching,Thursday evening,IS_INCLUDED
+was killed,Thursday evening,IS_INCLUDED
+were removed,a few years ago,IS_INCLUDED
+lives,O,DURING
+intended to rob,around 7:15 p.m.,BEFORE
+said,O,BEFORE
+have is,O,DURING
+created,Tuesday,IS_INCLUDED
+said,O,BEFORE
+investigation,O,BEFORE
+the 14 killings,O,BEFORE
+the 14 killings,1993,AFTER
+had been killed,last year,IS_INCLUDED
+said,O,BEFORE
+have expressed,recent months,IS_INCLUDED
+said,O,BEFORE
+the slayings,the last five years,IS_INCLUDED
+began delving,Thursday,IS_INCLUDED
+acknowledged,Thursday,BEFORE
+began delving,Thursday,IS_INCLUDED
+getting,O,IS_INCLUDED
+the task-force investigation,Thursday,BEGUN_BY
+no arrests,O,IS_INCLUDED
+vindicated,two years ago,IS_INCLUDED
+took,this week,IS_INCLUDED
+said,Saturday COMMA April 25,IS_INCLUDED
+the use,two years ago,IS_INCLUDED
+upheld,O,BEFORE
+and joined,O,BEFORE
+were expressed,O,BEFORE
+found,O,BEFORE
+seemed to agree,this week,IS_INCLUDED
+chose to uphold,O,BEFORE
+providing,O,BEFORE
+did not cover,O,BEFORE
+supported,O,BEFORE
+managed,O,BEFORE
+was convicted,nineteen ninety-one,IS_INCLUDED
+has reinstated,O,BEFORE
+is facing,O,IS_INCLUDED
+bought,nineteen ninety-one,BEFORE
+were thrown,nineteen ninety-six,IS_INCLUDED
+had not been raised,nineteen ninety-one,IS_INCLUDED
+to send,O,AFTER
+has ruled,Now,SIMULTANEOUS
+parole,O,BEFORE
+brought,Now,BEFORE
+means,O,IS_INCLUDED
+have kept,more than two thousand years,DURING
+is coming,a few minutes,BEFORE
+were destroyed COMMA,nineteen seventy-nine,INCLUDES
+today QUOTs geography quiz,today,SIMULTANEOUS
+sanctioned,O,AFTER
+declared,O,AFTER
+invaded,nineteen seventy-nine,INCLUDES
+dominated,centuries,DURING_INV
+search,O,IS_INCLUDED
+could have used,O,BEFORE
+speak,today,IS_INCLUDED
+and have,today,IS_INCLUDED
+Think,today,IS_INCLUDED
+patrolling,now,DURING
+is bolstering,O,INCLUDES
+increasingly eager,now,DURING
+half unemployment,the year two thousand,ENDED_BY
+been abandoned,now,IS_INCLUDED
+could nQUOTt have come,today,BEFORE
+the general election,this September,IS_INCLUDED
+have been demonstrating,today,IS_INCLUDED
+the second world war,O,BEFORE
+His promise,O,BEFORE
+say,O,IS_INCLUDED
+is slipping,O,INCLUDES
+reports,O,IS_INCLUDED
+cascaded,O,IS_INCLUDED
+cascaded,today,IS_INCLUDED
+are warning,O,INCLUDES
+say,O,IS_INCLUDED
+say,O,IS_INCLUDED
+to be expelled,O,AFTER
+Any decision,O,AFTER
+called,O,BEFORE
+two killings,last week,IS_INCLUDED
+is going to be used,O,AFTER
+According to,O,BEFORE
+a public hearing,O,BEFORE
+says,O,BEFORE
+are targeting,Now,DURING_INV
+says,O,BEFORE
+bought,O,BEFORE
+laid,O,BEFORE
+funded,O,INCLUDES
+tomorrow QUOTs vote,tomorrow,IS_INCLUDED
+located,now,IS_INCLUDED
+will vote,Tomorrow,IS_INCLUDED
+delivered,O,BEFORE
+say,O,IS_INCLUDED
+say,O,IS_INCLUDED
+too afraid,O,BEFORE
+reports,O,IS_INCLUDED
+an offensive,O,INCLUDES
+More heavy gunfire,O,IS_INCLUDED
+is thought to have been planned,O,BEFORE
+considerably worried,O,INCLUDES
+were saying,mid afternoon,IS_INCLUDED
+the beginnings,O,AFTER
+is thought to have been planned,O,IS_INCLUDED
+been confirmed,O,IS_INCLUDED
+the operation,mid afternoon,ENDED_BY
+met,Sunday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+encountering,O,DURING
+met,last week,IS_INCLUDED
+described,Monday,IS_INCLUDED
+outnumber,O,DURING
+was told,Wednesday,IS_INCLUDED
+said,Monday,IS_INCLUDED
+has informed,O,BEFORE
+said,Monday,IS_INCLUDED
+said,Monday,BEFORE
+sought to prove,Monday,BEFORE
+said,Monday,BEFORE
+on,Monday,IS_INCLUDED
+started calling,Monday,IS_INCLUDED
+to compete,this year,IS_INCLUDED
+rally,two day,DURING
+rally,two day,DURING
+gathered,O,BEFORE
+VOA West Africa Correspondent Purnell Murdock reports,O,IS_INCLUDED
+says,O,IS_INCLUDED
+Organizers state,two days,BEFORE
+announced,O,BEFORE
+have,now,BEFORE
+beginning to,now,IS_INCLUDED
+hate group crimes,last year,IS_INCLUDED
+received,O,BEFORE
+are joining,O,INCLUDES
+sold,a year,IS_INCLUDED
+helped,O,BEFORE
+jumped,this year,DURING_INV
+dropping,the nineties,DURING
+grew,last year,IS_INCLUDED
+has followed,More recently,IS_INCLUDED
+monitored,O,BEFORE
+a dramatic rise,the past year,DURING
+says,O,BEFORE
+being used,O,INCLUDES
+mentioned,O,BEFORE
+the expansion,O,BEFORE
+have,the past,IS_INCLUDED
+equal,today,IS_INCLUDED
+severe violations,the past twenty years,IS_INCLUDED
+says,O,BEFORE
+make,O,INCLUDES
+says,O,BEFORE
+are being organized,O,INCLUDES
+totally dependent,O,IS_INCLUDED
+are facing,O,IS_INCLUDED
+says,O,IS_INCLUDED
+the bloodletting,O,IS_INCLUDED
+says,O,IS_INCLUDED
+is appealing,O,IS_INCLUDED
+says,O,BEFORE
+said,O,BEFORE
+called,O,BEFORE
+is asked to uh stretch,O,AFTER
+meet,Monday,IS_INCLUDED
+next week QUOTs talks,next week,IS_INCLUDED
+was scheduled to return to port,O,BEFORE
+are stationed,O,BEFORE
+could head,O,AFTER
+confirmed,the weekend,IS_INCLUDED
+is taking,O,INCLUDES
+have indicated,O,BEFORE
+could go,the end of the month,AFTER
+is to put,the end of the month,ENDED_BY
+back down,O,AFTER
+have sized,O,BEFORE
+are nQUOTt being allowed to leave,O,INCLUDES
+could become,O,AFTER
+said,the weekend,IS_INCLUDED
+backing,O,BEFORE
+asked,yesterday,IS_INCLUDED
+said,yesterday,IS_INCLUDED
+tried to entice,yesterday,IS_INCLUDED
+invited,Friday,BEFORE
+tried to scare,Friday,IS_INCLUDED
+will help,O,AFTER
+said,yesterday,IS_INCLUDED
+were trying to block shipping,yesterday,INCLUDES
+asked,yesterday,IS_INCLUDED
+implied,yesterday,IS_INCLUDED
+said,O,BEFORE
+a statement,O,BEFORE
+speaking,O,BEFORE
+maintains,O,BEFORE
+has imposed,yesterday,INCLUDES
+asked,yesterday,BEFORE
+disclosed,yesterday,IS_INCLUDED
+was searching,O,BEFORE
+will withdraw,yesterday,AFTER
+announced,yesterday,IS_INCLUDED
+assumed,O,BEFORE
+hopes to lure,O,IS_INCLUDED
+triggers,O,IS_INCLUDED
+would begin QUOTQUOT,O,IAFTER
+leaving,O,IS_INCLUDED
+drags,O,AFTER
+said,O,BEFORE
+declared,O,BEFORE
+has,O,IS_INCLUDED
+are nQUOTt being allowed to leave,O,IS_INCLUDED
+finds,O,IS_INCLUDED
+says,O,IS_INCLUDED
+Saddam Hussein guessing,O,IS_INCLUDED
+planning,O,IS_INCLUDED
+say,O,IS_INCLUDED
+will surrender,the next few days,IS_INCLUDED
+the ground offensive begin,Saturday night,IS_INCLUDED
+began,last August,IS_INCLUDED
+withdraw,noon Saturday,AFTER
+withdraw,a week,IS_INCLUDED
+picked,a week or so ago,IS_INCLUDED
+decided,Feb. 11,IS_INCLUDED
+has begun,O,BEFORE
+has been sitting,O,INCLUDES
+became,the weekend,IS_INCLUDED
+said,late,IS_INCLUDED
+said,O,BEFORE
+dictating,O,IS_INCLUDED
+has offended,O,BEFORE
+a country participating,O,IS_INCLUDED
+asked,O,BEFORE
+is entrenched,O,IS_INCLUDED
+appears,O,IS_INCLUDED
+disavow,O,IS_INCLUDED
+declaring,the weekend,IS_INCLUDED
+said,O,BEFORE
+to cause,O,AFTER
+has,O,IS_INCLUDED
+seem,O,IS_INCLUDED
+has nQUOTt unleashed,O,IS_INCLUDED
+said,O,BEFORE
+is believed to have,O,IS_INCLUDED
+to deliver,O,AFTER
+appears,O,IS_INCLUDED
+remains to be seen,O,AFTER
+remains to be seen,O,IS_INCLUDED
+will commit,O,AFTER
+continues to implore,O,IS_INCLUDED
+have,O,IS_INCLUDED
+assumed,O,BEFORE
+growing,O,IS_INCLUDED
+say,O,IS_INCLUDED
+say,O,IS_INCLUDED
+say,O,IS_INCLUDED
+the offensive,Saturday night,BEGUN_BY
+start,Saturday night,DURING
+say,O,IS_INCLUDED
+keeping,O,AFTER
+considers,O,IS_INCLUDED
+forestalled,O,BEFORE
+starting,noon Saturday,DURING
+argued setting,O,BEFORE
+could be seen trudging,O,BEFORE
+hopes,O,IS_INCLUDED
+the U.S. hopes,O,IS_INCLUDED
+happens,O,AFTER
+has written,O,BEFORE
+says,O,IS_INCLUDED
+do nQUOTt retire,O,IS_INCLUDED
+say,O,IS_INCLUDED
+says,O,IS_INCLUDED
+has,O,IS_INCLUDED
+a great tragedy,O,IS_INCLUDED
+said,O,BEFORE
+complete,year-end,BEFORE
+totaled,1988,IS_INCLUDED
+said,O,BEFORE
+eligible,now,BEGUN_BY
+said,O,BEFORE
+said,O,BEFORE
+according to,O,IS_INCLUDED
+could be reached,O,BEFORE
+said,O,BEFORE
+resigned,last year,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+their 52-week high,52-week,IS_INCLUDED
+are wallowing,O,INCLUDES
+cut,recently,SIMULTANEOUS
+declines,each of the past three years,IS_INCLUDED
+has left,O,BEFORE
+will direct,O,AFTER
+said,O,BEFORE
+capital spending,O,IS_INCLUDED
+said,O,BEFORE
+previously announced,previously,SIMULTANEOUS
+owns,currently,IS_INCLUDED
+is scheduled to expire,the end of November,ENDED_BY
+advertised,today,IS_INCLUDED
+began,O,BEFORE
+is being launched,O,IS_INCLUDED
+is scheduled to expire,O,IS_INCLUDED
+adopted,O,BEFORE
+its third-quarter loss,third-quarter,ENDS
+said,O,BEFORE
+payable,Jan. 2,IS_INCLUDED
+cut,O,BEFORE
+reported,O,BEFORE
+said,O,BEFORE
+will begin mailing,the end of this week,IS_INCLUDED
+owns,O,INCLUDES
+expire,Nov. 21,SIMULTANEOUS
+will begin mailing,the end of this week,IS_INCLUDED
+declined to discuss,O,BEFORE
+be set,O,AFTER
+has,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+closing,December,IS_INCLUDED
+said,O,BEFORE
+is expected,O,IS_INCLUDED
+the agreement,O,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+was terminated,Sept. 27 COMMA 1989,IS_INCLUDED
+versus net income,a year earlier,ENDS
+a third-quarter net loss,third-quarter,ENDS
+posted,O,IS_INCLUDED
+stepped,March,IS_INCLUDED
+succeeds,Nov. 13,IS_INCLUDED
+effect,Nov. 13,IS_INCLUDED
+was named,O,BEFORE
+the potential Valley Federal Savings and Loan Association acquisition,Sept. 27 COMMA 1989,BEFORE
+a one-time gain,1988,IS_INCLUDED
+said,O,BEFORE
+no one-time gains or losses,the latest period,IS_INCLUDED
+discontinued operations,this year,IS_INCLUDED
+contributed,last year,IS_INCLUDED
+fell,O,BEFORE
+ended,the six months,ENDS
+no one-time gains or losses,the latest period,IS_INCLUDED
+ended,Oct. 1,SIMULTANEOUS
+net income,the six months,SIMULTANEOUS
+said,O,BEFORE
+early trading,yesterday,IS_INCLUDED
+is paying,O,INCLUDES
+fell,O,BEFORE
+extraordinary charges,the latest quarter,IS_INCLUDED
+jumped,the third quarter,ENDED_BY
+said,O,BEFORE
+fell,yesterday,IS_INCLUDED
+earned,fiscal 1989,SIMULTANEOUS
+expects to post,the current fiscal year,IS_INCLUDED
+ending,June 30 COMMA 1990,ENDED_BY
+ending,the year,ENDS
+to fall,the year,IS_INCLUDED
+said,O,BEFORE
+phasing,O,INCLUDES
+will result,the fiscal year,IS_INCLUDED
+earned,fiscal 1988,SIMULTANEOUS
+estimated,O,BEFORE
+attributed,O,BEFORE
+The year-ago results,year-ago,ENDED_BY
+a loss,the 1988 period,SIMULTANEOUS
+a loss,last year,SIMULTANEOUS
+fell,the latest quarter,IS_INCLUDED
+fell,third-quarter,IS_INCLUDED
+advanced,third-quarter,IS_INCLUDED
+a fourth-quarter pre-tax charge,fourth-quarter,IS_INCLUDED
+estimated,O,BEFORE
+rose,third-quarter,IS_INCLUDED
+rose,O,BEFORE
+charge,the 1988 second quarter,IS_INCLUDED
+were nQUOTt disclosed,O,IS_INCLUDED
+had owned,O,BEFORE
+said,O,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+the close,yesterday,IS_INCLUDED
+will pay,O,AFTER
+valued,currently,IS_INCLUDED
+will pay,O,AFTER
+said,O,BEFORE
+declined to specify,yesterday,IS_INCLUDED
+declined to specify,O,BEFORE
+rose,yesterday,IS_INCLUDED
+is seeking to oust,O,INCLUDES
+said,O,BEFORE
+on,O,IS_INCLUDED
+prove,O,IS_INCLUDED
+offer,5 p.m. EST Nov. 9,ENDS
+had been set to expire,Nov. 6,SIMULTANEOUS
+said,O,AFTER
+closed,O,BEFORE
+submit,O,AFTER
+said,O,BEFORE
+has proposed changing,Previously,AFTER
+offered,Previously,SIMULTANEOUS
+would be redeemed,five years,SIMULTANEOUS
+will assume,O,AFTER
+closed,O,BEFORE
+rose,O,BEFORE
+said,now,IS_INCLUDED
+becomes,O,AFTER
+becomes,O,AFTER
+said,O,BEFORE
+said,O,BEFORE
+a several-year tenure,several-year,SIMULTANEOUS
+manager,six months,DURING
+was named,O,BEFORE
+serve,O,BEFORE
+on,O,IS_INCLUDED
+said,O,BEFORE
+has set,O,BEFORE
+hold,already,SIMULTANEOUS
+said,O,BEFORE
+has launched,O,BEFORE
+to expire,yesterday,SIMULTANEOUS
+extended,Nov. 20,ENDED_BY
+extended,O,BEFORE
+due,yesterday,IS_INCLUDED
+claims,O,IS_INCLUDED
+declined,third-quarter,SIMULTANEOUS
+a loss,the quarter,SIMULTANEOUS
+said,O,BEFORE
+year-earlier profit,year-earlier,SIMULTANEOUS
+a third-quarter net loss,third-quarter,SIMULTANEOUS
+reported,O,BEFORE
+cited QUOTQUOT,O,BEFORE
+net income,A year earlier,SIMULTANEOUS
+will write,O,AFTER
+a third-quarter net loss,third-quarter,SIMULTANEOUS
+said,O,BEFORE
+plunged,yesterday,IS_INCLUDED
+said,O,BEFORE
+provides COMMA,O,IS_INCLUDED
+simulates,O,IS_INCLUDED
+owns and operates,O,IS_INCLUDED
+said,O,BEFORE
+facing,O,INCLUDES
+had,the third quarter,IS_INCLUDED
+rose,the third quarter,IS_INCLUDED
+a net loss,the nine months,IS_INCLUDED
+year-earlier net income,year-earlier,IS_INCLUDED
+rose,the nine months,IS_INCLUDED
+in,O,IS_INCLUDED
+reported,the nine months,IS_INCLUDED
+a recent public offering,O,BEFORE
+may be extended,an additional year,SIMULTANEOUS
+may be extended,one-year term,AFTER
+convertible,one-year term,IS_INCLUDED
+lent,O,BEFORE
+operates,O,INCLUDES
+sold,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+completion,Dec. 10,ENDED_BY
+is scheduled,O,INCLUDES
+up,mid-afternoon yesterday,IS_INCLUDED
+said,O,BEFORE
+raised,O,BEFORE
+is derived,already,SIMULTANEOUS
+had,a year ago,SIMULTANEOUS
+a third-quarter loss,third-quarter,IS_INCLUDED
+reported,O,BEFORE
+eliminate,future,BEFORE
+all future losses,future,IS_INCLUDED
+expects to achieve,1990,IS_INCLUDED
+said,O,AFTER
+said,O,AFTER
+being examined,currently,IS_INCLUDED
+continue to slow,currently,IS_INCLUDED
+has,O,IS_INCLUDED
+said,O,BEFORE
+will adopt,early 1990,BEGUN_BY
+will continue to operate,early 1990,ENDED_BY
+will continue to operate,O,AFTER
+to acquire,January,IS_INCLUDED
+announced,O,BEFORE
+has,now,IS_INCLUDED
+said,O,BEFORE
+filed,July 1988,IS_INCLUDED
+hit,1985,IS_INCLUDED
+hit,1983,IS_INCLUDED
+filed,O,BEFORE
+peaked,the early 1980s,IS_INCLUDED
+talks,O,INCLUDES
+has been locked,O,INCLUDES
+is scheduled to close,Monday,IS_INCLUDED
+unresolved,O,INCLUDES
+will formally take,this month,SIMULTANEOUS
+tendering,Tuesday,BEFORE
+completed,O,BEFORE
+said,O,BEFORE
+is scheduled to close,O,IS_INCLUDED
+said,O,BEFORE
+were told,early this week,IS_INCLUDED
+rose,O,BEFORE
+earned,the first nine months,IS_INCLUDED
+to be spread,the next three quarters,IS_INCLUDED
+has told,O,BEFORE
+were going to be centralized,O,AFTER
+Earlier staff-reduction moves,Earlier,IDENTITY
+said,earlier this year,AFTER
+adopted,earlier this year,IS_INCLUDED
+rose,yesterday,IS_INCLUDED
+leave,O,AFTER
+will take,O,AFTER
+questioned,O,BEFORE
+strategy,two-year,SIMULTANEOUS
+will participate,O,AFTER
+a fourth-quarter charge,fourth-quarter,IS_INCLUDED
+said,O,BEFORE
+expected to result,O,IS_INCLUDED
+offered,O,BEFORE
+has,O,DURING
+presented claims,this week,IS_INCLUDED
+holding,O,DURING
+signed,yesterday,IS_INCLUDED
+will be offered,O,AFTER
+said,O,BEFORE
+agreed,O,BEFORE
+began,Tuesday,IS_INCLUDED
+will attempt to limit,O,AFTER
+said,O,BEFORE
+is to contribute,O,AFTER
+said,O,BEFORE
+Waertsilae Marine QUOTs bankruptcy proceedings,Tuesday,BEGUN_BY
+This year QUOTs results,This year,IS_INCLUDED
+flat,the year,IAFTER
+earned,the year,IS_INCLUDED
+ended,Sept. 30,SIMULTANEOUS
+ended,the year,ENDS
+Sales,the latest period,IS_INCLUDED
+said,O,BEFORE
+earned,O,BEFORE
+fourth-quarter earnings,fourth-quarter,IS_INCLUDED
+reported,O,BEFORE
+the recent closing,recent,INCLUDES
+makes,O,DURING
+will be closed,the next year or so,DURING
+closed,yesterday,IS_INCLUDED
+its fourth-quarter slump,fourth-quarter,IS_INCLUDED
+Sales,the full year,IAFTER
+earned,A year earlier,IS_INCLUDED
+ended,Aug. 26,IS_INCLUDED
+ended,the fourth quarter,ENDS
+declared,O,BEFORE
+rose,O,BEFORE
+payable,Jan. 3,IS_INCLUDED
+rose,the fourth quarter,IS_INCLUDED
+said,O,BEFORE
+reported,O,BEFORE
+recognized,about two years ago,ENDS
+listed,about two years ago,BEGINS
+innovated,the 20th century,IS_INCLUDED
+the creation,the 20th century,IS_INCLUDED
+recognized,Oct. 23,IS_INCLUDED
+was pleased to note,O,BEFORE
+lower,a year ago,ENDS
+closed,O,BEFORE
+rose,the first nine months,DURING
+rose,the first nine months,DURING
+lower,the 1989 period,IS_INCLUDED
+charges,the year-earlier period,IS_INCLUDED
+the gain,a flat second quarter,AFTER
+tied,a flat second quarter,DURING
+said,O,BEFORE
+third-quarter net income,third-quarter,DURING
+posted,O,BEFORE
+rose,O,BEFORE
+a net loss,a year ago,ENDS
+a restated loss,a year ago,BEGINS
+been rumored,O,BEFORE
+said,O,BEFORE
+gained,The latest period,DURING
+had,The latest period,ENDS
+had,the third quarter,ENDS
+discontinued operations,the third quarter,DURING
+took,O,BEFORE
+will sell,O,AFTER
+said,O,BEFORE
+said,O,BEFORE
+hopes to complete,early next year,IS_INCLUDED
+has,O,DURING
+has,O,DURING
+had proposed acquiring,O,BEFORE
+said,O,BEFORE
+is nQUOTt abandoning,O,INCLUDES
+had set,yesterday,BEFORE
+said,O,BEFORE
+had,last year,IS_INCLUDED
+reaches,now,IS_INCLUDED
+control,now,IS_INCLUDED
+said,now,IDENTITY
+said,O,BEFORE
+agreed to pay,O,AFTER
+brings,O,IS_INCLUDED
+had,the quarter,IS_INCLUDED
+had,Sept. 30,ENDED_BY
+earned,quarter,IS_INCLUDED
+The year-ago results,year-ago,IS_INCLUDED
+established,the third quarter,IS_INCLUDED
+added,the third quarter,IS_INCLUDED
+charged,the third quarter,IS_INCLUDED
+a third-quarter loss,third-quarter,IS_INCLUDED
+can be used,three years,IS_INCLUDED
+said,O,BEFORE
+would be used to consolidate,three years,IS_INCLUDED
+dedicated,each month,IS_INCLUDED
+said,O,BEFORE
+said,last Wednesday,IS_INCLUDED
+been accepted,O,INCLUDES
+own,O,INCLUDES
+is making,O,INCLUDES
+said,O,BEFORE
+launched,last week,IS_INCLUDED
+told,O,BEFORE
+was told,Earlier yesterday,IS_INCLUDED
+trading,O,AFTER
+trading,Monday,IS_INCLUDED
+had suggested,O,BEFORE
+its fight,O,IS_INCLUDED
+said,O,BEFORE
+This quarter QUOTs loss,This quarter,DURING_INV
+a net loss,Sept. 30,ENDED_BY
+a net loss,the third quarter,DURING
+said,O,BEFORE
+compare,O,IS_INCLUDED
+attributed,O,BEFORE
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+has,currently,SIMULTANEOUS
+said,O,IS_INCLUDED
+said,O,BEFORE
+began trading,this summer,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+began trading,August,IS_INCLUDED
+soared,O,BEFORE
+had,a year ago,DURING
+said,O,BEFORE
+began trading,August,IS_INCLUDED
+began trading,this summer,IS_INCLUDED
+third-quarter net income,third-quarter,IS_INCLUDED
+reported,third-quarter,AFTER
+rose,O,BEFORE
+indicated,Earlier this month,IS_INCLUDED
+said,O,BEFORE
+will remain,O,INCLUDES
+said,O,BEFORE
+surfaced holding,last year,IS_INCLUDED
+said,O,BEFORE
+have said,O,BEFORE
+had,March 31,ENDED_BY
+had,the year,DURING
+had,O,BEFORE
+welcomed,O,BEFORE
+The establishment,next year QUOTs first quarter,IS_INCLUDED
+announced,O,BEFORE
+under,O,BEFORE
+launched,last week,IS_INCLUDED
+had rejected,Earlier this year,IS_INCLUDED
+filed,O,BEFORE
+led,O,INCLUDES
+said,O,BEFORE
+controls,currently,IS_INCLUDED
+hopes to control,1992,IS_INCLUDED
+has said,O,BEFORE
+pretax profit,Jan. 31,ENDED_BY
+pretax profit,the fiscal year,DURING
+sales,Jan. 31,ENDED_BY
+sales,the fiscal year,DURING
+reported,Jan. 31,AFTER
+reported,O,BEFORE
+to be completed,Dec. 15,ENDED_BY
+said,O,BEFORE
+the announcement,yesterday,IS_INCLUDED
+has agreed to acquire,O,BEFORE
+had purchased,Sept. 29,ENDED_BY
+approved,1987,IS_INCLUDED
+announced,O,IS_INCLUDED
+closing,Friday,IS_INCLUDED
+has slumped,recently,IS_INCLUDED
+has had,this year,DURING
+has had,O,BEFORE
+rising,the year,DURING
+has fluctuated,O,BEFORE
+rumored,six months,DURING
+rumored,O,BEFORE
+said,O,BEFORE
+according to,O,IS_INCLUDED
+declining,this year,IS_INCLUDED
+authorized,O,BEFORE
+lowered,O,BEFORE
+dropped,Third-quarter,DURING_INV
+the third-quarter loss,third-quarter,DURING
+a third-quarter loss,third-quarter,DURING
+said,O,BEFORE
+closed,Friday,IS_INCLUDED
+plummeted,O,BEFORE
+to be published,early November,IS_INCLUDED
+recorded,third-quarter,IS_INCLUDED
+rose,the third quarter,IS_INCLUDED
+the close,Thursday,IS_INCLUDED
+the close,Thursday,IS_INCLUDED
+said,last week,IS_INCLUDED
+to submit,mid-November,BEFORE
+to expire,Nov. 16,IS_INCLUDED
+to expire,Friday evening,IS_INCLUDED
+to expire,Nov. 6,IS_INCLUDED
+to expire,last Thursday,IS_INCLUDED
+said,O,BEFORE
+extended,Friday,IS_INCLUDED
+extended,O,BEFORE
+said,O,BEFORE
+last report,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+had sought,O,BEFORE
+said,O,BEFORE
+the redemption,Dec. 7,IS_INCLUDED
+closed,Friday,IS_INCLUDED
+remains,then,ENDED_BY
+will terminate,Nov. 30,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+is redeeming,O,INCLUDES
+had,last Monday,IS_INCLUDED
+closed,Friday,IS_INCLUDED
+will pay,O,AFTER
+due,March 1 COMMA 2011,ENDED_BY
+plans to redeem,Nov. 16,IS_INCLUDED
+plans to redeem,O,INCLUDES
+those talks,Late last week,IS_INCLUDED
+began,Late last week,IS_INCLUDED
+fell,Friday,IS_INCLUDED
+fell,Friday,IS_INCLUDED
+launched,Sept. 26,IS_INCLUDED
+has been filed,O,BEFORE
+mailed,last Friday,IS_INCLUDED
+said,O,BEFORE
+had been scheduled to expire,midnight Friday,IS_INCLUDED
+extended,O,BEFORE
+has said,O,BEFORE
+is expected to close,around year end,IS_INCLUDED
+agreed,June,IS_INCLUDED
+said,O,BEFORE
+will become,O,BEFORE
+is expected to close,O,IS_INCLUDED
+due,March 15 COMMA 2007,ENDED_BY
+said,O,BEFORE
+said,O,BEFORE
+have been given,O,BEFORE
+said,O,BEFORE
+Friday QUOTs purchases,Friday,IS_INCLUDED
+said,Friday,IS_INCLUDED
+will concentrate,O,AFTER
+have said,O,BEFORE
+bought,February,IS_INCLUDED
+expects to use,O,INCLUDES
+been repaid,O,BEFORE
+to pay,February,ENDED_BY
+had been expected,O,BEFORE
+distributed,last December,IS_INCLUDED
+had,last year,IS_INCLUDED
+had,O,BEFORE
+said,O,BEFORE
+according to,last December,IS_INCLUDED
+rose,the nine months,IS_INCLUDED
+the sale,August,IS_INCLUDED
+Third-quarter results,Third-quarter,DURING_INV
+posted,O,BEFORE
+the price war,nearly three years,DURING_INV
+fell,the latest quarter,DURING_INV
+earnings,last year,IS_INCLUDED
+had,the latest quarter,IS_INCLUDED
+closed,Friday,IS_INCLUDED
+fourth-quarter results,fourth-quarter,DURING_INV
+the Northern California earthquake,nearly two weeks ago,IS_INCLUDED
+has started processing,O,BEFORE
+The year-earlier results,year-earlier,DURING_INV
+catastrophe losses,Last year,IS_INCLUDED
+fell,O,BEFORE
+fell,third-quarter,DURING_INV
+included,Third-quarter,IS_INCLUDED
+losses,a year,ENDS
+earnings,a year,BEGINS
+much lower,next year,IS_INCLUDED
+will remain,next year,IS_INCLUDED
+is expected to do,the fourth quarter,IS_INCLUDED
+is expected to do,O,INCLUDES
+losses,the first nine months,DURING
+said,Friday,IS_INCLUDED
+having been burned,this year,IS_INCLUDED
+the challenges,the near term,IS_INCLUDED
+said,O,BEFORE
+will continue,next year,DURING
+must pay,every quarter,IS_INCLUDED
+has risen,O,BEFORE
+is betting,O,INCLUDES
+weak,the quarter,IS_INCLUDED
+a reduction,the end of the year,ENDED_BY
+reduced,the quarter,IS_INCLUDED
+will cut,future quarters,IS_INCLUDED
+paid,the quarter,DURING
+noted,O,BEFORE
+took,O,IS_INCLUDED
+said,a month ago,IS_INCLUDED
+took,the quarter,IS_INCLUDED
+inched,the quarter,DURING
+said,O,BEFORE
+Unisys Corp. QUOTs announcement,O,BEFORE
+a turnaround,next year,IS_INCLUDED
+loss,the third quarter,DURING
+Unisys Corp. QUOTs announcement,Friday,IS_INCLUDED
+fell,Friday,IS_INCLUDED
+flaring,O,IS_INCLUDED
+inched,a year,IS_INCLUDED
+said,O,BEFORE
+at,O,IS_INCLUDED
+low enough,next year,IS_INCLUDED
+earned,the nine months,DURING
+additional payments,the next four years,DURING
+will pay,O,AFTER
+signed,Earlier this month,IS_INCLUDED
+has nQUOTt made,O,BEFORE
+according to,recent,IS_INCLUDED
+and holds,O,INCLUDES
+began raising,July,IS_INCLUDED
+reducing,early September,IS_INCLUDED
+agreed to purchase,February,IS_INCLUDED
+disclosed,May,IS_INCLUDED
+fended,recently,IS_INCLUDED
+leaped,Friday,IS_INCLUDED
+bought,Thursday,ENDED_BY
+bought,Sept. 14,BEGUN_BY
+said,from time to time,BEFORE
+expects to continue to evaluate,from time to time,IS_INCLUDED
+considered seeking,the past,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+began raising,July,BEGUN_BY
+is selling,O,INCLUDES
+conceded,O,BEFORE
+scrapped,this past spring,IS_INCLUDED
+could help slash,O,AFTER
+could help slash,the end of 1990,IS_INCLUDED
+announced,recently,IS_INCLUDED
+will be held,O,AFTER
+losses,several quarters,IS_INCLUDED
+achieved,several quarters,AFTER
+achieved,recently,IS_INCLUDED
+had,the first nine months,DURING
+third-quarter earnings,third-quarter,DURING
+reported,Last week,IS_INCLUDED
+has extended,January,ENDED_BY
+has extended,recent months,IS_INCLUDED
+will QUOTQUOT develop,next year,IS_INCLUDED
+tapping,a good part of 1990,DURING
+to continue,1990,IS_INCLUDED
+the recent sale,recent,IS_INCLUDED
+buying,next year,IS_INCLUDED
+are talking,O,INCLUDES
+shrank,this year,IS_INCLUDED
+restructuring effort,five-year,DURING_INV
+said,O,BEFORE
+sees,now,IS_INCLUDED
+thinks,O,INCLUDES
+was hemorrhaging,months ago,IS_INCLUDED
+to consider repurchasing,soon,IS_INCLUDED
+healthy enough,soon,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+hopes to expand,O,IS_INCLUDED
+the company QUOTs scrape,O,BEFORE
+have been listed,O,BEFORE
+posted,Last month,IS_INCLUDED
+announced,September,IS_INCLUDED
+has been doubling,O,INCLUDES
+has been doubling,1980,BEGUN_BY
+is bringing,O,INCLUDES
+will be injected,O,AFTER
+remains to be seen,O,AFTER
+be recommending,the future,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+soared,recent years,IS_INCLUDED
+has moved,recent years,IS_INCLUDED
+repel,O,INCLUDES
+expect,O,INCLUDES
+exceed,currently,IS_INCLUDED
+a loss,the year,IS_INCLUDED
+was announced,Friday,IS_INCLUDED
+will pay,O,AFTER
+Polly Peck International Inc. QUOTs agreement,O,BEFORE
+say,O,IS_INCLUDED
+find,O,AFTER
+said,O,BEFORE
+make,O,IS_INCLUDED
+brimmed,O,BEFORE
+makes,O,IS_INCLUDED
+agreed to pay,five years,BEGINS
+broke,1984,IS_INCLUDED
+speculated,O,IS_INCLUDED
+national over-the-counter trading,Friday,IS_INCLUDED
+composite trading,Friday,IS_INCLUDED
+are being scaled,now,IS_INCLUDED
+were predicting,O,BEFORE
+earned,1988,IS_INCLUDED
+would dilute,1991,IS_INCLUDED
+would dilute,1990,IS_INCLUDED
+said,O,BEFORE
+surprised,O,BEFORE
+flawed,O,INCLUDES
+finds,O,INCLUDES
+said,O,BEFORE
+agreed to pay,O,BEFORE
+to begin,June 1994,IS_INCLUDED
+requires,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+continued to call,the weekend,DURING
+estimate,O,INCLUDES
+estimated,O,BEFORE
+profitable,1994 or later,BEGUN_BY
+acknowledged,O,BEFORE
+bidding,earlier this month,IS_INCLUDED
+has forced,O,BEFORE
+have nQUOTt been obtained,O,IS_INCLUDED
+said,O,BEFORE
+the proposed merger,O,AFTER
+announced,Friday,IS_INCLUDED
+calls,O,INCLUDES
+to placate,the short term,INCLUDES
+estimated,O,AFTER
+an auction process,June 1994,IS_INCLUDED
+does nQUOTt have to wait,O,AFTER
+would give,O,AFTER
+had fallen,Three days,BEGINS
+had fallen,Eight trading days,ENDS
+the stock market plunge,the day,ENDS
+had fallen,the day,BEGINS
+blamed,O,BEFORE
+earned,the 1988 quarter,IS_INCLUDED
+a rise,third-quarter,IS_INCLUDED
+reported,last year,IS_INCLUDED
+lower,third-quarter,IS_INCLUDED
+fell,Friday,IS_INCLUDED
+rose,Friday,IS_INCLUDED
+rocketed,O,BEFORE
+will resume,two to three weeks,IS_INCLUDED
+fell,Thursday,IS_INCLUDED
+said,O,IS_INCLUDED
+eased,Friday,IS_INCLUDED
+plans to dole,now,IS_INCLUDED
+surged,Friday,IS_INCLUDED
+totaled,Friday,IS_INCLUDED
+lost,Friday,IS_INCLUDED
+fell,Friday,IS_INCLUDED
+dropped,the week,IS_INCLUDED
+tumbled,Friday,IS_INCLUDED
+Friday QUOTs close,Friday,IS_INCLUDED
+had fallen,Oct. 12,AFTER
+agrees,O,BEFORE
+says,O,BEFORE
+the 1987 crash,1987,IS_INCLUDED
+seem to hurt,past years,IS_INCLUDED
+seem to hurt,these days,IS_INCLUDED
+sell programs,past years,IS_INCLUDED
+thinks,now,IS_INCLUDED
+acknowledges,O,BEFORE
+the big COMMA often tumultuous slide,this month,IS_INCLUDED
+Estimates,O,BEFORE
+amounted,September,IS_INCLUDED
+declares,O,BEFORE
+affects,O,INCLUDES
+are adding,O,INCLUDES
+says,O,IS_INCLUDED
+seem to hurt,O,IS_INCLUDED
+slashed,O,BEFORE
+according to,O,IS_INCLUDED
+shipment,O,AFTER
+told,O,BEFORE
+The percentage change,year-end,BEGUN_BY
+calculated,O,BEFORE
+had chosen to square,the weekend,BEFORE
+dropped,Friday,IS_INCLUDED
+said,O,BEFORE
+dropped,Friday,IS_INCLUDED
+lose,a week,IS_INCLUDED
+the culmination,a week,ENDS
+the fourth decline,the past five days,IS_INCLUDED
+closed,Friday,ENDS
+said,O,BEFORE
+Friday QUOTs profittaking,Friday,IS_INCLUDED
+made,this week,IS_INCLUDED
+November transactions,November,IS_INCLUDED
+November transactions,day,AFTER
+recent advances,recent,IS_INCLUDED
+were dashed,Friday,IS_INCLUDED
+was estimated,O,BEFORE
+early trading,Monday,IS_INCLUDED
+sharp advances,this week,IS_INCLUDED
+closed,O,BEFORE
+fell,O,BEFORE
+shed,O,BEFORE
+skidded,O,BEFORE
+showed,Friday,IS_INCLUDED
+telegraphed,Friday,IS_INCLUDED
+settled,O,BEFORE
+the current weakness,O,INCLUDES
+the current weakness,current,DURING_INV
+Wall Street QUOTs plunge,Oct. 13,IS_INCLUDED
+shed,the previous Friday,BEGUN_BY
+shed,O,BEFORE
+overnight losses,overnight,DURING
+closed,O,BEFORE
+closed,Friday,ENDS
+in,Thursday,IS_INCLUDED
+said,Thursday,BEFORE
+buying,the week,IS_INCLUDED
+a one-time charge,the latest quarter,IS_INCLUDED
+fell,third-quarter,IS_INCLUDED
+reported,O,BEFORE
+earned,Last year,IS_INCLUDED
+an earnings increase,the full year,IS_INCLUDED
+had been telling,recently,ENDED_BY
+Last Friday QUOTs announcement,Last Friday,IS_INCLUDED
+has reassigned,recent weeks,IS_INCLUDED
+said,recent weeks,IS_INCLUDED
+reported,recent weeks,IS_INCLUDED
+had retained,O,BEFORE
+is to come,next year,IS_INCLUDED
+is to add,next year,IS_INCLUDED
+has,next year,BEFORE
+Cereal volume growth,1989,IS_INCLUDED
+increased,the next two years or so,IS_INCLUDED
+can get,this year,IS_INCLUDED
+closed,Friday,IS_INCLUDED
+says,O,BEFORE
+will begin selling,O,AFTER
+will begin selling,soon,IS_INCLUDED
+so anxious,O,INCLUDES
+say,O,INCLUDES
+has gained,this year,IS_INCLUDED
+has gained,O,BEFORE
+successful,O,BEFORE
+was nQUOTt to begin turning,1993,BEFORE
+current market conditions,current,IS_INCLUDED
+said,O,BEFORE
+suspending,now,IS_INCLUDED
+quit,O,BEFORE
+has cost,O,BEFORE
+work,now,IS_INCLUDED
+was nQUOTt to begin turning,1993,IS_INCLUDED
+is believed to be,current,IS_INCLUDED
+will begin selling,soon,IS_INCLUDED
+say,now,IS_INCLUDED
+a happy group,right now,SIMULTANEOUS
+went,recently,IS_INCLUDED
+construction,now,AFTER
+overly optimistic,Last Friday,SIMULTANEOUS
+in,Last Friday,IS_INCLUDED
+priced,Friday,IS_INCLUDED
+Rated,Friday,IS_INCLUDED
+was priced,Friday,IS_INCLUDED
+due,1999,BEGUN_BY
+priced,Friday,IS_INCLUDED
+due,Nov. 1 COMMA 2009,ENDED_BY
+due,Friday,IS_INCLUDED
+Rated,Friday,IS_INCLUDED
+priced,Friday,IS_INCLUDED
+due,Oct. 15 COMMA 1999,ENDED_BY
+due,Friday,IS_INCLUDED
+compiled,O,BEFORE
+Friday QUOTs offerings and pricings,Friday,IS_INCLUDED
+Friday QUOTs offerings and pricings,Friday,IS_INCLUDED
+to be made,the next 12 to 18 months,DURING
+redeemable,the end of 1994,AFTER
+will be renegotiated,Dec. 31 COMMA 1994,AFTER
+will carry,Dec. 31 COMMA 1994,ENDED_BY
+will carry,O,AFTER
+will be used to reduce,O,AFTER
+be completed,around Nov. 1,IS_INCLUDED
+said,O,BEFORE
+has,currently,IS_INCLUDED
+due,Oct. 15 COMMA 1999,ENDED_BY
+announced,O,BEFORE
+will make,O,AFTER
+said,O,BEFORE
+agreed to buy,now,IS_INCLUDED
+owns,now,IS_INCLUDED
+agreed to buy,O,BEFORE
+made,Earlier this year,IS_INCLUDED
+would seek to liquidate,as soon as possible,IS_INCLUDED
+and said,O,BEFORE
+launched,O,BEFORE
+discussions,O,BEFORE
+for,O,IS_INCLUDED
+over-the-counter trading,Friday,IS_INCLUDED
+agreed to pay,O,BEFORE
+recapitalization,1988,IS_INCLUDED
+is expected to save,next year,IS_INCLUDED
+will be reported,O,AFTER
+its 1988 recapitalization,1988,IS_INCLUDED
+said,O,BEFORE
+is expected to save,O,AFTER
+an operating loss,fiscal 1989,IS_INCLUDED
+potential payments,the next two years,DURING
+earned,the year-ago third quarter,IS_INCLUDED
+an after-tax gain,the quarter,IS_INCLUDED
+a charge,the third quarter,IS_INCLUDED
+said,O,BEFORE
+sales,fiscal 1989,IS_INCLUDED
+said,O,BEFORE
+a fourth-quarter loss,fourth-quarter,IS_INCLUDED
+have,currently,IS_INCLUDED
+holds,currently,IS_INCLUDED
+intends to seek,O,INCLUDES
+said,O,BEFORE
+opened,earlier this year,IS_INCLUDED
+reported,fourth-quarter,IS_INCLUDED
+would nQUOTt say,O,BEFORE
+is cutting,O,INCLUDES
+strengthened,O,BEFORE
+could see,O,BEFORE
+suspended,O,BEFORE
+agreed to sell,O,BEFORE
+confirmed,O,BEFORE
+are expected to go,O,INCLUDES
+agreed to sell,O,BEFORE
+wonder,O,INCLUDES
+a turnaround,O,AFTER
+loss,the third quarter,IAFTER
+posted,O,BEFORE
+may plead,O,AFTER
+sweetened,O,BEFORE
+a broad investigation,the past year,DURING
+may plead,this week,IS_INCLUDED
+future demand,future,IDENTITY
+raise,O,INCLUDES
+are buying,this fall,SIMULTANEOUS
+the third-quarter GNP growth,third-quarter,SIMULTANEOUS
+raises,O,INCLUDES
+rose,September,SIMULTANEOUS
+are organizing to complain,O,INCLUDES
+are expected to continue launching,O,INCLUDES
+stock-index arbitrage trading,O,BEFORE
+suspending,O,BEFORE
+joined,O,BEFORE
+are expected to continue,O,INCLUDES
+is being curbed,O,INCLUDES
+is being led,O,IS_INCLUDED
+fueled,third-quarter,IS_INCLUDED
+say,O,IS_INCLUDED
+charges,O,IS_INCLUDED
+would resolve,O,AFTER
+work,this week,IS_INCLUDED
+to buy,18 months,DURING_INV
+an Aug. 10 COMMA 1988 COMMA stock purchase agreement,Aug. 10 COMMA 1988,SIMULTANEOUS
+said,O,BEFORE
+to develop and maintain,O,AFTER
+to develop and maintain,O,AFTER
+bought,Oct. 20,BEFORE
+bought,Aug. 26,AFTER
+bought,O,BEFORE
+bought,O,BEFORE
+According to,O,IS_INCLUDED
+said,O,BEFORE
+reported,O,BEFORE
+controls,O,DURING
+is seeking,O,INCLUDES
+went,this month,SIMULTANEOUS
+said,O,BEFORE
+had,the year,DURING
+available,late yesterday,DURING
+has,O,SIMULTANEOUS
+said,O,BEFORE
+completed,Earlier this month,INCLUDES
+has set,this year,IS_INCLUDED
+has set,O,BEFORE
+had,Sept. 30,IS_INCLUDED
+said,O,BEFORE
+the acquisition,Earlier this month,IS_INCLUDED
+a loss,second quarter,DURING
+a loss,the comparable year-ago quarter,DURING
+changed,December,IS_INCLUDED
+a loss,Oct. 31,ENDED_BY
+expects to release,mid-November,BEFORE
+expects to release,mid-November,IS_INCLUDED
+a loss,O,BEFORE
+said,O,BEFORE
+net income,the third quarter,DURING
+said,O,BEFORE
+write-down,that quarter,IS_INCLUDED
+will buy,O,AFTER
+tendered,today,BEGUN_BY
+tendered,Nov. 17,ENDED_BY
+has,O,INCLUDES
+have cleared,O,BEFORE
+The approval,O,BEFORE
+to buy,Jan. 1 COMMA 1990,AFTER
+said,O,BEFORE
+had suspended,O,BEFORE
+would continue,Nov. 1,AFTER
+a June agreement,June,IS_INCLUDED
+announced,Aug. 21,IS_INCLUDED
+announced,O,BEFORE
+is trying to sell,O,INCLUDES
+a net loss,the third quarter,DURING
+expects to post,O,INCLUDES
+said,O,BEFORE
+lunch,Tuesday,IS_INCLUDED
+the visit,O,BEFORE
+paid,This week,INCLUDES
+takeover,1988,IS_INCLUDED
+has relinquished,O,BEFORE
+its current financial difficulties,current,IS_INCLUDED
+keen,O,INCLUDES
+willing,O,INCLUDES
+selling,1984,IS_INCLUDED
+doing,the next 14 months,IS_INCLUDED
+expires,Dec. 31 COMMA 1990,IS_INCLUDED
+a news conference,O,BEFORE
+a news conference,yesterday,IS_INCLUDED
+have gained,Tuesday,BEGUN_BY
+late trading,yesterday,IS_INCLUDED
+pushed,O,BEFORE
+Tuesday QUOTs declaration,Tuesday,IS_INCLUDED
+said,O,BEFORE
+does nQUOTt own,yet,IS_INCLUDED
+sought,last week,IS_INCLUDED
+wants to buy,O,INCLUDES
+according to,O,IS_INCLUDED
+completing,O,IS_INCLUDED
+an all-out bidding war,Tuesday,AFTER
+would nQUOTt specify,O,BEFORE
+does nQUOTt want,O,IS_INCLUDED
+said,O,BEFORE
+would nQUOTt give,O,AFTER
+British-owned and independent,O,IS_INCLUDED
+receptive,O,AFTER
+agreed,O,BEFORE
+must wait,at least 30 days,DURING
+cleared,yesterday,IS_INCLUDED
+agreed,August 1988,IS_INCLUDED
+will receive,O,AFTER
+has nQUOTt been set,O,INCLUDES
+approved,last April,IS_INCLUDED
+said,O,BEFORE
+was cleared,O,BEFORE
+national over-the-counter trading,yesterday,IS_INCLUDED
+national over-the-counter trading,O,BEFORE
+authorized,O,BEFORE
+said,O,BEFORE
+announced,earlier this month,IS_INCLUDED
+announced,O,BEFORE
+the company QUOTs buy-out,last June,IS_INCLUDED
+rose,O,BEFORE
+fell,the third quarter,DURING_INV
+said,O,BEFORE
+rose,the year-earlier period,IS_INCLUDED
+cash flow,1990 and beyond,SIMULTANEOUS
+national over-the-counter trading,yesterday,IS_INCLUDED
+said,O,BEFORE
+QUOTQUOT squeezed,1989,IS_INCLUDED
+QUOTQUOT squeezed,O,BEFORE
+said,O,BEFORE
+declared,O,BEFORE
+last month QUOTs Campeau Corp. credit squeeze,week,BEGINS
+have been selling,recent weeks and months,IS_INCLUDED
+remain,now,SIMULTANEOUS
+rose,O,BEFORE
+has fallen,Oct. 19,ENDS
+has fallen,this year,IS_INCLUDED
+had,Oct. 19,ENDS
+broken,this year,IS_INCLUDED
+the whole ball game,The last two months,DURING
+little change,August,ENDS
+little change,this year,IS_INCLUDED
+yanked,the past two months,IS_INCLUDED
+holds,O,INCLUDES
+holds,now,SIMULTANEOUS
+seeped,Friday Oct. 13,IS_INCLUDED
+has seen,early September,BEGINS
+{ positive } net sales,every month,IS_INCLUDED
+{ positive } net sales,this month,ENDED_BY
+last month QUOTs Campeau Corp. credit squeeze,last month,IS_INCLUDED
+streamed out,last,IS_INCLUDED
+a net outflow,O,BEFORE
+a net outflow,the past two months,IS_INCLUDED
+the takeover boom,recent years,IS_INCLUDED
+has helped to finance,O,BEFORE
+the impact,O,AFTER
+have nQUOTt lost,O,BEFORE
+weakened,O,BEFORE
+could spell,O,AFTER
+to pay,the weeks ahead,IS_INCLUDED
+recent declines,recent,IS_INCLUDED
+net outflows,O,BEFORE
+net outflows,the past two months,IS_INCLUDED
+Interviews,O,BEFORE
+have lost,O,BEFORE
+have lost,the past two months,IS_INCLUDED
+flowed,O,BEFORE
+flowed,Last week,IS_INCLUDED
+are pouring,O,INCLUDES
+according to,O,IS_INCLUDED
+says,O,IS_INCLUDED
+says,O,IS_INCLUDED
+say,O,IS_INCLUDED
+says,O,IS_INCLUDED
+says,O,IS_INCLUDED
+say,O,IS_INCLUDED
+According to,O,BEFORE
+has emphasized,O,BEFORE
+said,O,BEFORE
+the sale,1987,ENDED_BY
+the sale,1985,BEGUN_BY
+engaging,O,BEFORE
+engaging,a three-year period,IS_INCLUDED
+was charged,last month,IS_INCLUDED
+said COMMA QUOTQUOT,O,BEFORE
+said,O,BEFORE
+the recent Supreme Court rulings,recent,IS_INCLUDED
+issued,this week,IS_INCLUDED
+According to,O,BEFORE
+has,O,INCLUDES
+seek,soon,IS_INCLUDED
+have told,O,BEFORE
+is being investigated,O,INCLUDES
+says,O,BEFORE
+according to,O,BEFORE
+worry,O,INCLUDES
+two decisions,O,BEFORE
+The warning,O,BEFORE
+two decisions,last June,IS_INCLUDED
+are warning,O,INCLUDES
+is sharpening,O,INCLUDES
+to seek to freeze or seize,O,IS_INCLUDED
+said,O,BEFORE
+is going to have,O,AFTER
+are expected to reach,early next year,IS_INCLUDED
+are developing,O,INCLUDES
+will keep,O,AFTER
+began dominating,O,BEFORE
+are expected to challenge,O,INCLUDES
+said,O,BEFORE
+say,O,INCLUDES
+plans to announce,Nov. 6,IS_INCLUDED
+said,O,BEFORE
+has,O,INCLUDES
+told,Monday,IS_INCLUDED
+said,O,BEFORE
+began shipping,late September,IS_INCLUDED
+say,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+would start producing,next week,IS_INCLUDED
+said,O,BEFORE
+is being attributed,O,INCLUDES
+plunged,Yesterday,IS_INCLUDED
+New York Stock Exchange composite trading,Wednesday,IS_INCLUDED
+over-the-counter trading,yesterday,IS_INCLUDED
+a decline,yesterday,IS_INCLUDED
+said,O,BEFORE
+planned to ship,early next year,IS_INCLUDED
+announced,last week,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+say,O,BEFORE
+began notifying,O,BEFORE
+began notifying,Friday,IS_INCLUDED
+discovered,last week,IS_INCLUDED
+said,O,BEFORE
+to be cleared,O,AFTER
+appear,O,AFTER
+appear,sometime next year,IS_INCLUDED
+say,O,BEFORE
+has,O,INCLUDES
+began notifying,Friday,IS_INCLUDED
+would start producing,next week,IS_INCLUDED
+shipping,O,BEFORE
+stopped shipping,Monday,IS_INCLUDED
+said,O,BEFORE
+to recall,O,AFTER
+coming,O,AFTER
+announced,A few days,ENDS
+brought,A few days,BEGINS
+brought,January,IS_INCLUDED
+put,The following month,IS_INCLUDED
+twists and turns,months,IS_INCLUDED
+twists and turns,months,IS_INCLUDED
+The completion,months,AFTER
+lowered,early this month,IS_INCLUDED
+received,March,IS_INCLUDED
+were named to join,O,BEFORE
+completed,yesterday,IS_INCLUDED
+completed,O,BEFORE
+urged,March,IS_INCLUDED
+the purchase,yesterday,IS_INCLUDED
+has engaged,O,BEFORE
+declined to comment,O,BEFORE
+has made QUOTQUOT,O,BEFORE
+left,the beginning of October,IS_INCLUDED
+closed,Yesterday,IS_INCLUDED
+has had,the past two quarters,IS_INCLUDED
+is controlled,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+was described,O,BEFORE
+a special shareholders QUOT meeting,O,BEFORE
+a special shareholders QUOT meeting,yesterday,IS_INCLUDED
+will redeem,Oct. 31,IS_INCLUDED
+will be used to redeem,O,AFTER
+has,O,INCLUDES
+closed,O,BEFORE
+is expected to raise,O,INCLUDES
+holds,currently,DURING
+holds,O,INCLUDES
+announced,O,BEFORE
+reported,O,BEFORE
+stopped paying,the third quarter of 1984,IS_INCLUDED
+be reinstated,later this year,IS_INCLUDED
+would recommend,O,IS_INCLUDED
+said,O,BEFORE
+stopped paying,the third quarter of 1984,IS_INCLUDED
+has,currently,IS_INCLUDED
+estimates,O,INCLUDES
+said,O,BEFORE
+will receive,this year,IS_INCLUDED
+enjoy,O,INCLUDES
+will offer,O,AFTER
+owns,O,INCLUDES
+said,Monday,IS_INCLUDED
+has said,O,BEFORE
+pending,O,INCLUDES
+holds,now,IS_INCLUDED
+was denationalized,1987,IS_INCLUDED
+has warded,the past 20 years,DURING
+has built,the past 20 years,DURING
+is expected to seek,O,INCLUDES
+is to resume,Tuesday,IS_INCLUDED
+is to resume,O,BEFORE
+is being traded,O,INCLUDES
+said,O,BEFORE
+trading,Tuesday,IS_INCLUDED
+organizing,O,IS_INCLUDED
+said,O,BEFORE
+would mean,O,AFTER
+downplayed,O,BEFORE
+will have,O,AFTER
+can be converted,O,INCLUDES
+is being offered,O,INCLUDES
+no periodic interest payments,O,INCLUDES
+will be used to reduce,O,AFTER
+due,Nov. 1 COMMA 2004,IS_INCLUDED
+said,O,BEFORE
+closed,yesterday,IS_INCLUDED
+is expected to save,O,IS_INCLUDED
+being used to pursue,O,INCLUDES
+is seeking,O,INCLUDES
+said,O,BEFORE
+said,O,BEFORE
+major market activity,yesterday,IS_INCLUDED
+major market activity,Wednesday,AFTER
+major market activity,O,BEFORE
+to lower,coming weeks,IS_INCLUDED
+was unmoved,O,BEFORE
+said,O,BEFORE
+more corporate earnings disappointments,the fourth quarter,IS_INCLUDED
+growth,the fourth quarter,DURING
+said,O,BEFORE
+predicting,O,INCLUDES
+grew,the third quarter,IS_INCLUDED
+fell,yesterday,IS_INCLUDED
+The less-than-robust third-quarter results,third-quarter,ENDS
+net losers,the third quarter,ENDS
+added,Later yesterday,IS_INCLUDED
+and pulled,Wednesday,AFTER
+closed,Wednesday,IS_INCLUDED
+hit,yesterday,IS_INCLUDED
+whacked,O,BEFORE
+have complained,O,BEFORE
+very good,third-quarter,SIMULTANEOUS
+growth,the fourth quarter,IS_INCLUDED
+continued increases,a year earlier,ENDS
+increase,a year earlier,BEGINS
+fell,yesterday,IS_INCLUDED
+will be used,O,AFTER
+purchased,the third quarter,DURING
+represent,the next couple of years,DURING
+performance,third-quarter,ENDS
+attributed,O,BEFORE
+a gain,the year-earlier nine months,ENDS
+The latest quarter QUOTs results,The latest quarter,ENDS
+rose,the third quarter,DURING
+said,O,BEFORE
+rose,the nine months,IS_INCLUDED
+said,O,BEFORE
+to total,the latest quarter,ENDS
+had,the year-earlier quarter,IS_INCLUDED
+jumped,third-quarter,DURING
+said,O,BEFORE
+an interview,O,BEFORE
+earned,a year earlier,ENDS
+entered,several months,ENDS
+an interview,several months,BEGINS
+would be paid,January,IS_INCLUDED
+will be paid,O,AFTER
+will be paid,Dec. 14,IS_INCLUDED
+earned,the nine months,DURING
+dropped,the quarter,DURING
+fell,the quarter,DURING
+lower earnings,the quarter,ENDS
+increasing,the third quarter,DURING
+was delayed,earlier in the year,IS_INCLUDED
+holds,O,INCLUDES
+says,O,BEFORE
+soared,the latest quarter,DURING
+Leading,the latest quarter,DURING
+to close,yesterday,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+rose,yesterday,IS_INCLUDED
+will post,O,AFTER
+said,O,BEFORE
+entered,April,IS_INCLUDED
+The dividend increase,this year,IS_INCLUDED
+earned,the year-earlier period,DURING
+reported,O,IS_INCLUDED
+grew,a year ago,BEGUN_BY
+grew,third-quarter,DURING
+reported,O,BEFORE
+need to,O,IS_INCLUDED
+will be paid,O,AFTER
+said,O,BEFORE
+posted,the quarter,IS_INCLUDED
+but requires,O,INCLUDES
+has been approved,O,BEFORE
+plans to run,O,INCLUDES
+said,O,BEFORE
+had,a year ago,IS_INCLUDED
+took,Aug. 9,IS_INCLUDED
+the annual meeting,O,BEFORE
+were issued,O,BEFORE
+posted,O,BEFORE
+has directed,O,BEFORE
+will serve,O,AFTER
+were named,O,BEFORE
+has,O,INCLUDES
+founded,O,BEFORE
+will continue to be,1990,DURING
+will have,this year,IS_INCLUDED
+fell,Sept. 30,ENDED_BY
+has risen,Quarterly,DURING_INV
+taken,O,BEFORE
+are looking,now,IS_INCLUDED
+introduced,recently,IS_INCLUDED
+are dealing,O,INCLUDES
+says,O,BEFORE
+welcomes,O,INCLUDES
+has faced,O,BEFORE
+reaches,O,AFTER
+will succeed,Feb. 1,IS_INCLUDED
+will succeed,O,AFTER
+was named,O,BEFORE
+below,1987,IS_INCLUDED
+a U.S. Trust trustee,1974,BEFORE
+plans to introduce,O,INCLUDES
+vulnerable,O,INCLUDES
+have said,Recently,IS_INCLUDED
+faces,O,INCLUDES
+should increase,the fiscal year,DURING
+hurt,O,BEFORE
+hurt,this year,IS_INCLUDED
+loss,its fourth quarter,DURING
+to meet,the summer,IS_INCLUDED
+introduced,April,IS_INCLUDED
+shipped,the quarter,IS_INCLUDED
+the introduction,April,IS_INCLUDED
+expected to break,the quarter,IS_INCLUDED
+said,this month,IS_INCLUDED
+earned,the 1988 period,IS_INCLUDED
+earned,the fiscal first quarter,IS_INCLUDED
+said,O,BEFORE
+plans to introduce,early next year,IS_INCLUDED
+said,yesterday,IS_INCLUDED
+responded,yesterday,IS_INCLUDED
+yesterday QUOTs announcement,yesterday,IS_INCLUDED
+said,Last April,IS_INCLUDED
+planned to acquire,Last April,IS_INCLUDED
+said,O,BEFORE
+have agreed to tender,O,BEFORE
+appointed,last May,IS_INCLUDED
+mail,Nov. 22,BEFORE
+said,O,BEFORE
+has said,O,BEFORE
+earned,the nine months,DURING
+jumped,third-quarter,DURING
+fell,the first nine months,DURING
+said,O,BEFORE
+rose,the nine months,DURING
+fell,the nine months,DURING
+fell,a year ago,BEGUN_BY
+to reduce,year end,ENDED_BY
+fell,yesterday,IS_INCLUDED
+will be disclosed,this morning,IS_INCLUDED
+New York Stock Exchange trading,yesterday,IS_INCLUDED
+fell,the third quarter,DURING
+said,O,BEFORE
+said,O,BEFORE
+attributed,O,BEFORE
+rose,the nine months,DURING
+growth,years,IS_INCLUDED
+will achieve,this year,IS_INCLUDED
+to rise,the next three years,DURING
+has nQUOTt had,about a decade,IS_INCLUDED
+is beginning to shrink,O,INCLUDES
+expects,O,INCLUDES
+will rise,1990,IS_INCLUDED
+earned,1988,IS_INCLUDED
+will be offset,the fourth quarter,IS_INCLUDED
+told,O,BEFORE
+is experiencing,O,INCLUDES
+will involve,O,AFTER
+grow,soon,IS_INCLUDED
+well positioned,O,INCLUDES
+a major boost,the 1990s,DURING
+expects to meet,O,INCLUDES
+acquiring,1983,BEGUN_BY
+has shed,1983,BEGUN_BY
+offset,the past 20 months,IS_INCLUDED
+said,O,BEFORE
+is beginning to shrink,O,IS_INCLUDED
+said,O,BEFORE
+expects,O,IS_INCLUDED
+is negotiating,O,IS_INCLUDED
+released,this month,IS_INCLUDED
+show,O,INCLUDES
+did nQUOTt include,O,INCLUDES
+will be marketed,O,AFTER
+is set to begin,early 1991,IS_INCLUDED
+is set to begin,O,INCLUDES
+will need to seek,a later date,IS_INCLUDED
+said,O,BEFORE
+are expected to be used,O,INCLUDES
+according to,O,BEFORE
+but did nQUOTt disclose,this month,IS_INCLUDED
+announced,this month,IS_INCLUDED
+announced,O,BEFORE
+issued,O,BEFORE
+has agreed to pay,O,BEFORE
+Construction,early 1991,DURING
+said,O,BEFORE
+earnings,the third quarter,DURING
+expects to report,O,INCLUDES
+posted,the 1988 third quarter,DURING
+is negotiating,O,DURING
+were hurt,Last year,IS_INCLUDED
+includes,The latest period,SIMULTANEOUS
+ended,Sept. 30,SIMULTANEOUS
+ended,quarter,ENDS
+increased,quarter,IS_INCLUDED
+posted,fiscal second-quarter,AFTER
+owns,O,DURING
+closed,O,BEFORE
+dropped,O,BEFORE
+a joint venture,now,DURING
+dropped,third-quarter,ENDS
+said,O,BEFORE
+has increased,the early summer,BEFORE
+continue to adjust,the fourth quarter,DURING
+remains,the fourth quarter,DURING
+decline,the fourth quarter,IS_INCLUDED
+will exhibit,O,AFTER
+were boosted,a year ago,AFTER
+enjoyed,a year ago,IS_INCLUDED
+estimated third-quarter earnings,third-quarter,BEFORE
+said,O,BEFORE
+linked,O,BEFORE
+has nQUOTt diversified,O,BEFORE
+rose,O,BEFORE
+dropped,Third-quarter,ENDS
+earned,year-ago period,IS_INCLUDED
+earned,O,BEFORE
+will report,the third quarter of 1990,INCLUDES
+will report,O,AFTER
+see,first two quarters of 1990,IS_INCLUDED
+the disappointing trend,first two quarters of 1990,INCLUDES
+the disappointing trend,the fourth quarter,INCLUDES
+a two-year boom,two-year,DURING
+believed to be,O,DURING
+reported,O,BEFORE
+posted,O,BEFORE
+hammered,O,DURING
+expect,O,IS_INCLUDED
+said,O,BEFORE
+thinks,O,IS_INCLUDED
+would seem to be,O,IS_INCLUDED
+said,O,BEFORE
+continue to adjust,the fourth quarter,DURING
+said,O,BEFORE
+consolidates,O,IS_INCLUDED
+dropped,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+noted,O,BEFORE
+profitable,O,DURING
+downgraded,Last month,IS_INCLUDED
+ended,Aug. 12,SIMULTANEOUS
+ended,the six months,ENDS
+tarnished,the past two years,IS_INCLUDED
+accounted,the latest fiscal year,ENDS
+appointed,O,BEFORE
+could nQUOTt be reached,O,BEFORE
+joined,1985,IS_INCLUDED
+said,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+posted,Aug. 12,DURING
+and are expecting,O,IS_INCLUDED
+discussions,the six months,IS_INCLUDED
+could nQUOTt be reached,Aug. 12,BEFORE
+owns,O,DURING
+underwrites,O,DURING
+plans to use,O,DURING
+sold,O,BEFORE
+said,O,BEFORE
+said,O,BEFORE
+rose,a year earlier,ENDED_BY
+a loss,a year earlier,ENDS
+a loss,the nine months,BEFORE
+posted,the nine months,ENDS
+rose,O,BEFORE
+an extraordinary gain,Year-earlier,IS_INCLUDED
+Year-earlier results,Year-earlier,ENDS
+jumped,third-quarter,ENDS
+reported,third-quarter,AFTER
+beginning to get,the quarter,IS_INCLUDED
+issued,the quarter,IS_INCLUDED
+began,last spring,IS_INCLUDED
+shares,O,INCLUDES
+posted,the quarter,ENDS
+soared,the fiscal first quarter,IS_INCLUDED
+soared,O,BEFORE
+reported,O,BEFORE
+and repurchased,the quarter,IS_INCLUDED
+said,O,BEFORE
+beginning to get,the quarter,IS_INCLUDED
+has,O,DURING
+will dispose,O,AFTER
+accelerated,the past two weeks,IS_INCLUDED
+traded,August,IS_INCLUDED
+has been cut,August,AFTER
+require,O,DURING
+must sell,five years,IS_INCLUDED
+must sell,now,DURING
+to divest,1994,BEFORE
+stood,June 30,IS_INCLUDED
+totaled,the nine months,ENDS
+Columbia QUOTs junk-bond trading,O,DURING
+owes,O,DURING
+its spectacular growth,recent years,IS_INCLUDED
+increased,the latest quarter,ENDS
+a loss,the third quarter,ENDS
+reeling,O,BEFORE
+reported,the quarter a year ago,AFTER
+contributed,O,BEFORE
+said,O,BEFORE
+requires,O,IS_INCLUDED
+said,O,BEFORE
+would be forced to take,August,AFTER
+said,O,BEFORE
+been completed,O,IS_INCLUDED
+QUOTs followed,O,DURING
+had,last year,IS_INCLUDED
+trimmed,1990,BEFORE
+called,O,BEFORE
+trimmed,yesterday,IS_INCLUDED
+grow,the current year,IS_INCLUDED
+lies,O,DURING
+said,the mid-1990s,BEFORE
+has characterized,the last half of the QUOT80s,DURING
+fell,yesterday,IS_INCLUDED
+plunging,yesterday,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+will mean,1990,ENDS
+will mean,the last half of 1989,ENDS
+expected to be applied,O,DURING
+started,last month,IS_INCLUDED
+said,O,BEFORE
+rose,third-quarter,ENDS
+reported,third-quarter,AFTER
+discounting,at least the past 18 months,IS_INCLUDED
+said,O,BEFORE
+predict,now,DURING
+offered,summer,IS_INCLUDED
+are becoming,O,DURING
+the once-sporadic and brief forays,O,DURING
+the passing,days,ENDS
+said,O,BEFORE
+been ceding,O,DURING
+reluctant,O,BEFORE
+said,O,BEFORE
+noted,O,BEFORE
+essentially flat,1989,DURING
+continues to hold,O,IS_INCLUDED
+is expected to see,the current year,DURING
+the intensity,third-quarter,DURING
+According to,O,IS_INCLUDED
+has agreed to sell,O,BEFORE
+having begun,the current quarter,BEGINS
+conducted,fourth quarters,IS_INCLUDED
+conducted,second,IS_INCLUDED
+surged,the latest period,IS_INCLUDED
+a year-earlier net loss,year-earlier,ENDS
+a third-quarter net loss,third-quarter,ENDS
+narrowed,third quarter,DURING
+narrowed,a year earlier,ENDS
+its net loss,third quarter,ENDS
+said,O,BEFORE
+having begun,O,BEFORE
+reported,O,IS_INCLUDED
+said,O,BEFORE
+had,Sept. 30,IS_INCLUDED
+closed,yesterday,IS_INCLUDED
+adopted,O,BEFORE
+said,O,IS_INCLUDED
+rose,third-quarter,IS_INCLUDED
+fell,third-quarter,INCLUDES
+accounted,last year,IS_INCLUDED
+sold,five years ago,IS_INCLUDED
+to respond,Oct. 31,BEFORE
+closed,yesterday,IS_INCLUDED
+is evaluating,O,DURING
+down,yesterday,IS_INCLUDED
+the company QUOTs acquisition,earlier this year,IS_INCLUDED
+drop,third-quarter,IS_INCLUDED
+reported,O,BEFORE
+had expected,third-quarter,BEFORE
+said,yesterday,IS_INCLUDED
+mandated,O,BEFORE
+may include selling,within 18 months,IS_INCLUDED
+over-the-counter trading,yesterday,IS_INCLUDED
+profit,A year ago,IS_INCLUDED
+said,O,BEFORE
+a third-quarter loss,third-quarter,IS_INCLUDED
+net income,third quarter,ENDS
+reported,O,BEFORE
+fell,the year-ago period,DURING
+rose,the year-ago period,DURING
+has,O,IS_INCLUDED
+declared,O,BEFORE
+declared,O,BEFORE
+closed,yesterday,IS_INCLUDED
+said,O,IS_INCLUDED
+said,O,IS_INCLUDED
+may be exercised,90 days,BEFORE
+has,O,IS_INCLUDED
+said,O,BEFORE
+said,O,IS_INCLUDED
+sales,last year,DURING
+had,O,BEFORE
+said,O,BEFORE
+paid,O,BEFORE

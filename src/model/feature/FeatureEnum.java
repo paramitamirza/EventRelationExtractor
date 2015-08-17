@@ -8,7 +8,7 @@ public final class FeatureEnum {
 	
 	public static enum Feature {
 		id,
-		token, lemma, tokenSpace, lemmaSpace,
+		token, lemma, tokenSpace, lemmaSpace, tokenChunk,
 		pos, mainpos, chunk, posCombined, mainposCombined, chunkCombined,
 		ner, supersense, nerCombined, supersenseCombined,
 		samePos, sameMainPos,
@@ -23,6 +23,7 @@ public final class FeatureEnum {
 		tempMarkerDep1, tempMarkerDep2, tempMarkerDep1Dep2,
 		causMarkerDep1, causMarkerDep2, causMarkerDep1Dep2,
 		coref, wnSim, timexRule,
+		tempMarkerTextPhrase, causMarkerTextPhrase,
 		label;
 	}
 

@@ -85,6 +85,25 @@ public class TXPParser {
         }
 	}
 	
+	private String getMainPosFromPos(String pos) {
+        if (pos.charAt(0) == 'V') return "v";
+        else if (pos.charAt(0) == 'N') return "n";
+        else if (pos.charAt(0) == 'A' && pos.charAt(1) == 'T') return "art";
+        else if (pos.charAt(0) == 'D') return "det";
+        else if (pos.charAt(0) == 'A' && pos.charAt(1) == 'J') return "adj";
+        else if (pos.charAt(0) == 'A' && pos.charAt(1) == 'V') return "adv";
+        else if (pos.charAt(0) == 'C' && pos.charAt(1) == 'J') return "conj";
+        else if (pos.charAt(0) == 'C' && pos.charAt(1) == 'R' && pos.charAt(2) == 'D') return "crd";
+        else if (pos.charAt(0) == 'O' && pos.charAt(1) == 'R' && pos.charAt(2) == 'D') return "ord";
+        else if (pos.charAt(0) == 'P' && pos.charAt(1) == 'N') return "pron";
+        else if (pos.charAt(0) == 'P' && pos.charAt(1) == 'R') return "prep";
+        else if (pos.charAt(0) == 'T' && pos.charAt(1) == 'O') return "to";
+        else if (pos.charAt(0) == 'P' && pos.charAt(1) == 'O' && pos.charAt(2) == 'S') return "pos";
+        else if (pos.charAt(0) == 'P' && pos.charAt(1) == 'U') return "punc";
+        else if (pos.charAt(0) == 'X') return "neg";
+        return "O";
+	}
+	
 	private Boolean isMainVerb(String mainVerb) {
 		if (!mainVerb.isEmpty()) {
 			if (mainVerb.equals("mainVb")) return true;
@@ -159,7 +178,7 @@ public class TXPParser {
 			tok.setLemmaPosChunk(cols.get(getIndex(Field.lemma)), 
 					cols.get(getIndex(Field.pos)), 
 					cols.get(getIndex(Field.chunk)));
-			tok.setMainPos(getMainPosFromMorpho(cols.get(getIndex(Field.morpho))));
+			tok.setMainPos(getMainPosFromPos(cols.get(getIndex(Field.pos))));
 			
 			//named entitiy type
 			tok.setNamedEntity(cols.get(getIndex(Field.ner)));
