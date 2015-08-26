@@ -24,6 +24,7 @@ public final class FeatureEnum {
 		causMarkerDep1, causMarkerDep2, causMarkerDep1Dep2,
 		coref, wnSim, timexRule,
 		tempMarkerTextPhrase, causMarkerTextPhrase,
+		tempSignalClusText,
 		label;
 	}
 

@@ -146,7 +146,9 @@ public class TempEval3TaskWeka {
 //				//token attribute features
 //				fv.addToVector(Feature.tokenSpace);
 //				fv.addToVector(Feature.lemmaSpace);
-				fv.addToVector(Feature.tokenChunk);
+//				fv.addToVector(Feature.tokenChunk);
+				
+				fv.addPhraseFeatureToVector(Feature.tokenChunk);
 				
 				//TODO addToVector phrase embedding for token and lemma
 				
@@ -161,7 +163,7 @@ public class TempEval3TaskWeka {
 //				fv.addBinaryFeatureToVector(Feature.sentDistance);
 				
 				if (fv instanceof EventEventFeatureVector) {
-					//Entity attributes
+//					//Entity attributes
 //					fv.addBinaryFeatureToVector(Feature.eventClass);
 //					fv.addBinaryFeatureToVector(Feature.tense);
 //					fv.addBinaryFeatureToVector(Feature.aspect);
@@ -175,15 +177,17 @@ public class TempEval3TaskWeka {
 //					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
 //					fv.addBinaryFeatureToVector(Feature.mainVerb);
 //					
-					//TODO addToVector phrase embedding for temporal & causal signal
-					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
-//					fv.addToVector(Feature.tempMarkerText);					
+//					//TODO addToVector phrase embedding for temporal & causal signal
+//					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
+//					//fv.addToVector(Feature.tempMarkerText);
+//					fv.addBinaryFeatureToVector(Feature.tempSignalClusText);
 //					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
 //					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
 //					
-//					fv.addToVector(Feature.causMarkerText);
+//					//fv.addToVector(Feature.causMarkerText);
+//					fv.addBinaryFeatureToVector(Feature.causMarkerClusText);
 //					fv.addBinaryFeatureToVector(Feature.causMarkerPos);
-					//fv.addToVector(Feature.causMarkerDep1Dep2);	//TODO dependency path to binary feature?
+//					//fv.addToVector(Feature.causMarkerDep1Dep2);	//TODO dependency path to binary feature?
 //					
 //					//event co-reference
 //					fv.addBinaryFeatureToVector(Feature.coref);
@@ -206,11 +210,12 @@ public class TempEval3TaskWeka {
 //					//dependency information
 //					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
 //					fv.addBinaryFeatureToVector(Feature.mainVerb);
-					
-					//TODO addToVector phrase embedding for temporal signal
-//					fv.addToVector(Feature.tempMarkerText);					
+//					
+//					//TODO addToVector phrase embedding for temporal signal
+//					//fv.addToVector(Feature.tempMarkerText);
+//					fv.addBinaryFeatureToVector(Feature.tempSignalClusText);
 //					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
-					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
+//					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
 //					
 //					//timex rule type
 //					fv.addBinaryFeatureToVector(Feature.timexRule);

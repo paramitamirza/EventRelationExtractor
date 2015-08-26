@@ -219,27 +219,22 @@ public class CausalTimeBankTask {
 	
 	public void train(TXPParser txpParser) throws Exception {
 		System.out.println("Building training data...");
-		StringBuilder ee1 = new StringBuilder();
-		StringBuilder ee2 = new StringBuilder();
-		StringBuilder ee3 = new StringBuilder();
-		StringBuilder ee4 = new StringBuilder();
-		StringBuilder ee5 = new StringBuilder();
-		getFeatureVector(txpParser, TXPPath + "-1", ee1);
-		getFeatureVector(txpParser, TXPPath + "-2", ee2);
-		getFeatureVector(txpParser, TXPPath + "-3", ee3);
-		getFeatureVector(txpParser, TXPPath + "-4", ee4);
-		getFeatureVector(txpParser, TXPPath + "-5", ee5);
 		
-		StringBuilder eetrain1 = new StringBuilder();
-		StringBuilder eetrain2 = new StringBuilder();
-		StringBuilder eetrain3 = new StringBuilder();
-		StringBuilder eetrain4 = new StringBuilder();
-		StringBuilder eetrain5 = new StringBuilder();
-		eetrain1.append(ee2.toString()); eetrain1.append(ee3.toString()); eetrain1.append(ee4.toString()); eetrain1.append(ee5.toString());
-		eetrain2.append(ee1.toString()); eetrain2.append(ee3.toString()); eetrain2.append(ee4.toString()); eetrain2.append(ee5.toString());
-		eetrain3.append(ee1.toString()); eetrain3.append(ee2.toString()); eetrain3.append(ee4.toString()); eetrain3.append(ee5.toString());
-		eetrain4.append(ee1.toString()); eetrain4.append(ee2.toString()); eetrain4.append(ee3.toString()); eetrain4.append(ee5.toString());
-		eetrain5.append(ee1.toString()); eetrain5.append(ee2.toString()); eetrain5.append(ee3.toString()); eetrain5.append(ee4.toString());
+		StringBuilder[] folds = new StringBuilder[5];
+		for (int i=0; i<5; i++) {
+			folds[i] = new StringBuilder();
+			getFeatureVector(txpParser, TXPPath + "-" + String.valueOf(i+1), folds[i]);
+		}
+		
+		StringBuilder[] trainFolds = new StringBuilder[5];
+		for (int i=0; i<5; i++) {
+			trainFolds[i] = new StringBuilder();
+			for (int j=0; j<5; j++) {
+				if (i != j) {
+					trainFolds[i].append(folds[j].toString());
+				}
+			}
+		}
 		
 		//Field/column titles of features
 		features.clear();
@@ -248,148 +243,85 @@ public class CausalTimeBankTask {
 		}
 		System.out.println("event-event features: " + String.join(",", features));
 		
-		//For training, only ee and et are needed
+		//Print feature vectors to file
 		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train-1.tlinks", "UTF-8");
-		eePW.write(eetrain1.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-train-2.tlinks", "UTF-8");
-		eePW.write(eetrain2.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-train-3.tlinks", "UTF-8");
-		eePW.write(eetrain3.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-train-4.tlinks", "UTF-8");
-		eePW.write(eetrain4.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-train-5.tlinks", "UTF-8");
-		eePW.write(eetrain5.toString());
-		eePW.close();
+		PrintWriter eePW;
+		for (int i=0; i<5; i++) {
+			eePW = new PrintWriter("data/" + name + "-ee-train-" + String.valueOf(i+1) + ".tlinks", "UTF-8");
+			eePW.write(trainFolds[i].toString());
+			eePW.close();
+		}
 		
 		//Copy training data to server
 		System.out.println("Copy training data...");
-		File eeFile1 = new File("data/" + name + "-ee-train-1.tlinks");
-		File eeFile2 = new File("data/" + name + "-ee-train-2.tlinks");
-		File eeFile3 = new File("data/" + name + "-ee-train-3.tlinks");
-		File eeFile4 = new File("data/" + name + "-ee-train-4.tlinks");
-		File eeFile5 = new File("data/" + name + "-ee-train-5.tlinks");
 		RemoteServer rs = new RemoteServer();
-		rs.copyFile(eeFile1, "data/");
-		rs.copyFile(eeFile2, "data/");
-		rs.copyFile(eeFile3, "data/");
-		rs.copyFile(eeFile4, "data/");
-		rs.copyFile(eeFile5, "data/");
+		File eeFile;
+		for (int i=0; i<5; i++) {
+			eeFile = new File("data/" + name + "-ee-train-" + String.valueOf(i+1) + ".tlinks");
+			rs.copyFile(eeFile, "data/");
+		}
 		
 		//Train models using YamCha + TinySVM
 		System.out.println("Train models...");
 		String cmdCd = "cd tools/yamcha-0.33/";
-		String cmdTrainEE1 = "make CORPUS=~/data/"+name+"-ee-train-1.tlinks "
-				+ "MODEL=~/models/"+name+"-ee-1 "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		String cmdTrainEE2 = "make CORPUS=~/data/"+name+"-ee-train-2.tlinks "
-				+ "MODEL=~/models/"+name+"-ee-2 "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		String cmdTrainEE3 = "make CORPUS=~/data/"+name+"-ee-train-3.tlinks "
-				+ "MODEL=~/models/"+name+"-ee-3 "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		String cmdTrainEE4 = "make CORPUS=~/data/"+name+"-ee-train-4.tlinks "
-				+ "MODEL=~/models/"+name+"-ee-4 "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		String cmdTrainEE5 = "make CORPUS=~/data/"+name+"-ee-train-5.tlinks "
-				+ "MODEL=~/models/"+name+"-ee-5 "
-				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train";
-		rs.executeCommand(cmdCd + " && " + cmdTrainEE1 + " && " + cmdTrainEE2 + " && " + cmdTrainEE3 + " && " + cmdTrainEE4 + " && " + cmdTrainEE5);
+		StringBuilder cmdTrain = new StringBuilder();
+		for (int i=0; i<5; i++) {
+			cmdTrain.append("make CORPUS=~/data/"+name+"-ee-train-"+String.valueOf(i+1)+".tlinks "
+					+ "MODEL=~/models/"+name+"-ee-"+String.valueOf(i+1)+ " "
+					+ "FEATURE=\"F:0:2..\" "
+					+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train"
+					+ " && ");
+		}
+		rs.executeCommand(cmdCd + " && " + cmdTrain);
 		
 		rs.disconnect();
 	}
 	
 	public void evaluate(TXPParser txpParser) throws Exception {
-		System.out.println("Building testing data...");
-		StringBuilder ee1 = new StringBuilder();
-		StringBuilder ee2 = new StringBuilder();
-		StringBuilder ee3 = new StringBuilder();
-		StringBuilder ee4 = new StringBuilder();
-		StringBuilder ee5 = new StringBuilder();
-		getFeatureVector(txpParser, TXPPath + "-1", ee1);
-		getFeatureVector(txpParser, TXPPath + "-2", ee2);
-		getFeatureVector(txpParser, TXPPath + "-3", ee3);
-		getFeatureVector(txpParser, TXPPath + "-4", ee4);
-		getFeatureVector(txpParser, TXPPath + "-5", ee5);
+		File dir_TXP;
+		File[] files_TXP;
+		StringBuilder ee;
+		PrintWriter eePW;
+		File eeFile;
+		//RemoteServer rs = new RemoteServer();
 		
-		//Field/column titles of features
-		features.clear();
-		for (String s : EventEventFeatureVector.fields) {
-			if (s!= null) features.add(s);
+		for (int i=0; i<5; i++) {
+			dir_TXP = new File(TXPPath + "-" + String.valueOf(i+1));
+			files_TXP = dir_TXP.listFiles();
+			
+			//For each file in the evaluation dataset
+			for (File file : files_TXP) {
+				if (file.isFile()) {	
+					System.out.println("Test " + file.getName() + "...");
+					ee = new StringBuilder();
+					getFeatureVectorPerFile(txpParser, file, ee);
+					
+					System.setProperty("line.separator", "\n");
+					eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
+					eePW.write(ee.toString());
+					System.out.println(ee.toString());
+					eePW.close();
+					
+					eeFile = new File("data/" + name + "-ee-eval.tlinks");
+//					rs.copyFile(eeFile, "data/");
+//					
+//					String cmdCd = "cd tools/yamcha-0.33/";					
+//					String cmdTest = "./usr/local/bin/yamcha "
+//							+ "-m ~/models/"+name+"-ee-"+String.valueOf(i+1)+".model"
+//							+ " < ~/data/"+name+"-ee-eval.tlinks "
+//							+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
+//					List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTest);
+//					
+//					for (String s : eeResult) {
+//						System.out.println(s);
+//					}
+					
+					//TODO evaluate eeResult compared with annotated CLINKs
+				}
+			}
 		}
 		
-		//For training, only ee and et are needed
-		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval-1.tlinks", "UTF-8");
-		eePW.write(ee1.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-eval-2.tlinks", "UTF-8");
-		eePW.write(ee2.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-eval-3.tlinks", "UTF-8");
-		eePW.write(ee3.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-eval-4.tlinks", "UTF-8");
-		eePW.write(ee4.toString());
-		eePW.close();
-		eePW = new PrintWriter("data/" + name + "-ee-eval-5.tlinks", "UTF-8");
-		eePW.write(ee5.toString());
-		eePW.close();	
-		
-		//Copy training data to server
-		System.out.println("Copy training data...");
-		File eeFile1 = new File("data/" + name + "-ee-eval-1.tlinks");
-		File eeFile2 = new File("data/" + name + "-ee-eval-2.tlinks");
-		File eeFile3 = new File("data/" + name + "-ee-eval-3.tlinks");
-		File eeFile4 = new File("data/" + name + "-ee-eval-4.tlinks");
-		File eeFile5 = new File("data/" + name + "-ee-eval-5.tlinks");
-		RemoteServer rs = new RemoteServer();
-		rs.copyFile(eeFile1, "data/");
-		rs.copyFile(eeFile2, "data/");
-		rs.copyFile(eeFile3, "data/");
-		rs.copyFile(eeFile4, "data/");
-		rs.copyFile(eeFile5, "data/");
-		
-		System.out.println("Test models...");
-		String cmdCd = "cd tools/yamcha-0.33/";
-		
-		String cmdTestEE1 = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee-1.model"
-				+ " < ~/data/"+name+"-ee-eval-1.tlinks "
-				+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-		String cmdTestEE2 = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee-2.model"
-				+ " < ~/data/"+name+"-ee-eval-2.tlinks "
-				+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-		String cmdTestEE3 = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee-3.model"
-				+ " < ~/data/"+name+"-ee-eval-3.tlinks "
-				+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-		String cmdTestEE4 = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee-4.model"
-				+ " < ~/data/"+name+"-ee-eval-4.tlinks "
-				+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-		String cmdTestEE5 = "./usr/local/bin/yamcha -m ~/models/"+name+"-ee-5.model"
-				+ " < ~/data/"+name+"-ee-eval-5.tlinks "
-				+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-		List<String> eeResult1 = rs.executeCommand(cmdCd + " && " + cmdTestEE1);
-		List<String> eeResult2 = rs.executeCommand(cmdCd + " && " + cmdTestEE2);
-		List<String> eeResult3 = rs.executeCommand(cmdCd + " && " + cmdTestEE3);
-		List<String> eeResult4 = rs.executeCommand(cmdCd + " && " + cmdTestEE4);
-		List<String> eeResult5 = rs.executeCommand(cmdCd + " && " + cmdTestEE5);
-		
-		//TODO: evaluate per file
-		
-//		System.out.println("Accuracy event-event: " + String.format( "%.2f", accuracy(eeResult)*100) + "%");
-//		System.out.println("Accuracy event-timex: " + String.format( "%.2f", accuracy(etResult)*100) + "%");
-//		System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
-		
-		rs.disconnect();
+		//rs.disconnect();
 	}
 	
 	public static void main(String [] args) {

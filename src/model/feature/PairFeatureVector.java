@@ -46,6 +46,19 @@ public class PairFeatureVector {
 	private String[] tmx_type = {"DATE", "TIME", "DURATION", "SET"};
 	private String[] marker_position = {"BETWEEN", "BEFORE", "AFTER", "BEGIN", "BEGIN-BETWEEN", "BEGIN-BEFORE"};
 	private String[] timex_rule = {"TMX-BEGIN", "TMX-END"};
+	private String[] temp_signal_event = {"as soon as", "as long as", "at the same time", "followed by", 
+			"prior to", "still", "during", "while", "when", "immediately", "after", 
+			"until", "if", "eventually", "then", "finally", "afterwards", "initially", "next", "once", 
+			"since", "simultaneously", "formerly", "former", "meanwhile", "later", "into", "follow", 
+			"earlier", "previously", "before", "as", "already"};
+	private String[] temp_signal_timex = {"at", "by", "in", "on", "for", "from", "to", "during", 
+			"between", "after", "before", "up to", "within", "until", "since", "still", "recently", 
+			"formerly", "former", "early", "over", "next", "later", "lately", "immediately", 
+			"earlier", "ago"};
+	private String[] caus_signal = {"as a result", "is why", "so that", "as a result of", "because of", 
+			"in connection with", "pursuant to", "reason is", "therefore", "because", "under", 
+			"since", "after", "as", "so", "by", "from"};
+	private String[] caus_verb = {"CAUSE", "CAUSE-AMBIGUOUS", "ENABLE", "PREVENT", "PREVENT-AMBIGUOUS", "AFFECT", "LINK"};
 	
 	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
@@ -1629,12 +1642,52 @@ public class PairFeatureVector {
 						fields.add("e_mainverb");
 					}
 					break;
+				case tempSignalClusText:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							for (String s : this.temp_signal_timex) {
+								getVectors().add("0");
+								fields.add("tempsig_" + s.replace(" ", "_"));
+							}
+						} else {	
+							m = getTemporalSignal();
+							for (String s : this.temp_signal_timex) {
+								if (s.equals(m.getCluster())) getVectors().add("1");
+								else getVectors().add("0");
+								fields.add("tempsig_" + s.replace(" ", "_"));
+							}
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignal();
+						for (String s : this.temp_signal_event) {
+							if (s.equals(m.getCluster())) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("tempsig_" + s.replace(" ", "_"));
+						}
+					}
+					break;
 				case tempMarkerPos:
 					m = getTemporalMarkerFeature();
 					for (String s : this.marker_position) {
 						if (s.equals(m.getPosition())) getVectors().add("1");
 						else getVectors().add("0");
 						fields.add("tempmarkerpos_" + s);
+					}
+					break;
+				case causMarkerClusText:
+					m = getCausalSignal();
+					for (String s : this.caus_signal) {
+						if (s.equals(m.getCluster())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("caussig_" + s.replace(" ", "_"));
+					}
+					m = getCausalVerb();
+					for (String s : this.caus_verb) {
+						if (s.equals(m.getCluster())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("causverb_" + s.replace(" ", "_"));
 					}
 					break;
 				case causMarkerPos:
@@ -1676,21 +1729,68 @@ public class PairFeatureVector {
 			fields = EventTimexFeatureVector.fields;
 		}
 		Marker m = null;
+		String[] embed = null;
+		int i;
 		if (fields != null) {
 			switch(feature) {
 				case tempMarkerTextPhrase:
 					m = getTemporalMarkerFeature();
-					System.out.println(m.getText());
+					embed = getPhraseEmbedding("http://137.132.82.174:8080/", m.getText());
 					if (!m.getText().equals("O")) {
-						String[] markers = {m.getText()};
-						System.out.println(getPhraseEmbedding("http://137.132.82.174:8080/", markers));
+						i = 0;
+						for (String s : embed) {
+							getVectors().add(s);
+							fields.add("tempmark_embed_" + i);
+							i += 1;
+						}
+					} else {
+						i = 0;
+						for (String s : embed) {
+							getVectors().add("0");
+							fields.add("tempmark_embed_" + i);
+							i += 1;
+						}
+					}
+					break;
+				case causMarkerTextPhrase:
+					m = getCausalMarkerFeature();
+					embed = getPhraseEmbedding("http://137.132.82.174:8080/", m.getText());
+					if (!m.getText().equals("O")) {
+						i = 0;
+						for (String s : embed) {
+							getVectors().add(s);
+							fields.add("causmark_embed_" + i);
+							i += 1;
+						}
+					} else {
+						i = 0;
+						for (String s : embed) {
+							getVectors().add("0");
+							fields.add("causmark_embed_" + i);
+							i += 1;
+						}
+					}
+					break;
+				case tokenChunk:
+					embed = getPhraseEmbedding("http://137.132.82.174:8080/", getWholeChunkToken(e1));
+					i = 0;
+					for (String s : embed) {
+						getVectors().add(s);
+						fields.add("tokenchunk_embed_" + i);
+						i += 1;
+					}
+					embed = getPhraseEmbedding("http://137.132.82.174:8080/", getWholeChunkToken(e2));
+					for (String s : embed) {
+						getVectors().add(s);
+						fields.add("tokenchunk_embed_" + i);
+						i += 1;
 					}
 					break;
 			}
 		}
 	}
 	
-	public static String getPhraseEmbedding(String urlStr, String[] phrases) throws Exception {
+	public static String[] getPhraseEmbedding(String urlStr, String phrase) throws Exception {
 		URL url = new URL(urlStr);
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		conn.setRequestMethod("POST");
@@ -1703,11 +1803,8 @@ public class PairFeatureVector {
 		// Create the form content
 		OutputStream out = conn.getOutputStream();
 		Writer writer = new OutputStreamWriter(out, "UTF-8");
-		for (int i = 0; i < phrases.length; i++) {
-			writer.write("sentence=");
-			writer.write(URLEncoder.encode(phrases[i], "UTF-8"));
-			writer.write("&");
-		}
+		writer.write("sentence=");
+		writer.write(URLEncoder.encode(phrase, "UTF-8"));
 		writer.close();
 		out.close();
 
@@ -1725,6 +1822,6 @@ public class PairFeatureVector {
 		rd.close();
 
 		conn.disconnect();
-		return sb.toString();
+		return sb.toString().split(",");
 	}
 }
