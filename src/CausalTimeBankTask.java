@@ -272,6 +272,7 @@ public class CausalTimeBankTask {
 					+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train"
 					+ " && ");
 		}
+		System.out.println(cmdCd + " && " + cmdTrain);
 		rs.executeCommand(cmdCd + " && " + cmdTrain);
 		
 		rs.disconnect();
@@ -283,7 +284,7 @@ public class CausalTimeBankTask {
 		StringBuilder ee;
 		PrintWriter eePW;
 		File eeFile;
-		//RemoteServer rs = new RemoteServer();
+		RemoteServer rs = new RemoteServer();
 		
 		for (int i=0; i<5; i++) {
 			dir_TXP = new File(TXPPath + "-" + String.valueOf(i+1));
@@ -299,29 +300,29 @@ public class CausalTimeBankTask {
 					System.setProperty("line.separator", "\n");
 					eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
 					eePW.write(ee.toString());
-					System.out.println(ee.toString());
 					eePW.close();
 					
 					eeFile = new File("data/" + name + "-ee-eval.tlinks");
-//					rs.copyFile(eeFile, "data/");
-//					
-//					String cmdCd = "cd tools/yamcha-0.33/";					
-//					String cmdTest = "./usr/local/bin/yamcha "
-//							+ "-m ~/models/"+name+"-ee-"+String.valueOf(i+1)+".model"
-//							+ " < ~/data/"+name+"-ee-eval.tlinks "
-//							+ " | cut -f1,2," + (this.features.size()) + "," + (this.features.size()+1);
-//					List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTest);
-//					
-//					for (String s : eeResult) {
-//						System.out.println(s);
-//					}
+					rs.copyFile(eeFile, "data/");
+					
+					String cmdCd = "cd tools/yamcha-0.33/";					
+					String cmdTest = "./usr/local/bin/yamcha "
+							+ "-m ~/models/"+name+"-ee-"+String.valueOf(i+1)+".model"
+							+ " < ~/data/"+name+"-ee-eval.tlinks "
+							+ " | cut -f1,2," + (EventEventFeatureVector.fields.size()) + "," + (EventEventFeatureVector.fields.size()+1);
+					System.out.println(cmdCd + " && " + cmdTest);
+					List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTest);
+					
+					for (String s : eeResult) {
+						System.out.println(s);
+					}
 					
 					//TODO evaluate eeResult compared with annotated CLINKs
 				}
 			}
 		}
 		
-		//rs.disconnect();
+		rs.disconnect();
 	}
 	
 	public static void main(String [] args) {
@@ -338,8 +339,8 @@ public class CausalTimeBankTask {
 		try {
 			CausalTimeBankTask task = new CausalTimeBankTask();
 			
-			//task.train(parser);
-			task.evaluate(parser);
+			task.train(parser);
+			//task.evaluate(parser);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
