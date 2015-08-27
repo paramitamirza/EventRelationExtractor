@@ -237,6 +237,8 @@ public class TempEval3Task {
 				}
 			}
 		}
+		ee.append("\n");
+		et.append("\n");
 	}
 	
 	public void getFeatureVector(TXPParser parser, TimeMLParser tmlParser, String filepath, 
@@ -251,9 +253,7 @@ public class TempEval3Task {
 			if (file.isDirectory()){				
 				this.getFeatureVector(parser, tmlParser, file.getPath(), ee, et, tt, eeCoref, etRule);				
 			} else if (file.isFile()) {				
-				getFeatureVectorPerFile(parser, tmlParser, file, ee, et, tt, eeCoref, etRule);
-				ee.append("\n");
-				et.append("\n");
+				getFeatureVectorPerFile(parser, tmlParser, file, ee, et, tt, eeCoref, etRule);				
 			}
 		}		
 	}

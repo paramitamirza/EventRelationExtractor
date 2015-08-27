@@ -1367,6 +1367,7 @@ public class PairFeatureVector {
 					break;
 				case causMarker:
 					m = getCausalMarkerFeature();
+					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
 					fields.add("causMarkerClusText-Position");
 					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
 					fields.add("causMarkerDep1-Dep2");

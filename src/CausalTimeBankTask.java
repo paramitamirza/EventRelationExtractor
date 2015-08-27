@@ -161,7 +161,7 @@ public class CausalTimeBankTask {
 			fv.addToVector(Feature.chunk);
 			//fv.addToVector(Feature.ner);
 			fv.addToVector(Feature.samePos);
-			fv.addToVector(Feature.sameMainPos);
+			//fv.addToVector(Feature.sameMainPos);
 			
 			//context features
 			fv.addToVector(Feature.entDistance);
@@ -169,9 +169,9 @@ public class CausalTimeBankTask {
 			
 			//Entity attributes
 			fv.addToVector(Feature.eventClass);
-			//fv.addToVector(Feature.tenseAspect);
-			fv.addToVector(Feature.tense);
-			fv.addToVector(Feature.aspect);
+			fv.addToVector(Feature.tenseAspect);
+			//fv.addToVector(Feature.tense);
+			//fv.addToVector(Feature.aspect);
 			fv.addToVector(Feature.polarity);
 			fv.addToVector(Feature.sameEventClass);
 			fv.addToVector(Feature.sameTense);
@@ -183,21 +183,28 @@ public class CausalTimeBankTask {
 			fv.addToVector(Feature.mainVerb);
 			
 			//temporal connective/signal
-			fv.addToVector(Feature.tempMarker);
+			//fv.addToVector(Feature.tempMarker);
+			fv.addToVector(Feature.tempMarkerClusText);
+			fv.addToVector(Feature.tempMarkerPos);
+			fv.addToVector(Feature.tempMarkerDep1Dep2);
 			
 			//causal connective/signal/verb
-			fv.addToVector(Feature.causMarker);
+			//fv.addToVector(Feature.causMarker);
+			fv.addToVector(Feature.causMarkerClusText);
+			fv.addToVector(Feature.causMarkerPos);
+			fv.addToVector(Feature.causMarkerDep1Dep2);
 			
 			//event co-reference
 			fv.addToVector(Feature.coref);
 			
 			//WordNet similarity
-			fv.addToVector(Feature.wnSim);
+			//fv.addToVector(Feature.wnSim);
 			
 			fv.addToVector(Feature.label);
 			
 			ee.append(fv.printVectors() + "\n");
 		}
+		ee.append("\n");
 	}
 	
 	public void getFeatureVector(TXPParser parser, String filepath, StringBuilder ee) 
@@ -212,7 +219,6 @@ public class CausalTimeBankTask {
 				this.getFeatureVector(parser, file.getPath(), ee);				
 			} else if (file.isFile()) {				
 				getFeatureVectorPerFile(parser, file, ee);
-				ee.append("\n");
 			}
 		}		
 	}
@@ -266,14 +272,13 @@ public class CausalTimeBankTask {
 		String cmdCd = "cd tools/yamcha-0.33/";
 		StringBuilder cmdTrain = new StringBuilder();
 		for (int i=0; i<5; i++) {
-			cmdTrain.append("make CORPUS=~/data/"+name+"-ee-train-"+String.valueOf(i+1)+".tlinks "
+			cmdTrain.append(" && make CORPUS=~/data/"+name+"-ee-train-"+String.valueOf(i+1)+".tlinks "
 					+ "MODEL=~/models/"+name+"-ee-"+String.valueOf(i+1)+ " "
 					+ "FEATURE=\"F:0:2..\" "
-					+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train"
-					+ " && ");
+					+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train");
 		}
-		System.out.println(cmdCd + " && " + cmdTrain);
-		rs.executeCommand(cmdCd + " && " + cmdTrain);
+		System.out.println(cmdCd + cmdTrain);
+		rs.executeCommand(cmdCd + cmdTrain);
 		
 		rs.disconnect();
 	}
@@ -282,22 +287,30 @@ public class CausalTimeBankTask {
 		File dir_TXP;
 		File[] files_TXP;
 		StringBuilder ee;
+		System.setProperty("line.separator", "\n");
 		PrintWriter eePW;
 		File eeFile;
+		Doc docTxp;
 		RemoteServer rs = new RemoteServer();
+		
+		int totalnumGoldClinks = 0, totalnumSystemClinks = 0, totalnumCorrectClinks = 0;
+		float microprecision = 0, microrecall = 0, microf1 = 0;
+		float sumprecision = 0, sumrecall = 0, sumf1 = 0;
 		
 		for (int i=0; i<5; i++) {
 			dir_TXP = new File(TXPPath + "-" + String.valueOf(i+1));
 			files_TXP = dir_TXP.listFiles();
 			
+			int numGoldClinks = 0, numSystemClinks = 0, numCorrectClinks = 0;
+			float precision = 0, recall = 0, f1 = 0;
+			
 			//For each file in the evaluation dataset
 			for (File file : files_TXP) {
 				if (file.isFile()) {	
-					System.out.println("Test " + file.getName() + "...");
+					//System.out.println("Test " + file.getName() + "...");
 					ee = new StringBuilder();
 					getFeatureVectorPerFile(txpParser, file, ee);
 					
-					System.setProperty("line.separator", "\n");
 					eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
 					eePW.write(ee.toString());
 					eePW.close();
@@ -310,17 +323,61 @@ public class CausalTimeBankTask {
 							+ "-m ~/models/"+name+"-ee-"+String.valueOf(i+1)+".model"
 							+ " < ~/data/"+name+"-ee-eval.tlinks "
 							+ " | cut -f1,2," + (EventEventFeatureVector.fields.size()) + "," + (EventEventFeatureVector.fields.size()+1);
-					System.out.println(cmdCd + " && " + cmdTest);
 					List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTest);
 					
-					for (String s : eeResult) {
-						System.out.println(s);
-					}
+					docTxp = txpParser.parseDocument(file.getPath());
+					numGoldClinks += docTxp.getClinks().size();
 					
-					//TODO evaluate eeResult compared with annotated CLINKs
+					String[] cols;
+					String sid, tid, label;
+					CausalRelation cl;
+					for (String s : eeResult) {
+						if (!s.isEmpty()) {
+							cols = s.split("\t");
+							label = cols[3];
+							if (!label.equals("NONE")) {
+								numSystemClinks += 1;								
+								if (label.equals("CLINK")) {
+									cl = new CausalRelation(cols[0], cols[1]);
+								} else {
+									cl = new CausalRelation(cols[1], cols[0]);
+								}
+								if (docTxp.getClinks().contains(cl))
+									numCorrectClinks += 1;
+							}
+						}
+					}
 				}
 			}
+			
+			//micro evaluation per fold
+			precision = numCorrectClinks / (float)numSystemClinks;
+			recall = numCorrectClinks / (float)numGoldClinks;
+			f1 = (2 * precision * recall) / (precision + recall);
+			System.out.println("Fold " + String.valueOf(i+1) + ":"
+				+ " P " + String.format( "%.2f", precision*100) + "%"
+				+ " R " + String.format( "%.2f", recall*100) + "%"
+				+ " F1 " + String.format( "%.2f", f1*100) + "%");
+			
+			totalnumGoldClinks += numGoldClinks;
+			totalnumSystemClinks += numSystemClinks;
+			totalnumCorrectClinks += numCorrectClinks;
+			sumprecision += precision;
+			sumrecall += recall;
+			sumf1 += f1;
 		}
+		
+		microprecision = totalnumCorrectClinks / (float)totalnumSystemClinks;
+		microrecall = totalnumCorrectClinks / (float)totalnumGoldClinks;
+		microf1 = (2 * microprecision * microrecall) / (microprecision + microrecall);
+		System.out.println("Micro average :"
+				+ " P " + String.format( "%.2f", microprecision*100) + "%"
+				+ " R " + String.format( "%.2f", microrecall*100) + "%"
+				+ " F1 " + String.format( "%.2f", microf1*100) + "%");
+		System.out.println("Macro average :"
+			+ " P " + String.format( "%.2f", sumprecision/5*100) + "%"
+			+ " R " + String.format( "%.2f", sumrecall/5*100) + "%"
+			+ " F1 " + String.format( "%.2f", sumf1/5*100) + "%");
 		
 		rs.disconnect();
 	}
@@ -340,7 +397,7 @@ public class CausalTimeBankTask {
 			CausalTimeBankTask task = new CausalTimeBankTask();
 			
 			task.train(parser);
-			//task.evaluate(parser);
+			task.evaluate(parser);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
