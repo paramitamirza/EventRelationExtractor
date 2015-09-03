@@ -66,8 +66,13 @@ public class TempEval3TaskWeka {
 	private String evalTXPPath;
 	private String evalTMLPath;
 	private String systemTMLPath;
-	TemporalSignalList tsignalList;
-	CausalSignalList csignalList;
+	private TemporalSignalList tsignalList;
+	private CausalSignalList csignalList;
+	
+	private Classifier eeCls;
+	private Classifier etCls;
+	
+	private int numDeduced=0;
 	
 	public TempEval3TaskWeka() throws IOException {
 		name = "te3";
@@ -117,7 +122,8 @@ public class TempEval3TaskWeka {
 			StringBuilder eeCoref, StringBuilder etRule) throws Exception {
 		
 		Doc docTxp = txpParser.parseDocument(file.getPath());
-		String tmlPath = file.getPath().replace("TXP", "TML");
+		//String tmlPath = file.getPath().replace("TXP", "TML");
+		String tmlPath = file.getPath().replace("TXP", "TML_deduced");
 		tmlPath = tmlPath.replace(".txp", "");
 		Doc docTml = tmlParser.parseDocument(tmlPath);
 		
@@ -126,6 +132,7 @@ public class TempEval3TaskWeka {
 		
 		//for (TemporalRelation tlink : doc.getTlinks()) {	//for every TLINK in TXP file: candidate pairs
 		for (TemporalRelation tlink : docTml.getTlinks()) {	//for every TLINK in TML file: gold annotated pairs
+			if (tlink.isDeduced()) numDeduced += 1;
 			if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
 					docTxp.getEntities().containsKey(tlink.getSourceID()) &&
 					docTxp.getEntities().containsKey(tlink.getTargetID()) &&
@@ -144,25 +151,24 @@ public class TempEval3TaskWeka {
 				
 				//TODO: get phrase embedding for these
 //				//token attribute features
-//				fv.addToVector(Feature.tokenSpace);
-//				fv.addToVector(Feature.lemmaSpace);
-//				fv.addToVector(Feature.tokenChunk);
-				
-				fv.addPhraseFeatureToVector(Feature.tokenChunk);
+				fv.addToVector(Feature.tokenSpace);
+				fv.addToVector(Feature.lemmaSpace);
+				fv.addToVector(Feature.tokenChunk);
 				
 				//TODO addToVector phrase embedding for token and lemma
-				
-//				fv.addBinaryFeatureToVector(Feature.pos);
-//				fv.addBinaryFeatureToVector(Feature.mainpos);
-//				fv.addBinaryFeatureToVector(Feature.chunk);
-//				fv.addBinaryFeatureToVector(Feature.samePos);
-//				fv.addBinaryFeatureToVector(Feature.sameMainPos);
-//				
-//				//context features
-//				fv.addBinaryFeatureToVector(Feature.entDistance);
-//				fv.addBinaryFeatureToVector(Feature.sentDistance);
+//				fv.addPhraseFeatureToVector(Feature.tokenChunk);
 				
 				if (fv instanceof EventEventFeatureVector) {
+//					fv.addBinaryFeatureToVector(Feature.pos);
+//					//fv.addBinaryFeatureToVector(Feature.mainpos);
+//					fv.addBinaryFeatureToVector(Feature.chunk);
+//					fv.addBinaryFeatureToVector(Feature.samePos);
+//					//fv.addBinaryFeatureToVector(Feature.sameMainPos);
+//					
+//					//context features
+//					fv.addBinaryFeatureToVector(Feature.entDistance);
+//					fv.addBinaryFeatureToVector(Feature.sentDistance);
+//					
 //					//Entity attributes
 //					fv.addBinaryFeatureToVector(Feature.eventClass);
 //					fv.addBinaryFeatureToVector(Feature.tense);
@@ -176,28 +182,38 @@ public class TempEval3TaskWeka {
 //					//dependency information
 //					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
 //					fv.addBinaryFeatureToVector(Feature.mainVerb);
-//					
-//					//TODO addToVector phrase embedding for temporal & causal signal
-//					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
-//					//fv.addToVector(Feature.tempMarkerText);
+					
+					//TODO addToVector phrase embedding for temporal & causal signal
+					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
+					fv.addToVector(Feature.tempMarkerText);
 //					fv.addBinaryFeatureToVector(Feature.tempSignalClusText);
-//					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
-//					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
-//					
-//					//fv.addToVector(Feature.causMarkerText);
+					//fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
+					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
+					
+					fv.addToVector(Feature.causMarkerText);
 //					fv.addBinaryFeatureToVector(Feature.causMarkerClusText);
-//					fv.addBinaryFeatureToVector(Feature.causMarkerPos);
-//					//fv.addToVector(Feature.causMarkerDep1Dep2);	//TODO dependency path to binary feature?
-//					
-//					//event co-reference
+					//fv.addBinaryFeatureToVector(Feature.causMarkerPos);
+					//fv.addToVector(Feature.causMarkerDep1Dep2);	//TODO dependency path to binary feature?
+					
+					//event co-reference
 //					fv.addBinaryFeatureToVector(Feature.coref);
 //					
 //					//WordNet similarity
 //					fv.addBinaryFeatureToVector(Feature.wnSim);
 					
-					fv.addBinaryFeatureToVector(Feature.label);
+					//fv.addBinaryFeatureToVector(Feature.label);
+					fv.addToVector(Feature.label);
 					
 				} else if (fv instanceof EventTimexFeatureVector) {
+//					fv.addBinaryFeatureToVector(Feature.pos);
+//					fv.addBinaryFeatureToVector(Feature.mainpos);
+//					fv.addBinaryFeatureToVector(Feature.chunk);
+//					fv.addBinaryFeatureToVector(Feature.samePos);
+//					fv.addBinaryFeatureToVector(Feature.sameMainPos);
+//					
+//					//context features
+//					fv.addBinaryFeatureToVector(Feature.entDistance);
+//					fv.addBinaryFeatureToVector(Feature.sentDistance);
 //					fv.addBinaryFeatureToVector(Feature.entOrder);
 //					
 //					//Entity attributes
@@ -205,22 +221,23 @@ public class TempEval3TaskWeka {
 //					fv.addBinaryFeatureToVector(Feature.tense);
 //					fv.addBinaryFeatureToVector(Feature.aspect);
 //					fv.addBinaryFeatureToVector(Feature.polarity);
-//					fv.addBinaryFeatureToVector(Feature.timexType);
+//					//fv.addBinaryFeatureToVector(Feature.timexType);
 //					
 //					//dependency information
 //					//fv.addToVector(Feature.depPath);	//TODO dependency path to binary feature?
 //					fv.addBinaryFeatureToVector(Feature.mainVerb);
-//					
-//					//TODO addToVector phrase embedding for temporal signal
-//					//fv.addToVector(Feature.tempMarkerText);
+					
+					//TODO addToVector phrase embedding for temporal signal
+					fv.addToVector(Feature.tempMarkerText);
 //					fv.addBinaryFeatureToVector(Feature.tempSignalClusText);
-//					fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
-//					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
-//					
-//					//timex rule type
+					//fv.addBinaryFeatureToVector(Feature.tempMarkerPos);
+					//fv.addToVector(Feature.tempMarkerDep1Dep2);	//TODO dependency path to binary feature?
+					
+					//timex rule type
 //					fv.addBinaryFeatureToVector(Feature.timexRule);
 					
-					fv.addBinaryFeatureToVector(Feature.label);
+					//fv.addBinaryFeatureToVector(Feature.label);
+					fv.addToVector(Feature.label);
 				}
 				
 				
@@ -279,6 +296,49 @@ public class TempEval3TaskWeka {
 		}		
 	}
 	
+	public void writeArffFile(PrintWriter eePW, PrintWriter etPW, String eeVec, String etVec) {
+		//Header
+		eePW.write("@relation " + name + "-ee\n\n");
+		etPW.write("@relation " + name + "-et\n\n");
+		
+		//Field/column titles of features
+		for (String s : EventEventFeatureVector.fields) {
+			if (s!= null) {
+//				if (s.equals("entDistance") || s.equals("sentDistance")) {
+//					eePW.write("@attribute " + s + " numeric\n");
+//				} else if (s.equals("wnSim")) {
+//					eePW.write("@attribute " + s + " numeric\n");
+//				} else 
+					if (s.equals("label")) {
+					eePW.write("@attribute " + s + " {BEFORE, AFTER, IBEFORE, IAFTER, IDENTITY, SIMULTANEOUS, INCLUDES, IS_INCLUDED, DURING, DURING_INV, BEGINS, BEGUN_BY, ENDS, ENDED_BY}\n");
+				} else {
+					eePW.write("@attribute " + s + " {0,1}\n");
+				}
+			}
+		}
+		for (String s : EventTimexFeatureVector.fields) {
+			if (s!= null) {
+//				if (s.equals("entDistance") || s.equals("sentDistance")) {
+//					etPW.write("@attribute " + s + " numeric\n");
+//				} else 
+					if (s.equals("label")) {
+					etPW.write("@attribute " + s + " {BEFORE, AFTER, IBEFORE, IAFTER, IDENTITY, SIMULTANEOUS, INCLUDES, IS_INCLUDED, DURING, DURING_INV, BEGINS, BEGUN_BY, ENDS, ENDED_BY}\n");
+				} else {
+					etPW.write("@attribute " + s + " {0,1}\n");
+				}
+			}
+		}
+		
+		//Vectors
+		eePW.write("\n@data\n");
+		etPW.write("\n@data\n");
+		eePW.write(eeVec.toString());
+		etPW.write(etVec.toString());
+		
+		eePW.close();
+		etPW.close();
+	}
+	
 	public void train(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
 		System.out.println("Building training data...");
 		StringBuilder ee = new StringBuilder();
@@ -288,27 +348,28 @@ public class TempEval3TaskWeka {
 		StringBuilder etRule = new StringBuilder();
 		getFeatureVector(txpParser, tmlParser, trainTXPPath, ee, et, tt, eeCoref, etRule);
 		
+		System.out.println("event-event features: " + String.join(",", EventEventFeatureVector.fields));
+		System.out.println("event-timex features: " + String.join(",", EventTimexFeatureVector.fields));
+		System.out.println("num deduced TLINKs: " + numDeduced);
+		
 		//For training, only ee and et are needed
 		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train.csv", "UTF-8");
-		PrintWriter etPW = new PrintWriter("data/" + name + "-et-train.csv", "UTF-8");
-		//Field/column titles of features
-		eeFeatures.clear();
-		etFeatures.clear();
-		for (String s : EventEventFeatureVector.fields) {
-			if (s!= null) eeFeatures.add(s);
-		}
-		for (String s : EventTimexFeatureVector.fields) {
-			if (s!= null) etFeatures.add(s);
-		}
-		eePW.write(String.join(",", eeFeatures) + "\n");
-		etPW.write(String.join(",", etFeatures) + "\n");
-		eePW.write(ee.toString());
-		etPW.write(et.toString());
-		eePW.close();
-		etPW.close();
+		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train.arff", "UTF-8");
+		PrintWriter etPW = new PrintWriter("data/" + name + "-et-train.arff", "UTF-8");
+		writeArffFile(eePW, etPW, ee.toString(), et.toString());		
 		
 	    //TODO: train with Weka
+		DataSource eeSource = new DataSource("data/" + name + "-ee-train.arff");
+		Instances eeTrain = eeSource.getDataSet();
+		eeTrain.setClassIndex(EventEventFeatureVector.fields.size() - 1); 
+		eeCls = new LibSVM();
+	    eeCls.buildClassifier(eeTrain);
+	    
+	    DataSource etSource = new DataSource("data/" + name + "-et-train.arff");
+		Instances etTrain = etSource.getDataSet();
+		etTrain.setClassIndex(EventTimexFeatureVector.fields.size() - 1);
+		etCls = new LibSVM();
+	    etCls.buildClassifier(etTrain);
 	}
 	
 	public double accuracy(List<String> pairs) {
@@ -335,42 +396,33 @@ public class TempEval3TaskWeka {
 		
 		//For training, only ee and et are needed
 		System.setProperty("line.separator", "\n");
-		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.csv", "UTF-8");
-		PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.csv", "UTF-8");
-		//Field/column titles of features
-		eeFeatures.clear();
-		etFeatures.clear();
-		for (String s : EventEventFeatureVector.fields) {
-			if (s!= null) eeFeatures.add(s);
-		}
-		for (String s : EventTimexFeatureVector.fields) {
-			if (s!= null) etFeatures.add(s);
-		}
-		eePW.write(String.join(",", eeFeatures) + "\n");
-		etPW.write(String.join(",", etFeatures) + "\n");
-		eePW.write(ee.toString());
-		etPW.write(et.toString());
-		eePW.close();
-		etPW.close();
+		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-eval.arff", "UTF-8");
+		PrintWriter etPW = new PrintWriter("data/" + name + "-et-eval.arff", "UTF-8");
+		writeArffFile(eePW, etPW, ee.toString(), et.toString());
 		
 		//TODO classify with Weka
+		DataSource eeSource;
+		eeSource = new DataSource("data/" + name + "-ee-train.arff");
+		Instances eeTrain = eeSource.getDataSet();
+		eeTrain.setClassIndex(EventEventFeatureVector.fields.size() - 1);
+		eeSource = new DataSource("data/" + name + "-ee-eval.arff");
+		Instances eeTest = eeSource.getDataSet();
+		eeTest.setClassIndex(EventEventFeatureVector.fields.size() - 1);
+		Evaluation eeEval = new Evaluation(eeTrain);
+	    eeEval.evaluateModel(etCls, eeTest);
+	    System.out.println(eeEval.toSummaryString("\nEvent-event Results\n======\n", false));
+	    
+	    DataSource etSource;
+		etSource = new DataSource("data/" + name + "-et-train.arff");
+		Instances etTrain = etSource.getDataSet();
+		etTrain.setClassIndex(EventTimexFeatureVector.fields.size() - 1);
+		etSource = new DataSource("data/" + name + "-et-eval.arff");
+		Instances etTest = etSource.getDataSet();
+		etTest.setClassIndex(EventTimexFeatureVector.fields.size() - 1);
+		Evaluation etEval = new Evaluation(etTrain);
+	    etEval.evaluateModel(etCls, etTest);
+	    System.out.println(etEval.toSummaryString("\nEvent-timex Results\n======\n", false));
 
-		
-//		List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
-//		List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
-//		
-//		String[] eeCorefArr = eeCoref.toString().split("\\r?\\n");
-//		eeResult.addAll(Arrays.asList(eeCorefArr));
-//		
-//		String[] etRuleArr = etRule.toString().split("\\r?\\n");
-//		etResult.addAll(Arrays.asList(etRuleArr));
-//		
-//		String[] ttArr = tt.toString().split("\\r?\\n");
-//		List<String> ttResult = Arrays.asList(ttArr);
-//		
-//		System.out.println("Accuracy event-event: " + String.format( "%.2f", accuracy(eeResult)*100) + "%");
-//		System.out.println("Accuracy event-timex: " + String.format( "%.2f", accuracy(etResult)*100) + "%");
-//		System.out.println("Accuracy timex-timex: " + String.format( "%.2f", accuracy(ttResult)*100) + "%");
 	}
 	
 	public void evaluateTE3(TXPParser txpParser, TimeMLParser tmlParser) throws Exception {
@@ -502,24 +554,11 @@ public class TempEval3TaskWeka {
 		//dir_TXP <-- data/example_TXP
 		try {
 			TempEval3TaskWeka task = new TempEval3TaskWeka();
-			task.train(parser, tmlParser);			
-//			
-			task.evaluate(parser, tmlParser);
-//			//task.evaluateTE3(parser, tmlParser);
+			task.train(parser, tmlParser);					
+			//task.evaluate(parser, tmlParser);
+			//task.evaluateTE3(parser, tmlParser);
 			
-			CSVLoader eeLoaderTrain = new CSVLoader();
-			eeLoaderTrain.setSource(new File("data/" + task.name + "-ee-train.csv"));
-		    Instances eeTrain = eeLoaderTrain.getDataSet();
-		    CSVLoader etLoaderTrain = new CSVLoader();
-			etLoaderTrain.setSource(new File("data/" + task.name + "-et-train.csv"));
-		    Instances etTrain = etLoaderTrain.getDataSet();
-		    
-		    CSVLoader eeLoaderTest = new CSVLoader();
-		    eeLoaderTest.setSource(new File("data/" + task.name + "-ee-eval.csv"));
-		    Instances eeTest = eeLoaderTest.getDataSet();
-		    CSVLoader etLoaderTest = new CSVLoader();
-			etLoaderTest.setSource(new File("data/" + task.name + "-et-eval.csv"));
-		    Instances etTest = etLoaderTest.getDataSet();
+			
 		    
 //		    ArffSaver saver = new ArffSaver();
 //		    saver.setInstances(eeTrain);

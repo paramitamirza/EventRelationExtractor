@@ -12,6 +12,7 @@ public class TemporalRelation extends Relation{
 	
 	private String relType;
 	private String signal;
+	private boolean deduced;
 	
 	public TemporalRelation() {
 		
@@ -84,5 +85,13 @@ public class TemporalRelation extends Relation{
 		tlink.setAttributeNode(rel);
 		
 		return tlink;
+	}
+
+	public boolean isDeduced() {
+		return deduced;
+	}
+
+	public void setDeduced(boolean deduced) {
+		this.deduced = deduced;
 	}
 }

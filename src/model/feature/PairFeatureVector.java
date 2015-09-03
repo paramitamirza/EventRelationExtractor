@@ -60,6 +60,10 @@ public class PairFeatureVector {
 			"since", "after", "as", "so", "by", "from"};
 	private String[] caus_verb = {"CAUSE", "CAUSE-AMBIGUOUS", "ENABLE", "PREVENT", "PREVENT-AMBIGUOUS", "AFFECT", "LINK"};
 	
+	private String[] temp_rel_type = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
+			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
+	private List<String> temp_rel_type_list = Arrays.asList(temp_rel_type);
+	
 	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
@@ -129,7 +133,12 @@ public class PairFeatureVector {
 	}
 
 	public String getLabel() {
-		return label;
+//		if (label.equals("IBEFORE")) 
+//			return "BEFORE";
+//		else if (label.equals("IAFTER")) 
+//			return "AFTER";
+//		else 
+			return label;
 	}
 
 	public void setLabel(String label) {
@@ -149,6 +158,20 @@ public class PairFeatureVector {
 			csv += s + ",";
 		}
 		return csv.substring(0, csv.length()-1);
+	}
+	
+	public String printLibSVMVectors() {
+		int idx = 1;
+		String svm = "";
+		svm += this.vectors.get(this.vectors.size()-1);
+		for (int i=0; i<this.vectors.size()-1; i++) {
+			double val = Double.valueOf(this.vectors.get(i));
+			if (val > 0) {
+				svm += " " + idx + ":" + String.valueOf(val); 
+			}
+			idx += 1;
+		}
+		return svm;
 	}
 
 	public PairType getPairType() {
@@ -1415,7 +1438,9 @@ public class PairFeatureVector {
 					fields.add("timexRule");
 					break;
 				case label:
-					getVectors().add(getLabel());
+					String lbl = getLabel();
+					if (lbl.equals("END")) lbl = "ENDS";
+					getVectors().add(lbl);
 					fields.add("label");
 					break;
 			}
@@ -1513,11 +1538,21 @@ public class PairFeatureVector {
 					fields.add("sameMainPos");
 					break;
 				case entDistance:
-					getVectors().add(getEntityDistance().toString());
+					//getVectors().add(getEntityDistance().toString());
+					if (getEntityDistance() > 0) {
+						getVectors().add("1");
+					} else {
+						getVectors().add("0");
+					}
 					fields.add("entDistance");
 					break;
 				case sentDistance:
-					getVectors().add(getSentenceDistance().toString());
+					//getVectors().add(getSentenceDistance().toString());
+					if (getSentenceDistance() > 0) {
+						getVectors().add("1");
+					} else {
+						getVectors().add("0");
+					}
 					fields.add("sentDistance");
 					break;
 				case entOrder:
@@ -1704,7 +1739,12 @@ public class PairFeatureVector {
 					fields.add("coref");
 					break;
 				case wnSim:
-					getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
+					//getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
+					if (((EventEventFeatureVector) this).getWordSimilarity() > 0) {
+						getVectors().add("1");
+					} else {
+						getVectors().add("0");
+					}
 					fields.add("wnSim");
 					break;
 				case timexRule:
@@ -1715,11 +1755,17 @@ public class PairFeatureVector {
 					}
 					break;
 				case label:
-					getVectors().add(getLabel());
+					String lbl = getLabel();
+					if (lbl.equals("END")) lbl = "ENDS";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lbl)+1));
 					fields.add("label");
 					break;				
 			}
 		}
+	}
+	
+	public String getLabelFromNum(String num) {
+		return temp_rel_type_list.get(Integer.valueOf(num)-1);
 	}
 	
 	public void addPhraseFeatureToVector(Feature feature) throws Exception {

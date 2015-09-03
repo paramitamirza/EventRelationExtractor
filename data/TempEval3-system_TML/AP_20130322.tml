@@ -119,25 +119,25 @@ This flu <EVENT class="OCCURRENCE" eid="e2003">season</EVENT> <EVENT class="ASPE
 
 
 <TLINK eventInstanceID="ei1000028" lid="1" relType="AFTER" relatedToEventInstance="ei2"/>
-<TLINK eventInstanceID="ei2002" lid="2" relType="IDENTITY" relatedToEventInstance="ei2004"/>
-<TLINK eventInstanceID="ei2002" lid="3" relType="IDENTITY" relatedToEventInstance="ei2003"/>
-<TLINK eventInstanceID="ei1000028" lid="4" relType="IDENTITY" relatedToEventInstance="ei2002"/>
-<TLINK eventInstanceID="ei30" lid="5" relType="BEFORE" relatedToEventInstance="ei31"/>
-<TLINK eventInstanceID="ei29" lid="6" relType="IS_INCLUDED" relatedToEventInstance="ei31"/>
+<TLINK eventInstanceID="ei2002" lid="2" relType="AFTER" relatedToEventInstance="ei2004"/>
+<TLINK eventInstanceID="ei2002" lid="3" relType="AFTER" relatedToEventInstance="ei2003"/>
+<TLINK eventInstanceID="ei1000028" lid="4" relType="AFTER" relatedToEventInstance="ei2002"/>
+<TLINK eventInstanceID="ei30" lid="5" relType="AFTER" relatedToEventInstance="ei31"/>
+<TLINK eventInstanceID="ei29" lid="6" relType="AFTER" relatedToEventInstance="ei31"/>
 <TLINK eventInstanceID="ei27" lid="7" relType="BEFORE" relatedToEventInstance="ei28"/>
 <TLINK eventInstanceID="ei26" lid="8" relType="BEFORE" relatedToEventInstance="ei27"/>
 <TLINK eventInstanceID="ei20" lid="9" relType="AFTER" relatedToEventInstance="ei22"/>
 <TLINK eventInstanceID="ei19" lid="10" relType="BEFORE" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei17" lid="11" relType="BEFORE" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei16" lid="12" relType="BEFORE" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei1000032" lid="13" relType="BEFORE" relatedToEventInstance="ei12"/>
-<TLINK eventInstanceID="ei9" lid="14" relType="AFTER" relatedToEventInstance="ei10"/>
+<TLINK eventInstanceID="ei1000032" lid="13" relType="AFTER" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei9" lid="14" relType="IDENTITY" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="15" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei6" lid="16" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei6" lid="17" relType="BEFORE" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei3" lid="18" relType="SIMULTANEOUS" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei3" lid="18" relType="BEFORE" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei3" lid="19" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei3" lid="20" relType="AFTER" relatedToEventInstance="ei4"/>
+<TLINK eventInstanceID="ei3" lid="20" relType="BEFORE" relatedToEventInstance="ei4"/>
 <TLINK eventInstanceID="ei5" lid="21" relType="IS_INCLUDED" relatedToTime="t1000"/>
 <TLINK eventInstanceID="ei2001" lid="22" relType="IS_INCLUDED" relatedToTime="t5"/>
 <TLINK eventInstanceID="ei1000035" lid="23" relType="IS_INCLUDED" relatedToTime="t11"/>
@@ -155,7 +155,7 @@ This flu <EVENT class="OCCURRENCE" eid="e2003">season</EVENT> <EVENT class="ASPE
 <TLINK eventInstanceID="ei10" lid="35" relType="IS_INCLUDED" relatedToTime="t3"/>
 <TLINK eventInstanceID="ei8" lid="36" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei6" lid="37" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei7" lid="38" relType="IS_INCLUDED" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei7" lid="38" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei3" lid="39" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei3" lid="40" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK lid="41" relType="IS_INCLUDED" relatedToTime="t11" timeID="t9"/>

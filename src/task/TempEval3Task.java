@@ -1,3 +1,4 @@
+package task;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -57,8 +58,10 @@ public class TempEval3Task {
 	private String evalTXPPath;
 	private String evalTMLPath;
 	private String systemTMLPath;
-	TemporalSignalList tsignalList;
-	CausalSignalList csignalList;
+	private TemporalSignalList tsignalList;
+	private CausalSignalList csignalList;
+	
+	private int numDeduced=0;
 	
 	public TempEval3Task() throws IOException {
 		name = "te3";
@@ -109,6 +112,7 @@ public class TempEval3Task {
 		
 		Doc docTxp = txpParser.parseDocument(file.getPath());
 		String tmlPath = file.getPath().replace("TXP", "TML");
+		//String tmlPath = file.getPath().replace("TXP", "TML_deduced");
 		tmlPath = tmlPath.replace(".txp", "");
 		Doc docTml = tmlParser.parseDocument(tmlPath);
 		
@@ -117,6 +121,7 @@ public class TempEval3Task {
 		
 		//for (TemporalRelation tlink : docTxp.getTlinks()) {	//for every TLINK in TXP file: candidate pairs
 		for (TemporalRelation tlink : docTml.getTlinks()) {	//for every TLINK in TML file: gold annotated pairs
+			if (tlink.isDeduced()) numDeduced += 1;
 			if (!tlink.getSourceID().equals(tlink.getTargetID()) &&
 					docTxp.getEntities().containsKey(tlink.getSourceID()) &&
 					docTxp.getEntities().containsKey(tlink.getTargetID()) &&
@@ -150,9 +155,9 @@ public class TempEval3Task {
 				if (fv instanceof EventEventFeatureVector) {
 					//Entity attributes
 					fv.addToVector(Feature.eventClass);
-					//fv.addToVector(Feature.tenseAspect);
-					fv.addToVector(Feature.tense);
-					fv.addToVector(Feature.aspect);
+					fv.addToVector(Feature.tenseAspect);
+					//fv.addToVector(Feature.tense);
+					//fv.addToVector(Feature.aspect);
 					fv.addToVector(Feature.polarity);
 					fv.addToVector(Feature.sameEventClass);
 					fv.addToVector(Feature.sameTense);
@@ -279,6 +284,8 @@ public class TempEval3Task {
 		System.out.println("event-event features: " + String.join(",", eeFeatures));
 		System.out.println("event-timex features: " + String.join(",", etFeatures));
 		
+		System.out.println("num deduced TLINKs: " + numDeduced);
+		
 		//For training, only ee and et are needed
 		System.setProperty("line.separator", "\n");
 		PrintWriter eePW = new PrintWriter("data/" + name + "-ee-train.tlinks", "UTF-8");
@@ -300,10 +307,12 @@ public class TempEval3Task {
 		System.out.println("Train models...");
 		String cmdCd = "cd tools/yamcha-0.33/";
 		String cmdTrainEE = "make CORPUS=~/data/"+name+"-ee-train.tlinks "
+//				+ "MULTI_CLASS=2 "
 				+ "MODEL=~/models/"+name+"-ee "
 				+ "FEATURE=\"F:0:2..\" "
-				+ "SVM_PARAM=\"-t1 -d4 -c1 -m 512\" train";
+				+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
 		String cmdTrainET = "make CORPUS=~/data/"+name+"-et-train.tlinks "
+//				+ "MULTI_CLASS=2 "
 				+ "MODEL=~/models/"+name+"-et "
 				+ "FEATURE=\"F:0:2..\" "
 				+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
@@ -533,10 +542,9 @@ public class TempEval3Task {
 		//dir_TXP <-- data/example_TXP
 		try {
 			TempEval3Task task = new TempEval3Task();
-			task.train(parser, tmlParser);			
-			
-			task.evaluate(parser, tmlParser);
-			//task.evaluateTE3(parser, tmlParser);
+			//task.train(parser, tmlParser);
+			//task.evaluate(parser, tmlParser);
+			task.evaluateTE3(parser, tmlParser);
 			
 			
 		} catch (IOException e) {

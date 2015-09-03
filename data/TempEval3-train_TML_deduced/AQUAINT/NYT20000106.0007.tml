@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><TimeML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://timeml.org/timeMLdocs/TimeML_1.2.1.xsd">
+
+<DOCID>NYT20000106.0007</DOCID>
+
+<DCT><TIMEX3 functionInDocument="CREATION_TIME" temporalFunction="false" tid="t0" type="TIME" value="2000-01-06">2000-01-06</TIMEX3></DCT>
+
+<TITLE>EDITORIAL: A DECISION ON ELIAN GONZALEZ</TITLE>
+
+
+<EXTRAINFO>
+NYT20000106.0007  NEWS STORY  2000-01-06 00:06
+A7977 &amp;Cx1f; taf-z
+u k BC-EDIT-GONZALEZ-DECISIO     01-06 0451
+BC-EDIT-GONZALEZ-DECISION-NYT
+EDITORIAL: A DECISION ON ELIAN GONZALEZ
+(rk)
+c.2000 N.Y. Times News Service
+</EXTRAINFO>
+
+
+<TEXT>
+
+The New York Times <EVENT class="REPORTING" eid="e1">says</EVENT> in an editorial on <TIMEX3 anchorTimeID="t1" functionInDocument="NONE" temporalFunction="true" tid="t9" type="DATE" value="2000-01-06">Thursday</TIMEX3>, <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t1" type="DATE" value="2000-01-06">Jan. 6</TIMEX3>: &amp;QL;
+
+The U.S. Immigration and Naturalization Service <EVENT class="OCCURRENCE" eid="e2">made</EVENT> a reasonable <EVENT class="OCCURRENCE" eid="e47">decision</EVENT> <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t3" type="DATE" value="2000-01-05">Wednesday</TIMEX3> in <EVENT class="OCCURRENCE" eid="e48">ruling</EVENT> that Elian Gonzalez, the 6-year-old boy who <EVENT class="OCCURRENCE" eid="e3">survived</EVENT> an ill-fated migrant smuggling <EVENT class="OCCURRENCE" eid="e50">trip</EVENT> across the Florida Straits, should be <EVENT class="OCCURRENCE" eid="e72">reunited</EVENT> with his father back in Cuba. The <EVENT class="OCCURRENCE" eid="e51">decision</EVENT> will <EVENT class="OCCURRENCE" eid="e5">inflame</EVENT> anti-Castro Cubans in Miami, but Doris Meissner, the INS commissioner, <EVENT class="OCCURRENCE" eid="e6">made</EVENT> it clear that the service had <EVENT class="OCCURRENCE" eid="e7">followed</EVENT> established policy in the case. Moreover, by <EVENT class="OCCURRENCE" eid="e9">setting</EVENT> a <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t4" type="DATE" value="2000-01-14">Jan. 14</TIMEX3> <EVENT class="OCCURRENCE" eid="e52">return</EVENT> date, the immigration service <EVENT class="OCCURRENCE" eid="e10">allowed</EVENT> Elian's American relatives time to <EVENT class="OCCURRENCE" eid="e11">test</EVENT> the <EVENT class="OCCURRENCE" eid="e54">ruling</EVENT> in court.
+
+Elian was one of 13 Cubans who were <EVENT class="I_ACTION" eid="e12">trying</EVENT> to <EVENT class="OCCURRENCE" eid="e13">cross</EVENT> from Cuba to Florida <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t5" type="DATE" value="1999-W47">six weeks ago</TIMEX3> on a 17-foot aluminum powerboat when it <EVENT class="OCCURRENCE" eid="e14">capsized</EVENT>. Ten of those on board <EVENT class="OCCURRENCE" eid="e73">died</EVENT>, including his mother and stepfather. The boy <EVENT class="OCCURRENCE" eid="e16">clung</EVENT> to an inner tube for <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t6" type="DURATION" value="P2D">two days</TIMEX3> and was <EVENT class="OCCURRENCE" eid="e17">plucked</EVENT> from the Atlantic <SIGNAL sid="s1">on</SIGNAL> <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t7" type="DATE" value="1999-11-25">Thanksgiving Day</TIMEX3> and <EVENT class="OCCURRENCE" eid="e18">brought</EVENT> ashore. He was immediately <EVENT class="OCCURRENCE" eid="e19">released</EVENT> into the custody of relatives in Miami _ and just as quickly <EVENT class="OCCURRENCE" eid="e20">embraced</EVENT> as a pawn in the poisonous estrangement between Fidel Castro's regime and its opponents in exile.
+
+This page has <EVENT class="OCCURRENCE" eid="e21">argued</EVENT> from the <EVENT class="OCCURRENCE" eid="e59">start</EVENT> that Elian not be <EVENT class="OCCURRENCE" eid="e22">denied</EVENT> due process because of his youth, and the INS <EVENT class="OCCURRENCE" eid="e23">appears</EVENT> to have <EVENT class="OCCURRENCE" eid="e24">moved</EVENT> carefully. Elian's great-uncle and other American relatives were <EVENT class="OCCURRENCE" eid="e25">allowed</EVENT> to <EVENT class="OCCURRENCE" eid="e26">make</EVENT> their case that he should have a life in Miami. The boy's <EVENT class="OCCURRENCE" eid="e27">divorced</EVENT> father, Juan Miguel Gonzalez, was also <EVENT class="OCCURRENCE" eid="e28">interviewed</EVENT> and <EVENT class="OCCURRENCE" eid="e74">satisfied</EVENT> the agency that he had a close and involved relationship with his son. The mother's parents also <EVENT class="OCCURRENCE" eid="e29">argued</EVENT> for a <EVENT class="OCCURRENCE" eid="e61">return</EVENT> to Cuba. The INS <EVENT class="OCCURRENCE" eid="e75">decided</EVENT> that under their prevailing policies, Gonzalez <EVENT class="OCCURRENCE" eid="e30">met</EVENT> the test that calls for custody <EVENT class="OCCURRENCE" eid="e32">reverting</EVENT> to the sole surviving parent in such cases.
+
+``This little boy, who has been through so much, belongs with his father,'' Meissner <EVENT class="REPORTING" eid="e35">said</EVENT> <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t8" type="DATE" value="2000-01-05">Wednesday</TIMEX3>, <EVENT class="OCCURRENCE" eid="e76">adding</EVENT> that ``the unique relationship between parent and child and family reunification has long been a cornerstone of both American immigration law and INS practice.'' The White House quickly <EVENT class="REPORTING" eid="e36">announced</EVENT> support for the <EVENT class="OCCURRENCE" eid="e68">decision</EVENT>.
+
+It is unclear how the political side of this affair will <EVENT class="OCCURRENCE" eid="e37">play</EVENT> out. Elian's relatives in Miami have <EVENT class="REPORTING" eid="e38">indicated</EVENT> they <EVENT class="OCCURRENCE" eid="e39">plan</EVENT> to <EVENT class="OCCURRENCE" eid="e40">appeal</EVENT>, as is their right. Some of their more militant supporters in Miami, <EVENT class="OCCURRENCE" eid="e77">decrying</EVENT> the prospect that the boy will be <EVENT class="OCCURRENCE" eid="e41">used</EVENT> as a ``trophy'' by Castro, have <EVENT class="REPORTING" eid="e42">indicated</EVENT> they may <EVENT class="I_ACTION" eid="e43">try</EVENT> to <EVENT class="OCCURRENCE" eid="e44">disrupt</EVENT> efforts to <EVENT class="OCCURRENCE" eid="e78">reunite</EVENT> Elian with his father. That would be <EVENT class="OCCURRENCE" eid="e45">treating</EVENT> the boy as a trophy in a diplomatic <EVENT class="OCCURRENCE" eid="e70">struggle</EVENT> that predates his <EVENT class="OCCURRENCE" eid="e71">birth</EVENT> by decades.
+
+</TEXT>
+
+
+<EXTRAINFO>
+NYT-01-06-00 0006EST &amp;QL;
+</EXTRAINFO>
+
+
+<MAKEINSTANCE aspect="NONE" eiid="ei1" eventID="e1" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei2" eventID="e2" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei3" eventID="e3" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei5" eventID="e5" polarity="NEG" pos="UNKNOWN" tense="FUTURE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei6" eventID="e6" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei7" eventID="e7" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei9" eventID="e9" polarity="NEG" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei10" eventID="e10" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei11" eventID="e11" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="PROGRESSIVE" eiid="ei12" eventID="e12" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei13" eventID="e13" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei14" eventID="e14" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei16" eventID="e16" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei17" eventID="e17" polarity="NEG" pos="UNKNOWN" signalID="s1" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei18" eventID="e18" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei19" eventID="e19" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei20" eventID="e20" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei21" eventID="e21" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei22" eventID="e22" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei23" eventID="e23" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei24" eventID="e24" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei25" eventID="e25" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei26" eventID="e26" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei27" eventID="e27" polarity="NEG" pos="ADJECTIVE" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei28" eventID="e28" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei29" eventID="e29" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei30" eventID="e30" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei32" eventID="e32" polarity="NEG" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei35" eventID="e35" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei36" eventID="e36" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei37" eventID="e37" polarity="NEG" pos="UNKNOWN" tense="FUTURE"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei38" eventID="e38" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei39" eventID="e39" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei40" eventID="e40" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei41" eventID="e41" polarity="NEG" pos="UNKNOWN" tense="FUTURE"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei42" eventID="e42" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei43" eventID="e43" modality="MAY" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei44" eventID="e44" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="PROGRESSIVE" eiid="ei45" eventID="e45" modality="WOULD" polarity="NEG" pos="UNKNOWN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei47" eventID="e47" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei48" eventID="e48" polarity="NEG" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei50" eventID="e50" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei51" eventID="e51" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei52" eventID="e52" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei54" eventID="e54" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei59" eventID="e59" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei61" eventID="e61" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei68" eventID="e68" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei70" eventID="e70" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei71" eventID="e71" polarity="NEG" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei72" eventID="e72" modality="SHOULD" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei73" eventID="e73" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei74" eventID="e74" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei75" eventID="e75" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei76" eventID="e76" polarity="NEG" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei77" eventID="e77" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei78" eventID="e78" polarity="NEG" pos="VERB" tense="INFINITIVE"/>
+<TLINK lid="l3" origin="USER" relType="INCLUDES" relatedToTime="t7" timeID="t5"/>
+<TLINK lid="l4" origin="USER" relType="BEFORE" relatedToTime="t8" timeID="t7"/>
+<TLINK lid="l5" origin="USER" relType="IDENTITY" relatedToTime="t3" timeID="t8"/>
+<TLINK lid="l8" origin="USER" relType="BEFORE" relatedToTime="t4" timeID="t1"/>
+<TLINK eventInstanceID="ei1" lid="l9" origin="USER" relType="IS_INCLUDED" relatedToTime="t1"/>
+<TLINK eventInstanceID="ei2" lid="l10" origin="USER" relType="IS_INCLUDED" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei47" lid="l11" origin="USER" relType="IS_INCLUDED" relatedToEventInstance="ei2"/>
+<TLINK eventInstanceID="ei48" lid="l12" origin="USER" relType="IDENTITY" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei3" lid="l13" origin="USER" relType="BEFORE" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei50" lid="l14" origin="USER" relType="BEFORE" relatedToEventInstance="ei3"/>
+<TLINK eventInstanceID="ei72" lid="l15" origin="USER" relType="AFTER" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei51" lid="l16" origin="USER" relType="IDENTITY" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei5" lid="l17" origin="USER" relType="BEGUN_BY" relatedToEventInstance="ei51"/>
+<TLINK eventInstanceID="ei51" lid="l18" origin="USER" relType="BEFORE" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei7" lid="l19" origin="USER" relType="BEFORE" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei9" lid="l20" origin="USER" relType="BEFORE" relatedToEventInstance="ei7"/>
+<TLINK eventInstanceID="ei52" lid="l21" origin="USER" relType="IS_INCLUDED" relatedToTime="t4"/>
+<TLINK eventInstanceID="ei9" lid="l22" origin="USER" relType="BEFORE" relatedToEventInstance="ei10"/>
+<TLINK eventInstanceID="ei10" lid="l23" origin="USER" relType="BEFORE" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei54" lid="l24" origin="USER" relType="BEFORE" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei54" lid="l25" origin="USER" relType="IDENTITY" relatedToEventInstance="ei48"/>
+<TLINK eventInstanceID="ei12" lid="l26" origin="USER" relType="IS_INCLUDED" relatedToTime="t5"/>
+<TLINK eventInstanceID="ei12" lid="l27" origin="USER" relType="BEFORE" relatedToEventInstance="ei13"/>
+<TLINK eventInstanceID="ei13" lid="l29" origin="USER" relType="ENDED_BY" relatedToEventInstance="ei14"/>
+<TLINK eventInstanceID="ei73" lid="l30" origin="USER" relType="AFTER" relatedToEventInstance="ei14"/>
+<TLINK eventInstanceID="ei16" lid="l31" origin="USER" relType="AFTER" relatedToEventInstance="ei73"/>
+<TLINK eventInstanceID="ei16" lid="l32" origin="USER" relType="IS_INCLUDED" relatedToTime="t6"/>
+<TLINK eventInstanceID="ei16" lid="l33" origin="USER" relType="BEFORE" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei17" lid="l34" origin="USER" relType="IS_INCLUDED" relatedToTime="t7"/>
+<TLINK eventInstanceID="ei17" lid="l35" origin="USER" relType="BEFORE" relatedToEventInstance="ei18"/>
+<TLINK eventInstanceID="ei18" lid="l36" origin="USER" relType="BEFORE" relatedToEventInstance="ei19"/>
+<TLINK eventInstanceID="ei19" lid="l37" origin="USER" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei21" lid="l38" origin="USER" relType="BEGUN_BY" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei59" lid="l39" origin="USER" relType="BEGUN_BY" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei59" lid="l40" origin="USER" relType="BEFORE" relatedToEventInstance="ei21"/>
+<TLINK eventInstanceID="ei22" lid="l41" origin="USER" relType="AFTER" relatedToEventInstance="ei21"/>
+<TLINK eventInstanceID="ei22" lid="l42" origin="USER" relType="BEFORE" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei23" lid="l43" origin="USER" relType="BEFORE" relatedToEventInstance="ei24"/>
+<TLINK eventInstanceID="ei23" lid="l44" origin="USER" relType="BEFORE" relatedToEventInstance="ei25"/>
+<TLINK eventInstanceID="ei25" lid="l45" origin="USER" relType="BEFORE" relatedToEventInstance="ei26"/>
+<TLINK eventInstanceID="ei27" lid="l47" origin="USER" relType="BEFORE" relatedToTime="t5"/>
+<TLINK eventInstanceID="ei28" lid="l48" origin="USER" relType="BEFORE" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei28" lid="l49" origin="USER" relType="BEFORE" relatedToEventInstance="ei74"/>
+<TLINK eventInstanceID="ei29" lid="l50" origin="USER" relType="AFTER" relatedToEventInstance="ei28"/>
+<TLINK eventInstanceID="ei29" lid="l51" origin="USER" relType="BEFORE" relatedToEventInstance="ei61"/>
+<TLINK eventInstanceID="ei75" lid="l52" origin="USER" relType="IDENTITY" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei75" lid="l53" origin="USER" relType="AFTER" relatedToEventInstance="ei30"/>
+<TLINK eventInstanceID="ei30" lid="l54" origin="USER" relType="BEFORE" relatedToEventInstance="ei32"/>
+<TLINK eventInstanceID="ei35" lid="l55" origin="USER" relType="IS_INCLUDED" relatedToTime="t8"/>
+<TLINK eventInstanceID="ei35" lid="l56" origin="USER" relType="BEFORE" relatedToEventInstance="ei76"/>
+<TLINK eventInstanceID="ei68" lid="l57" origin="USER" relType="BEFORE" relatedToEventInstance="ei36"/>
+<TLINK eventInstanceID="ei68" lid="l58" origin="USER" relType="IDENTITY" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei36" lid="l59" origin="USER" relType="BEFORE" relatedToEventInstance="ei37"/>
+<TLINK eventInstanceID="ei38" lid="l60" origin="USER" relType="AFTER" relatedToEventInstance="ei68"/>
+<TLINK eventInstanceID="ei38" lid="l61" origin="USER" relType="BEFORE" relatedToEventInstance="ei39"/>
+<TLINK eventInstanceID="ei37" lid="l62" origin="USER" relType="AFTER" relatedToEventInstance="ei38"/>
+<TLINK eventInstanceID="ei39" lid="l63" origin="USER" relType="BEFORE" relatedToEventInstance="ei40"/>
+<TLINK eventInstanceID="ei68" lid="l65" origin="USER" relType="BEFORE" relatedToEventInstance="ei77"/>
+<TLINK eventInstanceID="ei77" lid="l66" origin="USER" relType="BEFORE" relatedToEventInstance="ei41"/>
+<TLINK eventInstanceID="ei77" lid="l67" origin="USER" relType="AFTER" relatedToEventInstance="ei42"/>
+<TLINK eventInstanceID="ei42" lid="l68" origin="USER" relType="BEFORE" relatedToEventInstance="ei43"/>
+<TLINK eventInstanceID="ei43" lid="l70" origin="USER" relType="BEFORE" relatedToEventInstance="ei44"/>
+<TLINK eventInstanceID="ei44" lid="l72" origin="USER" relType="BEFORE" relatedToEventInstance="ei78"/>
+<TLINK eventInstanceID="ei45" lid="l74" origin="USER" relType="AFTER" relatedToEventInstance="ei78"/>
+<TLINK eventInstanceID="ei70" lid="l75" origin="USER" relType="BEFORE" relatedToEventInstance="ei71"/>
+<TLINK eventInstanceID="ei71" lid="l76" origin="USER" relType="BEFORE" relatedToEventInstance="ei45"/>
+<SLINK eventInstanceID="ei12" lid="l28" relType="MODAL" subordinatedEventInstance="ei13"/>
+<SLINK eventInstanceID="ei25" lid="l46" relType="MODAL" subordinatedEventInstance="ei26"/>
+<SLINK eventInstanceID="ei39" lid="l64" relType="MODAL" subordinatedEventInstance="ei40"/>
+<SLINK eventInstanceID="ei42" lid="l69" relType="MODAL" subordinatedEventInstance="ei43"/>
+<SLINK eventInstanceID="ei43" lid="l71" relType="MODAL" subordinatedEventInstance="ei44"/>
+<SLINK eventInstanceID="ei44" lid="l73" relType="MODAL" subordinatedEventInstance="ei78"/>
+<TLINK eventInstanceID="ei2" lid="l714" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei51" lid="l715" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei5" lid="l716" origin="user" relType="AFTER" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei6" lid="l717" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei10" lid="l718" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei13" lid="l719" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei73" lid="l720" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei19" lid="l721" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei29" lid="l722" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei75" lid="l723" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei36" lid="l724" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei68" lid="l725" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei38" lid="l726" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei77" lid="l727" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei42" lid="l728" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei70" lid="l729" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+</TimeML>

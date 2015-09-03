@@ -65,6 +65,7 @@ public class TimeMLParser {
 		ArrayList<TemporalRelation> tlinkArr = d.getTlinks();
 		String source = null, target = null, relType = null;
 		String sourceType = null, targetType = null;
+		boolean deduced = false;
 		for (int index = tlinks.getLength() - 1; index >= 0; index--) {
 			Node tlink = tlinks.item(index);
 			NamedNodeMap attrs = tlink.getAttributes();			
@@ -88,6 +89,12 @@ public class TimeMLParser {
 						break;
 					case "relType":
 						relType = attrs.item(i).getNodeValue();
+						break;
+					case "deduced":
+						if (attrs.item(i).getNodeValue().equals("true")) {
+							deduced = true;
+						}
+						break;
 				}
 				if (d.getInstances().containsKey(source)) {
 					source = d.getInstances().get(source);
@@ -99,6 +106,7 @@ public class TimeMLParser {
 			TemporalRelation tl = new TemporalRelation(source, target);
 			tl.setSourceType(sourceType); tl.setTargetType(targetType);
 			tl.setRelType(relType);
+			tl.setDeduced(deduced);
 			tlinkArr.add(tl);
 		}
 	}
