@@ -434,7 +434,11 @@ class TempEval3Task {
 					//WordNet similarity
 					fv.addBinaryFeatureToVector(Feature.wnSim);
 					
-					fv.addBinaryFeatureToVector(Feature.label);
+					if (classifier.equals(VectorClassifier.libsvm)) {
+						fv.addBinaryFeatureToVector(Feature.label);
+					} else {
+						fv.addToVector(Feature.label);
+					}
 					
 					vectors.add(fv);
 					
@@ -515,7 +519,11 @@ class TempEval3Task {
 					//timex rule type
 					fv.addBinaryFeatureToVector(Feature.timexRule);
 					
-					fv.addBinaryFeatureToVector(Feature.label);
+					if (classifier.equals(VectorClassifier.libsvm)) {
+						fv.addBinaryFeatureToVector(Feature.label);
+					} else {
+						fv.addToVector(Feature.label);
+					}
 					
 					vectors.add(fv);
 				}
