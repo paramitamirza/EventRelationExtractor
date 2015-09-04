@@ -87,11 +87,11 @@ Ray Johnson, Lockheeds chief technical officer, <EVENT class="REPORTING" eid="e2
 <TLINK eventInstanceID="ei24" lid="3" relType="BEFORE" relatedToEventInstance="ei28"/>
 <TLINK eventInstanceID="ei24" lid="4" relType="BEFORE" relatedToEventInstance="ei27"/>
 <TLINK eventInstanceID="ei24" lid="5" relType="BEFORE" relatedToEventInstance="ei26"/>
-<TLINK eventInstanceID="ei18" lid="6" relType="AFTER" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei18" lid="7" relType="AFTER" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei18" lid="6" relType="BEFORE" relatedToEventInstance="ei24"/>
+<TLINK eventInstanceID="ei18" lid="7" relType="BEFORE" relatedToEventInstance="ei23"/>
 <TLINK eventInstanceID="ei18" lid="8" relType="BEFORE" relatedToEventInstance="ei22"/>
 <TLINK eventInstanceID="ei18" lid="9" relType="BEFORE" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei18" lid="10" relType="AFTER" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei18" lid="10" relType="BEFORE" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei14" lid="11" relType="BEFORE" relatedToEventInstance="ei18"/>
 <TLINK eventInstanceID="ei9" lid="12" relType="BEFORE" relatedToEventInstance="ei12"/>
 <TLINK eventInstanceID="ei9" lid="13" relType="BEFORE" relatedToEventInstance="ei11"/>

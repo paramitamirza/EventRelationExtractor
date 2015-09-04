@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><TimeML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://timeml.org/timeMLdocs/TimeML_1.2.1.xsd">
+
+<DOCID>NYT19980907.0112</DOCID>
+
+<DCT><TIMEX3 functionInDocument="CREATION_TIME" temporalFunction="false" tid="t0" type="TIME" value="1998-09-07">1998-09-07</TIMEX3></DCT>
+
+<TITLE>BOMBINGS CAST A SHADOW ON EAST AFRICAN TOURISM</TITLE>
+
+
+<EXTRAINFO>
+NYT19980907.0112  NEWS STORY  1998-09-07 16:53
+A2547 &amp;Cx1f; taf-z
+s t &amp;Cx13;  &amp;Cx11;  BC-TRAVEL-AFRICA-$ADV13-     09-07 0853
+BC-TRAVEL-AFRICA-$ADV13-NYT
+BOMBINGS CAST A SHADOW ON EAST AFRICAN TOURISM
+(For release Sun., Sept. 13)  (JT)
+By PHILIP SHENON
+c.1998 N.Y. Times News Service
+</EXTRAINFO>
+
+
+<TEXT>
+
+WASHINGTON _
+
+The <EVENT class="OCCURRENCE" eid="e83">bombings</EVENT> at the American Embassies in Kenya and Tanzania have <EVENT class="OCCURRENCE" eid="e1">frightened</EVENT> away travelers from East Africa just as Kenya was hoping for an end to a <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t11" type="DURATION" value="P1Y">years-old</TIMEX3> slump in foreign tourism, and as Tanzania was finally <EVENT class="ASPECTUAL" eid="e3">beginning</EVENT> to <EVENT class="OCCURRENCE" eid="e137">reap</EVENT> the benefits from a major investment in the travel industry.
+
+Tour operators who specialize in travel in Kenya and Tanzania, which boast some of Africa's best game parks and sunniest beaches, <EVENT class="REPORTING" eid="e6">say</EVENT> there have been no mass <EVENT class="OCCURRENCE" eid="e91">cancellations</EVENT> as a result of the <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t2" type="DATE" value="1998-08-07">Aug. 7</TIMEX3> Embassy <EVENT class="OCCURRENCE" eid="e92">bombings</EVENT> in Nairobi, the Kenyan capital, and Dar es Salaam, Tanzania, which <EVENT class="OCCURRENCE" eid="e7">left</EVENT> more than 250 people dead.
+
+But they <EVENT class="REPORTING" eid="e8">report</EVENT> a number of worried <EVENT class="OCCURRENCE" eid="e138">calls</EVENT> from prospective travelers, many of them alarmed by the possibility of more terrorist <EVENT class="OCCURRENCE" eid="e93">attacks</EVENT> in the region. ``People have been <EVENT class="OCCURRENCE" eid="e12">calling</EVENT>, and we've been <EVENT class="OCCURRENCE" eid="e139">reassuring</EVENT> them that we don't <EVENT class="PERCEPTION" eid="e14">see</EVENT> further problems,'' <EVENT class="REPORTING" eid="e15">said</EVENT> Mary Mkimbo, a spokeswoman in New York for the Kenya Tourist Office.
+
+The State Department, which does not <EVENT class="I_STATE" eid="e16">want</EVENT> to <EVENT class="PERCEPTION" eid="e17">see</EVENT> Kenya and Tanzania punished economically as a result of terrorist <EVENT class="OCCURRENCE" eid="e94">attacks</EVENT> that were clearly <EVENT class="OCCURRENCE" eid="e19">targeted</EVENT> at the United States, has <EVENT class="OCCURRENCE" eid="e20">lifted</EVENT> dire travel warnings <EVENT class="OCCURRENCE" eid="e21">issued</EVENT> just the <EVENT class="OCCURRENCE" eid="e97">bombings</EVENT> that <EVENT class="I_ACTION" eid="e22">urged</EVENT> Americans to stay away from the two countries. New public announcements <EVENT class="OCCURRENCE" eid="e24">put</EVENT> out <SIGNAL sid="s1">on</SIGNAL> <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t3" type="DATE" value="1998-08-13">Aug. 13</TIMEX3> suggest only that Americans ``exercise caution'' when <EVENT class="OCCURRENCE" eid="e26">visiting</EVENT> Kenya and Tanzania.
+
+Embassy employees in both cities have <EVENT class="OCCURRENCE" eid="e27">gone</EVENT> back to <EVENT class="OCCURRENCE" eid="e28">work</EVENT>, although in new locations. The bombed-out Embassy in Nairobi is <EVENT class="I_STATE" eid="e30">expected</EVENT> to be <EVENT class="OCCURRENCE" eid="e31">demolished</EVENT> after the FBI has <EVENT class="ASPECTUAL" eid="e32">finished</EVENT> <EVENT class="OCCURRENCE" eid="e33">gathering</EVENT> evidence. The embassy in Dar es Salaam <EVENT class="OCCURRENCE" eid="e34">suffered</EVENT> less damage from the <EVENT class="OCCURRENCE" eid="e102">blast</EVENT>, although it, too, may have to be <EVENT class="OCCURRENCE" eid="e35">razed</EVENT>. For <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t4" type="DATE" value="PRESENT_REF">now</TIMEX3>, the State Department <EVENT class="REPORTING" eid="e36">says</EVENT>, Embassy employees can <EVENT class="OCCURRENCE" eid="e37">offer</EVENT> only emergency consular service.
+
+Foreign visitors to Nairobi and Dar es Salaam since the <EVENT class="OCCURRENCE" eid="e104">bombings</EVENT> have noted a reassuringly heavy presence of both police and soldiers on the streets of the two capitals. Crew-cut FBI agents fill many of the luxury hotels in the two cities.
+
+Western diplomats and intelligence officials <EVENT class="REPORTING" eid="e40">say</EVENT> there is no reason to <EVENT class="I_STATE" eid="e41">believe</EVENT> that terrorists affiliated with Osama bin Laden, the exiled Saudi millionaire who is <EVENT class="I_ACTION" eid="e44">accused</EVENT> of <EVENT class="OCCURRENCE" eid="e45">organizing</EVENT> the Embassy <EVENT class="OCCURRENCE" eid="e108">bombings</EVENT>, plan to <EVENT class="OCCURRENCE" eid="e46">strike</EVENT> again soon in either country.
+
+Still, the televised images of the charred hulks of the American Embassy buildings will likely haunt the travel industry in East Africa for years. ``The tourism industry is very sensitive to the news media,'' <EVENT class="REPORTING" eid="e47">said</EVENT> Ms. Mkimbo. ``We do <EVENT class="I_STATE" eid="e49">expect</EVENT> a little downward movement in the industry.''
+
+The tourism industry in Kenya has been troubled for years _ in part because of the <EVENT class="OCCURRENCE" eid="e114">opening</EVENT> of new safari destinations in South Africa, in part because of Nairobi's well-deserved reputation for street crime. Tourism industry revenues reportedly <EVENT class="OCCURRENCE" eid="e50">dropped</EVENT> to $300 million <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t5" type="DATE" value="1997">last year</TIMEX3>, down from $450 million the year before.
+
+The government has <EVENT class="OCCURRENCE" eid="e51">responded</EVENT> to the slump with a series of <EVENT class="OCCURRENCE" eid="e118">actions</EVENT> to <EVENT class="OCCURRENCE" eid="e140">lure</EVENT> tourists back, including a marked improvement in the service of Kenya Airways, the national airline, which has <EVENT class="OCCURRENCE" eid="e54">gone</EVENT> into partnership with KLM Royal Dutch Airlines. The <EVENT class="OCCURRENCE" eid="e120">bombing</EVENT> will doubtless <EVENT class="OCCURRENCE" eid="e55">set</EVENT> back those efforts.
+
+Tourism has never been so well-developed an industry in neighboring Tanzania, which is home to Mt. Kilimanjaro, the magnificent wildlife of Serengeti National Park and the exotic island of Zanzibar.
+
+But the lack of infrastructure has <EVENT class="OCCURRENCE" eid="e57">worked</EVENT> to Tanzania's advantage in recent years given the dramatic growth in the number of adventure travelers who are willing, even eager to <EVENT class="OCCURRENCE" eid="e59">go</EVENT> without the five-star safari resorts that Kenya offers. The number of visitors to Tanzania <EVENT class="OCCURRENCE" eid="e61">jumped</EVENT> from fewer than 100,000 in <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t6" type="DATE" value="1980">1980</TIMEX3> to more than 300,000 <TIMEX3 functionInDocument="NONE" temporalFunction="false" tid="t7" type="DATE" value="1997">last year</TIMEX3>, prompting the government to <EVENT class="OCCURRENCE" eid="e63">improve</EVENT> roads needed for safari tours.
+
+``Tanzania has just been underdeveloped for years, and they're <EVENT class="ASPECTUAL" eid="e64">beginning</EVENT> to <EVENT class="OCCURRENCE" eid="e65">develop</EVENT> it <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t8" type="DATE" value="PRESENT_REF">now</TIMEX3>,'' <EVENT class="REPORTING" eid="e66">said</EVENT> Jalal Ebrahim, president of Safaricentre International, a tour operator in Manhattan Beach, Calif. ``There were fewer people in the parks in Tanzania, and that's what attracted visitors. It was more pristine.''
+
+Ebrahim, whose company has been <EVENT class="OCCURRENCE" eid="e67">sending</EVENT> American travelers on East African safaris for <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t9" type="DURATION" value="P12Y">13 years</TIMEX3>, <EVENT class="REPORTING" eid="e68">said</EVENT> that his company had <EVENT class="OCCURRENCE" eid="e69">received</EVENT> only one <EVENT class="OCCURRENCE" eid="e131">cancellation</EVENT> as a result of the embassy <EVENT class="OCCURRENCE" eid="e132">bombings</EVENT> _ and that he did not <EVENT class="I_STATE" eid="e70">expect</EVENT> many more.
+
+``We had one <EVENT class="OCCURRENCE" eid="e133">cancellation</EVENT> from a couple who decided they were just going to <EVENT class="OCCURRENCE" eid="e72">wait</EVENT> and <EVENT class="PERCEPTION" eid="e73">see</EVENT> what happened,'' he <EVENT class="REPORTING" eid="e75">said</EVENT>. ``Our clients are adventure travelers and most of them are very savvy. They <EVENT class="OCCURRENCE" eid="e76">read</EVENT> a lot, they stay on top of world events.'' They <EVENT class="I_STATE" eid="e78">understand</EVENT>, he <EVENT class="REPORTING" eid="e79">said</EVENT>, that increasingly terrorism knows no borders.
+
+The U.S. Embassy in Nairobi is <TIMEX3 functionInDocument="NONE" temporalFunction="true" tid="t10" type="DATE" value="PRESENT_REF">now</TIMEX3> operating out of the offices of the Agency for International Development on The Crescent, in the neighborhood of Nairobi known as the Parklands; (254-2) 751-613. The Embassy in Dar es Salaam is at 285 Toure Drive; (255-51) 666-015.
+
+</TEXT>
+
+
+<EXTRAINFO>
+&amp;QL;
+NYT-09-07-98 1653EDT &amp;QL;
+</EXTRAINFO>
+
+
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei1" eventID="e1" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PROGRESSIVE" eiid="ei3" eventID="e3" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei6" eventID="e6" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei7" eventID="e7" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei8" eventID="e8" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="PERFECTIVE_PROGRESSIVE" eiid="ei12" eventID="e12" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei14" eventID="e14" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei15" eventID="e15" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei16" eventID="e16" polarity="NEG" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei17" eventID="e17" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei19" eventID="e19" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei20" eventID="e20" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei21" eventID="e21" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei22" eventID="e22" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei24" eventID="e24" polarity="POS" pos="UNKNOWN" signalID="s1" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei26" eventID="e26" polarity="POS" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei27" eventID="e27" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei28" eventID="e28" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei30" eventID="e30" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei31" eventID="e31" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei32" eventID="e32" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei33" eventID="e33" polarity="POS" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei34" eventID="e34" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei35" eventID="e35" modality="MAY" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei36" eventID="e36" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei37" eventID="e37" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei40" eventID="e40" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei41" eventID="e41" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei44" eventID="e44" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei45" eventID="e45" polarity="POS" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei46" eventID="e46" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei47" eventID="e47" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei49" eventID="e49" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei50" eventID="e50" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei51" eventID="e51" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei54" eventID="e54" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei55" eventID="e55" polarity="POS" pos="UNKNOWN" tense="FUTURE"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei57" eventID="e57" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei59" eventID="e59" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei61" eventID="e61" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei63" eventID="e63" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei64" eventID="e64" polarity="POS" pos="VERB" tense="PRESPART"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei65" eventID="e65" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei66" eventID="e66" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE_PROGRESSIVE" eiid="ei67" eventID="e67" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei68" eventID="e68" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="PERFECTIVE" eiid="ei69" eventID="e69" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei70" eventID="e70" polarity="NEG" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei72" eventID="e72" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei73" eventID="e73" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei75" eventID="e75" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei76" eventID="e76" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei78" eventID="e78" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei79" eventID="e79" polarity="POS" pos="UNKNOWN" tense="PAST"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei83" eventID="e83" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei91" eventID="e91" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei92" eventID="e92" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei93" eventID="e93" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei94" eventID="e94" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei97" eventID="e97" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei102" eventID="e102" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei104" eventID="e104" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei108" eventID="e108" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei114" eventID="e114" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei118" eventID="e118" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei120" eventID="e120" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei131" eventID="e131" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" cardinality="2" eiid="ei132" eventID="e132" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei133" eventID="e133" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei137" eventID="e137" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei138" eventID="e138" polarity="POS" pos="NOUN" tense="NONE"/>
+<MAKEINSTANCE aspect="PERFECTIVE_PROGRESSIVE" eiid="ei139" eventID="e139" polarity="POS" pos="UNKNOWN" tense="PRESENT"/>
+<MAKEINSTANCE aspect="NONE" eiid="ei141" eventID="e140" polarity="POS" pos="VERB" tense="INFINITIVE"/>
+<TLINK eventInstanceID="ei83" lid="l1" origin="USER" relType="BEFORE" relatedToEventInstance="ei1"/>
+<TLINK eventInstanceID="ei3" lid="l2" origin="USER" relType="BEFORE" relatedToEventInstance="ei83"/>
+<TLINK lid="l3" origin="USER" relType="BEFORE" relatedToEventInstance="ei83" timeID="t11"/>
+<TLINK eventInstanceID="ei1" lid="l5" origin="USER" relType="BEFORE" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei91" lid="l6" origin="USER" relType="BEFORE" relatedToEventInstance="ei6"/>
+<TLINK lid="l7" origin="USER" relType="INCLUDES" relatedToEventInstance="ei92" timeID="t2"/>
+<TLINK eventInstanceID="ei83" lid="l8" origin="USER" relType="IDENTITY" relatedToEventInstance="ei92"/>
+<TLINK eventInstanceID="ei92" lid="l9" origin="USER" relType="BEFORE" relatedToEventInstance="ei7"/>
+<TLINK eventInstanceID="ei6" lid="l10" origin="USER" relType="IDENTITY" relatedToEventInstance="ei8"/>
+<TLINK eventInstanceID="ei138" lid="l11" origin="USER" relType="BEFORE" relatedToEventInstance="ei8"/>
+<TLINK eventInstanceID="ei93" lid="l12" origin="USER" relType="BEFORE" relatedToEventInstance="ei138"/>
+<TLINK eventInstanceID="ei93" lid="l13" origin="USER" relType="IDENTITY" relatedToEventInstance="ei92"/>
+<TLINK eventInstanceID="ei93" lid="l14" origin="USER" relType="BEFORE" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei12" lid="l15" origin="USER" relType="IDENTITY" relatedToEventInstance="ei138"/>
+<TLINK eventInstanceID="ei12" lid="l16" origin="USER" relType="BEFORE" relatedToEventInstance="ei139"/>
+<TLINK eventInstanceID="ei14" lid="l17" origin="USER" relType="AFTER" relatedToEventInstance="ei139"/>
+<TLINK eventInstanceID="ei15" lid="l18" origin="USER" relType="AFTER" relatedToEventInstance="ei139"/>
+<TLINK eventInstanceID="ei94" lid="l20" origin="USER" relType="BEFORE" relatedToEventInstance="ei16"/>
+<TLINK eventInstanceID="ei94" lid="l21" origin="USER" relType="IDENTITY" relatedToEventInstance="ei93"/>
+<TLINK eventInstanceID="ei19" lid="l22" origin="USER" relType="BEFORE" relatedToEventInstance="ei94"/>
+<TLINK eventInstanceID="ei16" lid="l23" origin="USER" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei21" lid="l24" origin="USER" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei97" lid="l25" origin="USER" relType="BEFORE" relatedToEventInstance="ei21"/>
+<TLINK eventInstanceID="ei97" lid="l26" origin="USER" relType="BEFORE" relatedToEventInstance="ei22"/>
+<TLINK eventInstanceID="ei24" lid="l27" origin="USER" relType="IS_INCLUDED" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei24" lid="l28" origin="USER" relType="BEFORE" relatedToEventInstance="ei26"/>
+<TLINK eventInstanceID="ei27" lid="l30" origin="USER" relType="BEFORE" relatedToEventInstance="ei30"/>
+<TLINK eventInstanceID="ei30" lid="l32" origin="USER" relType="BEFORE" relatedToEventInstance="ei32"/>
+<TLINK eventInstanceID="ei24" lid="l34" origin="USER" relType="BEFORE" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei34" lid="l35" origin="USER" relType="BEFORE" relatedToTime="t3"/>
+<TLINK eventInstanceID="ei102" lid="l36" origin="USER" relType="BEFORE" relatedToEventInstance="ei34"/>
+<TLINK eventInstanceID="ei34" lid="l37" origin="USER" relType="BEFORE" relatedToEventInstance="ei35"/>
+<TLINK lid="l38" origin="USER" relType="INCLUDES" relatedToEventInstance="ei36" timeID="t4"/>
+<TLINK lid="l39" origin="USER" relType="AFTER" relatedToTime="t3" timeID="t4"/>
+<TLINK lid="l40" origin="USER" relType="BEFORE" relatedToTime="t3" timeID="t2"/>
+<TLINK eventInstanceID="ei36" lid="l41" origin="USER" relType="BEFORE" relatedToEventInstance="ei37"/>
+<TLINK eventInstanceID="ei104" lid="l42" origin="USER" relType="BEFORE" relatedToTime="t4"/>
+<TLINK eventInstanceID="ei104" lid="l43" origin="USER" relType="IDENTITY" relatedToEventInstance="ei92"/>
+<TLINK eventInstanceID="ei104" lid="l44" origin="USER" relType="BEFORE" relatedToEventInstance="ei40"/>
+<TLINK eventInstanceID="ei40" lid="l45" origin="USER" relType="BEFORE" relatedToEventInstance="ei41"/>
+<TLINK eventInstanceID="ei104" lid="l46" origin="USER" relType="BEFORE" relatedToEventInstance="ei44"/>
+<TLINK eventInstanceID="ei45" lid="l47" origin="USER" relType="BEFORE" relatedToEventInstance="ei104"/>
+<TLINK eventInstanceID="ei108" lid="l49" origin="USER" relType="IDENTITY" relatedToEventInstance="ei104"/>
+<TLINK eventInstanceID="ei40" lid="l50" origin="USER" relType="BEFORE" relatedToEventInstance="ei46"/>
+<TLINK eventInstanceID="ei47" lid="l51" origin="USER" relType="BEFORE" relatedToEventInstance="ei49"/>
+<TLINK eventInstanceID="ei40" lid="l52" origin="USER" relType="SIMULTANEOUS" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei114" lid="l53" origin="USER" relType="BEFORE" relatedToTime="t5"/>
+<TLINK eventInstanceID="ei50" lid="l54" origin="USER" relType="IS_INCLUDED" relatedToTime="t5"/>
+<TLINK eventInstanceID="ei50" lid="l55" origin="USER" relType="BEFORE" relatedToEventInstance="ei51"/>
+<TLINK eventInstanceID="ei51" lid="l56" origin="USER" relType="BEFORE" relatedToEventInstance="ei118"/>
+<TLINK eventInstanceID="ei54" lid="l58" origin="USER" relType="BEFORE" relatedToEventInstance="ei118"/>
+<TLINK lid="l59" origin="USER" relType="BEFORE" relatedToEventInstance="ei120" timeID="t5"/>
+<TLINK eventInstanceID="ei120" lid="l60" origin="USER" relType="BEFORE" relatedToEventInstance="ei55"/>
+<TLINK eventInstanceID="ei57" lid="l61" origin="USER" relType="BEFORE" relatedToEventInstance="ei59"/>
+<TLINK lid="l62" origin="USER" relType="BEFORE" relatedToEventInstance="ei61" timeID="t6"/>
+<TLINK eventInstanceID="ei61" lid="l63" origin="USER" relType="BEFORE" relatedToEventInstance="ei57"/>
+<TLINK eventInstanceID="ei61" lid="l64" origin="USER" relType="IS_INCLUDED" relatedToTime="t7"/>
+<TLINK eventInstanceID="ei61" lid="l65" origin="USER" relType="BEFORE" relatedToEventInstance="ei63"/>
+<TLINK eventInstanceID="ei63" lid="l66" origin="USER" relType="BEFORE" relatedToEventInstance="ei64"/>
+<TLINK eventInstanceID="ei64" lid="l68" origin="USER" relType="BEFORE" relatedToEventInstance="ei66"/>
+<TLINK eventInstanceID="ei67" lid="l69" origin="USER" relType="BEFORE" relatedToEventInstance="ei66"/>
+<TLINK lid="l70" origin="USER" relType="INCLUDES" relatedToEventInstance="ei67" timeID="t9"/>
+<TLINK eventInstanceID="ei68" lid="l71" origin="USER" relType="AFTER" relatedToEventInstance="ei67"/>
+<TLINK eventInstanceID="ei69" lid="l72" origin="USER" relType="BEFORE" relatedToEventInstance="ei68"/>
+<TLINK eventInstanceID="ei69" lid="l73" origin="USER" relType="INCLUDES" relatedToEventInstance="ei131"/>
+<TLINK eventInstanceID="ei132" lid="l74" origin="USER" relType="BEFORE" relatedToEventInstance="ei69"/>
+<TLINK eventInstanceID="ei132" lid="l75" origin="USER" relType="IDENTITY" relatedToEventInstance="ei83"/>
+<TLINK eventInstanceID="ei70" lid="l76" origin="USER" relType="AFTER" relatedToEventInstance="ei68"/>
+<TLINK eventInstanceID="ei131" lid="l77" origin="USER" relType="IDENTITY" relatedToEventInstance="ei133"/>
+<TLINK eventInstanceID="ei133" lid="l78" origin="USER" relType="BEFORE" relatedToEventInstance="ei72"/>
+<TLINK eventInstanceID="ei72" lid="l79" origin="USER" relType="BEFORE" relatedToEventInstance="ei73"/>
+<TLINK eventInstanceID="ei133" lid="l80" origin="USER" relType="BEFORE" relatedToEventInstance="ei75"/>
+<TLINK eventInstanceID="ei75" lid="l82" origin="USER" relType="BEFORE" relatedToEventInstance="ei79"/>
+<TLINK eventInstanceID="ei79" lid="l83" origin="USER" relType="SIMULTANEOUS" relatedToEventInstance="ei76"/>
+<TLINK eventInstanceID="ei76" lid="l84" origin="USER" relType="SIMULTANEOUS" relatedToEventInstance="ei78"/>
+<TLINK eventInstanceID="ei79" lid="l85" origin="USER" relType="SIMULTANEOUS" relatedToEventInstance="ei78"/>
+<SLINK eventInstanceID="ei16" lid="l19" relType="MODAL" subordinatedEventInstance="ei17" syntax="USER"/>
+<SLINK eventInstanceID="ei27" lid="l29" relType="MODAL" subordinatedEventInstance="ei28" syntax="USER"/>
+<SLINK eventInstanceID="ei30" lid="l31" relType="MODAL" subordinatedEventInstance="ei31" syntax="USER"/>
+<SLINK eventInstanceID="ei45" lid="l48" relType="MODAL" subordinatedEventInstance="ei108" syntax="USER"/>
+<SLINK eventInstanceID="ei118" lid="l57" relType="MODAL" subordinatedEventInstance="ei141" syntax="USER"/>
+<ALINK eventInstanceID="ei3" lid="l4" relType="INITIATES" relatedToEventInstance="ei137" syntax="USER"/>
+<ALINK eventInstanceID="ei32" lid="l33" relType="TERMINATES" relatedToEventInstance="ei33" syntax="USER"/>
+<ALINK eventInstanceID="ei64" lid="l67" relType="INITIATES" relatedToEventInstance="ei65" syntax="USER"/>
+
+<TLINK eventInstanceID="ei83" lid="l657" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei1" lid="l658" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei3" lid="l659" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei6" lid="l660" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei8" lid="l661" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei15" lid="l662" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei16" lid="l663" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei19" lid="l664" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei20" lid="l665" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei21" lid="l666" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei27" lid="l667" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei30" lid="l668" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei32" lid="l669" origin="user" relType="AFTER" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei34" lid="l670" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei37" lid="l671" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei104" lid="l672" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei40" lid="l673" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei44" lid="l674" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei47" lid="l675" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei114" lid="l676" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei51" lid="l677" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei118" lid="l678" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei54" lid="l679" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei57" lid="l680" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei66" lid="l681" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei68" lid="l682" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei69" lid="l683" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei70" lid="l684" origin="user" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei75" lid="l685" origin="user" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei79" lid="l686" origin="user" relType="BEFORE" relatedToTime="t0"/>
+</TimeML>

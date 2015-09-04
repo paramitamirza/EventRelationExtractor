@@ -167,35 +167,35 @@ While partisan division is the central characteristic of the modern Congress, wo
 
 
 
-<TLINK eventInstanceID="ei40" lid="1" relType="IS_INCLUDED" relatedToEventInstance="ei1003"/>
-<TLINK eventInstanceID="ei1000012" lid="2" relType="IS_INCLUDED" relatedToEventInstance="ei1010"/>
-<TLINK eventInstanceID="ei53" lid="3" relType="BEFORE" relatedToEventInstance="ei1002"/>
+<TLINK eventInstanceID="ei40" lid="1" relType="AFTER" relatedToEventInstance="ei1003"/>
+<TLINK eventInstanceID="ei1000012" lid="2" relType="AFTER" relatedToEventInstance="ei1010"/>
+<TLINK eventInstanceID="ei53" lid="3" relType="AFTER" relatedToEventInstance="ei1002"/>
 <TLINK eventInstanceID="ei49" lid="4" relType="AFTER" relatedToEventInstance="ei53"/>
 <TLINK eventInstanceID="ei49" lid="5" relType="BEFORE" relatedToEventInstance="ei51"/>
-<TLINK eventInstanceID="ei49" lid="6" relType="AFTER" relatedToEventInstance="ei50"/>
-<TLINK eventInstanceID="ei43" lid="7" relType="AFTER" relatedToEventInstance="ei49"/>
+<TLINK eventInstanceID="ei49" lid="6" relType="BEFORE" relatedToEventInstance="ei50"/>
+<TLINK eventInstanceID="ei43" lid="7" relType="BEFORE" relatedToEventInstance="ei49"/>
 <TLINK eventInstanceID="ei43" lid="8" relType="BEFORE" relatedToEventInstance="ei48"/>
 <TLINK eventInstanceID="ei43" lid="9" relType="BEFORE" relatedToEventInstance="ei47"/>
 <TLINK eventInstanceID="ei43" lid="10" relType="AFTER" relatedToEventInstance="ei44"/>
 <TLINK eventInstanceID="ei40" lid="11" relType="BEFORE" relatedToEventInstance="ei42"/>
 <TLINK eventInstanceID="ei40" lid="12" relType="BEFORE" relatedToEventInstance="ei41"/>
 <TLINK eventInstanceID="ei37" lid="13" relType="AFTER" relatedToEventInstance="ei39"/>
-<TLINK eventInstanceID="ei32" lid="14" relType="INCLUDES" relatedToEventInstance="ei36"/>
+<TLINK eventInstanceID="ei32" lid="14" relType="BEFORE" relatedToEventInstance="ei36"/>
 <TLINK eventInstanceID="ei26" lid="15" relType="BEFORE" relatedToEventInstance="ei29"/>
-<TLINK eventInstanceID="ei26" lid="16" relType="IS_INCLUDED" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei26" lid="16" relType="BEFORE" relatedToEventInstance="ei27"/>
 <TLINK eventInstanceID="ei24" lid="17" relType="BEFORE" relatedToEventInstance="ei25"/>
-<TLINK eventInstanceID="ei23" lid="18" relType="INCLUDES" relatedToEventInstance="ei24"/>
+<TLINK eventInstanceID="ei23" lid="18" relType="BEFORE" relatedToEventInstance="ei24"/>
 <TLINK eventInstanceID="ei22" lid="19" relType="BEFORE" relatedToEventInstance="ei24"/>
 <TLINK eventInstanceID="ei20" lid="20" relType="BEFORE" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei19" lid="21" relType="AFTER" relatedToEventInstance="ei20"/>
-<TLINK eventInstanceID="ei16" lid="22" relType="INCLUDES" relatedToEventInstance="ei18"/>
-<TLINK eventInstanceID="ei16" lid="23" relType="INCLUDES" relatedToEventInstance="ei17"/>
+<TLINK eventInstanceID="ei19" lid="21" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei16" lid="22" relType="AFTER" relatedToEventInstance="ei18"/>
+<TLINK eventInstanceID="ei16" lid="23" relType="BEFORE" relatedToEventInstance="ei17"/>
 <TLINK eventInstanceID="ei12" lid="24" relType="BEFORE" relatedToEventInstance="ei13"/>
 <TLINK eventInstanceID="ei11" lid="25" relType="BEFORE" relatedToEventInstance="ei13"/>
 <TLINK eventInstanceID="ei10" lid="26" relType="BEFORE" relatedToEventInstance="ei13"/>
 <TLINK eventInstanceID="ei9" lid="27" relType="BEFORE" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="28" relType="BEFORE" relatedToEventInstance="ei10"/>
-<TLINK eventInstanceID="ei6" lid="29" relType="AFTER" relatedToEventInstance="ei7"/>
+<TLINK eventInstanceID="ei6" lid="29" relType="BEFORE" relatedToEventInstance="ei7"/>
 <TLINK eventInstanceID="ei5" lid="30" relType="BEFORE" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei4" lid="31" relType="AFTER" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei2" lid="32" relType="BEFORE" relatedToEventInstance="ei6"/>
@@ -208,7 +208,7 @@ While partisan division is the central characteristic of the modern Congress, wo
 <TLINK eventInstanceID="ei1000011" lid="39" relType="IS_INCLUDED" relatedToTime="t1005"/>
 <TLINK eventInstanceID="ei12" lid="40" relType="IS_INCLUDED" relatedToTime="t4"/>
 <TLINK eventInstanceID="ei11" lid="41" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei1000009" lid="42" relType="AFTER" relatedToTime="t1"/>
+<TLINK eventInstanceID="ei1000009" lid="42" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK eventInstanceID="ei1000009" lid="43" relType="IS_INCLUDED" relatedToTime="t1007"/>
 <TLINK eventInstanceID="ei1000010" lid="44" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK eventInstanceID="ei40" lid="45" relType="BEFORE" relatedToTime="t0"/>
