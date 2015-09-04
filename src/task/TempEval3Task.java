@@ -631,15 +631,15 @@ class TempEval3Task {
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			DataSource eeSource = new DataSource("data/" + name + "-ee-train.arff");
 			Instances eeTrain = eeSource.getDataSet();
-//			eeTrain.setClassIndex(eeFeatures.size() - 1); 
-//			eeCls = new LibSVM();
-//		    eeCls.buildClassifier(eeTrain);
+			eeTrain.setClassIndex(eeFeatures.size() - 1); 
+			eeCls = new LibSVM();
+		    eeCls.buildClassifier(eeTrain);
 		    
 		    DataSource etSource = new DataSource("data/" + name + "-et-train.arff");
 			Instances etTrain = etSource.getDataSet();
-//			etTrain.setClassIndex(etFeatures.size() - 1);
-//			etCls = new LibSVM();
-//		    etCls.buildClassifier(etTrain);
+			etTrain.setClassIndex(etFeatures.size() - 1);
+			etCls = new LibSVM();
+		    etCls.buildClassifier(etTrain);
 		}
 		
 		rs.disconnect();
