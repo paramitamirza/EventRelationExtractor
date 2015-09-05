@@ -64,6 +64,10 @@ public class PairFeatureVector {
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
 	private List<String> temp_rel_type_list = Arrays.asList(temp_rel_type);
 	
+	public PairFeatureVector() {
+		this.setVectors(new ArrayList<String>());
+	}
+	
 	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
 		this.setDoc(doc);
 		this.setE1(e1);
@@ -1704,34 +1708,78 @@ public class PairFeatureVector {
 						}
 					}
 					break;
-				case tempMarkerPos:
-					m = getTemporalMarkerFeature();
-					for (String s : this.marker_position) {
-						if (s.equals(m.getPosition())) getVectors().add("1");
-						else getVectors().add("0");
-						fields.add("tempmarkerpos_" + s);
+				case tempSignalPos:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							for (String s : this.marker_position) {
+								getVectors().add("0");
+								fields.add("tempsigpos_" + s);
+							}
+						} else {	
+							m = getTemporalSignal();
+							for (String s : this.marker_position) {
+								if (s.equals(m.getCluster())) getVectors().add("1");
+								else getVectors().add("0");
+								fields.add("tempsigpos_" + s);
+							}
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignal();
+						for (String s : this.marker_position) {
+							if (s.equals(m.getCluster())) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("tempsigpos_" + s);
+						}
 					}
 					break;
 				case causMarkerClusText:
+					boolean found = false;
 					m = getCausalSignal();
 					for (String s : this.caus_signal) {
-						if (s.equals(m.getCluster())) getVectors().add("1");
+						if (s.equals(m.getCluster())) {
+							getVectors().add("1");
+							found = true;
+						}
 						else getVectors().add("0");
 						fields.add("caussig_" + s.replace(" ", "_"));
 					}
 					m = getCausalVerb();
 					for (String s : this.caus_verb) {
-						if (s.equals(m.getCluster())) getVectors().add("1");
-						else getVectors().add("0");
+						if (found) {
+							getVectors().add("0");
+						} else {
+							if (s.equals(m.getCluster())) getVectors().add("1");
+							else getVectors().add("0");
+						}
 						fields.add("causverb_" + s.replace(" ", "_"));
 					}
 					break;
 				case causMarkerPos:
-					m = getCausalMarkerFeature();
+					boolean foundd = false;
+					List<String> pos = new ArrayList<String>();
+					m = getCausalSignal();
 					for (String s : this.marker_position) {
-						if (s.equals(m.getPosition())) getVectors().add("1");
-						else getVectors().add("0");
-						fields.add("causmarkerpos_" + s);
+						if (s.equals(m.getPosition())) {
+							pos.add("1");
+							foundd = true;
+						}
+						else pos.add("0");
+					}
+					if (!foundd) {
+						pos.clear();
+						m = getCausalVerb();
+						for (String s : this.marker_position) {
+							if (s.equals(m.getPosition())) {
+								pos.add("1");
+							}
+							else pos.add("0");
+						}
+					}
+					getVectors().addAll(pos);
+					for (String s : this.marker_position) {
+						fields.add("caussigpos_" + s);
 					}
 					break;
 				case coref:
