@@ -99,7 +99,7 @@ class TempEval3Task {
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
 		
 		//set the classifier
-		classifier = VectorClassifier.libsvm;
+		classifier = VectorClassifier.weka;
 		if (classifier.equals(VectorClassifier.weka)) {
 			eeCls = new LibSVM();
 			etCls = new LibSVM();
@@ -170,7 +170,7 @@ class TempEval3Task {
 		try {
 			TempEval3Task task = new TempEval3Task();
 			
-			task.train(txpParser, tmlParser, false, false);
+			//task.train(txpParser, tmlParser, false, false);
 			task.evaluate(txpParser, tmlParser, false, false);
 			//task.evaluateTE3(txpParser, tmlParser, false, false);
 			
@@ -189,35 +189,55 @@ class TempEval3Task {
 		StringBuilder et = new StringBuilder();
 		StringBuilder eeCoref = new StringBuilder();
 		StringBuilder etRule = new StringBuilder();
+		
+		String eeFilepath, etFilepath;
+		
+		//Write training data - event-event
+//		eeFilepath = "data/" + name + "-ee-train-conv-deduced.data";
 //		if (eecoref) {
 //			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
 //		} else {
 //			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, null);
 //		}
-		if (etrule) {
-			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
-		} else {
-			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
-		}
+//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-		//Write training data
-		String eeFilepath = "data/" + name + "-ee-train.data";
-		String etFilepath = "data/" + name + "-et-train.data";
-		//writeEventEventDataset(rs, ee, eeFilepath);
-		//writeEventEventWordEmbedding(rs, "data/te3-ee-token-lemma-train_EMBEDDINGS.csv", eeFilepath);
-		combineEventEventFeatureVectorWordEmbedding(rs, txpParser, tmlParser, 
-				trainTXPPath, trainTMLPath,
-				"data/te3-ee-token-lemma-train_EMBEDDINGS.csv", eeFilepath);
-		writeEventTimexDataset(rs, et, etFilepath);
+		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
+		writeEventEventEmbedding(rs, 					//word embedding
+			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
 		
-		//Field/column titles of features
-		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
-		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
+//		eeFilepath = "data/" + name + "-ee-train-word-embed-conv.data";
+//		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
+//				txpParser, tmlParser, 
+//				trainTXPPath, trainTMLPath,
+//				"data/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
+//		
+		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
+		writeEventEventEmbedding(rs, 					//chunk embedding
+				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
 		
-		System.out.println("num deduced TLINKs: " + numDeduced);		
+//		eeFilepath = "data/" + name + "-ee-train-phrase-embed-conv.data";
+//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+//				txpParser, tmlParser, 
+//				trainTXPPath, trainTMLPath,
+//				"data/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
+//		
+//		//Write training data - event-timex
+//		etFilepath = "data/" + name + "-et-train-conv.data";
+//		if (etrule) {
+//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
+//		} else {
+//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
+//		}
+//		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
+//		
+//		//Field/column titles of features
+//		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
+//		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
+//		
+//		System.out.println("num deduced TLINKs: " + numDeduced);		
 		
-		System.out.println("Train models...");
-		trainModels(rs, eeFilepath, etFilepath);
+//		System.out.println("Train models...");
+//		trainModels(rs, eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}
@@ -231,32 +251,52 @@ class TempEval3Task {
 		StringBuilder et = new StringBuilder();
 		StringBuilder eeCoref = new StringBuilder();
 		StringBuilder etRule = new StringBuilder();
+		
+		String eeFilepath, etFilepath;
+		
+		//Write evaluation data - event-event
+//		eeFilepath = "data/" + name + "-ee-eval-conv.data";
 //		if (eecoref) {
 //			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
 //		} else {
 //			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
 //		}
+//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		
+		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
+		writeEventEventEmbedding(rs, 					//word embedding
+				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
+		
+//		eeFilepath = "data/" + name + "-ee-eval-word-embed-conv.data";
+//		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
+//				txpParser, tmlParser, 
+//				evalTXPPath, evalTMLPath,
+//				"data/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
+		
+		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
+		writeEventEventEmbedding(rs, 					//chunk embedding
+				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
+		
+//		eeFilepath = "data/" + name + "-ee-eval-phrase-embed-conv.data";
+//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+//				txpParser, tmlParser, 
+//				evalTXPPath, evalTMLPath,
+//				"data/te3-ee-token-in-chunk-eval-embedding-no-label.csv", eeFilepath, 9600);
+		
+		//Write evaluation data - event-timex
+		etFilepath = "data/" + name + "-et-eval-conv.data";
 		if (etrule) {
 			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, etRule);
 		} else {
 			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, null);
 		}
-		
-		//Write evaluation data
-		String eeFilepath = "data/" + name + "-ee-eval.data";
-		String etFilepath = "data/" + name + "-et-eval.data";
-		//writeEventEventDataset(rs, ee, eeFilepath);
-		//writeEventEventWordEmbedding(rs, "data/te3-ee-token-lemma-eval_EMBEDDINGS.csv", eeFilepath);
-		combineEventEventFeatureVectorWordEmbedding(rs, txpParser, tmlParser, 
-				evalTXPPath, evalTMLPath,
-				"data/te3-ee-token-lemma-eval_EMBEDDINGS.csv", eeFilepath);
 		writeEventTimexDataset(rs, et, etFilepath);
 		
-		System.out.println("Test models...");
-		String eeTrainFilepath = "data/" + name + "-ee-train.data";
-		String etTrainFilepath = "data/" + name + "-et-train.data";
-		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
-				eeFilepath, etFilepath);
+//		System.out.println("Test models...");
+//		String eeTrainFilepath = "data/" + name + "-ee-train.data";
+//		String etTrainFilepath = "data/" + name + "-et-train.data";
+//		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
+//				eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}	
@@ -1132,26 +1172,14 @@ class TempEval3Task {
 		sysTML.close();
 	}
 	
-	private void combineEventEventFeatureVectorWordEmbedding(RemoteServer rs,
+	private void combineEventEventFeatureVectorEmbedding(RemoteServer rs,
 			TXPParser txpParser, TimeMLParser tmlParser, 
 			String txpDirpath, String tmlDirpath,
-			String eeWordEmbeddingPath, String eeFilepath) 
+			String eeWordEmbeddingPath, String eeFilepath,
+			int numEmbeddingCols) 
 					throws Exception {
 		File[] txpFiles = new File(txpDirpath).listFiles();		
 		if (txpFiles == null) return;
-		
-		BufferedReader br = new BufferedReader(new FileReader(eeWordEmbeddingPath));
-		String line, weLine;
-		List<String> weLines = new ArrayList<String>();
-		String[] cols;
-		while ((line = br.readLine()) != null) {
-			if (!line.isEmpty()) {
-				cols = line.split(",");
-				weLine = cols[0];
-				for (int i=1; i<cols.length-1; i++) weLine += "," + cols[i].trim();
-				weLines.add(weLine);
-			}
-	    }
 		
 		List<String> fvLines = new ArrayList<String>();
 		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
@@ -1174,22 +1202,26 @@ class TempEval3Task {
 			String label;
 			
 			int weIdx = 0;
-			for (String wel : weLines) {
-		    	String[] weCols = wel.split(",");
-		    	String[] fvCols = fvLines.get(weIdx).split(",");
-		    	label = fvCols[fvCols.length-1].trim();
-		    	eePW.write(label);
-		    	idx = 1;
-		    	for (int i=0; i<weCols.length-1; i++) {
-		    		eePW.write(" " + idx + ":" + weCols[i].trim());
-		    		idx += 1;
-		    	}
-		    	for (int i=0; i<fvCols.length-1; i++) {
-		    		eePW.write(" " + idx + ":" + fvCols[i].trim());
-		    		idx += 1;
-		    	}
-		    	eePW.write("\n");
-		    	weIdx += 1;
+			BufferedReader br = new BufferedReader(new FileReader(eeWordEmbeddingPath));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty()) {
+			    	String[] weCols = line.split(",");
+			    	String[] fvCols = fvLines.get(weIdx).split(",");
+			    	label = fvCols[fvCols.length-1].trim();
+			    	eePW.write(label);
+			    	idx = 1;
+			    	for (int i=0; i<weCols.length-1; i++) {
+			    		eePW.write(" " + idx + ":" + weCols[i].trim());
+			    		idx += 1;
+			    	}
+			    	for (int i=0; i<fvCols.length-1; i++) {
+			    		eePW.write(" " + idx + ":" + fvCols[i].trim());
+			    		idx += 1;
+			    	}
+			    	eePW.write("\n");
+			    	weIdx += 1;
+				}
 		    }
 			eePW.close();
 			
@@ -1202,10 +1234,8 @@ class TempEval3Task {
 			PrintWriter eePW = new PrintWriter(eeFilepath + ".arff", "UTF-8");	
 			eePW.write("@relation " + name + "-ee-word-embedding-feature-vector\n\n");
 			
-			int idx;
-			String[] weCols = weLines.get(0).split(",");
-			idx = 1;
-			for (int i=0; i<weCols.length; i++) {
+			int idx = 1;
+			for (int i=0; i<numEmbeddingCols; i++) {
 	    		eePW.write("@attribute attr" + idx + " numeric\n");
 	    		idx += 1;
 	    	}
@@ -1229,16 +1259,20 @@ class TempEval3Task {
 			eePW.write("\n@data\n");
 			
 			int weIdx = 0;
-			for (String wel : weLines) {
-				eePW.write(wel + "," + fvLines.get(weIdx) + "\n");
-				weIdx += 1;
+			BufferedReader br = new BufferedReader(new FileReader(eeWordEmbeddingPath));
+			String line;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty()) {
+					eePW.write(line + "," + fvLines.get(weIdx) + "\n");
+					weIdx += 1;
+				}
 			}
 			eePW.close();
 		}		
 	}
 	
-	private void writeEventEventWordEmbedding (RemoteServer rs, String eeWordEmbeddingPath, 
-			String eeFilepath) throws Exception {
+	private void writeEventEventEmbedding (RemoteServer rs, String eeWordEmbeddingPath, 
+			String eeFilepath, int numEmbeddingCols) throws Exception {
 		System.setProperty("line.separator", "\n");
 		if (classifier.equals(VectorClassifier.libsvm)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath, "UTF-8");
@@ -1268,29 +1302,23 @@ class TempEval3Task {
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath + ".arff", "UTF-8");	
 			eePW.write("@relation " + name + "-ee-word-embedding\n\n");
-			StringBuilder data = new StringBuilder();
-			boolean start = false;
-			int idx;
+			
+			int idx = 1;
+			for (int i=0; i<numEmbeddingCols; i++) {
+	    		eePW.write("@attribute attr" + idx + " numeric\n");
+	    		idx += 1;
+	    	}
+			eePW.write("@attribute label {BEFORE, AFTER, IBEFORE, IAFTER, IDENTITY, "
+					+ "SIMULTANEOUS, INCLUDES, IS_INCLUDED, DURING, DURING_INV, "
+					+ "BEGINS, BEGUN_BY, ENDS, ENDED_BY}\n");
+			
+			eePW.write("\n@data\n");
 			
 			BufferedReader br = new BufferedReader(new FileReader(eeWordEmbeddingPath));
 			String line;
 			while ((line = br.readLine()) != null) {
-				if (!start) {
-					String[] cols = line.split(",");
-					idx = 1;
-					for (int i=0; i<cols.length-1; i++) {
-			    		eePW.write("@attribute attr" + idx + " numeric\n");
-			    		idx += 1;
-			    	}
-					eePW.write("@attribute label {BEFORE, AFTER, IBEFORE, IAFTER, IDENTITY, "
-							+ "SIMULTANEOUS, INCLUDES, IS_INCLUDED, DURING, DURING_INV, "
-							+ "BEGINS, BEGUN_BY, ENDS, ENDED_BY}\n");
-					start = true;
-				}
-				data.append(line + "\n");
+				eePW.write(line + "\n");
 			}
-			eePW.write("\n@data\n");
-			eePW.write(data.toString());
 			eePW.close();
 		}
 	}
