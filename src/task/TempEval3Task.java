@@ -50,6 +50,7 @@ import libsvm.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.LibSVM;
+import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
@@ -99,10 +100,13 @@ class TempEval3Task {
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
 		
 		//set the classifier
-		classifier = VectorClassifier.weka;
+		classifier = VectorClassifier.yamcha;
 		if (classifier.equals(VectorClassifier.weka)) {
-			eeCls = new LibSVM();
-			etCls = new LibSVM();
+//			eeCls = new LibSVM();
+//			etCls = new LibSVM();
+			
+			eeCls = new RandomForest();
+			etCls = new RandomForest();
 		}
 		
 		eeFeatureNames = new ArrayList<String>();
@@ -110,48 +114,51 @@ class TempEval3Task {
 		
 		Feature[] eeFeatures = {
 				//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
-				//Feature.token, Feature.lemma,	//*yamcha
+				Feature.token, Feature.lemma,	//*yamcha
 				Feature.pos, //Feature.mainpos,
-				Feature.chunk, Feature.samePos, //Feature.sameMainPos,
-				Feature.entDistance, Feature.sentDistance,
-				Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
-				Feature.sameEventClass, Feature.sameTense, Feature.sameAspect, Feature.samePolarity,
-//				//Feature.depPath,				//*yamcha
+//				Feature.samePos, //Feature.sameMainPos,
+//				Feature.chunk,
+				Feature.entDistance, //Feature.sentDistance,
+				/*Feature.eventClass, */Feature.tense, Feature.aspect, /*Feature.polarity,*/
+				Feature.sameEventClass, /*Feature.sameTense, */Feature.sameAspect, Feature.samePolarity,
+				Feature.depPath,				//*yamcha
 				Feature.mainVerb,
-//				//Feature.tempMarkerText, 
-//				//Feature.tempMarker,				//*yamcha
-//				//Feature.tempMarkerPos, 
+//				Feature.tempMarkerText,
+//				Feature.tempMarkerClusText,
+//				Feature.tempMarker,				//*yamcha
+//				Feature.tempMarkerPos, 
 //				//Feature.tempMarkerDep1Dep2,
-				Feature.tempSignalClusText, 	//*libsvm weka
-				//Feature.tempSignalPos,
-//				//Feature.causMarkerText,
-//				//Feature.causMarker,				//*yamcha
-				Feature.causMarkerClusText, 	//*libsvm weka
-				//Feature.causMarkerPos, 
-//				//Feature.causMarkerDep1Dep2,
+//				Feature.tempSignalClusText, 	//*libsvm weka
+//				Feature.tempSignalPos,
+//				Feature.causMarkerText,
+//				Feature.causMarker,				//*yamcha
+//				Feature.causMarkerClusText, 	//*libsvm weka
+//				Feature.causMarkerPos, 
+//				Feature.causMarkerDep1Dep2,
 				Feature.coref, 
-				Feature.wnSim
+//				Feature.wnSim
 		};
 		eeFeatureList = Arrays.asList(eeFeatures);
 		
 		Feature[] etFeatures = {
 				//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
-				//Feature.token, Feature.lemma,	//*yamcha
-				Feature.pos, Feature.mainpos,
-				Feature.chunk, Feature.samePos, Feature.sameMainPos,
+				Feature.token, Feature.lemma,	//*yamcha
+				Feature.pos, //Feature.mainpos,
+				/*Feature.chunk, */Feature.samePos, /*Feature.sameMainPos,*/
 				Feature.entDistance, Feature.sentDistance, Feature.entOrder,
-				Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
-				Feature.timexType, 				
+				Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
+				Feature.dct,
+//				Feature.timexType, 				
 //				//Feature.timexValueTemplate, 	//*yamcha
-//				//Feature.depPath,				//*yamcha
+				Feature.depPath,				//*yamcha
 				//Feature.mainVerb, 
-//				//Feature.tempMarkerText, 
-//				//Feature.tempMarker,				//*yamcha
-//				//Feature.tempMarkerPos, 
+				Feature.tempMarkerText, 
+				//Feature.tempMarker,				//*yamcha
+				Feature.tempMarkerPos, 
 //				//Feature.tempMarkerDep1Dep2,
 				//Feature.tempSignalClusText, 
 				//Feature.tempSignalPos,
-				Feature.timexRule
+				//Feature.timexRule
 		};
 		etFeatureList = Arrays.asList(etFeatures);
 	}
@@ -170,7 +177,7 @@ class TempEval3Task {
 		try {
 			TempEval3Task task = new TempEval3Task();
 			
-			//task.train(txpParser, tmlParser, false, false);
+			task.train(txpParser, tmlParser, false, false);
 			task.evaluate(txpParser, tmlParser, false, false);
 			//task.evaluateTE3(txpParser, tmlParser, false, false);
 			
@@ -193,17 +200,26 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write training data - event-event
+		
+		eeFilepath = "data/" + name + "-ee-train-conv.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		
 //		eeFilepath = "data/" + name + "-ee-train-conv-deduced.data";
 //		if (eecoref) {
 //			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
 //		} else {
 //			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, null);
 //		}
-//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features - with deduced TLINKs
 		
-		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
-		writeEventEventEmbedding(rs, 					//word embedding
-			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
+//		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
+//		writeEventEventEmbedding(rs, 					//word embedding
+//			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
 		
 //		eeFilepath = "data/" + name + "-ee-train-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
@@ -211,9 +227,9 @@ class TempEval3Task {
 //				trainTXPPath, trainTMLPath,
 //				"data/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
 //		
-		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
-		writeEventEventEmbedding(rs, 					//chunk embedding
-				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
+//		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
+//		writeEventEventEmbedding(rs, 					//chunk embedding
+//				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
 		
 //		eeFilepath = "data/" + name + "-ee-train-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
@@ -222,22 +238,31 @@ class TempEval3Task {
 //				"data/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
 //		
 //		//Write training data - event-timex
-//		etFilepath = "data/" + name + "-et-train-conv.data";
-//		if (etrule) {
-//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
-//		} else {
-//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
-//		}
-//		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
-//		
-//		//Field/column titles of features
-//		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
-//		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
-//		
-//		System.out.println("num deduced TLINKs: " + numDeduced);		
 		
-//		System.out.println("Train models...");
-//		trainModels(rs, eeFilepath, etFilepath);
+		etFilepath = "data/" + name + "-et-train-conv.data";
+		if (etrule) {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
+		} else {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
+		}
+		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
+		
+//		etFilepath = "data/" + name + "-et-train-conv-deduced.data";
+//		if (etrule) {
+//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, etRule);
+//		} else {
+//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, null);
+//		}
+//		writeEventTimexDataset(rs, et, etFilepath);		//conventional features - with deduced TLINKs
+		
+		//Field/column titles of features
+		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
+		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
+		
+		System.out.println("num deduced TLINKs: " + numDeduced);		
+		
+		System.out.println("Train models...");
+		trainModels(rs, eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}
@@ -255,17 +280,17 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write evaluation data - event-event
-//		eeFilepath = "data/" + name + "-ee-eval-conv.data";
-//		if (eecoref) {
-//			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
-//		} else {
-//			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
-//		}
-//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		eeFilepath = "data/" + name + "-ee-eval-conv.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
-		writeEventEventEmbedding(rs, 					//word embedding
-				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
+//		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
+//		writeEventEventEmbedding(rs, 					//word embedding
+//				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
 		
 //		eeFilepath = "data/" + name + "-ee-eval-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
@@ -273,9 +298,9 @@ class TempEval3Task {
 //				evalTXPPath, evalTMLPath,
 //				"data/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
 		
-		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
-		writeEventEventEmbedding(rs, 					//chunk embedding
-				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
+//		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
+//		writeEventEventEmbedding(rs, 					//chunk embedding
+//				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
 		
 //		eeFilepath = "data/" + name + "-ee-eval-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
@@ -292,11 +317,11 @@ class TempEval3Task {
 		}
 		writeEventTimexDataset(rs, et, etFilepath);
 		
-//		System.out.println("Test models...");
-//		String eeTrainFilepath = "data/" + name + "-ee-train.data";
-//		String etTrainFilepath = "data/" + name + "-et-train.data";
-//		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
-//				eeFilepath, etFilepath);
+		System.out.println("Test models...");
+		String eeTrainFilepath = "data/" + name + "-ee-train.data";
+		String etTrainFilepath = "data/" + name + "-et-train.data";
+		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
+				eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}	
@@ -363,12 +388,12 @@ class TempEval3Task {
 //					+ "MULTI_CLASS=2 "
 					+ "MODEL=~/models/" + name + "-ee "
 					+ "FEATURE=\"F:0:2..\" "
-					+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
+					+ "SVM_PARAM=\"-t1 -d4 -c1 -m 512\" train";
 			String cmdTrainET = "make CORPUS=~/" + etFilepath + " "
 //					+ "MULTI_CLASS=2 "
 					+ "MODEL=~/models/" + name + "-et "
 					+ "FEATURE=\"F:0:2..\" "
-					+ "SVM_PARAM=\"-t1 -d3 -c1 -m 512\" train";
+					+ "SVM_PARAM=\"-t1 -d4 -c1 -m 512\" train";
 			rs.executeCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
 			
 		} else if (classifier.equals(VectorClassifier.libsvm)) {	//Train models using LibSVM
