@@ -154,33 +154,38 @@ But the <EVENT class="OCCURRENCE" eid="e50">tie-up</EVENT> with Rosneft will <EV
 
 
 <TLINK eventInstanceID="ei25" lid="1" relType="BEFORE" relatedToEventInstance="ei30"/>
-<TLINK eventInstanceID="ei25" lid="2" relType="IS_INCLUDED" relatedToEventInstance="ei45"/>
+<TLINK eventInstanceID="ei25" lid="2" relType="BEFORE" relatedToEventInstance="ei45"/>
 <TLINK eventInstanceID="ei16" lid="3" relType="AFTER" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei30" lid="4" relType="AFTER" relatedToEventInstance="ei49"/>
-<TLINK eventInstanceID="ei30" lid="5" relType="AFTER" relatedToEventInstance="ei48"/>
-<TLINK eventInstanceID="ei30" lid="6" relType="AFTER" relatedToEventInstance="ei47"/>
-<TLINK eventInstanceID="ei30" lid="7" relType="AFTER" relatedToEventInstance="ei35"/>
-<TLINK eventInstanceID="ei30" lid="8" relType="AFTER" relatedToEventInstance="ei34"/>
-<TLINK eventInstanceID="ei30" lid="9" relType="AFTER" relatedToEventInstance="ei33"/>
+<TLINK eventInstanceID="ei30" lid="4" relType="BEFORE" relatedToEventInstance="ei49"/>
+<TLINK eventInstanceID="ei30" lid="5" relType="BEFORE" relatedToEventInstance="ei48"/>
+<TLINK eventInstanceID="ei30" lid="6" relType="BEFORE" relatedToEventInstance="ei47"/>
+<TLINK eventInstanceID="ei30" lid="7" relType="BEFORE" relatedToEventInstance="ei35"/>
+<TLINK eventInstanceID="ei30" lid="8" relType="BEFORE" relatedToEventInstance="ei34"/>
+<TLINK eventInstanceID="ei30" lid="9" relType="BEFORE" relatedToEventInstance="ei33"/>
 <TLINK eventInstanceID="ei31" lid="10" relType="AFTER" relatedToEventInstance="ei49"/>
 <TLINK eventInstanceID="ei31" lid="11" relType="AFTER" relatedToEventInstance="ei48"/>
 <TLINK eventInstanceID="ei31" lid="12" relType="AFTER" relatedToEventInstance="ei47"/>
-<TLINK eventInstanceID="ei31" lid="13" relType="AFTER" relatedToEventInstance="ei35"/>
-<TLINK eventInstanceID="ei31" lid="14" relType="AFTER" relatedToEventInstance="ei34"/>
+<TLINK eventInstanceID="ei31" lid="13" relType="BEFORE" relatedToEventInstance="ei35"/>
+<TLINK eventInstanceID="ei31" lid="14" relType="SIMULTANEOUS" relatedToEventInstance="ei34"/>
 <TLINK eventInstanceID="ei31" lid="15" relType="AFTER" relatedToEventInstance="ei33"/>
+<<<<<<< HEAD
 <TLINK eventInstanceID="ei37" lid="16" relType="AFTER" relatedToEventInstance="ei42"/>
 <TLINK eventInstanceID="ei37" lid="17" relType="AFTER" relatedToEventInstance="ei40"/>
+=======
+<TLINK eventInstanceID="ei37" lid="16" relType="IDENTITY" relatedToEventInstance="ei42"/>
+<TLINK eventInstanceID="ei37" lid="17" relType="BEFORE" relatedToEventInstance="ei40"/>
+>>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 <TLINK eventInstanceID="ei37" lid="18" relType="BEFORE" relatedToEventInstance="ei39"/>
-<TLINK eventInstanceID="ei37" lid="19" relType="AFTER" relatedToEventInstance="ei38"/>
+<TLINK eventInstanceID="ei37" lid="19" relType="SIMULTANEOUS" relatedToEventInstance="ei38"/>
 <TLINK eventInstanceID="ei36" lid="20" relType="BEFORE" relatedToEventInstance="ei37"/>
 <TLINK eventInstanceID="ei27" lid="21" relType="AFTER" relatedToEventInstance="ei30"/>
-<TLINK eventInstanceID="ei27" lid="22" relType="AFTER" relatedToEventInstance="ei29"/>
+<TLINK eventInstanceID="ei27" lid="22" relType="BEFORE" relatedToEventInstance="ei29"/>
 <TLINK eventInstanceID="ei27" lid="23" relType="BEFORE" relatedToEventInstance="ei28"/>
-<TLINK eventInstanceID="ei26" lid="24" relType="INCLUDES" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei25" lid="25" relType="IS_INCLUDED" relatedToEventInstance="ei26"/>
-<TLINK eventInstanceID="ei23" lid="26" relType="AFTER" relatedToEventInstance="ei24"/>
+<TLINK eventInstanceID="ei26" lid="24" relType="BEFORE" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei25" lid="25" relType="BEFORE" relatedToEventInstance="ei26"/>
+<TLINK eventInstanceID="ei23" lid="26" relType="SIMULTANEOUS" relatedToEventInstance="ei24"/>
 <TLINK eventInstanceID="ei22" lid="27" relType="BEFORE" relatedToEventInstance="ei23"/>
-<TLINK eventInstanceID="ei19" lid="28" relType="INCLUDES" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei19" lid="28" relType="BEFORE" relatedToEventInstance="ei23"/>
 <TLINK eventInstanceID="ei19" lid="29" relType="BEFORE" relatedToEventInstance="ei21"/>
 <TLINK eventInstanceID="ei19" lid="30" relType="BEFORE" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei15" lid="31" relType="IS_INCLUDED" relatedToEventInstance="ei19"/>
@@ -189,11 +194,15 @@ But the <EVENT class="OCCURRENCE" eid="e50">tie-up</EVENT> with Rosneft will <EV
 <TLINK eventInstanceID="ei15" lid="34" relType="BEFORE" relatedToEventInstance="ei16"/>
 <TLINK eventInstanceID="ei12" lid="35" relType="BEFORE" relatedToEventInstance="ei15"/>
 <TLINK eventInstanceID="ei12" lid="36" relType="BEFORE" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei12" lid="37" relType="IS_INCLUDED" relatedToEventInstance="ei13"/>
+<TLINK eventInstanceID="ei12" lid="37" relType="AFTER" relatedToEventInstance="ei13"/>
 <TLINK eventInstanceID="ei11" lid="38" relType="BEFORE" relatedToEventInstance="ei12"/>
-<TLINK eventInstanceID="ei9" lid="39" relType="BEFORE" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei9" lid="39" relType="SIMULTANEOUS" relatedToEventInstance="ei11"/>
 <TLINK eventInstanceID="ei9" lid="40" relType="BEFORE" relatedToEventInstance="ei10"/>
+<<<<<<< HEAD
 <TLINK eventInstanceID="ei5" lid="41" relType="AFTER" relatedToEventInstance="ei9"/>
+=======
+<TLINK eventInstanceID="ei5" lid="41" relType="SIMULTANEOUS" relatedToEventInstance="ei9"/>
+>>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 <TLINK eventInstanceID="ei5" lid="42" relType="AFTER" relatedToEventInstance="ei8"/>
 <TLINK eventInstanceID="ei5" lid="43" relType="BEFORE" relatedToEventInstance="ei7"/>
 <TLINK eventInstanceID="ei5" lid="44" relType="AFTER" relatedToEventInstance="ei6"/>
@@ -202,20 +211,24 @@ But the <EVENT class="OCCURRENCE" eid="e50">tie-up</EVENT> with Rosneft will <EV
 <TLINK eventInstanceID="ei1" lid="47" relType="AFTER" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei1" lid="48" relType="BEFORE" relatedToEventInstance="ei2"/>
 <TLINK eventInstanceID="ei22" lid="49" relType="IS_INCLUDED" relatedToTime="t1000"/>
+<<<<<<< HEAD
 <TLINK eventInstanceID="ei2" lid="50" relType="AFTER" relatedToTime="t4"/>
+=======
+<TLINK eventInstanceID="ei2" lid="50" relType="IS_INCLUDED" relatedToTime="t4"/>
+>>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 <TLINK eventInstanceID="ei2" lid="51" relType="AFTER" relatedToTime="t3"/>
 <TLINK eventInstanceID="ei9" lid="52" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK eventInstanceID="ei42" lid="53" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei36" lid="54" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei36" lid="55" relType="IS_INCLUDED" relatedToTime="t7"/>
-<TLINK eventInstanceID="ei30" lid="56" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei30" lid="56" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei27" lid="57" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei27" lid="58" relType="IS_INCLUDED" relatedToTime="t6"/>
 <TLINK eventInstanceID="ei26" lid="59" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei24" lid="60" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei24" lid="61" relType="IS_INCLUDED" relatedToTime="t5"/>
 <TLINK eventInstanceID="ei19" lid="62" relType="INCLUDES" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei15" lid="63" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei15" lid="63" relType="AFTER" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei11" lid="64" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei11" lid="65" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei10" lid="66" relType="IS_INCLUDED" relatedToTime="t1"/>

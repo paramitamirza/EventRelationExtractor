@@ -64,21 +64,25 @@ Former President Nicolas Sarkozy was <EVENT class="REPORTING" eid="e1">informed<
 
 
 <TLINK eventInstanceID="ei21" lid="1" relType="AFTER" relatedToEventInstance="ei3"/>
+<<<<<<< HEAD
 <TLINK eventInstanceID="ei1" lid="2" relType="BEFORE" relatedToEventInstance="ei15"/>
+=======
+<TLINK eventInstanceID="ei1" lid="2" relType="IDENTITY" relatedToEventInstance="ei15"/>
+>>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 <TLINK eventInstanceID="ei15" lid="3" relType="IDENTITY" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei15" lid="4" relType="BEFORE" relatedToEventInstance="ei19"/>
 <TLINK eventInstanceID="ei15" lid="5" relType="AFTER" relatedToEventInstance="ei18"/>
 <TLINK eventInstanceID="ei15" lid="6" relType="AFTER" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei13" lid="7" relType="BEFORE" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei13" lid="7" relType="AFTER" relatedToEventInstance="ei15"/>
 <TLINK eventInstanceID="ei13" lid="8" relType="BEFORE" relatedToEventInstance="ei14"/>
-<TLINK eventInstanceID="ei8" lid="9" relType="IDENTITY" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei8" lid="10" relType="IS_INCLUDED" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei8" lid="9" relType="BEFORE" relatedToEventInstance="ei13"/>
+<TLINK eventInstanceID="ei8" lid="10" relType="AFTER" relatedToEventInstance="ei11"/>
 <TLINK eventInstanceID="ei8" lid="11" relType="AFTER" relatedToEventInstance="ei9"/>
-<TLINK eventInstanceID="ei5" lid="12" relType="AFTER" relatedToEventInstance="ei8"/>
+<TLINK eventInstanceID="ei5" lid="12" relType="BEFORE" relatedToEventInstance="ei8"/>
 <TLINK eventInstanceID="ei5" lid="13" relType="BEFORE" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei1" lid="14" relType="AFTER" relatedToEventInstance="ei5"/>
+<TLINK eventInstanceID="ei1" lid="14" relType="BEFORE" relatedToEventInstance="ei5"/>
 <TLINK eventInstanceID="ei1" lid="15" relType="BEFORE" relatedToEventInstance="ei4"/>
-<TLINK eventInstanceID="ei1" lid="16" relType="AFTER" relatedToEventInstance="ei3"/>
+<TLINK eventInstanceID="ei1" lid="16" relType="BEFORE" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei1" lid="17" relType="BEFORE" relatedToEventInstance="ei2"/>
 <TLINK eventInstanceID="ei17" lid="18" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei1000" lid="19" relType="IS_INCLUDED" relatedToTime="t1000"/>
