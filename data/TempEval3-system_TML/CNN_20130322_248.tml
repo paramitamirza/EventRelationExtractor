@@ -105,7 +105,7 @@ By congressional mandate, the FAA must <EVENT class="OCCURRENCE" eid="e16">cut</
 <TLINK eventInstanceID="ei5" lid="23" relType="IS_INCLUDED" relatedToTime="t15"/>
 <TLINK eventInstanceID="ei16" lid="24" relType="IS_INCLUDED" relatedToTime="t4"/>
 <TLINK eventInstanceID="ei11" lid="25" relType="IS_INCLUDED" relatedToTime="t3"/>
-<TLINK eventInstanceID="ei6" lid="26" relType="IS_INCLUDED" relatedToTime="t2"/>
+<TLINK eventInstanceID="ei6" lid="26" relType="AFTER" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei1" lid="27" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK lid="28" relType="INCLUDES" relatedToTime="t0" timeID="t4"/>
 <TLINK lid="29" relType="SIMULTANEOUS" relatedToTime="t0" timeID="t3"/>

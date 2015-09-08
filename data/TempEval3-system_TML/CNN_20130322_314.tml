@@ -113,7 +113,7 @@ Turkey had been <EVENT class="OCCURRENCE" eid="e23">prosecuting</EVENT> four Isr
 <TLINK eventInstanceID="ei2" lid="5" relType="AFTER" relatedToEventInstance="ei5"/>
 <TLINK eventInstanceID="ei2" lid="6" relType="BEFORE" relatedToEventInstance="ei4"/>
 <TLINK eventInstanceID="ei24" lid="7" relType="AFTER" relatedToEventInstance="ei27"/>
-<TLINK eventInstanceID="ei24" lid="8" relType="BEFORE" relatedToEventInstance="ei25"/>
+<TLINK eventInstanceID="ei24" lid="8" relType="AFTER" relatedToEventInstance="ei25"/>
 <TLINK eventInstanceID="ei23" lid="9" relType="BEFORE" relatedToEventInstance="ei24"/>
 <TLINK eventInstanceID="ei19" lid="10" relType="AFTER" relatedToEventInstance="ei24"/>
 <TLINK eventInstanceID="ei19" lid="11" relType="AFTER" relatedToEventInstance="ei22"/>
@@ -143,7 +143,7 @@ Turkey had been <EVENT class="OCCURRENCE" eid="e23">prosecuting</EVENT> four Isr
 <TLINK eventInstanceID="ei29" lid="35" relType="IS_INCLUDED" relatedToTime="t3"/>
 <TLINK eventInstanceID="ei6" lid="36" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei1" lid="37" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei19" lid="38" relType="AFTER" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei19" lid="38" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei10" lid="39" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei1" lid="40" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2" lid="41" relType="IS_INCLUDED" relatedToTime="t1"/>

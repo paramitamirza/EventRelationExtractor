@@ -123,9 +123,9 @@ This flu <EVENT class="OCCURRENCE" eid="e2003">season</EVENT> <EVENT class="ASPE
 <TLINK eventInstanceID="ei2002" lid="3" relType="AFTER" relatedToEventInstance="ei2003"/>
 <TLINK eventInstanceID="ei1000028" lid="4" relType="AFTER" relatedToEventInstance="ei2002"/>
 <TLINK eventInstanceID="ei30" lid="5" relType="AFTER" relatedToEventInstance="ei31"/>
-<TLINK eventInstanceID="ei29" lid="6" relType="AFTER" relatedToEventInstance="ei31"/>
+<TLINK eventInstanceID="ei29" lid="6" relType="INCLUDES" relatedToEventInstance="ei31"/>
 <TLINK eventInstanceID="ei27" lid="7" relType="BEFORE" relatedToEventInstance="ei28"/>
-<TLINK eventInstanceID="ei26" lid="8" relType="BEFORE" relatedToEventInstance="ei27"/>
+<TLINK eventInstanceID="ei26" lid="8" relType="AFTER" relatedToEventInstance="ei27"/>
 <TLINK eventInstanceID="ei20" lid="9" relType="AFTER" relatedToEventInstance="ei22"/>
 <TLINK eventInstanceID="ei19" lid="10" relType="BEFORE" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei17" lid="11" relType="BEFORE" relatedToEventInstance="ei20"/>

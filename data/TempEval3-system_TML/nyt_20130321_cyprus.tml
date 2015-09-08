@@ -257,7 +257,7 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei47" lid="61" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei46" lid="62" relType="IS_INCLUDED" relatedToTime="t4"/>
 <TLINK eventInstanceID="ei44" lid="63" relType="INCLUDES" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei33" lid="64" relType="IS_INCLUDED" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei33" lid="64" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei27" lid="65" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei25" lid="66" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2016" lid="67" relType="IS_INCLUDED" relatedToTime="t3"/>
@@ -274,5 +274,5 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei2006" lid="78" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2023" lid="79" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2001" lid="80" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei1" lid="81" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei1" lid="81" relType="BEFORE" relatedToTime="t0"/>
 </TimeML>

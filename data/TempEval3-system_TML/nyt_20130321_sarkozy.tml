@@ -64,7 +64,7 @@ Former President Nicolas Sarkozy was <EVENT class="REPORTING" eid="e1">informed<
 
 
 <TLINK eventInstanceID="ei21" lid="1" relType="AFTER" relatedToEventInstance="ei3"/>
-<TLINK eventInstanceID="ei1" lid="2" relType="AFTER" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei1" lid="2" relType="BEFORE" relatedToEventInstance="ei15"/>
 <TLINK eventInstanceID="ei15" lid="3" relType="IDENTITY" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei15" lid="4" relType="BEFORE" relatedToEventInstance="ei19"/>
 <TLINK eventInstanceID="ei15" lid="5" relType="AFTER" relatedToEventInstance="ei18"/>

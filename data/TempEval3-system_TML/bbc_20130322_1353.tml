@@ -183,8 +183,8 @@ Before <EVENT class="OCCURRENCE" eid="e35">departing</EVENT> for Jordan on <TIME
 <TLINK eventInstanceID="ei8" lid="39" relType="AFTER" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="40" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei1" lid="41" relType="BEFORE" relatedToEventInstance="ei6"/>
-<TLINK eventInstanceID="ei1" lid="42" relType="BEFORE" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei1" lid="43" relType="BEFORE" relatedToEventInstance="ei4"/>
+<TLINK eventInstanceID="ei1" lid="42" relType="AFTER" relatedToEventInstance="ei5"/>
+<TLINK eventInstanceID="ei1" lid="43" relType="AFTER" relatedToEventInstance="ei4"/>
 <TLINK eventInstanceID="ei1" lid="44" relType="BEFORE" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei1" lid="45" relType="AFTER" relatedToEventInstance="ei2"/>
 <TLINK eventInstanceID="ei31" lid="46" relType="IS_INCLUDED" relatedToTime="t4"/>
@@ -193,7 +193,7 @@ Before <EVENT class="OCCURRENCE" eid="e35">departing</EVENT> for Jordan on <TIME
 <TLINK eventInstanceID="ei32" lid="49" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei28" lid="50" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei19" lid="51" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei22" lid="52" relType="IS_INCLUDED" relatedToTime="t2"/>
+<TLINK eventInstanceID="ei22" lid="52" relType="AFTER" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei17" lid="53" relType="IS_INCLUDED" relatedToTime="t1"/>
 <TLINK lid="54" relType="INCLUDES" relatedToTime="t3" timeID="t0"/>
 <TLINK lid="55" relType="BEFORE" relatedToTime="t0" timeID="t1"/>

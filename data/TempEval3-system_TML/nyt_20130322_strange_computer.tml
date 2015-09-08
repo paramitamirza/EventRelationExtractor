@@ -94,18 +94,18 @@ Ray Johnson, Lockheeds chief technical officer, <EVENT class="REPORTING" eid="e2
 <TLINK eventInstanceID="ei18" lid="10" relType="AFTER" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei14" lid="11" relType="BEFORE" relatedToEventInstance="ei18"/>
 <TLINK eventInstanceID="ei9" lid="12" relType="BEFORE" relatedToEventInstance="ei12"/>
-<TLINK eventInstanceID="ei9" lid="13" relType="BEFORE" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei9" lid="13" relType="INCLUDES" relatedToEventInstance="ei11"/>
 <TLINK eventInstanceID="ei9" lid="14" relType="BEFORE" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="15" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei6" lid="16" relType="BEFORE" relatedToEventInstance="ei7"/>
 <TLINK eventInstanceID="ei1" lid="17" relType="BEFORE" relatedToEventInstance="ei2"/>
 <TLINK eventInstanceID="ei28" lid="18" relType="IS_INCLUDED" relatedToTime="t101"/>
 <TLINK eventInstanceID="ei9" lid="19" relType="IS_INCLUDED" relatedToTime="t102"/>
-<TLINK eventInstanceID="ei28" lid="20" relType="IS_INCLUDED" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei18" lid="21" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei28" lid="20" relType="AFTER" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei18" lid="21" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei23" lid="22" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei9" lid="23" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei8" lid="24" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei6" lid="25" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei6" lid="25" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2" lid="26" relType="INCLUDES" relatedToTime="t0"/>
 </TimeML>

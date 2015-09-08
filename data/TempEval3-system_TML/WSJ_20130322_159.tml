@@ -173,7 +173,7 @@ The <EVENT class="OCCURRENCE" eid="e52">incident</EVENT> was a subject of <EVENT
 <TLINK eventInstanceID="ei1" lid="2" relType="BEFORE" relatedToEventInstance="ei12"/>
 <TLINK eventInstanceID="ei2" lid="3" relType="AFTER" relatedToEventInstance="ei52"/>
 <TLINK eventInstanceID="ei47" lid="4" relType="AFTER" relatedToEventInstance="ei48"/>
-<TLINK eventInstanceID="ei33" lid="5" relType="IDENTITY" relatedToEventInstance="ei61"/>
+<TLINK eventInstanceID="ei33" lid="5" relType="AFTER" relatedToEventInstance="ei61"/>
 <TLINK eventInstanceID="ei53" lid="6" relType="BEFORE" relatedToEventInstance="ei55"/>
 <TLINK eventInstanceID="ei52" lid="7" relType="BEFORE" relatedToEventInstance="ei55"/>
 <TLINK eventInstanceID="ei46" lid="8" relType="IDENTITY" relatedToEventInstance="ei55"/>
@@ -201,7 +201,7 @@ The <EVENT class="OCCURRENCE" eid="e52">incident</EVENT> was a subject of <EVENT
 <TLINK eventInstanceID="ei20" lid="30" relType="BEFORE" relatedToEventInstance="ei26"/>
 <TLINK eventInstanceID="ei20" lid="31" relType="BEFORE" relatedToEventInstance="ei23"/>
 <TLINK eventInstanceID="ei20" lid="32" relType="BEFORE" relatedToEventInstance="ei21"/>
-<TLINK eventInstanceID="ei19" lid="33" relType="BEFORE" relatedToEventInstance="ei20"/>
+<TLINK eventInstanceID="ei19" lid="33" relType="IS_INCLUDED" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei1" lid="34" relType="AFTER" relatedToEventInstance="ei20"/>
 <TLINK eventInstanceID="ei18" lid="35" relType="BEFORE" relatedToEventInstance="ei19"/>
 <TLINK eventInstanceID="ei12" lid="36" relType="BEFORE" relatedToEventInstance="ei19"/>

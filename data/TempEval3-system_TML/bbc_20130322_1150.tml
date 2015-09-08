@@ -181,7 +181,7 @@ The last British climbing member of the 1953 team, Mike Westmacott, <EVENT class
 <TLINK eventInstanceID="ei29" lid="17" relType="BEFORE" relatedToEventInstance="ei30"/>
 <TLINK eventInstanceID="ei23" lid="18" relType="BEFORE" relatedToEventInstance="ei25"/>
 <TLINK eventInstanceID="ei23" lid="19" relType="BEFORE" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei21" lid="20" relType="BEFORE" relatedToEventInstance="ei23"/>
+<TLINK eventInstanceID="ei21" lid="20" relType="INCLUDES" relatedToEventInstance="ei23"/>
 <TLINK eventInstanceID="ei21" lid="21" relType="BEFORE" relatedToEventInstance="ei22"/>
 <TLINK eventInstanceID="ei20" lid="22" relType="IDENTITY" relatedToEventInstance="ei21"/>
 <TLINK eventInstanceID="ei19" lid="23" relType="AFTER" relatedToEventInstance="ei21"/>
@@ -197,7 +197,7 @@ The last British climbing member of the 1953 team, Mike Westmacott, <EVENT class
 <TLINK eventInstanceID="ei8" lid="33" relType="AFTER" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei6" lid="34" relType="AFTER" relatedToEventInstance="ei8"/>
 <TLINK eventInstanceID="ei6" lid="35" relType="AFTER" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei4" lid="36" relType="BEFORE" relatedToEventInstance="ei6"/>
+<TLINK eventInstanceID="ei4" lid="36" relType="AFTER" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei3" lid="37" relType="IS_INCLUDED" relatedToEventInstance="ei4"/>
 <TLINK eventInstanceID="ei2" lid="38" relType="AFTER" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei1" lid="39" relType="AFTER" relatedToEventInstance="ei2"/>

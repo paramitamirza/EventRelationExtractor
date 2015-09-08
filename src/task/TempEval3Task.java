@@ -78,7 +78,9 @@ class TempEval3Task {
 	private List<Feature> eeFeatureList;
 	private List<Feature> etFeatureList;
 	
-	public TempEval3Task() throws IOException {
+	private List<String> inconsistentFiles;
+	
+	public TempEval3Task() throws Exception {
 		name = "te3";
 		trainTXPPath = "data/TempEval3-train_TXP";
 		trainTMLPath = "data/TempEval3-train_TML";
@@ -99,7 +101,7 @@ class TempEval3Task {
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
 		
 		//set the classifier
-		classifier = VectorClassifier.weka;
+		classifier = VectorClassifier.libsvm;
 		if (classifier.equals(VectorClassifier.weka)) {
 			eeCls = new LibSVM();
 			etCls = new LibSVM();
@@ -154,6 +156,9 @@ class TempEval3Task {
 				Feature.timexRule
 		};
 		etFeatureList = Arrays.asList(etFeatures);
+		
+		//inconsistentFiles = new ArrayList<String>();
+		initInconsistentFiles();
 	}
 	
 	public static void main(String [] args) {
@@ -170,9 +175,9 @@ class TempEval3Task {
 		try {
 			TempEval3Task task = new TempEval3Task();
 			
-			//task.train(txpParser, tmlParser, false, false);
+			task.train(txpParser, tmlParser, false, false);
 			task.evaluate(txpParser, tmlParser, false, false);
-			//task.evaluateTE3(txpParser, tmlParser, false, false);
+			task.evaluateTE3(txpParser, tmlParser, false, false);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -193,35 +198,43 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write training data - event-event
-//		eeFilepath = "data/" + name + "-ee-train-conv-deduced.data";
+//		eeFilepath = "data/" + name + "-ee-train-conv.data";
 //		if (eecoref) {
-//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
+//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, eeCoref);
 //		} else {
-//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, null);
+//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, null);
 //		}
 //		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
-		writeEventEventEmbedding(rs, 					//word embedding
-			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
+		eeFilepath = "data/" + name + "-ee-train-conv-deduced.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features - with deduced TLINKs
+		
+//		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
+//		writeEventEventEmbedding(rs, 					//word embedding
+//			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
 		
 //		eeFilepath = "data/" + name + "-ee-train-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
 //				txpParser, tmlParser, 
 //				trainTXPPath, trainTMLPath,
 //				"data/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
-//		
-		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
-		writeEventEventEmbedding(rs, 					//chunk embedding
-				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
+		
+//		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
+//		writeEventEventEmbedding(rs, 					//chunk embedding
+//				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
 		
 //		eeFilepath = "data/" + name + "-ee-train-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
 //				txpParser, tmlParser, 
 //				trainTXPPath, trainTMLPath,
 //				"data/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
-//		
-//		//Write training data - event-timex
+		
+		//Write training data - event-timex
 //		etFilepath = "data/" + name + "-et-train-conv.data";
 //		if (etrule) {
 //			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
@@ -229,15 +242,23 @@ class TempEval3Task {
 //			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
 //		}
 //		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
-//		
-//		//Field/column titles of features
-//		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
-//		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
-//		
-//		System.out.println("num deduced TLINKs: " + numDeduced);		
 		
-//		System.out.println("Train models...");
-//		trainModels(rs, eeFilepath, etFilepath);
+		etFilepath = "data/" + name + "-et-train-conv-deduced.data";
+		if (etrule) {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, etRule);
+		} else {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, null);
+		}
+		writeEventTimexDataset(rs, et, etFilepath);		//conventional features - with deduced TLINKs
+		
+		//Field/column titles of features
+		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
+		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
+		
+		System.out.println("num deduced TLINKs: " + numDeduced);		
+		
+		System.out.println("Train models...");
+		trainModels(rs, eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}
@@ -255,17 +276,17 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write evaluation data - event-event
-//		eeFilepath = "data/" + name + "-ee-eval-conv.data";
-//		if (eecoref) {
-//			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
-//		} else {
-//			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
-//		}
-//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		eeFilepath = "data/" + name + "-ee-eval-conv.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
-		writeEventEventEmbedding(rs, 					//word embedding
-				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
+//		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
+//		writeEventEventEmbedding(rs, 					//word embedding
+//				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
 		
 //		eeFilepath = "data/" + name + "-ee-eval-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
@@ -273,9 +294,9 @@ class TempEval3Task {
 //				evalTXPPath, evalTMLPath,
 //				"data/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
 		
-		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
-		writeEventEventEmbedding(rs, 					//chunk embedding
-				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
+//		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
+//		writeEventEventEmbedding(rs, 					//chunk embedding
+//				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
 		
 //		eeFilepath = "data/" + name + "-ee-eval-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
@@ -292,11 +313,11 @@ class TempEval3Task {
 		}
 		writeEventTimexDataset(rs, et, etFilepath);
 		
-//		System.out.println("Test models...");
-//		String eeTrainFilepath = "data/" + name + "-ee-train.data";
-//		String etTrainFilepath = "data/" + name + "-et-train.data";
-//		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
-//				eeFilepath, etFilepath);
+		System.out.println("Test models...");
+		String eeTrainFilepath = "data/" + name + "-ee-train-conv.data";
+		String etTrainFilepath = "data/" + name + "-et-train-conv.data";
+		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
+				eeFilepath, etFilepath);
 		
 		rs.disconnect();
 	}	
@@ -737,14 +758,16 @@ class TempEval3Task {
 		if (txpFiles == null) return;
 		
 		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
-			File tmlFile = new File(tmlDirpath, txpFile.getName().replace(".txp", ""));
-			List<PairFeatureVector> vectors = getEventEventFeatureVectorPerFile(txpParser, tmlParser, txpFile, tmlFile);
-			//Field/column titles of features
-			eeFeatureNames.clear();
-			for (String s : EventEventFeatureVector.fields) {
-				if (s!= null) eeFeatureNames.add(s);
+			if (isConsistent(txpFile.getName())) {
+				File tmlFile = new File(tmlDirpath, txpFile.getName().replace(".txp", ""));
+				List<PairFeatureVector> vectors = getEventEventFeatureVectorPerFile(txpParser, tmlParser, txpFile, tmlFile);
+				//Field/column titles of features
+				eeFeatureNames.clear();
+				for (String s : EventEventFeatureVector.fields) {
+					if (s!= null) eeFeatureNames.add(s);
+				}
+				printEventEventFeatureVector(vectors, ee, eeCoref);
 			}
-			printEventEventFeatureVector(vectors, ee, eeCoref);
 		}	
 	}
 	
@@ -756,13 +779,15 @@ class TempEval3Task {
 		if (txpFiles == null) return;
 		
 		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
-			File tmlFile = new File(tmlDirpath, txpFile.getName().replace(".txp", ""));
-			List<PairFeatureVector> vectors = getEventTimexFeatureVectorPerFile(txpParser, tmlParser, txpFile, tmlFile);
-			etFeatureNames.clear();
-			for (String s : EventTimexFeatureVector.fields) {
-				if (s!= null) etFeatureNames.add(s);
+			if (isConsistent(txpFile.getName())) {
+				File tmlFile = new File(tmlDirpath, txpFile.getName().replace(".txp", ""));
+				List<PairFeatureVector> vectors = getEventTimexFeatureVectorPerFile(txpParser, tmlParser, txpFile, tmlFile);
+				etFeatureNames.clear();
+				for (String s : EventTimexFeatureVector.fields) {
+					if (s!= null) etFeatureNames.add(s);
+				}
+				printEventTimexFeatureVector(vectors, et, etRule);
 			}
-			printEventTimexFeatureVector(vectors, et, etRule);
 		}	
 	}
 	
@@ -1224,6 +1249,7 @@ class TempEval3Task {
 				}
 		    }
 			eePW.close();
+			br.close();
 			
 			//Copy training data to server
 			//System.out.println("Copy training data...");
@@ -1268,6 +1294,7 @@ class TempEval3Task {
 				}
 			}
 			eePW.close();
+			br.close();
 		}		
 	}
 	
@@ -1293,6 +1320,7 @@ class TempEval3Task {
 		    	eePW.write("\n");
 		    }
 			eePW.close();
+			br.close();
 			
 			//Copy training data to server
 			//System.out.println("Copy training data...");
@@ -1320,7 +1348,25 @@ class TempEval3Task {
 				eePW.write(line + "\n");
 			}
 			eePW.close();
+			br.close();
 		}
+	}
+	
+	private void initInconsistentFiles() throws Exception {
+		inconsistentFiles = new ArrayList<String>();
+		String inconsistentLog = "data/inconsistent.txt";
+		BufferedReader br = new BufferedReader(new FileReader(inconsistentLog));
+		String line;
+		while ((line = br.readLine()) != null) {
+			inconsistentFiles.add(line);
+		}
+		br.close();
+	}
+	
+	private boolean isConsistent(String txpFilename) {
+		String tmlFilename = txpFilename.replace(".txp", "");
+		if (!inconsistentFiles.contains(tmlFilename)) return true;
+		else return false;
 	}
 
 }

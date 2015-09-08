@@ -152,7 +152,7 @@ The report <EVENT class="REPORTING" eid="e41">estimated</EVENT> that the number 
 <TLINK eventInstanceID="ei30" lid="10" relType="AFTER" relatedToEventInstance="ei33"/>
 <TLINK eventInstanceID="ei30" lid="11" relType="BEFORE" relatedToEventInstance="ei32"/>
 <TLINK eventInstanceID="ei30" lid="12" relType="BEFORE" relatedToEventInstance="ei31"/>
-<TLINK eventInstanceID="ei29" lid="13" relType="BEFORE" relatedToEventInstance="ei30"/>
+<TLINK eventInstanceID="ei29" lid="13" relType="AFTER" relatedToEventInstance="ei30"/>
 <TLINK eventInstanceID="ei28" lid="14" relType="AFTER" relatedToEventInstance="ei30"/>
 <TLINK eventInstanceID="ei24" lid="15" relType="AFTER" relatedToEventInstance="ei25"/>
 <TLINK eventInstanceID="ei22" lid="16" relType="BEFORE" relatedToEventInstance="ei24"/>
@@ -192,7 +192,7 @@ The report <EVENT class="REPORTING" eid="e41">estimated</EVENT> that the number 
 <TLINK eventInstanceID="ei30" lid="50" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei31" lid="51" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei29" lid="52" relType="IS_INCLUDED" relatedToTime="t6"/>
-<TLINK eventInstanceID="ei28" lid="53" relType="INCLUDES" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei28" lid="53" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei24" lid="54" relType="AFTER" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei25" lid="55" relType="IS_INCLUDED" relatedToTime="t5"/>
 <TLINK eventInstanceID="ei22" lid="56" relType="BEFORE" relatedToTime="t0"/>
