@@ -1364,13 +1364,23 @@ public class PairFeatureVector {
 					break;
 				case tempMarkerText:
 					m = getTemporalMarkerFeature();
-					getVectors().add(m.getText());
+					getVectors().add(m.getText().replace(" ", "_"));
 					fields.add("tempMarkerText");
 					break;
 				case tempMarkerClusText:
 					m = getTemporalMarkerFeature();
-					getVectors().add(m.getCluster());
+					getVectors().add(m.getCluster().replace(" ", "_"));
 					fields.add("tempMarkerClusText");
+					break;
+				case tempMarkerTextSpace:
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getText());
+					fields.add("tempMarkerTextSpace");
+					break;
+				case tempMarkerClusTextSpace:
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getCluster());
+					fields.add("tempMarkerClusTextSpace");
 					break;
 				case tempMarkerPos:
 					m = getTemporalMarkerFeature();
@@ -1401,10 +1411,20 @@ public class PairFeatureVector {
 					break;
 				case causMarkerText:
 					m = getCausalMarkerFeature();
-					getVectors().add(m.getText());
+					getVectors().add(m.getText().replace(" ", "_"));
 					fields.add("causMarkerText");
 					break;
 				case causMarkerClusText:
+					m = getCausalMarkerFeature();
+					getVectors().add(m.getCluster().replace(" ", "_"));
+					fields.add("causMarkerClusTex");
+					break;
+				case causMarkerTextSpace:
+					m = getCausalMarkerFeature();
+					getVectors().add(m.getText());
+					fields.add("causMarkerText");
+					break;
+				case causMarkerClusTextSpace:
 					m = getCausalMarkerFeature();
 					getVectors().add(m.getCluster());
 					fields.add("causMarkerClusTex");

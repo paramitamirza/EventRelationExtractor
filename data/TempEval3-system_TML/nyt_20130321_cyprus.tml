@@ -196,7 +196,7 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 
 <TLINK eventInstanceID="ei21" lid="1" relType="INCLUDES" relatedToEventInstance="ei41"/>
 <TLINK eventInstanceID="ei2101" lid="2" relType="AFTER" relatedToEventInstance="ei55"/>
-<TLINK eventInstanceID="ei21" lid="3" relType="BEFORE" relatedToEventInstance="ei51"/>
+<TLINK eventInstanceID="ei21" lid="3" relType="IDENTITY" relatedToEventInstance="ei51"/>
 <TLINK eventInstanceID="ei42" lid="4" relType="AFTER" relatedToEventInstance="ei2017"/>
 <TLINK eventInstanceID="ei21" lid="5" relType="AFTER" relatedToEventInstance="ei23"/>
 <TLINK eventInstanceID="ei21" lid="6" relType="SIMULTANEOUS" relatedToEventInstance="ei35"/>
@@ -208,7 +208,7 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei46" lid="12" relType="BEFORE" relatedToEventInstance="ei48"/>
 <TLINK eventInstanceID="ei52" lid="13" relType="BEFORE" relatedToEventInstance="ei57"/>
 <TLINK eventInstanceID="ei52" lid="14" relType="AFTER" relatedToEventInstance="ei55"/>
-<TLINK eventInstanceID="ei51" lid="15" relType="IDENTITY" relatedToEventInstance="ei52"/>
+<TLINK eventInstanceID="ei51" lid="15" relType="BEFORE" relatedToEventInstance="ei52"/>
 <TLINK eventInstanceID="ei50" lid="16" relType="AFTER" relatedToEventInstance="ei51"/>
 <TLINK eventInstanceID="ei49" lid="17" relType="BEFORE" relatedToEventInstance="ei51"/>
 <TLINK eventInstanceID="ei48" lid="18" relType="BEFORE" relatedToEventInstance="ei51"/>
@@ -218,29 +218,29 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei2017" lid="22" relType="AFTER" relatedToEventInstance="ei43"/>
 <TLINK eventInstanceID="ei41" lid="23" relType="AFTER" relatedToEventInstance="ei43"/>
 <TLINK eventInstanceID="ei41" lid="24" relType="AFTER" relatedToEventInstance="ei42"/>
-<TLINK eventInstanceID="ei39" lid="25" relType="AFTER" relatedToEventInstance="ei40"/>
+<TLINK eventInstanceID="ei39" lid="25" relType="SIMULTANEOUS" relatedToEventInstance="ei40"/>
 <TLINK eventInstanceID="ei36" lid="26" relType="AFTER" relatedToEventInstance="ei39"/>
-<TLINK eventInstanceID="ei36" lid="27" relType="INCLUDES" relatedToEventInstance="ei38"/>
+<TLINK eventInstanceID="ei36" lid="27" relType="BEFORE" relatedToEventInstance="ei38"/>
 <TLINK eventInstanceID="ei34" lid="28" relType="BEFORE" relatedToEventInstance="ei36"/>
 <TLINK eventInstanceID="ei34" lid="29" relType="BEFORE" relatedToEventInstance="ei35"/>
 <TLINK eventInstanceID="ei30" lid="30" relType="AFTER" relatedToEventInstance="ei2011"/>
 <TLINK eventInstanceID="ei22" lid="31" relType="AFTER" relatedToEventInstance="ei25"/>
 <TLINK eventInstanceID="ei22" lid="32" relType="AFTER" relatedToEventInstance="ei24"/>
-<TLINK eventInstanceID="ei21" lid="33" relType="BEFORE" relatedToEventInstance="ei22"/>
+<TLINK eventInstanceID="ei21" lid="33" relType="IDENTITY" relatedToEventInstance="ei22"/>
 <TLINK eventInstanceID="ei24" lid="34" relType="AFTER" relatedToEventInstance="ei2016"/>
 <TLINK eventInstanceID="ei20" lid="35" relType="AFTER" relatedToEventInstance="ei21"/>
 <TLINK eventInstanceID="ei15" lid="36" relType="BEFORE" relatedToEventInstance="ei21"/>
 <TLINK eventInstanceID="ei15" lid="37" relType="BEFORE" relatedToEventInstance="ei19"/>
 <TLINK eventInstanceID="ei15" lid="38" relType="BEFORE" relatedToEventInstance="ei17"/>
-<TLINK eventInstanceID="ei15" lid="39" relType="AFTER" relatedToEventInstance="ei16"/>
-<TLINK eventInstanceID="ei14" lid="40" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei13" lid="41" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei9" lid="42" relType="BEFORE" relatedToEventInstance="ei10"/>
+<TLINK eventInstanceID="ei15" lid="39" relType="BEFORE" relatedToEventInstance="ei16"/>
+<TLINK eventInstanceID="ei14" lid="40" relType="BEFORE" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei13" lid="41" relType="BEFORE" relatedToEventInstance="ei15"/>
+<TLINK eventInstanceID="ei9" lid="42" relType="IDENTITY" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="43" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei2" lid="44" relType="AFTER" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei5" lid="45" relType="AFTER" relatedToEventInstance="ei6"/>
 <TLINK eventInstanceID="ei2" lid="46" relType="AFTER" relatedToEventInstance="ei5"/>
-<TLINK eventInstanceID="ei2" lid="47" relType="AFTER" relatedToEventInstance="ei4"/>
+<TLINK eventInstanceID="ei2" lid="47" relType="BEFORE" relatedToEventInstance="ei4"/>
 <TLINK eventInstanceID="ei2" lid="48" relType="BEFORE" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei1" lid="49" relType="INCLUDES" relatedToEventInstance="ei2"/>
 <TLINK eventInstanceID="ei2001" lid="50" relType="AFTER" relatedToEventInstance="ei2006"/>
@@ -256,15 +256,9 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei57" lid="60" relType="IS_INCLUDED" relatedToTime="t5"/>
 <TLINK eventInstanceID="ei47" lid="61" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei46" lid="62" relType="IS_INCLUDED" relatedToTime="t4"/>
-<<<<<<< HEAD
 <TLINK eventInstanceID="ei44" lid="63" relType="INCLUDES" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei33" lid="64" relType="BEFORE" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei27" lid="65" relType="BEFORE" relatedToTime="t0"/>
-=======
-<TLINK eventInstanceID="ei44" lid="63" relType="IS_INCLUDED" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei33" lid="64" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei27" lid="65" relType="INCLUDES" relatedToTime="t0"/>
->>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 <TLINK eventInstanceID="ei25" lid="66" relType="BEFORE" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2016" lid="67" relType="IS_INCLUDED" relatedToTime="t3"/>
 <TLINK eventInstanceID="ei24" lid="68" relType="IS_INCLUDED" relatedToTime="t3"/>
@@ -275,14 +269,10 @@ A hasty <EVENT class="OCCURRENCE" eid="e52">expulsion</EVENT> from the euro zone
 <TLINK eventInstanceID="ei12" lid="73" relType="IS_INCLUDED" relatedToTime="t2"/>
 <TLINK eventInstanceID="ei9" lid="74" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei8" lid="75" relType="IS_INCLUDED" relatedToTime="t1"/>
-<TLINK eventInstanceID="ei7" lid="76" relType="INCLUDES" relatedToTime="t0"/>
-<TLINK eventInstanceID="ei2" lid="77" relType="BEFORE" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei7" lid="76" relType="IS_INCLUDED" relatedToTime="t0"/>
+<TLINK eventInstanceID="ei2" lid="77" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2006" lid="78" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2023" lid="79" relType="INCLUDES" relatedToTime="t0"/>
 <TLINK eventInstanceID="ei2001" lid="80" relType="BEFORE" relatedToTime="t0"/>
-<<<<<<< HEAD
-<TLINK eventInstanceID="ei1" lid="81" relType="BEFORE" relatedToTime="t0"/>
-=======
 <TLINK eventInstanceID="ei1" lid="81" relType="AFTER" relatedToTime="t0"/>
->>>>>>> 40ced0a3668e73133963a34401cfeb5855bc6e00
 </TimeML>
