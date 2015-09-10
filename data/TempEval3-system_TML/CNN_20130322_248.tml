@@ -80,21 +80,21 @@ By congressional mandate, the FAA must <EVENT class="OCCURRENCE" eid="e16">cut</
 
 
 
-<TLINK eventInstanceID="ei8" lid="1" relType="AFTER" relatedToEventInstance="ei100"/>
+<TLINK eventInstanceID="ei8" lid="1" relType="BEFORE" relatedToEventInstance="ei100"/>
 <TLINK eventInstanceID="ei4" lid="2" relType="BEFORE" relatedToEventInstance="ei45"/>
 <TLINK eventInstanceID="ei14" lid="3" relType="AFTER" relatedToEventInstance="ei15"/>
-<TLINK eventInstanceID="ei11" lid="4" relType="INCLUDES" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei11" lid="4" relType="BEFORE" relatedToEventInstance="ei12"/>
 <TLINK eventInstanceID="ei7" lid="5" relType="AFTER" relatedToEventInstance="ei8"/>
 <TLINK eventInstanceID="ei1" lid="6" relType="AFTER" relatedToEventInstance="ei3"/>
 <TLINK eventInstanceID="ei2" lid="7" relType="AFTER" relatedToEventInstance="ei102"/>
-<TLINK eventInstanceID="ei1" lid="8" relType="IDENTITY" relatedToEventInstance="ei11"/>
+<TLINK eventInstanceID="ei1" lid="8" relType="AFTER" relatedToEventInstance="ei11"/>
 <TLINK eventInstanceID="ei1" lid="9" relType="AFTER" relatedToEventInstance="ei8"/>
 <TLINK eventInstanceID="ei1" lid="10" relType="IDENTITY" relatedToEventInstance="ei7"/>
-<TLINK eventInstanceID="ei17" lid="11" relType="SIMULTANEOUS" relatedToEventInstance="ei18"/>
+<TLINK eventInstanceID="ei17" lid="11" relType="BEFORE" relatedToEventInstance="ei18"/>
 <TLINK eventInstanceID="ei16" lid="12" relType="BEFORE" relatedToEventInstance="ei18"/>
 <TLINK eventInstanceID="ei12" lid="13" relType="BEFORE" relatedToEventInstance="ei13"/>
-<TLINK eventInstanceID="ei11" lid="14" relType="INCLUDES" relatedToEventInstance="ei12"/>
-<TLINK eventInstanceID="ei8" lid="15" relType="AFTER" relatedToEventInstance="ei10"/>
+<TLINK eventInstanceID="ei11" lid="14" relType="BEFORE" relatedToEventInstance="ei12"/>
+<TLINK eventInstanceID="ei8" lid="15" relType="BEFORE" relatedToEventInstance="ei10"/>
 <TLINK eventInstanceID="ei8" lid="16" relType="BEFORE" relatedToEventInstance="ei9"/>
 <TLINK eventInstanceID="ei6" lid="17" relType="AFTER" relatedToEventInstance="ei7"/>
 <TLINK eventInstanceID="ei5" lid="18" relType="AFTER" relatedToEventInstance="ei7"/>

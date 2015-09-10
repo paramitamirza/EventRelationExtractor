@@ -67,7 +67,7 @@ class TempEval3Task {
 	private CausalSignalList csignalList;
 	
 	private static int numDeduced = 0;
-	private static enum VectorClassifier {yamcha, libsvm, weka};
+	private static enum VectorClassifier {yamcha, libsvm, weka, liblinear};
 	private VectorClassifier classifier;
 	
 	private Classifier eeCls;
@@ -114,59 +114,80 @@ class TempEval3Task {
 		eeFeatureNames = new ArrayList<String>();
 		etFeatureNames = new ArrayList<String>();
 		
-		Feature[] eeFeatures = {
-				//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
-				Feature.token, Feature.lemma,	//*yamcha
-				Feature.pos, /*Feature.mainpos,*/
-				/*Feature.samePos,*/ /*Feature.sameMainPos,*/
-				/*Feature.chunk,*/
-				Feature.entDistance, Feature.sentDistance,
-				Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
-				/*Feature.sameEventClass,*/ /*Feature.sameTense,*/ /*Feature.sameAspect,*/ /*Feature.samePolarity,*/
-				Feature.depPath,				//*yamcha
-				Feature.mainVerb,
-//				//Feature.tempMarkerText,
-				Feature.tempMarkerClusText,
-//				//Feature.tempMarker,				//*yamcha
-				Feature.tempMarkerPos, 
-//				Feature.tempMarkerDep1Dep2,
-//				//Feature.tempSignalClusText, 	//*libsvm weka
-//				//Feature.tempSignalPos,
-//				//Feature.causMarkerText,
-				Feature.causMarkerClusText, 	//*libsvm weka
-//				//Feature.causMarker,				//*yamcha
-//				Feature.causMarkerPos, 
-//				Feature.causMarkerDep1Dep2,
-//				Feature.coref,
-//				Feature.wnSim
-		};
-		eeFeatureList = Arrays.asList(eeFeatures);
+		if (classifier.equals(VectorClassifier.yamcha)) {
+			Feature[] eeFeatures = {
+					Feature.token, Feature.lemma,
+					Feature.pos, /*Feature.mainpos,*/
+					/*Feature.samePos,*/ /*Feature.sameMainPos,*/
+					/*Feature.chunk,*/
+					Feature.entDistance, Feature.sentDistance,
+					Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
+					/*Feature.sameEventClass,*/ /*Feature.sameTense,*/ /*Feature.sameAspect,*/ /*Feature.samePolarity,*/
+					Feature.depPath,				
+					Feature.mainVerb,
+					Feature.tempMarkerClusText,		
+					Feature.tempMarkerPos, 
+					/*Feature.tempMarkerDep1Dep2,*/
+					Feature.causMarkerClusText, 
+					/*Feature.causMarkerPos,*/ 
+					/*Feature.causMarkerDep1Dep2,*/
+					/*Feature.coref,*/
+					/*Feature.wnSim*/
+			};
+			Feature[] etFeatures = {
+					//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
+					Feature.token, Feature.lemma,
+					Feature.pos, /*Feature.mainpos,*/
+					/*Feature.chunk, */Feature.samePos, /*Feature.sameMainPos,*/
+					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
+					Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
+					Feature.dct,
+					/*Feature.timexType,*/ 				
+					/*Feature.timexValueTemplate,*/
+					Feature.depPath,				
+					/*Feature.mainVerb,*/ 
+					Feature.tempMarkerClusText,
+					Feature.tempMarkerPos, 
+					/*Feature.tempMarkerDep1Dep2,*/
+					/*Feature.timexRule*/
+			};
+			eeFeatureList = Arrays.asList(eeFeatures);
+			etFeatureList = Arrays.asList(etFeatures);
+		} else {
+			Feature[] eeFeatures = {
+					Feature.pos, /*Feature.mainpos,*/
+					Feature.samePos, /*Feature.sameMainPos,*/
+					Feature.chunk,
+					Feature.entDistance, Feature.sentDistance,
+					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
+					Feature.sameEventClass, Feature.sameTense, Feature.sameAspect, Feature.samePolarity,
+					Feature.depPath,				
+					Feature.mainVerb,
+					Feature.tempSignalClusText, 
+					Feature.tempSignalPos,
+					Feature.causMarkerClusText,
+					/*Feature.causMarkerPos,*/
+					Feature.coref,
+					Feature.wnSim
+			};
+			Feature[] etFeatures = {
+					Feature.pos, Feature.mainpos,
+					Feature.chunk, Feature.samePos, Feature.sameMainPos,
+					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
+					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
+					/*Feature.dct,*/
+					Feature.timexType, 				
+					/*Feature.mainVerb,*/ 
+					/*Feature.tempSignalClusText,*/ 
+					/*Feature.tempSignalPos,*/
+					Feature.timexRule
+			};
+			eeFeatureList = Arrays.asList(eeFeatures);
+			etFeatureList = Arrays.asList(etFeatures);
+		}
 		
-		Feature[] etFeatures = {
-				//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
-				Feature.token, Feature.lemma,	//*yamcha
-				Feature.pos, //Feature.mainpos,
-				/*Feature.chunk, */Feature.samePos, /*Feature.sameMainPos,*/
-				Feature.entDistance, Feature.sentDistance, Feature.entOrder,
-				Feature.eventClass, Feature.tense, Feature.aspect, //Feature.polarity,
-				Feature.dct,
-//				Feature.timexType, 				
-//				Feature.timexValueTemplate, 	//*yamcha
-				Feature.depPath,				//*yamcha
-				//Feature.mainVerb, 
-//				//Feature.tempMarkerText, 
-				Feature.tempMarkerClusText,
-//				//Feature.tempMarker,				//*yamcha
-				Feature.tempMarkerPos, 
-//				Feature.tempMarkerDep1Dep2,
-//				//Feature.tempSignalClusText, 
-//				//Feature.tempSignalPos,
-//				Feature.timexRule
-		};
-		etFeatureList = Arrays.asList(etFeatures);
-		
-		//inconsistentFiles = new ArrayList<String>();
-		initInconsistentFiles();
+		inconsistentFiles = new ArrayList<String>();
+		//initInconsistentFiles();
 	}
 	
 	public static void main(String [] args) {
