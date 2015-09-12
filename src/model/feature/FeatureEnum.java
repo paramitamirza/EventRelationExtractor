@@ -19,6 +19,7 @@ public final class FeatureEnum {
 		sameEventClass, sameTense, sameAspect, sameTenseAspect, samePolarity,
 		timexType, timexValue, dct, timexValueTemplate, timexTypeValueTemplate,
 		tempMarker, causMarker, tempMarkerText, causMarkerText, tempMarkerClusText, causMarkerClusText,
+		tempMarkerClusTextPos, causMarkerClusTextPos,
 		tempMarkerTextSpace, causMarkerTextSpace, tempMarkerClusTextSpace, causMarkerClusTextSpace,
 		tempMarkerPos, causMarkerPos, 
 		tempMarkerDep1, tempMarkerDep2, tempMarkerDep1Dep2,
@@ -26,7 +27,7 @@ public final class FeatureEnum {
 		coref, wnSim, timexRule,
 		tempMarkerTextPhrase, causMarkerTextPhrase,
 		tempSignalClusText, tempSignalPos,
-		label;
+		label, labelReduced;
 	}
 
 }

@@ -1372,6 +1372,11 @@ public class PairFeatureVector {
 					getVectors().add(m.getCluster().replace(" ", "_"));
 					fields.add("tempMarkerClusText");
 					break;
+				case tempMarkerClusTextPos:
+					m = getTemporalMarkerFeature();
+					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
+					fields.add("tempMarkerClusTextPos");
+					break;
 				case tempMarkerTextSpace:
 					m = getTemporalMarkerFeature();
 					getVectors().add(m.getText());
@@ -1417,7 +1422,12 @@ public class PairFeatureVector {
 				case causMarkerClusText:
 					m = getCausalMarkerFeature();
 					getVectors().add(m.getCluster().replace(" ", "_"));
-					fields.add("causMarkerClusTex");
+					fields.add("causMarkerClusText");
+					break;
+				case causMarkerClusTextPos:
+					m = getCausalMarkerFeature();
+					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
+					fields.add("causMarkerClusTextPos");
 					break;
 				case causMarkerTextSpace:
 					m = getCausalMarkerFeature();
@@ -1454,7 +1464,8 @@ public class PairFeatureVector {
 					fields.add("coref");
 					break;
 				case wnSim:
-					getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
+					//getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
+					getVectors().add(((EventEventFeatureVector) this).getDiscreteWordSimilarity() ? "SIM" : "NOSIM");
 					fields.add("wnSim");
 					break;
 				case timexRule:
@@ -1466,6 +1477,17 @@ public class PairFeatureVector {
 					if (lbl.equals("END")) lbl = "ENDS";
 					getVectors().add(lbl);
 					fields.add("label");
+					break;
+				case labelReduced:
+					String lblRed = getLabel();
+					if (lblRed.equals("END")) lbl = "ENDS";
+					else if (lblRed.equals("IDENTITY")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("DURING")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("DURING_INV")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("IBEFORE")) lblRed = "BEFORE";
+					else if (lblRed.equals("IAFTER")) lblRed = "AFTER";
+					getVectors().add(lblRed);
+					fields.add("labelReduced");
 					break;
 			}
 		}
@@ -1827,7 +1849,18 @@ public class PairFeatureVector {
 					if (lbl.equals("END")) lbl = "ENDS";
 					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lbl)+1));
 					fields.add("label");
-					break;				
+					break;	
+				case labelReduced:
+					String lblRed = getLabel();
+					if (lblRed.equals("END")) lbl = "ENDS";
+					else if (lblRed.equals("IDENTITY")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("DURING")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("DURING_INV")) lblRed = "SIMULTANEOUS";
+					else if (lblRed.equals("IBEFORE")) lblRed = "BEFORE";
+					else if (lblRed.equals("IAFTER")) lblRed = "AFTER";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblRed)+1));
+					fields.add("labelReduced");
+					break;
 			}
 		}
 	}

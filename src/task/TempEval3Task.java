@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,6 +50,7 @@ import server.RemoteServer;
 import libsvm.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.functions.LibLINEAR;
 import weka.classifiers.functions.LibSVM;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
@@ -69,6 +71,8 @@ class TempEval3Task {
 	private static int numDeduced = 0;
 	private static enum VectorClassifier {yamcha, libsvm, weka, liblinear};
 	private VectorClassifier classifier;
+	
+	private String dataDirPath;
 	
 	private Classifier eeCls;
 	private Classifier etCls;
@@ -104,12 +108,13 @@ class TempEval3Task {
 		//set the classifier
 		classifier = VectorClassifier.yamcha;
 		if (classifier.equals(VectorClassifier.weka)) {
-//			eeCls = new LibSVM();
-//			etCls = new LibSVM();
-			
-			eeCls = new RandomForest();
-			etCls = new RandomForest();
+			eeCls = new LibSVM();
+			etCls = new LibSVM();
+//			eeCls = new RandomForest();
+//			etCls = new RandomForest();
 		}
+		
+		ensureDataDirectory();
 		
 		eeFeatureNames = new ArrayList<String>();
 		etFeatureNames = new ArrayList<String>();
@@ -125,20 +130,20 @@ class TempEval3Task {
 					/*Feature.sameEventClass,*/ /*Feature.sameTense,*/ /*Feature.sameAspect,*/ /*Feature.samePolarity,*/
 					Feature.depPath,				
 					Feature.mainVerb,
-					Feature.tempMarkerClusText,		
-					Feature.tempMarkerPos, 
+					Feature.tempMarkerClusTextPos,		
+					/*Feature.tempMarkerPos,*/ 
 					/*Feature.tempMarkerDep1Dep2,*/
-					Feature.causMarkerClusText, 
+					Feature.causMarkerClusTextPos,
 					/*Feature.causMarkerPos,*/ 
 					/*Feature.causMarkerDep1Dep2,*/
 					/*Feature.coref,*/
-					/*Feature.wnSim*/
+					Feature.wnSim
 			};
 			Feature[] etFeatures = {
 					//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
 					Feature.token, Feature.lemma,
 					Feature.pos, /*Feature.mainpos,*/
-					/*Feature.chunk, */Feature.samePos, /*Feature.sameMainPos,*/
+					/*Feature.chunk, *//*Feature.samePos,*/ /*Feature.sameMainPos,*/
 					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
 					Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
 					Feature.dct,
@@ -146,8 +151,8 @@ class TempEval3Task {
 					/*Feature.timexValueTemplate,*/
 					Feature.depPath,				
 					/*Feature.mainVerb,*/ 
-					Feature.tempMarkerClusText,
-					Feature.tempMarkerPos, 
+					Feature.tempMarkerClusTextPos,
+					/*Feature.tempMarkerPos,*/ 
 					/*Feature.tempMarkerDep1Dep2,*/
 					/*Feature.timexRule*/
 			};
@@ -186,8 +191,21 @@ class TempEval3Task {
 			etFeatureList = Arrays.asList(etFeatures);
 		}
 		
-		inconsistentFiles = new ArrayList<String>();
-		//initInconsistentFiles();
+		//inconsistentFiles = new ArrayList<String>();
+		initInconsistentFiles();
+	}
+	
+	private void ensureDataDirectory() {
+		if (classifier.equals(VectorClassifier.yamcha)) {
+			dataDirPath = "data/yamcha/";
+		} else if (classifier.equals(VectorClassifier.libsvm) ||
+				classifier.equals(VectorClassifier.liblinear)) {
+			dataDirPath = "data/libsvm/";
+		} else if (classifier.equals(VectorClassifier.weka)) {
+			dataDirPath = "data/weka/";
+		}
+		File dir = new File(dataDirPath);
+		if (!dir.exists()) dir.mkdir();
 	}
 	
 	public static void main(String [] args) {
@@ -227,7 +245,7 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write training data - event-event
-//		eeFilepath = "data/" + name + "-ee-train-conv.data";
+//		eeFilepath = dataDirPath + name + "-ee-train-conv.data";
 //		if (eecoref) {
 //			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, eeCoref);
 //		} else {
@@ -235,7 +253,7 @@ class TempEval3Task {
 //		}
 //		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-		eeFilepath = "data/" + name + "-ee-train-conv-deduced.data";
+		eeFilepath = dataDirPath + name + "-ee-train-conv-deduced.data";
 		if (eecoref) {
 			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
 		} else {
@@ -243,28 +261,34 @@ class TempEval3Task {
 		}
 		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features - with deduced TLINKs
 		
-//		eeFilepath = "data/" + name + "-ee-train-word-embed.data";
+//		eeFilepath = dataDirPath + name + "-ee-train-word-embed.data";
 //		writeEventEventEmbedding(rs, 					//word embedding
-//			"data/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
-		
-//		eeFilepath = "data/" + name + "-ee-train-word-embed-conv.data";
+//			"data/embedding/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
+//		
+//		eeFilepath = dataDirPath + name + "-ee-train-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
 //				txpParser, tmlParser, 
 //				trainTXPPath, trainTMLPath,
-//				"data/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
+//				"data/embedding/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
 
-//		eeFilepath = "data/" + name + "-ee-train-phrase-embed.data";
+//		eeFilepath = dataDirPath + name + "-ee-train-phrase-embed.data";
 //		writeEventEventEmbedding(rs, 					//chunk embedding
-//				"data/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
+//				"data/embedding/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
 		
-//		eeFilepath = "data/" + name + "-ee-train-phrase-embed-conv.data";
+//		eeFilepath = dataDirPath + name + "-ee-train-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
 //				txpParser, tmlParser, 
 //				trainTXPPath, trainTMLPath,
-//				"data/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
+//				"data/embedding/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
+		
+//		eeFilepath = dataDirPath + name + "-ee-train-word-embed-prob.data";
+//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+//				txpParser, tmlParser, 
+//				trainTXPPath, trainTMLPath,
+//				"data/probs/prob1.csv", eeFilepath, 7);
 		
 		//Write training data - event-timex
-//		etFilepath = "data/" + name + "-et-train-conv.data";
+//		etFilepath = dataDirPath + name + "-et-train-conv.data";
 //		if (etrule) {
 //			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
 //		} else {
@@ -272,7 +296,7 @@ class TempEval3Task {
 //		}
 //		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
 		
-		etFilepath = "data/" + name + "-et-train-conv-deduced.data";
+		etFilepath = dataDirPath + name + "-et-train-conv-deduced.data";
 		if (etrule) {
 			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, etRule);
 		} else {
@@ -311,7 +335,7 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write evaluation data - event-event
-		eeFilepath = "data/" + name + "-ee-eval-conv.data";
+		eeFilepath = dataDirPath + name + "-ee-eval-conv.data";
 		if (eecoref) {
 			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
 		} else {
@@ -319,28 +343,28 @@ class TempEval3Task {
 		}
 		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
 		
-//		eeFilepath = "data/" + name + "-ee-eval-word-embed.data";
+//		eeFilepath = dataDirPath + name + "-ee-eval-word-embed.data";
 //		writeEventEventEmbedding(rs, 					//word embedding
-//				"data/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
-		
-//		eeFilepath = "data/" + name + "-ee-eval-word-embed-conv.data";
+//				"data/embedding/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
+//		
+//		eeFilepath = dataDirPath + name + "-ee-eval-word-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
 //				txpParser, tmlParser, 
 //				evalTXPPath, evalTMLPath,
-//				"data/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
+//				"data/embedding/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
 		
-//		eeFilepath = "data/" + name + "-ee-eval-phrase-embed.data";
+//		eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed.data";
 //		writeEventEventEmbedding(rs, 					//chunk embedding
-//				"data/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
+//				"data/embedding/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
 		
-//		eeFilepath = "data/" + name + "-ee-eval-phrase-embed-conv.data";
+//		eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed-conv.data";
 //		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
 //				txpParser, tmlParser, 
 //				evalTXPPath, evalTMLPath,
-//				"data/te3-ee-token-in-chunk-eval-embedding-no-label.csv", eeFilepath, 9600);
+//				"data/embedding/te3-ee-token-in-chunk-eval-embedding-no-label.csv", eeFilepath, 9600);
 		
 		//Write evaluation data - event-timex
-		etFilepath = "data/" + name + "-et-eval-conv.data";
+		etFilepath = dataDirPath + name + "-et-eval-conv.data";
 		if (etrule) {
 			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, etRule);
 		} else {
@@ -350,10 +374,11 @@ class TempEval3Task {
 		
 		System.out.println("Test models...");
 
-//		String eeTrainFilepath = "data/" + name + "-ee-train.data";
-//		String etTrainFilepath = "data/" + name + "-et-train.data";
-		String eeTrainFilepath = "data/" + name + "-ee-train-conv.data";
-		String etTrainFilepath = "data/" + name + "-et-train-conv.data";
+		String eeTrainFilepath = dataDirPath + name + "-ee-train.data";
+		String etTrainFilepath = dataDirPath + name + "-et-train.data";
+		
+//		String eeTrainFilepath = dataDirPath + name + "-ee-train-conv.data";
+//		String etTrainFilepath = dataDirPath + name + "-et-train-conv.data";
 
 		evaluateModels(rs, txpParser, tmlParser, eeTrainFilepath, etTrainFilepath,
 				eeFilepath, etFilepath);
@@ -371,8 +396,8 @@ class TempEval3Task {
 		rs.executeCommand("rm -rf ~/data/gold/ && mkdir ~/data/gold/");
 		rs.executeCommand("rm -rf ~/data/system/ && mkdir ~/data/system/");
 		
-		String eeFilepath = "data/" + name + "-ee-eval.data";
-		String etFilepath = "data/" + name + "-et-eval.data";
+		String eeFilepath = dataDirPath + name + "-ee-eval.data";
+		String etFilepath = dataDirPath + name + "-et-eval.data";
 		
 		//For each file in the evaluation dataset
 		for (File txpFile : txpFiles) {
@@ -435,16 +460,30 @@ class TempEval3Task {
 			String cmdCd = "cd tools/libsvm-3.20/";
 			String cmdTrainEE = "./svm-train "
 					+ "-s 0 -t 2 -d 3 -g 0.0 -r 0.0 -c 1 -n 0.5 -p 0.1 -m 128 -e 0.001 "
-					+ "~/" + eeFilepath + " "
-					+ "~/models/" + name + "-ee-svm.model";
+					+ "~/" + eeFilepath + ".libsvm "
+					+ "~/models/" + name + "-ee-libsvm.model";
 			String cmdTrainET = "./svm-train "
 					+ "-s 0 -t 2 -d 3 -g 0.0 -r 0.0 -c 1 -n 0.5 -p 0.1 -m 128 -e 0.001 "
-					+ "~/" + etFilepath + " "
-					+ "~/models/" + name + "-et-svm.model";
+					+ "~/" + etFilepath + ".libsvm "
+					+ "~/models/" + name + "-et-libsvm.model";
 			
 			rs.executeCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
 			
-		} else if (classifier.equals(VectorClassifier.weka)) {	//Train models using Weka
+		} else if (classifier.equals(VectorClassifier.liblinear)) {	//Train models using LibLINEAR
+			String cmdCd = "cd tools/liblinear-2.01/";
+			String cmdTrainEE = "./train "
+					+ "-s 1 -c 1.0 -e 0.01 -B 1.0 "
+					+ "~/" + eeFilepath + ".libsvm "
+					+ "~/models/" + name + "-ee-liblinear.model";
+			String cmdTrainET = "./train "
+					+ "-s 1 -c 1.0 -e 0.01 -B 1.0 "
+					+ "~/" + etFilepath + ".libsvm "
+					+ "~/models/" + name + "-et-liblinear.model";
+			
+			System.out.println(cmdCd + " && " + cmdTrainEE);
+			rs.executeCommand(cmdCd + " && " + cmdTrainEE + " && " + cmdTrainET);
+			
+		}else if (classifier.equals(VectorClassifier.weka)) {	//Train models using Weka
 			Instances eeTrain = new DataSource(eeFilepath + ".arff").getDataSet();
 			eeTrain.setClassIndex(eeTrain.numAttributes() - 1); 
 			eeCls.buildClassifier(eeTrain);
@@ -478,18 +517,41 @@ class TempEval3Task {
 		} else if (classifier.equals(VectorClassifier.libsvm)) {
 			String cmdCd = "cd tools/libsvm-3.20/";		
 			String cmdTestEE = "./svm-predict "
-					+ "~/" + eeTestFilepath + " "
-					+ "~/models/" + name + "-ee-svm.model "
+					+ "~/" + eeTestFilepath + ".libsvm "
+					+ "~/models/" + name + "-ee-libsvm.model "
 					+ "~/data/" + name + "-ee-eval.tagged";
 			String cmdTestET = "./svm-predict "
-					+ "~/" + etTestFilepath + " "
-					+ "~/models/" + name + "-et-svm.model "
+					+ "~/" + etTestFilepath + ".libsvm "
+					+ "~/models/" + name + "-et-libsvm.model "
 					+ "~/data/" + name + "-et-eval.tagged";
 			
 			List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
 			List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
 			eeAccuracy = eeResult.get(0);
 			etAccuracy = etResult.get(0);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
+			
+		} else if (classifier.equals(VectorClassifier.liblinear)) {
+			String cmdCd = "cd tools/liblinear-2.01/";		
+			String cmdTestEE = "./predict "
+					+ "~/" + eeTestFilepath + ".libsvm "
+					+ "~/models/" + name + "-ee-liblinear.model "
+					+ "~/data/" + name + "-ee-eval.tagged";
+			String cmdTestET = "./predict "
+					+ "~/" + etTestFilepath + ".libsvm "
+					+ "~/models/" + name + "-et-liblinear.model "
+					+ "~/data/" + name + "-et-eval.tagged";
+			
+			System.out.println(cmdCd + " && " + cmdTestEE);
+			List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTestEE);
+			List<String> etResult = rs.executeCommand(cmdCd + " && " + cmdTestET);
+			eeAccuracy = eeResult.get(0);
+			etAccuracy = etResult.get(0);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
 			
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			Instances eeTrain = new DataSource(eeTrainFilepath + ".arff").getDataSet();
@@ -704,7 +766,7 @@ class TempEval3Task {
 	private void writeEventEventDataset(RemoteServer rs, StringBuilder ee, String eeFilepath) 
 			throws Exception {
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.libsvm) || classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.yamcha)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath, "UTF-8");		
 			eePW.write(ee.toString());
 			eePW.close();
@@ -712,7 +774,23 @@ class TempEval3Task {
 			//Copy training data to server
 			//System.out.println("Copy training data...");
 			File eeFile = new File(eeFilepath);
-			rs.copyFile(eeFile, "data/");
+			rs.copyFile(eeFile, "data/yamcha/");
+			
+			//Delete file in local directory
+			eeFile.delete();
+			
+		} else if (classifier.equals(VectorClassifier.libsvm) || classifier.equals(VectorClassifier.liblinear)) {
+			PrintWriter eePW = new PrintWriter(eeFilepath + ".libsvm", "UTF-8");		
+			eePW.write(ee.toString());
+			eePW.close();
+			
+			//Copy training data to server
+			//System.out.println("Copy training data...");
+			File eeFile = new File(eeFilepath + ".libsvm");
+			rs.copyFile(eeFile, "data/libsvm/");
+			
+			//Delete file in local directory
+			eeFile.delete();
 			
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath + ".arff", "UTF-8");	
@@ -723,7 +801,7 @@ class TempEval3Task {
 	private void writeEventTimexDataset(RemoteServer rs, StringBuilder et, String etFilepath) 
 			throws Exception {
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.libsvm) || classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.yamcha)) {
 			PrintWriter etPW = new PrintWriter(etFilepath, "UTF-8");		
 			etPW.write(et.toString());
 			etPW.close();
@@ -731,7 +809,23 @@ class TempEval3Task {
 			//Copy training data to server
 			//System.out.println("Copy training data...");
 			File etFile = new File(etFilepath);
-			rs.copyFile(etFile, "data/");
+			rs.copyFile(etFile, "data/yamcha/");
+			
+			//Delete file in local directory
+			etFile.delete();
+			
+		} else if (classifier.equals(VectorClassifier.libsvm) || classifier.equals(VectorClassifier.liblinear)) {
+			PrintWriter etPW = new PrintWriter(etFilepath + ".libsvm", "UTF-8");		
+			etPW.write(et.toString());
+			etPW.close();
+			
+			//Copy training data to server
+			//System.out.println("Copy training data...");
+			File etFile = new File(etFilepath + ".libsvm");
+			rs.copyFile(etFile, "data/libsvm/");
+			
+			//Delete file in local directory
+			etFile.delete();
 			
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			PrintWriter etPW = new PrintWriter(etFilepath + ".arff", "UTF-8");	
@@ -740,7 +834,7 @@ class TempEval3Task {
 	}
 	
 	public void printFeatureVector(StringBuilder pair, PairFeatureVector fv) {
-		if (classifier.equals(VectorClassifier.libsvm)) {
+		if (classifier.equals(VectorClassifier.libsvm) || classifier.equals(VectorClassifier.liblinear)) {
 			pair.append(fv.printLibSVMVectors() + "\n");
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			pair.append(fv.printCSVVectors() + "\n");
@@ -866,6 +960,7 @@ class TempEval3Task {
 					//Add features to feature vector
 					for (Feature f : eeFeatureList) {
 						if (classifier.equals(VectorClassifier.libsvm) ||
+								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
 							fv.addBinaryFeatureToVector(f);
 						} else if (classifier.equals(VectorClassifier.yamcha)) {
@@ -877,7 +972,8 @@ class TempEval3Task {
 					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
 					//fv.addPhraseFeatureToVector(Feature.causMarkerTextPhrase);
 					
-					if (classifier.equals(VectorClassifier.libsvm)) {
+					if (classifier.equals(VectorClassifier.libsvm) || 
+							classifier.equals(VectorClassifier.liblinear)) {
 						fv.addBinaryFeatureToVector(Feature.label);
 					} else if (classifier.equals(VectorClassifier.yamcha) ||
 							classifier.equals(VectorClassifier.weka)){
@@ -927,6 +1023,7 @@ class TempEval3Task {
 					//Add features to feature vector
 					for (Feature f : etFeatureList) {
 						if (classifier.equals(VectorClassifier.libsvm) ||
+								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
 							fv.addBinaryFeatureToVector(f);
 						} else if (classifier.equals(VectorClassifier.yamcha)) {
@@ -937,7 +1034,8 @@ class TempEval3Task {
 					//TODO addToVector phrase embedding for temporal signal
 					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
 					
-					if (classifier.equals(VectorClassifier.libsvm)) {
+					if (classifier.equals(VectorClassifier.libsvm) ||
+							classifier.equals(VectorClassifier.liblinear)) {
 						fv.addBinaryFeatureToVector(Feature.label);
 					} else {
 						fv.addToVector(Feature.label);
@@ -1075,11 +1173,38 @@ class TempEval3Task {
 		} else if (classifier.equals(VectorClassifier.libsvm)) {
 			String cmdCd = "cd tools/libsvm-3.20/";				
 			String cmdTestEE = "./svm-predict -q"
-					+ " ~/" + eeFilepath
-					+ " ~/models/" + name + "-ee-svm.model"
-					+ " ~/" + eeFilepath + ".tagged";
-			String cmdCatEE = "cat ~/" + eeFilepath + ".tagged";			
+					+ " ~/" + eeFilepath + ".libsvm"
+					+ " ~/models/" + name + "-ee-libsvm.model"
+					+ " ~/data/" + name + "-ee-eval.tagged";
+			String cmdCatEE = "cat ~/data/" + name + "-ee-eval.tagged";			
 			List<String> eeLabel = rs.executeCommand(cmdCd + " && " + cmdTestEE + " && " + cmdCatEE);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
+						
+			StringBuilder eePair = new StringBuilder();
+			StringBuilder etPair = new StringBuilder();
+			StringBuilder eeCorefPair = new StringBuilder();
+			StringBuilder etRulePair = new StringBuilder();
+			getPairIDPerFile(txpParser, tmlParser, txpFile, tmlFile, 
+					eePair, etPair, eeCorefPair, etRulePair, eecoref, etrule);
+			
+			int i = 0;
+			for (String pair : eePair.toString().split("\n")) {
+				eeResult.add(pair + "\t" + getLabelFromNum(eeLabel.get(i)));
+				i += 1;
+			}
+		} else if (classifier.equals(VectorClassifier.liblinear)) {
+			String cmdCd = "cd tools/liblinear-2.01/";				
+			String cmdTestEE = "./predict -q"
+					+ " ~/" + eeFilepath + ".libsvm"
+					+ " ~/models/" + name + "-ee-liblinear.model"
+					+ " ~/data/" + name + "-ee-eval.tagged";
+			String cmdCatEE = "cat ~/data/" + name + "-ee-eval.tagged";		
+			List<String> eeLabel = rs.executeCommand(cmdCd + " && " + cmdTestEE + " && " + cmdCatEE);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
 						
 			StringBuilder eePair = new StringBuilder();
 			StringBuilder etPair = new StringBuilder();
@@ -1138,12 +1263,38 @@ class TempEval3Task {
 		} else if (classifier.equals(VectorClassifier.libsvm)) {
 			String cmdCd = "cd tools/libsvm-3.20/";	
 			String cmdTestET = "./svm-predict -q"
-					+ " ~/" + etFilepath
-					+ " ~/models/" + name + "-et-svm.model"
-					+ " ~/" + etFilepath + ".tagged";
-			String cmdCatET = "cat ~/" + etFilepath + ".tagged";
-			
+					+ " ~/" + etFilepath + ".libsvm"
+					+ " ~/models/" + name + "-et-libsvm.model"
+					+ " ~/data/" + name + "-et-eval.tagged";
+			String cmdCatET = "cat ~/data/" + name + "-et-eval.tagged";			
 			List<String> etLabel = rs.executeCommand(cmdCd + " && " + cmdTestET + " && " + cmdCatET);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
+			
+			StringBuilder eePair = new StringBuilder();
+			StringBuilder etPair = new StringBuilder();
+			StringBuilder eeCorefPair = new StringBuilder();
+			StringBuilder etRulePair = new StringBuilder();
+			getPairIDPerFile(txpParser, tmlParser, txpFile, tmlFile, 
+					eePair, etPair, eeCorefPair, etRulePair, eecoref, etrule);
+			
+			int i = 0;
+			for (String pair : etPair.toString().split("\n")) {
+				etResult.add(pair + "\t" + getLabelFromNum(etLabel.get(i)));
+				i += 1;
+			}
+		} else if (classifier.equals(VectorClassifier.liblinear)) {
+			String cmdCd = "cd tools/liblinear-2.01/";	
+			String cmdTestET = "./predict -q"
+					+ " ~/" + etFilepath + ".libsvm"
+					+ " ~/models/" + name + "-et-liblinear.model"
+					+ " ~/data/" + name + "-et-eval.tagged";
+			String cmdCatET = "cat ~/data/" + name + "-et-eval.tagged";			
+			List<String> etLabel = rs.executeCommand(cmdCd + " && " + cmdTestET + " && " + cmdCatET);
+			
+			String rmTagged = "cd ~/data/ && rm *.tagged";
+			rs.executeCommand(rmTagged);
 			
 			StringBuilder eePair = new StringBuilder();
 			StringBuilder etPair = new StringBuilder();
@@ -1260,8 +1411,9 @@ class TempEval3Task {
 		}	
 		
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.libsvm)) {
-			PrintWriter eePW = new PrintWriter(eeFilepath, "UTF-8");
+		if (classifier.equals(VectorClassifier.libsvm) ||
+				classifier.equals(VectorClassifier.liblinear)) {
+			PrintWriter eePW = new PrintWriter(eeFilepath + ".libsvm", "UTF-8");
 			int idx;
 			String label;
 			
@@ -1292,8 +1444,8 @@ class TempEval3Task {
 			
 			//Copy training data to server
 			//System.out.println("Copy training data...");
-			File eeFile = new File(eeFilepath);
-			rs.copyFile(eeFile, "data/");
+			File eeFile = new File(eeFilepath + ".libsvm");
+			rs.copyFile(eeFile, "data/libsvm/");
 			
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath + ".arff", "UTF-8");	
@@ -1340,8 +1492,9 @@ class TempEval3Task {
 	private void writeEventEventEmbedding (RemoteServer rs, String eeWordEmbeddingPath, 
 			String eeFilepath, int numEmbeddingCols) throws Exception {
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.libsvm)) {
-			PrintWriter eePW = new PrintWriter(eeFilepath, "UTF-8");
+		if (classifier.equals(VectorClassifier.libsvm) ||
+				classifier.equals(VectorClassifier.liblinear)) {
+			PrintWriter eePW = new PrintWriter(eeFilepath + ".libsvm", "UTF-8");
 			int idx;
 			String label;
 			
@@ -1363,8 +1516,8 @@ class TempEval3Task {
 			
 			//Copy training data to server
 			//System.out.println("Copy training data...");
-			File eeFile = new File(eeFilepath);
-			rs.copyFile(eeFile, "data/");
+			File eeFile = new File(eeFilepath + ".libsvm");
+			rs.copyFile(eeFile, "data/libsvm/");
 			
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath + ".arff", "UTF-8");	

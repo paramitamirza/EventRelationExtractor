@@ -49,6 +49,11 @@ public class EventEventFeatureVector extends PairFeatureVector{
 		return rc.calcRelatednessOfWords(getTokenAttribute(e1, Feature.lemma), getTokenAttribute(e2, Feature.lemma));
 	}
 	
+	public boolean getDiscreteWordSimilarity() {
+		if (getWordSimilarity() > 1) return true;
+		else return false;
+	}
+	
 	public ArrayList<String> getEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass));
