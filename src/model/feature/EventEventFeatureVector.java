@@ -49,9 +49,20 @@ public class EventEventFeatureVector extends PairFeatureVector{
 		return rc.calcRelatednessOfWords(getTokenAttribute(e1, Feature.lemma), getTokenAttribute(e2, Feature.lemma));
 	}
 	
-	public boolean getDiscreteWordSimilarity() {
-		if (getWordSimilarity() > 1) return true;
-		else return false;
+	public String getDiscreteWordSimilarity() {
+		if (getWordSimilarity() > 1) return "SIM1";
+		else if (getWordSimilarity() <=1 && getWordSimilarity() > 0.5) return "SIMHIGH";
+		else if (getWordSimilarity() <=0.5 && getWordSimilarity() > 0.0) return "SIMLOW";
+		else if (getWordSimilarity() <= 0.0) return "SIM0";
+		else return "SIM";
+	}
+	
+	public Double getDiscreteDoubleWordSimilarity() {
+		if (getWordSimilarity() > 1) return 1.0;
+		else if (getWordSimilarity() <=1 && getWordSimilarity() > 0.5) return 0.75;
+		else if (getWordSimilarity() <=0.5 && getWordSimilarity() > 0.0) return 0.25;
+		else if (getWordSimilarity() <= 0.0) return 0.0;
+		else return 0.0;
 	}
 	
 	public ArrayList<String> getEntityAttributes() {

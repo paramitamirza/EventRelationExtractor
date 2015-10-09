@@ -56,23 +56,27 @@ import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
-class TempEval3Task {
+class CopyOfTempEval3TaskBuild {
 	
 	private String name;
 	private String trainTXPPath;
-	private String trainTMLPath;
-	private String trainTMLDeducedPath;
+	private String trainEETMLPath;
+	private String trainETTMLPath;
 	private String evalTXPPath;
 	private String evalTMLPath;
 	private String systemTMLPath;
 	private TemporalSignalList tsignalList;
 	private CausalSignalList csignalList;
 	
+	private static int numEE = 0;
+	private static int numET = 0;
+	private static int numTT = 0;
+	
 	private static int numEEDeduced = 0;
 	private static int numETDeduced = 0;
 	private static int numTTDeduced = 0;
 	
-	private static enum VectorClassifier {yamcha, libsvm, weka, liblinear};
+	private static enum VectorClassifier {yamcha, libsvm, weka, liblinear, none};
 	private VectorClassifier classifier;
 	
 	private String dataDirPath;
@@ -86,43 +90,44 @@ class TempEval3Task {
 	private List<Feature> eeFeatureList;
 	private List<Feature> etFeatureList;
 	
+	private boolean includeInconsistent;
 	private List<String> inconsistentFiles;
 	
-	public TempEval3Task() throws Exception {
-		name = "te3";
-		trainTXPPath = "data/TempEval3-train_TXP2";
-		trainTMLPath = "data/TempEval3-train_TML";
-		trainTMLDeducedPath = "data/TempEval3-train_TML_deduced";
-		evalTXPPath = "data/TempEval3-eval_TXP";
-		evalTMLPath = "data/TempEval3-eval_TML";
-		
-		//TimeML directory for system result files
-		systemTMLPath = "data/TempEval3-system_TML";
-		File sysDir = new File(systemTMLPath);
-		// if the directory does not exist, create it
-		if (!sysDir.exists()) {
-			sysDir.mkdir();
-		}
-		
+	private static enum FeatureType {conventional, wordEmbed, 
+		wordEmbedConv, phraseEmbed, phraseEmbedConv, prob};
+	private FeatureType featureType;
+	
+	private void initSignal() throws Exception {
 		//temporal & causal signal list files
 		tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
 		csignalList = new CausalSignalList(EntityEnum.Language.EN);
-		
+	}
+	
+	private void initClassifier() {
 		//set the classifier
-		classifier = VectorClassifier.yamcha;
+		classifier = VectorClassifier.liblinear;
 		if (classifier.equals(VectorClassifier.weka)) {
 			eeCls = new LibSVM();
 			etCls = new LibSVM();
-//			eeCls = new RandomForest();
-//			etCls = new RandomForest();
+//					eeCls = new RandomForest();
+//					etCls = new RandomForest();
 		}
 		
-		ensureDataDirectory();
-		
-		eeFeatureNames = new ArrayList<String>();
-		etFeatureNames = new ArrayList<String>();
-		
-		if (classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.none)) {
+			Feature[] eeFeatures = {
+					Feature.tokenSpace, Feature.lemmaSpace,
+					Feature.tokenChunk,
+					Feature.tempMarkerTextSpace, Feature.causMarkerTextSpace
+			};
+			Feature[] etFeatures = {
+					Feature.tokenSpace, Feature.lemmaSpace,
+					Feature.tokenChunk,
+					Feature.tempMarkerTextSpace
+			};
+			eeFeatureList = Arrays.asList(eeFeatures);
+			etFeatureList = Arrays.asList(etFeatures);
+			
+		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			Feature[] eeFeatures = {
 					Feature.token, Feature.lemma,
 					Feature.pos, /*Feature.mainpos,*/
@@ -161,6 +166,7 @@ class TempEval3Task {
 			};
 			eeFeatureList = Arrays.asList(eeFeatures);
 			etFeatureList = Arrays.asList(etFeatures);
+			
 		} else {
 			Feature[] eeFeatures = {
 					Feature.pos, /*Feature.mainpos,*/
@@ -169,37 +175,113 @@ class TempEval3Task {
 					Feature.entDistance, Feature.sentDistance,
 					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
 					Feature.sameEventClass, Feature.sameTense, Feature.sameAspect, Feature.samePolarity,
-					Feature.depPath,				
+					/*Feature.depPath,*/				
 					Feature.mainVerb,
 					Feature.tempSignalClusText, 
 					Feature.tempSignalPos,
-					Feature.causMarkerClusText,
+					/*Feature.causMarkerClusText,*/
 					/*Feature.causMarkerPos,*/
-					Feature.coref,
+					/*Feature.coref,*/
 					Feature.wnSim
 			};
 			Feature[] etFeatures = {
 					Feature.pos, Feature.mainpos,
-					Feature.chunk, Feature.samePos, Feature.sameMainPos,
+					Feature.chunk, //Feature.samePos, Feature.sameMainPos,
 					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
 					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
-					/*Feature.dct,*/
+					Feature.dct,
 					Feature.timexType, 				
-					/*Feature.mainVerb,*/ 
-					/*Feature.tempSignalClusText,*/ 
-					/*Feature.tempSignalPos,*/
+					Feature.mainVerb, 
+					Feature.tempSignalClusText, 
+					Feature.tempSignalPos,
 					Feature.timexRule
 			};
 			eeFeatureList = Arrays.asList(eeFeatures);
 			etFeatureList = Arrays.asList(etFeatures);
 		}
+	}
+	
+	public CopyOfTempEval3TaskBuild() throws Exception {
+		name = "te3";
+		trainTXPPath = "data/TempEval3-train_TXP2";
+		trainEETMLPath = "data/TempEval3-train_TML_deduced";
+		trainETTMLPath = "data/TempEval3-train_TML";
+		evalTXPPath = "data/TempEval3-eval_TXP";
+		evalTMLPath = "data/TempEval3-eval_TML";
 		
-		inconsistentFiles = new ArrayList<String>();
-		//initInconsistentFiles();
+		//TimeML directory for system result files
+		systemTMLPath = "data/TempEval3-system_TML";
+		File sysDir = new File(systemTMLPath);
+		// if the directory does not exist, create it
+		if (!sysDir.exists()) {
+			sysDir.mkdir();
+		}
+		
+		eeFeatureNames = new ArrayList<String>();
+		etFeatureNames = new ArrayList<String>();
+		
+		initSignal();		
+		
+		featureType = FeatureType.conventional;
+		initClassifier();
+		ensureDataDirectory();
+		
+		includeInconsistent = true;
+		if (includeInconsistent) {
+			inconsistentFiles = new ArrayList<String>();
+		} else {
+			initInconsistentFiles();
+		}
+	}
+	
+	public CopyOfTempEval3TaskBuild(String trainTXP, String eeTrainTML, String etTrainTML, 
+			String evalTXP, String evalTML,
+			String feature, String inconsistency) throws Exception {
+		name = "te3";
+		trainTXPPath = trainTXP;
+		trainEETMLPath = eeTrainTML;
+		trainETTMLPath = etTrainTML;
+		evalTXPPath = evalTXP;
+		evalTMLPath = evalTML;
+		
+		//TimeML directory for system result files
+		systemTMLPath = "data/TempEval3-system_TML";
+		File sysDir = new File(systemTMLPath);
+		// if the directory does not exist, create it
+		if (!sysDir.exists()) {
+			sysDir.mkdir();
+		}
+		
+		eeFeatureNames = new ArrayList<String>();
+		etFeatureNames = new ArrayList<String>();
+		
+		initSignal();		
+		
+		switch (feature) {
+			case "conv": featureType = FeatureType.conventional; break;
+			case "wembed" : featureType = FeatureType.wordEmbed; break;
+			case "wembedconv" : featureType = FeatureType.wordEmbedConv; break;
+			case "pembed" : featureType = FeatureType.phraseEmbed; break;
+			case "pembedconv" : featureType = FeatureType.phraseEmbedConv; break;
+		}		
+		initClassifier();
+		ensureDataDirectory();
+		
+		switch (inconsistency) {
+			case "include": includeInconsistent = true; break;
+			case "exclude": includeInconsistent = false; break;
+		}		
+		if (includeInconsistent) {
+			inconsistentFiles = new ArrayList<String>();
+		} else {
+			initInconsistentFiles();
+		}
 	}
 	
 	private void ensureDataDirectory() {
-		if (classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.none)) {
+			dataDirPath = "data/tokens/";
+		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			dataDirPath = "data/yamcha/";
 		} else if (classifier.equals(VectorClassifier.libsvm) ||
 				classifier.equals(VectorClassifier.liblinear)) {
@@ -223,9 +305,13 @@ class TempEval3Task {
 		
 		//dir_TXP <-- data/example_TXP
 		try {
-			TempEval3Task task = new TempEval3Task();
+			CopyOfTempEval3TaskBuild task = new CopyOfTempEval3TaskBuild(args[0], args[1], args[2],
+					args[3], args[4], args[5], args[6]);
+			
+			//task.printDataset(txpParser, tmlParser, false, false);
 			
 			task.train(txpParser, tmlParser, false, false);
+			numEE = 0; numET = 0; numTT = 0;
 			task.evaluate(txpParser, tmlParser, false, false);
 			task.evaluateTE3(txpParser, tmlParser, false, false);
 			
@@ -233,6 +319,56 @@ class TempEval3Task {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+	}
+	
+	public void printDataset(TXPParser txpParser, TimeMLParser tmlParser, 
+			boolean eecoref, boolean etrule) throws Exception{
+		RemoteServer rs = new RemoteServer();
+		
+		StringBuilder ee = new StringBuilder();
+		StringBuilder et = new StringBuilder();
+		StringBuilder eeCoref = new StringBuilder();
+		StringBuilder etRule = new StringBuilder();
+		String eeFilepath, etFilepath;
+		
+		eeFilepath = dataDirPath + name + "-ee-train-tokens-deduced.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainEETMLPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainEETMLPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		
+		etFilepath = dataDirPath + name + "-et-train-tokens-deduced.data";
+		if (etrule) {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainETTMLPath, et, etRule);
+		} else {
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainETTMLPath, et, null);
+		}
+		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
+		
+		ee = new StringBuilder();
+		et = new StringBuilder();
+		eeCoref = new StringBuilder();
+		etRule = new StringBuilder();
+		
+		eeFilepath = dataDirPath + name + "-ee-eval-conv.data";
+		if (eecoref) {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
+		} else {
+			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
+		}
+		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+		
+		etFilepath = dataDirPath + name + "-et-eval-conv.data";
+		if (etrule) {
+			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, etRule);
+		} else {
+			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, null);
+		}
+		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
+		
+		rs.disconnect();
 	}
 	
 	public void train(TXPParser txpParser, TimeMLParser tmlParser, 
@@ -248,68 +384,71 @@ class TempEval3Task {
 		String eeFilepath, etFilepath;
 		
 		//Write training data - event-event
-//		eeFilepath = dataDirPath + name + "-ee-train-conv.data";
-//		if (eecoref) {
-//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, eeCoref);
-//		} else {
-//			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, ee, null);
-//		}
-//		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
-		
-		eeFilepath = dataDirPath + name + "-ee-train-conv-deduced.data";
-		if (eecoref) {
-			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, eeCoref);
-		} else {
-			getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, ee, null);
-		}
-		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features - with deduced TLINKs
-		
-//		eeFilepath = dataDirPath + name + "-ee-train-word-embed.data";
-//		writeEventEventEmbedding(rs, 					//word embedding
-//			"data/embedding/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
-//		
-//		eeFilepath = dataDirPath + name + "-ee-train-word-embed-conv.data";
-//		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
-//				txpParser, tmlParser, 
-//				trainTXPPath, trainTMLPath,
-//				"data/embedding/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
-
-//		eeFilepath = dataDirPath + name + "-ee-train-phrase-embed.data";
-//		writeEventEventEmbedding(rs, 					//chunk embedding
-//				"data/embedding/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
-		
-//		eeFilepath = dataDirPath + name + "-ee-train-phrase-embed-conv.data";
-//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
-//				txpParser, tmlParser, 
-//				trainTXPPath, trainTMLPath,
-//				"data/embedding/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
-		
-//		eeFilepath = dataDirPath + name + "-ee-train-word-embed-prob.data";
-//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
-//				txpParser, tmlParser, 
-//				trainTXPPath, trainTMLPath,
-//				"data/probs/prob1.csv", eeFilepath, 7);
+		eeFilepath = dataDirPath + name + "-ee-train-conv.data";
+		switch (featureType) {
+			case conventional:
+				eeFilepath = dataDirPath + name + "-ee-train-conv.data";
+				if (eecoref) {
+					getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainEETMLPath, ee, eeCoref);
+				} else {
+					getEventEventFeatureVector(txpParser, tmlParser, trainTXPPath, trainEETMLPath, ee, null);
+				}
+				writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+				break;
+			
+			case wordEmbed:
+				eeFilepath = dataDirPath + name + "-ee-train-word-embed.data";
+				writeEventEventEmbedding(rs, 					//word embedding
+					"data/embedding/te3-ee-token-lemma-train-embedding.csv", eeFilepath, 600);
+				break;
+				
+			case wordEmbedConv:
+				eeFilepath = dataDirPath + name + "-ee-train-word-embed-conv.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
+						txpParser, tmlParser, 
+						trainTXPPath, trainEETMLPath,
+						"data/embedding/te3-ee-token-lemma-train-embedding-no-label.csv", eeFilepath, 600);
+				break;
+				
+			case phraseEmbed:
+				eeFilepath = dataDirPath + name + "-ee-train-phrase-embed.data";
+				writeEventEventEmbedding(rs, 					//chunk embedding
+						"data/embedding/te3-ee-token-in-chunk-train-embedding.csv", eeFilepath, 9600);
+				break;
+				
+			case phraseEmbedConv:
+				eeFilepath = dataDirPath + name + "-ee-train-phrase-embed-conv.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+						txpParser, tmlParser, 
+						trainTXPPath, trainEETMLPath,
+						"data/embedding/te3-ee-token-in-chunk-train-embedding-no-label.csv", eeFilepath, 9600);
+				break;
+				
+			case prob:
+				eeFilepath = dataDirPath + name + "-ee-train-word-embed-prob.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+						txpParser, tmlParser, 
+						trainTXPPath, trainEETMLPath,
+						"data/probs/prob1.csv", eeFilepath, 7);
+				break;
+		}		
 		
 		//Write training data - event-timex
-//		etFilepath = dataDirPath + name + "-et-train-conv.data";
-//		if (etrule) {
-//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, etRule);
-//		} else {
-//			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLPath, et, null);
-//		}
-//		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
-		
-		etFilepath = dataDirPath + name + "-et-train-conv-deduced.data";
+		etFilepath = dataDirPath + name + "-et-train-conv.data";
 		if (etrule) {
-			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, etRule);
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainETTMLPath, et, etRule);
 		} else {
-			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainTMLDeducedPath, et, null);
+			getEventTimexFeatureVector(txpParser, tmlParser, trainTXPPath, trainETTMLPath, et, null);
 		}
-		writeEventTimexDataset(rs, et, etFilepath);		//conventional features - with deduced TLINKs
+		writeEventTimexDataset(rs, et, etFilepath);		//conventional features
 		
 		//Field/column titles of features
 		System.out.println("event-event features: " + String.join(",", eeFeatureNames));
 		System.out.println("event-timex features: " + String.join(",", etFeatureNames));
+		
+		System.out.println("num event-event TLINKs: " + numEE);		
+		System.out.println("num event-timex TLINKs: " + numET);
+		System.out.println("num timex-timex TLINKs: " + numTT);
 		
 		System.out.println("num deduced event-event TLINKs: " + numEEDeduced);		
 		System.out.println("num deduced event-timex TLINKs: " + numETDeduced);
@@ -335,32 +474,53 @@ class TempEval3Task {
 		
 		//Write evaluation data - event-event
 		eeFilepath = dataDirPath + name + "-ee-eval-conv.data";
-		if (eecoref) {
-			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
-		} else {
-			getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
+		switch (featureType) {
+			case conventional:
+				eeFilepath = dataDirPath + name + "-ee-eval-conv.data";
+				if (eecoref) {
+					getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, eeCoref);
+				} else {
+					getEventEventFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, ee, null);
+				}
+				writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
+				break;
+			
+			case wordEmbed:
+				eeFilepath = dataDirPath + name + "-ee-eval-word-embed.data";
+				writeEventEventEmbedding(rs, 					//word embedding
+						"data/embedding/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
+				break;
+				
+			case wordEmbedConv:
+				eeFilepath = dataDirPath + name + "-ee-eval-word-embed-conv.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
+						txpParser, tmlParser, 
+						evalTXPPath, evalTMLPath,
+						"data/embedding/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
+				break;
+				
+			case phraseEmbed:
+				eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed.data";
+				writeEventEventEmbedding(rs, 					//chunk embedding
+						"data/embedding/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
+				break;
+				
+			case phraseEmbedConv:
+				eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed-conv.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+						txpParser, tmlParser, 
+						evalTXPPath, evalTMLPath,
+						"data/embedding/te3-ee-token-in-chunk-eval-embedding-no-label.csv", eeFilepath, 9600);
+				break;
+				
+			case prob:
+				eeFilepath = dataDirPath + name + "-ee-eval-word-embed-prob.data";
+				combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
+						txpParser, tmlParser, 
+						evalTXPPath, evalTMLPath,
+						"data/probs/prob1.csv", eeFilepath, 7);
+				break;
 		}
-		writeEventEventDataset(rs, ee, eeFilepath);		//conventional features
-		
-//		eeFilepath = dataDirPath + name + "-ee-eval-word-embed.data";
-//		writeEventEventEmbedding(rs, 					//word embedding
-//				"data/embedding/te3-ee-token-lemma-eval-embedding.csv", eeFilepath, 600);
-//		
-//		eeFilepath = dataDirPath + name + "-ee-eval-word-embed-conv.data";
-//		combineEventEventFeatureVectorEmbedding(rs, 	//word embedding + conventional features
-//				txpParser, tmlParser, 
-//				evalTXPPath, evalTMLPath,
-//				"data/embedding/te3-ee-token-lemma-eval-embedding-no-label.csv", eeFilepath, 600);
-		
-//		eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed.data";
-//		writeEventEventEmbedding(rs, 					//chunk embedding
-//				"data/embedding/te3-ee-token-in-chunk-eval-embedding.csv", eeFilepath, 9600);
-		
-//		eeFilepath = dataDirPath + name + "-ee-eval-phrase-embed-conv.data";
-//		combineEventEventFeatureVectorEmbedding(rs, 	//chunk embedding + conventional features
-//				txpParser, tmlParser, 
-//				evalTXPPath, evalTMLPath,
-//				"data/embedding/te3-ee-token-in-chunk-eval-embedding-no-label.csv", eeFilepath, 9600);
 		
 		//Write evaluation data - event-timex
 		etFilepath = dataDirPath + name + "-et-eval-conv.data";
@@ -370,6 +530,10 @@ class TempEval3Task {
 			getEventTimexFeatureVector(txpParser, tmlParser, evalTXPPath, evalTMLPath, et, null);
 		}
 		writeEventTimexDataset(rs, et, etFilepath);
+		
+		System.out.println("num event-event TLINKs: " + numEE);		
+		System.out.println("num event-timex TLINKs: " + numET);
+		System.out.println("num timex-timex TLINKs: " + numTT);
 		
 		System.out.println("Test models...");
 
@@ -401,7 +565,7 @@ class TempEval3Task {
 		//For each file in the evaluation dataset
 		for (File txpFile : txpFiles) {
 			if (txpFile.isFile()) {	
-				System.out.println("Test " + txpFile.getName() + "...");
+				//System.out.println("Test " + txpFile.getName() + "...");
 				File tmlFile = new File(evalTMLPath, txpFile.getName().replace(".txp", ""));
 				
 				StringBuilder ee = new StringBuilder();
@@ -621,7 +785,7 @@ class TempEval3Task {
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				
 				if (fv.getPairType().equals(PairType.timex_timex)) {
-					if (tlink.isDeduced()) numTTDeduced += 1;
+					if (tlink.isDeduced()) numTTDeduced ++;
 					Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
 					Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
 					if (ttlinks.containsKey(st)) {
@@ -765,7 +929,12 @@ class TempEval3Task {
 	private void writeEventEventDataset(RemoteServer rs, StringBuilder ee, String eeFilepath) 
 			throws Exception {
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.none)) {
+			PrintWriter eePW = new PrintWriter(eeFilepath + ".csv", "UTF-8");		
+			eePW.write(ee.toString());
+			eePW.close();
+			
+		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			PrintWriter eePW = new PrintWriter(eeFilepath, "UTF-8");		
 			eePW.write(ee.toString());
 			eePW.close();
@@ -800,7 +969,12 @@ class TempEval3Task {
 	private void writeEventTimexDataset(RemoteServer rs, StringBuilder et, String etFilepath) 
 			throws Exception {
 		System.setProperty("line.separator", "\n");
-		if (classifier.equals(VectorClassifier.yamcha)) {
+		if (classifier.equals(VectorClassifier.none)) {
+			PrintWriter etPW = new PrintWriter(etFilepath + ".csv", "UTF-8");		
+			etPW.write(et.toString());
+			etPW.close();
+			
+		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			PrintWriter etPW = new PrintWriter(etFilepath, "UTF-8");		
 			etPW.write(et.toString());
 			etPW.close();
@@ -839,6 +1013,8 @@ class TempEval3Task {
 			pair.append(fv.printCSVVectors() + "\n");
 		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			pair.append(fv.printVectors() + "\n");
+		} else if (classifier.equals(VectorClassifier.none)) {
+			pair.append(fv.printCSVVectors() + "\n");
 		}
 	}
 	
@@ -943,10 +1119,11 @@ class TempEval3Task {
 				Entity e2 = docTxp.getEntities().get(tlink.getTargetID());
 				
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
-				if (fv.getPairType().equals(PairType.event_event)) {
-					if (tlink.isDeduced()) numEEDeduced += 1;
+				if (fv.getPairType().equals(PairType.event_event)) {					
+					numEE ++;
+					if (tlink.isDeduced()) numEEDeduced ++;
 					fv = new EventEventFeatureVector(fv);
-					
+						
 					if (classifier.equals(VectorClassifier.yamcha)) {
 						fv.addToVector(Feature.id);
 					}
@@ -962,7 +1139,8 @@ class TempEval3Task {
 								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
 							fv.addBinaryFeatureToVector(f);
-						} else if (classifier.equals(VectorClassifier.yamcha)) {
+						} else if (classifier.equals(VectorClassifier.yamcha) ||
+								classifier.equals(VectorClassifier.none)) {
 							fv.addToVector(f);
 						}
 					}
@@ -975,11 +1153,17 @@ class TempEval3Task {
 							classifier.equals(VectorClassifier.liblinear)) {
 						fv.addBinaryFeatureToVector(Feature.label);
 					} else if (classifier.equals(VectorClassifier.yamcha) ||
-							classifier.equals(VectorClassifier.weka)){
+							classifier.equals(VectorClassifier.weka) ||
+							classifier.equals(VectorClassifier.none)){
 						fv.addToVector(Feature.label);
 					}
 					
 					vectors.add(fv);
+					
+				} else if (fv.getPairType().equals(PairType.timex_timex)) {
+					//////////////only for counting
+					numTT ++;
+					if (tlink.isDeduced()) numTTDeduced ++;
 				}
 			}
 		}
@@ -1007,7 +1191,8 @@ class TempEval3Task {
 				
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				if (fv.getPairType().equals(PairType.event_timex)) {
-					if (tlink.isDeduced()) numETDeduced += 1;
+					numET ++;
+					if (tlink.isDeduced()) numETDeduced ++;
 					fv = new EventTimexFeatureVector(fv);
 				
 					if (classifier.equals(VectorClassifier.yamcha)) {
@@ -1025,7 +1210,8 @@ class TempEval3Task {
 								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
 							fv.addBinaryFeatureToVector(f);
-						} else if (classifier.equals(VectorClassifier.yamcha)) {
+						} else if (classifier.equals(VectorClassifier.yamcha) ||
+								classifier.equals(VectorClassifier.none)) {
 							fv.addToVector(f);
 						}
 					}
@@ -1033,10 +1219,12 @@ class TempEval3Task {
 					//TODO addToVector phrase embedding for temporal signal
 					//fv.addPhraseFeatureToVector(Feature.tempMarkerTextPhrase);
 					
-					if (classifier.equals(VectorClassifier.libsvm) ||
+					if (classifier.equals(VectorClassifier.libsvm) || 
 							classifier.equals(VectorClassifier.liblinear)) {
 						fv.addBinaryFeatureToVector(Feature.label);
-					} else {
+					} else if (classifier.equals(VectorClassifier.yamcha) ||
+							classifier.equals(VectorClassifier.weka) ||
+							classifier.equals(VectorClassifier.none)){
 						fv.addToVector(Feature.label);
 					}
 					
@@ -1104,6 +1292,38 @@ class TempEval3Task {
 		pw.write(vec.toString());
 		
 		pw.close();
+	}
+	
+	private double averageF1(List<String> pairs) {
+		int[] tp = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		int[] fp = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		int[] total = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		double[] precision = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		double[] recall = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		double[] f1 = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+		String[] label = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "BEGINS", "BEGUN_BY",
+				"ENDS", "ENDED_BY", "INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV",
+				"IDENTITY", "SIMULTANEOUS"};
+		List<String> labelList = Arrays.asList(label);
+		int idxLabel, idxPred;
+		for (String s : pairs) { //e1	e2	label	predicted
+			if (!s.isEmpty()) {
+				String[] cols = s.split("\t");
+				idxLabel = labelList.indexOf(cols[2]);
+				idxPred = labelList.indexOf(cols[3]);
+				total[idxLabel] ++;
+				if (idxPred == idxLabel) tp[idxPred] ++;
+				else fp[idxPred] ++;
+			}
+		}
+		double totalf1 = 0;
+		for (int i=0; i<labelList.size(); i++) {
+			precision[i] = tp[i]/(tp[i]+fp[i]);
+			recall[i] = tp[i]/total[i];
+			f1[i] = (2*precision[i]*recall[i])/(precision[i]+recall[i]);
+			totalf1 += f1[i];
+		}
+		return totalf1/labelList.size();
 	}
 	
 	private double accuracy(List<String> pairs) {

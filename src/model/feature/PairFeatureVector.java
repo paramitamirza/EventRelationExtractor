@@ -1465,7 +1465,7 @@ public class PairFeatureVector {
 					break;
 				case wnSim:
 					//getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
-					getVectors().add(((EventEventFeatureVector) this).getDiscreteWordSimilarity() ? "SIM" : "NOSIM");
+					getVectors().add(((EventEventFeatureVector) this).getDiscreteWordSimilarity());
 					fields.add("wnSim");
 					break;
 				case timexRule:
@@ -1830,11 +1830,12 @@ public class PairFeatureVector {
 					break;
 				case wnSim:
 					//getVectors().add(((EventEventFeatureVector) this).getWordSimilarity().toString());
-					if (((EventEventFeatureVector) this).getWordSimilarity() > 0) {
+					/*if (((EventEventFeatureVector) this).getWordSimilarity() > 0) {
 						getVectors().add("1");
 					} else {
 						getVectors().add("0");
-					}
+					}*/
+					getVectors().add(((EventEventFeatureVector) this).getDiscreteDoubleWordSimilarity().toString());
 					fields.add("wnSim");
 					break;
 				case timexRule:

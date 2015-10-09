@@ -65,8 +65,9 @@ public class TimeMLParser {
 		ArrayList<TemporalRelation> tlinkArr = d.getTlinks();
 		String source = null, target = null, relType = null;
 		String sourceType = null, targetType = null;
-		boolean deduced = false;
+		
 		for (int index = tlinks.getLength() - 1; index >= 0; index--) {
+			boolean deduced = false;
 			Node tlink = tlinks.item(index);
 			NamedNodeMap attrs = tlink.getAttributes();			
 			for (int i = 0; i < attrs.getLength(); i++) {
