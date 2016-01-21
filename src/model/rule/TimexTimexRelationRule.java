@@ -1,7 +1,9 @@
-package model.feature;
+package model.rule;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import parser.entities.Timex;
@@ -9,27 +11,45 @@ import parser.entities.Timex;
 public class TimexTimexRelationRule {
 	
 	private String relType;
+	private Boolean identityRel=true;
 	
-	public TimexTimexRelationRule(Timex t1, Timex t2, Timex dct) {
+	public TimexTimexRelationRule(Timex t1, Timex t2, Timex dct, Boolean identityRel) {
 		
-		this.setRelType("O");
+		this.setRelType("O");	
+		this.setIdentityRel(identityRel);
 		
 		if (!t1.getID().equals(t2.getID())) {
-			if (t1.getType().equals("DATE") && t2.getType().equals("TIME") &&
-					t2.getValue().contains(t1.getValue())) {
-				this.setRelType("INCLUDES");
-			} else if (t1.getType().equals("TIME") && t2.getType().equals("DATE") &&
-					t1.getValue().contains(t2.getValue())) {
-				this.setRelType("IS_INCLUDED");
+			if (t1.getType().equals("DATE") && t2.getType().equals("TIME")) {
+				if (t1.getValue().equals(t2.getValue())) {
+					this.setRelType("IDENTITY");
+				} else if (t2.getValue().contains(t1.getValue())) {
+					this.setRelType("INCLUDES");
+				} else {
+					this.setRelType(getTmxDateRelation(t1.getValue(), t2.getValue(), dct.getValue()));
+				}
+			} else if (t1.getType().equals("TIME") && t2.getType().equals("DATE")) {
+				if (t1.getValue().equals(t2.getValue())) {
+					this.setRelType("IDENTITY");
+				} else if (t1.getValue().contains(t2.getValue())) {
+					this.setRelType("IS_INCLUDED");
+				} else {
+					this.setRelType(getTmxDateRelation(t1.getValue(), t2.getValue(), dct.getValue()));
+				}
 			} else if (t1.getType().equals("DATE") && t2.getType().equals("DATE")) {
 				if (t1.getValue().equals(t2.getValue())) {
-					this.setRelType("SIMULTANEOUS");
+					this.setRelType("IDENTITY");
 				} else if (t2.getValue().contains(t1.getValue())) {
 					this.setRelType("INCLUDES");
 				} else if (t1.getValue().contains(t2.getValue())) {
 					this.setRelType("IS_INCLUDED");
 				} else {
-					this.setRelType(getTmxDateRelation(t1.getValue(), t2.getValue(), dct.getValue()));
+					if ((t1.getValue().contains("W") || t2.getValue().contains("W")) 
+							&& (!t1.getValue().contains("WI") && !t2.getValue().contains("WI"))
+							&& (!t1.getValue().contains("P") && !t2.getValue().contains("P"))) {
+						this.setRelType(this.getTmxWeekDateRelation(t1.getValue(), t2.getValue()));
+					} else {
+						this.setRelType(getTmxDateRelation(t1.getValue(), t2.getValue(), dct.getValue()));
+					}
 				}
 			} else if (t1.getType().equals("TIME") && t2.getType().equals("TIME")) {
 				String[] dateTime1 = {t1.getValue(), ""};
@@ -50,11 +70,109 @@ public class TimexTimexRelationRule {
 				}
 			}
 		}
+		
+		if (!this.isIdentityRel()) {
+			if (this.getRelType().equals("IDENTITY")) {
+				this.setRelType("SIMULTANEOUS");
+			}
+		}
+	}
+	
+	private String getTmxWeekDateRelation(String date1, String date2) {
+		if (date1.contains("T")) date1 = date1.split("T")[0];
+		if (date2.contains("T")) date2 = date2.split("T")[0];
+		
+		if (date1.contains("W") && date2.contains("W")
+				&& !date1.contains("X") && !date2.contains("X")) {
+			int y1 = Integer.valueOf(date1.split("-W")[0]);
+			int y2 = Integer.valueOf(date2.split("-W")[0]);
+			int w1 = Integer.valueOf(date1.split("-W")[1]);
+			int w2 = Integer.valueOf(date2.split("-W")[1]);
+			if (y1 < y2) {
+				return "BEFORE";
+			} else if (y1 > y2) {
+				return "AFTER";
+			} else {
+				if (w1 < w2) {
+					return "BEFORE";
+				} else if (w1 > w2) {
+					return "AFTER";
+				} else {
+					return "IDENTITY";
+				}
+			}
+		} else if (date1.contains("W") && !date2.contains("W")
+				&& !date1.contains("X")) {
+			ArrayList<Date> dd1 = new ArrayList<Date>();
+			int y1 = Integer.valueOf(date1.split("-W")[0]);
+			int w1 = Integer.valueOf(date1.split("-W")[1]);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			cal.setMinimalDaysInFirstWeek(4);
+			cal.set(Calendar.YEAR, y1);
+			cal.set(Calendar.WEEK_OF_YEAR, w1);
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			for (int i=0; i<7; i++) {			
+				dd1.add(getDateComponents(sdf.format(cal.getTime())));
+				cal.add(Calendar.DATE, 1);
+			}
+			Date d2 = getDateComponents(date2);
+			
+			if (dd1.contains(d2)) {
+				return "INCLUDES";
+			} else {
+				if (getDateRelation(dd1.get(6), d2).equals("BEFORE")) {
+					return "BEFORE";
+				} else if (getDateRelation(dd1.get(0), d2).equals("AFTER")) {
+					return "AFTER";
+				} else {
+					return "O";
+				}
+			}
+				
+		} else if (!date1.contains("W") && date2.contains("W")
+				&& !date2.contains("X")) {
+			ArrayList<Date> dd2 = new ArrayList<Date>();
+			int y2 = Integer.valueOf(date2.split("-W")[0]);
+			int w2 = Integer.valueOf(date2.split("-W")[1]);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			cal.setMinimalDaysInFirstWeek(4);
+			cal.set(Calendar.YEAR, y2);
+			cal.set(Calendar.WEEK_OF_YEAR, w2);
+			cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+			for (int i=0; i<7; i++) {			
+				dd2.add(getDateComponents(sdf.format(cal.getTime())));
+				cal.add(Calendar.DATE, 1);
+			}
+			Date d1 = getDateComponents(date1);
+			
+			if (dd2.contains(d1)) {
+				return "IS_INCLUDED";
+			} else {
+				if (getDateRelation(d1, dd2.get(0)).equals("BEFORE")) {
+					return "BEFORE";
+				} else if (getDateRelation(d1, dd2.get(6)).equals("AFTER")) {
+					return "AFTER";
+				} else {
+					return "O";
+				}
+			}
+		} else {
+			return "O";
+		}		
 	}
 	
 	private String getTmxDateRelation(String date1, String date2, String dctStr) {
 		String[] eraArr = {"PAST_REF", "PRESENT_REF", "FUTURE_REF"};
 		List<String> eraList = Arrays.asList(eraArr);
+		
+		if (!eraList.contains(date1) && date1.contains("T")) {
+			date1 = date1.split("T")[0];
+		}
+		if (!eraList.contains(date2) && date2.contains("T")) {
+			date2 = date2.split("T")[0];
+		}
 		
 		Date d1 = getDateComponents(date1);
 		Date d2 = getDateComponents(date2);
@@ -67,7 +185,7 @@ public class TimexTimexRelationRule {
 			} else if (eraList.indexOf(d1.getEra()) > eraList.indexOf(d2.getEra())) {
 				return "AFTER";
 			} else {
-				return "SIMULTANEOUS";
+				return "IDENTITY";
 			}
 		} else if (!d1.getEra().equals("") && d2.getEra().equals("") &&
 				eraList.contains(d1.getEra())) {
@@ -78,7 +196,7 @@ public class TimexTimexRelationRule {
 					return "BEFORE";
 				}
 			} else if (d1.getEra().equals("PRESENT_REF")) {
-				if (getDateRelation(d2, dct).equals("SIMULTANEOUS")) {
+				if (getDateRelation(d2, dct).equals("IDENTITY")) {
 					return "INCLUDES";
 				} else {
 					return getDateRelation(d2, dct);
@@ -99,7 +217,7 @@ public class TimexTimexRelationRule {
 					return "AFTER";
 				}
 			} else if (d2.getEra().equals("PRESENT_REF")) {
-				if (getDateRelation(d1, dct).equals("SIMULTANEOUS")) {
+				if (getDateRelation(d1, dct).equals("IDENTITY")) {
 					return "IS_INCLUDED";
 				} else {
 					return getDateRelation(d1, dct);
@@ -118,60 +236,117 @@ public class TimexTimexRelationRule {
 	}
 	
 	private String getDateRelation(Date d1, Date d2) {
-		if (d1.getYear() < d2.getYear()) {
-			return "BEFORE";
-		} else if (d1.getYear() > d2.getYear()) {
-			return "AFTER";
-		} else {
-			if (!d1.getMonthArr().isEmpty() && d2.getMonthArr().isEmpty()) {
-				if (d2.getMonth() == 0) {
-					return "IS_INCLUDED";
+		Integer yy;
+		
+		if (d1.getYear() == 0 && d2.getYear() == 0) {
+			//if (d1.getDecade())
+			
+		} else if (d1.getYear() == 0 && d2.getYear() != 0) {
+			if (d1.getDecade() != 0) {
+				yy = Integer.valueOf(d2.getYear().toString().substring(0, 3));
+				if (d1.getDecade() < yy) {
+					return "BEFORE";
+				} else if (d1.getDecade() > yy) {
+					return "AFTER";
 				} else {
-					if (d1.getMonthArr().contains(d2.getMonth())) { 
-						return "INCLUDES";						
-					} else if (d2.getMonth() < d1.getMonthArr().get(0)) { 
-						return "AFTER";
-					} else if (d2.getMonth() > d1.getMonthArr().get(d1.getMonthArr().size()-1)) { 
-						return "BEFORE";
-					}
-				}
-			} else if (d1.getMonthArr().isEmpty() && !d2.getMonthArr().isEmpty()) {
-				if (d1.getMonth() == 0) {
 					return "INCLUDES";
+				}
+			} else if (d1.getCentury() != 0) {
+				yy = Integer.valueOf(d2.getYear().toString().substring(0, 2));
+				if (d1.getCentury() < yy) {
+					return "BEFORE";
+				} else if (d1.getCentury() > yy) {
+					return "AFTER";
 				} else {
-					if (d2.getMonthArr().contains(d1.getMonth())) { 
-						return "IS_INCLUDED";						
-					} else if (d1.getMonth() < d2.getMonthArr().get(0)) { 
+					return "INCLUDES";
+				}
+			}
+			
+		} else if (d1.getYear() != 0 && d2.getYear() == 0) {
+			if (d2.getDecade() != 0) {
+				yy = Integer.valueOf(d1.getYear().toString().substring(0, 3));
+				if (yy < d2.getDecade()) {
+					return "BEFORE";
+				} else if (yy > d2.getDecade()) {
+					return "AFTER";
+				} else {
+					return "IS_INCLUDED";
+				}
+			} else if (d2.getCentury() != 0) {
+				yy = Integer.valueOf(d1.getYear().toString().substring(0, 2));
+				if (yy < d2.getCentury()) {
+					return "BEFORE";
+				} else if (yy > d2.getCentury()) {
+					return "AFTER";
+				} else {
+					return "IS_INCLUDED";
+				}
+			}
+			
+		} else {
+			if (d1.getYear() < d2.getYear()) {
+				return "BEFORE";
+			} else if (d1.getYear() > d2.getYear()) {
+				return "AFTER";
+			} else {
+				if (!d1.getMonthArr().isEmpty() && d2.getMonthArr().isEmpty()) {
+					if (d2.getMonth() == 0) {
+						return "IS_INCLUDED";
+					} else {
+						if (d1.getMonthArr().contains(d2.getMonth())) { 
+							return "INCLUDES";						
+						} else if (d2.getMonth() < d1.getMonthArr().get(0)) { 
+							return "AFTER";
+						} else if (d2.getMonth() > d1.getMonthArr().get(d1.getMonthArr().size()-1)) { 
+							return "BEFORE";
+						}
+					}
+				} else if (d1.getMonthArr().isEmpty() && !d2.getMonthArr().isEmpty()) {
+					if (d1.getMonth() == 0) {
+						return "INCLUDES";
+					} else {
+						if (d2.getMonthArr().contains(d1.getMonth())) { 
+							return "IS_INCLUDED";						
+						} else if (d1.getMonth() < d2.getMonthArr().get(0)) { 
+							return "BEFORE";
+						} else if (d1.getMonth() > d2.getMonthArr().get(d2.getMonthArr().size()-1)) { 
+							return "AFTER";
+						}
+					} 
+				} else if (!d1.getMonthArr().isEmpty() && !d2.getMonthArr().isEmpty()) {
+					if (d1.getMonthArr().get(0) == d2.getMonthArr().get(0)) {
+						return "IDENTITY";
+					} else if (d1.getMonthArr().get(d1.getMonthArr().size()-1) < d2.getMonthArr().get(0)) {
 						return "BEFORE";
-					} else if (d1.getMonth() > d2.getMonthArr().get(d2.getMonthArr().size()-1)) { 
+					} else if (d2.getMonthArr().get(d2.getMonthArr().size()-1) < d1.getMonthArr().get(0)) {
 						return "AFTER";
 					}
-				} 
-			} else if (!d1.getMonthArr().isEmpty() && !d2.getMonthArr().isEmpty()) {
-				if (d1.getMonthArr().get(0) == d2.getMonthArr().get(0)) {
-					return "SIMULTANEOUS";
-				} else if (d1.getMonthArr().get(d1.getMonthArr().size()-1) < d2.getMonthArr().get(0)) {
-					return "BEFORE";
-				} else if (d2.getMonthArr().get(d2.getMonthArr().size()-1) < d1.getMonthArr().get(0)) {
-					return "AFTER";
-				}
-			} else {
-				if (d1.getMonth() < d2.getMonth()) {
-					return "BEFORE";
-				} else if (d1.getMonth() > d2.getMonth()) {
-					return "AFTER";
 				} else {
-					if (d1.getDay() < d2.getDay()) {
+					if (d1.getMonth() < d2.getMonth()) {
 						return "BEFORE";
-					} else if (d1.getDay() > d2.getDay()) {
+					} else if (d1.getMonth() > d2.getMonth()) {
 						return "AFTER";
 					} else {
-						return "SIMULTANEOUS";
+						if (d1.getDay() != 0 && d2.getDay() != 0) {
+							if (d1.getDay() < d2.getDay()) {
+								return "BEFORE";
+							} else if (d1.getDay() > d2.getDay()) {
+								return "AFTER";
+							} else {
+								return "IDENTITY"; //the same date
+							}
+						} else if (d1.getDay() == 0 && d2.getDay() != 0) {
+							return "INCLUDES";
+						} else if (d1.getDay() != 0 && d2.getDay() == 0) {
+							return "IS_INCLUDED";
+						} else {
+							return "IDENTITY"; //the same date
+						}
 					}
 				}
 			}
 		}
-		return null;
+		return "O";
 	}
 	
 	private String getTimeRelation(Time t1, Time t2) {
@@ -201,7 +376,7 @@ public class TimexTimexRelationRule {
 				} else if (partDayList.indexOf(t1.getPartDay()) > partDayList.indexOf(t2.getPartDay())) {
 					return "AFTER";
 				} else {
-					return "SIMULTANEOUS";
+					return "IDENTITY";
 				}
 			}
 		} else {
@@ -220,7 +395,7 @@ public class TimexTimexRelationRule {
 					} else if (t1.getSecond() > t2.getSecond()) {
 						return "AFTER";
 					} else {
-						return "SIMULTANEOUS";
+						return "IDENTITY";
 					}
 				}
 			}
@@ -235,6 +410,13 @@ public class TimexTimexRelationRule {
 		if (cols.length == 1) {
 			if (cols[0].matches("\\d+")) {
 				d.setYear(Integer.valueOf(cols[0]));
+			} else if (cols[0].length() == 4 && cols[0].contains("X")) {
+				String y = cols[0].replace("X", "");
+				if (y.length() == 3) {	//decade
+					d.setDecade(Integer.valueOf(y));
+				} else if (y.length() == 2) {	//century
+					d.setCentury(Integer.valueOf(y));
+				}
 			} else {
 				d.setEra(cols[0]);
 			}
@@ -243,6 +425,7 @@ public class TimexTimexRelationRule {
 				d.setYear(Integer.valueOf(cols[0])); 
 				d.setMonth(Integer.valueOf(cols[1]));
 			} else if (cols[1].startsWith("Q")) {
+				d.setYear(Integer.valueOf(cols[0]));
 				if (cols[1].endsWith("1")) {
 					d.getMonthArr().add(1);
 					d.getMonthArr().add(2);
@@ -260,7 +443,7 @@ public class TimexTimexRelationRule {
 					d.getMonthArr().add(11);
 					d.getMonthArr().add(12);
 				}
-			}
+			} 
 		} else if (cols.length == 3 && cols[0].matches("\\d+") && 
 				cols[1].matches("\\d+") && cols[2].matches("\\d+")) {
 			d.setYear(Integer.valueOf(cols[0])); 
@@ -323,17 +506,42 @@ public class TimexTimexRelationRule {
 	public void setRelType(String relType) {
 		this.relType = relType;
 	}
+	
+	public Boolean isIdentityRel() {
+		return identityRel;
+	}
+
+	public void setIdentityRel(Boolean idRel) {
+		this.identityRel = idRel;
+	}
 
 	private class Date {
+		private Integer century;
+		private Integer decade;
 		private Integer year;
 		private Integer month;
 		private Integer day;
 		private ArrayList<Integer> monthArr;
+		private ArrayList<Integer> dayArr;
 		private String era;
 		public Date() {
+			this.setCentury(0); this.setDecade(0);
 			this.setYear(0); this.setMonth(0); this.setDay(0);
 			this.setMonthArr(new ArrayList<Integer>());
+			this.setDayArr(new ArrayList<Integer>());
 			this.era = "";
+		}
+		public Integer getCentury() {
+			return century;
+		}
+		public void setCentury(Integer cen) {
+			this.century = cen;
+		}
+		public Integer getDecade() {
+			return decade;
+		}
+		public void setDecade(Integer dec) {
+			this.decade = dec;
 		}
 		public Integer getYear() {
 			return year;
@@ -359,11 +567,35 @@ public class TimexTimexRelationRule {
 		public void setMonthArr(ArrayList<Integer> monthArr) {
 			this.monthArr = monthArr;
 		}
+		public ArrayList<Integer> getDayArr() {
+			return dayArr;
+		}
+		public void setDayArr(ArrayList<Integer> dayArr) {
+			this.dayArr = dayArr;
+		}
 		public String getEra() {
 			return era;
 		}
 		public void setEra(String era) {
 			this.era = era;
+		}
+		@Override
+	    public boolean equals(Object obj) {
+			if(obj instanceof Date) {
+				Date d = (Date) obj;
+				return this.year.equals(d.year)
+						&& this.month.equals(d.month)
+						&& this.day.equals(d.day);
+			}
+			return false;
+		}
+		@Override
+	    public int hashCode() {
+	        return 1;
+	    }
+		@Override
+		public String toString() {
+			return this.year + "-" + this.month + "-" + this.day;
 		}
 	}
 	

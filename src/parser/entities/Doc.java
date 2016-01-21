@@ -20,6 +20,7 @@ public class Doc {
 	private Timex dct;
 	private Map<String, String> instances;
 	private Map<String, String> instancesInv;
+	private Map<String, String> tlinkTypes;
 	
 	private int tokIdx;
 	private int sentIdx;
@@ -41,6 +42,7 @@ public class Doc {
 		setClinks(new ArrayList<CausalRelation>());
 		setInstances(new HashMap<String, String>());
 		setInstancesInv(new HashMap<String, String>());
+		setTlinkTypes(new HashMap<String, String>());
 	}
 	
 	public Doc(EntityEnum.Language lang) {
@@ -59,6 +61,7 @@ public class Doc {
 		setClinks(new ArrayList<CausalRelation>());
 		setInstances(new HashMap<String, String>());
 		setInstancesInv(new HashMap<String, String>());
+		setTlinkTypes(new HashMap<String, String>());
 	}
 	
 	public Doc(EntityEnum.Language lang, String filename) {
@@ -78,6 +81,7 @@ public class Doc {
 		setClinks(new ArrayList<CausalRelation>());
 		setInstances(new HashMap<String, String>());
 		setInstancesInv(new HashMap<String, String>());
+		setTlinkTypes(new HashMap<String, String>());
 	}
 
 	public String getFilename() {
@@ -214,5 +218,13 @@ public class Doc {
 
 	public void setInstancesInv(Map<String, String> instancesInv) {
 		this.instancesInv = instancesInv;
+	}
+
+	public Map<String, String> getTlinkTypes() {
+		return tlinkTypes;
+	}
+
+	public void setTlinkTypes(Map<String, String> tlinkTypes) {
+		this.tlinkTypes = tlinkTypes;
 	}
 }

@@ -27,15 +27,14 @@ import com.jcraft.jsch.Session;
 import com.jcraft.jsch.SftpException;
 
 import evaluator.TempEval3;
-import javafx.util.Pair;
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
 import model.feature.EventTimexFeatureVector;
 import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
-import model.feature.TimexTimexRelationRule;
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
 import parser.TimeMLParser;
@@ -80,8 +79,8 @@ class QATempEvalTask {
 	private List<String> eeFeatureNames;
 	private List<String> etFeatureNames;
 	
-	private List<Feature> eeFeatureList;
-	private List<Feature> etFeatureList;
+	private List<FeatureName> eeFeatureList;
+	private List<FeatureName> etFeatureList;
 	
 	private List<String> inconsistentFiles;
 	
@@ -120,72 +119,72 @@ class QATempEvalTask {
 		etFeatureNames = new ArrayList<String>();
 		
 		if (classifier.equals(VectorClassifier.yamcha)) {
-			Feature[] eeFeatures = {
-					Feature.token, Feature.lemma,
-					Feature.pos, /*Feature.mainpos,*/
+			FeatureName[] eeFeatures = {
+					FeatureName.token, FeatureName.lemma,
+					FeatureName.pos, /*Feature.mainpos,*/
 					/*Feature.samePos,*/ /*Feature.sameMainPos,*/
 					/*Feature.chunk,*/
-					Feature.entDistance, Feature.sentDistance,
-					Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
+					FeatureName.entDistance, FeatureName.sentDistance,
+					FeatureName.eventClass, FeatureName.tense, FeatureName.aspect, /*Feature.polarity,*/
 					/*Feature.sameEventClass,*/ /*Feature.sameTense,*/ /*Feature.sameAspect,*/ /*Feature.samePolarity,*/
-					Feature.depPath,				
-					Feature.mainVerb,
-					Feature.tempMarkerClusText,		
-					Feature.tempMarkerPos, 
+					FeatureName.depPath,				
+					FeatureName.mainVerb,
+					FeatureName.tempMarkerClusText,		
+					FeatureName.tempMarkerPos, 
 					/*Feature.tempMarkerDep1Dep2,*/
-					Feature.causMarkerClusText, 
+					FeatureName.causMarkerClusText, 
 					/*Feature.causMarkerPos,*/ 
 					/*Feature.causMarkerDep1Dep2,*/
 					/*Feature.coref,*/
 					/*Feature.wnSim*/
 			};
-			Feature[] etFeatures = {
+			FeatureName[] etFeatures = {
 					//Feature.tokenSpace, Feature.lemmaSpace, Feature.tokenChunk,
-					Feature.token, Feature.lemma,
-					Feature.pos, /*Feature.mainpos,*/
-					/*Feature.chunk, */Feature.samePos, /*Feature.sameMainPos,*/
-					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
-					Feature.eventClass, Feature.tense, Feature.aspect, /*Feature.polarity,*/
-					Feature.dct,
+					FeatureName.token, FeatureName.lemma,
+					FeatureName.pos, /*Feature.mainpos,*/
+					/*Feature.chunk, */FeatureName.samePos, /*Feature.sameMainPos,*/
+					FeatureName.entDistance, FeatureName.sentDistance, FeatureName.entOrder,
+					FeatureName.eventClass, FeatureName.tense, FeatureName.aspect, /*Feature.polarity,*/
+					FeatureName.dct,
 					/*Feature.timexType,*/ 				
 					/*Feature.timexValueTemplate,*/
-					Feature.depPath,				
+					FeatureName.depPath,				
 					/*Feature.mainVerb,*/ 
-					Feature.tempMarkerClusText,
-					Feature.tempMarkerPos, 
+					FeatureName.tempMarkerClusText,
+					FeatureName.tempMarkerPos, 
 					/*Feature.tempMarkerDep1Dep2,*/
 					/*Feature.timexRule*/
 			};
 			eeFeatureList = Arrays.asList(eeFeatures);
 			etFeatureList = Arrays.asList(etFeatures);
 		} else {
-			Feature[] eeFeatures = {
-					Feature.pos, /*Feature.mainpos,*/
-					Feature.samePos, /*Feature.sameMainPos,*/
-					Feature.chunk,
-					Feature.entDistance, Feature.sentDistance,
-					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
-					Feature.sameEventClass, Feature.sameTense, Feature.sameAspect, Feature.samePolarity,
-					Feature.depPath,				
-					Feature.mainVerb,
-					Feature.tempSignalClusText, 
-					Feature.tempSignalPos,
-					Feature.causMarkerClusText,
+			FeatureName[] eeFeatures = {
+					FeatureName.pos, /*Feature.mainpos,*/
+					FeatureName.samePos, /*Feature.sameMainPos,*/
+					FeatureName.chunk,
+					FeatureName.entDistance, FeatureName.sentDistance,
+					FeatureName.eventClass, FeatureName.tense, FeatureName.aspect, FeatureName.polarity,
+					FeatureName.sameEventClass, FeatureName.sameTense, FeatureName.sameAspect, FeatureName.samePolarity,
+					FeatureName.depPath,				
+					FeatureName.mainVerb,
+					FeatureName.tempSignalClusText, 
+					FeatureName.tempSignalPos,
+					FeatureName.causMarkerClusText,
 					/*Feature.causMarkerPos,*/
-					Feature.coref,
-					Feature.wnSim
+					FeatureName.coref,
+					FeatureName.wnSim
 			};
-			Feature[] etFeatures = {
-					Feature.pos, Feature.mainpos,
-					Feature.chunk, Feature.samePos, Feature.sameMainPos,
-					Feature.entDistance, Feature.sentDistance, Feature.entOrder,
-					Feature.eventClass, Feature.tense, Feature.aspect, Feature.polarity,
+			FeatureName[] etFeatures = {
+					FeatureName.pos, FeatureName.mainpos,
+					FeatureName.chunk, FeatureName.samePos, FeatureName.sameMainPos,
+					FeatureName.entDistance, FeatureName.sentDistance, FeatureName.entOrder,
+					FeatureName.eventClass, FeatureName.tense, FeatureName.aspect, FeatureName.polarity,
 					/*Feature.dct,*/
-					Feature.timexType, 				
+					FeatureName.timexType, 				
 					/*Feature.mainVerb,*/ 
 					/*Feature.tempSignalClusText,*/ 
 					/*Feature.tempSignalPos,*/
-					Feature.timexRule
+					FeatureName.timexRule
 			};
 			eeFeatureList = Arrays.asList(eeFeatures);
 			etFeatureList = Arrays.asList(etFeatures);
@@ -570,18 +569,18 @@ class QATempEvalTask {
 				+ " (" + numCorrect(ttResult) + "/" + numInstance(ttResult) + ")");		
 	}
 	
-	public Map<Pair<String,String>,String> getTimexTimexRuleRelation(Doc doc) {
+	public Map<String,String> getTimexTimexRuleRelation(Doc doc) {
 		Object[] entArr = doc.getEntities().keySet().toArray();
-		Map<Pair<String,String>,String> ttlinks = new HashMap<Pair<String,String>,String>();
-		Pair<String,String> pair = null;
+		Map<String,String> ttlinks = new HashMap<String,String>();
+		String pair = null;
 		for (int i = 0; i < entArr.length; i++) {
 			for (int j = i; j < entArr.length; j++) {
 				if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 						doc.getEntities().get(entArr[j]) instanceof Timex) {
 					TimexTimexRelationRule timextimex = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
-							((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
+							((Timex)doc.getEntities().get(entArr[j])), doc.getDct(), false);
 					if (!timextimex.getRelType().equals("O")) {
-						pair = new Pair<String,String>(((String) entArr[i]), ((String) entArr[j]));
+						pair = ((String) entArr[i]) + "-" + ((String) entArr[j]);
 						ttlinks.put(pair, timextimex.getRelType());
 					}
 				}
@@ -598,7 +597,7 @@ class QATempEvalTask {
 		Doc docTml = tmlParser.parseDocument(tmlFile.getPath());
 		
 		//Determine the relation type of every timex-timex pair in the document via rules 
-		Map<Pair<String,String>,String> ttlinks = getTimexTimexRuleRelation(docTxp);
+		Map<String,String> ttlinks = getTimexTimexRuleRelation(docTxp);
 		
 		//for (TemporalRelation tlink : docTxp.getTlinks()) {	//for every TLINK in TXP file: candidate pairs
 		for (TemporalRelation tlink : docTml.getTlinks()) {	//for every TLINK in TML file: gold annotated pairs
@@ -614,8 +613,8 @@ class QATempEvalTask {
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				
 				if (fv.getPairType().equals(PairType.timex_timex)) {
-					Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
-					Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
+					String st = tlink.getSourceID() + "-" + tlink.getTargetID();
+					String ts = tlink.getTargetID() + "-" + tlink.getSourceID();
 					if (ttlinks.containsKey(st)) {
 						tt.add(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + 
 								tlink.getRelType() + "\t" + ttlinks.get(st));
@@ -945,7 +944,7 @@ class QATempEvalTask {
 					fv = new EventEventFeatureVector(fv);
 					
 					if (classifier.equals(VectorClassifier.yamcha)) {
-						fv.addToVector(Feature.id);
+						fv.addToVector(FeatureName.id);
 					}
 					
 //					//TODO: get phrase embedding for token, lemma features
@@ -954,7 +953,7 @@ class QATempEvalTask {
 //					fv.addPhraseFeatureToVector(Feature.tokenChunk);					
 					
 					//Add features to feature vector
-					for (Feature f : eeFeatureList) {
+					for (FeatureName f : eeFeatureList) {
 						if (classifier.equals(VectorClassifier.libsvm) ||
 								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
@@ -970,10 +969,10 @@ class QATempEvalTask {
 					
 					if (classifier.equals(VectorClassifier.libsvm) || 
 							classifier.equals(VectorClassifier.liblinear)) {
-						fv.addBinaryFeatureToVector(Feature.labelReduced);
+						fv.addBinaryFeatureToVector(FeatureName.label);
 					} else if (classifier.equals(VectorClassifier.yamcha) ||
 							classifier.equals(VectorClassifier.weka)){
-						fv.addToVector(Feature.labelReduced);
+						fv.addToVector(FeatureName.label);
 					}
 					
 					vectors.add(fv);
@@ -1011,7 +1010,7 @@ class QATempEvalTask {
 					fv = new EventTimexFeatureVector(fv);
 				
 					if (classifier.equals(VectorClassifier.yamcha)) {
-						fv.addToVector(Feature.id);
+						fv.addToVector(FeatureName.id);
 					}
 				
 					//TODO: get phrase embedding for token, lemma features
@@ -1020,7 +1019,7 @@ class QATempEvalTask {
 //					fv.addPhraseFeatureToVector(Feature.tokenChunk);
 				
 					//Add features to feature vector
-					for (Feature f : etFeatureList) {
+					for (FeatureName f : etFeatureList) {
 						if (classifier.equals(VectorClassifier.libsvm) ||
 								classifier.equals(VectorClassifier.liblinear) ||
 								classifier.equals(VectorClassifier.weka)) {
@@ -1035,9 +1034,9 @@ class QATempEvalTask {
 					
 					if (classifier.equals(VectorClassifier.libsvm) ||
 							classifier.equals(VectorClassifier.liblinear)) {
-						fv.addBinaryFeatureToVector(Feature.label);
+						fv.addBinaryFeatureToVector(FeatureName.label);
 					} else {
-						fv.addToVector(Feature.label);
+						fv.addToVector(FeatureName.label);
 					}
 					
 					vectors.add(fv);

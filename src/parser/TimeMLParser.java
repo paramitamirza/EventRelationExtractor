@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -56,6 +57,7 @@ public class TimeMLParser {
 		Doc d = new Doc();	
 		setInstances(tmlDoc, d);
 		setTlinks(tmlDoc, d);
+		d.setFilename(new File(filepath).getName());
 		
 		return d;
 	}
@@ -131,8 +133,6 @@ public class TimeMLParser {
 			instInvMap.put(eid, eiid);
 		}		
 	}
-	
-	
 	
 	
 

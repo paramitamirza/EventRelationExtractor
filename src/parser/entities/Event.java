@@ -2,7 +2,7 @@ package parser.entities;
 
 import java.util.ArrayList;
 
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 
 public class Event extends Entity{
 	
@@ -65,7 +65,7 @@ public class Event extends Entity{
 		this.corefList = corefList;
 	}
 
-	public String getAttribute(Feature feature) {
+	public String getAttribute(FeatureName feature) {
 		switch (feature) {
 			case eventClass: return this.getEventClass(); 
 			case tense: return this.getTense();

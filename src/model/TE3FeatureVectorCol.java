@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-import javafx.util.Pair;
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
 import model.feature.EventTimexFeatureVector;
 import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
-import model.feature.TimexTimexRelationRule;
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
 import parser.entities.Doc;
@@ -40,16 +39,16 @@ public class TE3FeatureVectorCol {
 				
 				Object[] entArr = doc.getEntities().keySet().toArray();
 				
-				HashMap<Pair<String,String>,String> ttlinks = new HashMap<Pair<String,String>,String>();
-				Pair<String,String> pair = null;
+				HashMap<String,String> ttlinks = new HashMap<String,String>();
+				String pair = null;
 				for (int i = 0; i < entArr.length; i++) {
 					for (int j = i; j < entArr.length; j++) {
 						if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 								doc.getEntities().get(entArr[j]) instanceof Timex) {
 							TimexTimexRelationRule timextimex = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
-									((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
+									((Timex)doc.getEntities().get(entArr[j])), doc.getDct(), false);
 							if (!timextimex.getRelType().equals("O")) {
-								pair = new Pair<String,String>(((String) entArr[i]), ((String) entArr[j]));
+								pair = ((String) entArr[i]) + "-" + ((String) entArr[j]);
 								ttlinks.put(pair, timextimex.getRelType());
 							}
 						}
@@ -71,8 +70,8 @@ public class TE3FeatureVectorCol {
 						} else if (fv.getPairType().equals(PairType.event_timex)) {
 							fv = new EventTimexFeatureVector(fv);
 						} else if (fv.getPairType().equals(PairType.timex_timex)) {
-							Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
-							Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
+							String st = tlink.getSourceID() + "-" + tlink.getTargetID();
+							String ts = tlink.getTargetID() + "-" + tlink.getSourceID();
 							if (ttlinks.containsKey(st)) {
 								tt.println(tlink.getSourceID() + "\t" + tlink.getTargetID() + "\t" + 
 										tlink.getRelType() + "\t" + ttlinks.get(st));
@@ -87,14 +86,14 @@ public class TE3FeatureVectorCol {
 						//fv.getVectors().add(fv.getE2().getID());
 						
 						//token attribute features
-						fv.getVectors().addAll(fv.getTokenAttribute(Feature.token));
-						fv.getVectors().addAll(fv.getTokenAttribute(Feature.lemma));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.pos));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.mainpos));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.chunk));
-						fv.getVectors().add(fv.getCombinedTokenAttribute(Feature.ner));
-						fv.getVectors().add(fv.isSameTokenAttribute(Feature.pos) ? "TRUE" : "FALSE");
-						fv.getVectors().add(fv.isSameTokenAttribute(Feature.mainpos) ? "TRUE" : "FALSE");
+						fv.getVectors().addAll(fv.getTokenAttribute(FeatureName.token));
+						fv.getVectors().addAll(fv.getTokenAttribute(FeatureName.lemma));
+						fv.getVectors().add(fv.getCombinedTokenAttribute(FeatureName.pos));
+						fv.getVectors().add(fv.getCombinedTokenAttribute(FeatureName.mainpos));
+						fv.getVectors().add(fv.getCombinedTokenAttribute(FeatureName.chunk));
+						fv.getVectors().add(fv.getCombinedTokenAttribute(FeatureName.ner));
+						fv.getVectors().add(fv.isSameTokenAttribute(FeatureName.pos) ? "TRUE" : "FALSE");
+						fv.getVectors().add(fv.isSameTokenAttribute(FeatureName.mainpos) ? "TRUE" : "FALSE");
 						
 						//context features
 						fv.getVectors().add(fv.getEntityDistance().toString());

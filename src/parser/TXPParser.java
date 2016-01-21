@@ -144,7 +144,7 @@ public class TXPParser {
 	
 	public void parseLine(String s, Doc doc) {
 		ArrayList<String> cols = new ArrayList<String>(Arrays.asList(s.split("\t")));
-		//System.out.println(cols.get(0));
+//		System.err.println(cols.get(0));
 		
 		if(cols.get(0).contains("DCT_")) {
 			String tmx_id = cols.get(getIndex(Field.tmx_id));
@@ -182,6 +182,11 @@ public class TXPParser {
 			
 			//named entitiy type
 			tok.setNamedEntity(cols.get(getIndex(Field.ner)));
+			
+			//WordNet supersense
+			if (getIndex(Field.supersense) != -1) {
+				tok.setWnSupersense(cols.get(getIndex(Field.supersense)));
+			}
 			
 			//discourse connective
 			tok.setDiscourseConn(cols.get(getIndex(Field.connective)));
@@ -386,6 +391,7 @@ public class TXPParser {
 			            		if (!doc.getTlinks().contains(tlink)) {
 			            			doc.getTlinks().add(tlink);
 			            		}
+			            		doc.getTlinkTypes().put(tlink_str[0]+","+tlink_str[1], tlink_str[2]);
 			            	}
 			            }
 					}

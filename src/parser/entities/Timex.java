@@ -1,6 +1,6 @@
 package parser.entities;
 
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 
 public class Timex extends Entity{
 	
@@ -57,7 +57,7 @@ public class Timex extends Entity{
 		return template;
 	}
 	
-	public String getAttribute(Feature feature) {
+	public String getAttribute(FeatureName feature) {
 		switch (feature) {
 			case timexType: return this.getType(); 
 			case timexValue: return this.getValue();

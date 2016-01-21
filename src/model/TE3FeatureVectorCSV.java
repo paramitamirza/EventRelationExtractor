@@ -5,15 +5,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-import javafx.util.Pair;
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
 import model.feature.EventTimexFeatureVector;
 import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
-import model.feature.TimexTimexRelationRule;
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
 import parser.entities.Doc;
@@ -40,16 +39,16 @@ public class TE3FeatureVectorCSV {
 				
 				Object[] entArr = doc.getEntities().keySet().toArray();
 				
-				HashMap<Pair<String,String>,String> ttlinks = new HashMap<Pair<String,String>,String>();
-				Pair<String,String> pair = null;
+				HashMap<String,String> ttlinks = new HashMap<String,String>();
+				String pair = null;
 				for (int i = 0; i < entArr.length; i++) {
 					for (int j = i; j < entArr.length; j++) {
 						if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 								doc.getEntities().get(entArr[j]) instanceof Timex) {
 							TimexTimexRelationRule timextimex = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
-									((Timex)doc.getEntities().get(entArr[j])), doc.getDct());
+									((Timex)doc.getEntities().get(entArr[j])), doc.getDct(), false);
 							if (!timextimex.getRelType().equals("O")) {
-								pair = new Pair<String,String>(((String) entArr[i]), ((String) entArr[j]));
+								pair = ((String) entArr[i]) + "-" + ((String) entArr[j]);
 								ttlinks.put(pair, timextimex.getRelType());
 							}
 						}
@@ -71,8 +70,8 @@ public class TE3FeatureVectorCSV {
 						} else if (fv.getPairType().equals(PairType.event_timex)) {
 							fv = new EventTimexFeatureVector(fv);
 						} else if (fv.getPairType().equals(PairType.timex_timex)) {
-							Pair<String,String> st = new Pair<String, String>(tlink.getSourceID(), tlink.getTargetID());
-							Pair<String,String> ts = new Pair<String, String>(tlink.getTargetID(), tlink.getSourceID());
+							String st = tlink.getSourceID() + "-" + tlink.getTargetID();
+							String ts = tlink.getTargetID() + "-" + tlink.getSourceID();
 							if (ttlinks.containsKey(st)) {
 								tt.append(tlink.getSourceID() + "," + tlink.getTargetID() + "," + 
 										tlink.getRelType() + "," + ttlinks.get(st) + "\n");
@@ -83,73 +82,73 @@ public class TE3FeatureVectorCSV {
 							break;
 						}
 						
-						fv.addToVector(Feature.id);
+						fv.addToVector(FeatureName.id);
 						
 						//token attribute features
-						fv.addToVector(Feature.token);
-						fv.addToVector(Feature.lemma);
-						fv.addToVector(Feature.pos);
-						fv.addToVector(Feature.mainpos);
-						fv.addToVector(Feature.chunk);
-						fv.addToVector(Feature.ner);
-						fv.addToVector(Feature.samePos);
-						fv.addToVector(Feature.sameMainPos);
+						fv.addToVector(FeatureName.token);
+						fv.addToVector(FeatureName.lemma);
+						fv.addToVector(FeatureName.pos);
+						fv.addToVector(FeatureName.mainpos);
+						fv.addToVector(FeatureName.chunk);
+						fv.addToVector(FeatureName.ner);
+						fv.addToVector(FeatureName.samePos);
+						fv.addToVector(FeatureName.sameMainPos);
 						
 						//context features
-						fv.addToVector(Feature.entDistance);
-						fv.addToVector(Feature.sentDistance);
+						fv.addToVector(FeatureName.entDistance);
+						fv.addToVector(FeatureName.sentDistance);
 						
 						if (fv instanceof EventEventFeatureVector) {
 							//Entity attributes
-							fv.addToVector(Feature.eventClass);
-							fv.addToVector(Feature.tense);
-							fv.addToVector(Feature.aspect);
-							fv.addToVector(Feature.polarity);
-							fv.addToVector(Feature.sameEventClass);
-							fv.addToVector(Feature.sameTense);
-							fv.addToVector(Feature.sameAspect);
-							fv.addToVector(Feature.samePolarity);
+							fv.addToVector(FeatureName.eventClass);
+							fv.addToVector(FeatureName.tense);
+							fv.addToVector(FeatureName.aspect);
+							fv.addToVector(FeatureName.polarity);
+							fv.addToVector(FeatureName.sameEventClass);
+							fv.addToVector(FeatureName.sameTense);
+							fv.addToVector(FeatureName.sameAspect);
+							fv.addToVector(FeatureName.samePolarity);
 							
 							//dependency information
-							fv.addToVector(Feature.depPath);
-							fv.addToVector(Feature.mainVerb);
+							fv.addToVector(FeatureName.depPath);
+							fv.addToVector(FeatureName.mainVerb);
 							
 							//temporal connective/signal
-							fv.addToVector(Feature.tempMarker);
+							fv.addToVector(FeatureName.tempMarker);
 							
 							//causal connective/signal/verb
-							fv.addToVector(Feature.causMarker);
+							fv.addToVector(FeatureName.causMarker);
 							
 							//event co-reference
-							fv.addToVector(Feature.coref);
+							fv.addToVector(FeatureName.coref);
 							
 							//WordNet similarity
-							fv.addToVector(Feature.wnSim);
+							fv.addToVector(FeatureName.wnSim);
 							
 						} else if (fv instanceof EventTimexFeatureVector) {
-							fv.addToVector(Feature.entOrder);
+							fv.addToVector(FeatureName.entOrder);
 							
 							//Entity attributes
-							fv.addToVector(Feature.eventClass);
-							fv.addToVector(Feature.tense);
-							fv.addToVector(Feature.aspect);
-							fv.addToVector(Feature.polarity);
-							fv.addToVector(Feature.timexType);
-							fv.addToVector(Feature.timexValueTemplate);
-							fv.addToVector(Feature.dct);
+							fv.addToVector(FeatureName.eventClass);
+							fv.addToVector(FeatureName.tense);
+							fv.addToVector(FeatureName.aspect);
+							fv.addToVector(FeatureName.polarity);
+							fv.addToVector(FeatureName.timexType);
+							fv.addToVector(FeatureName.timexValueTemplate);
+							fv.addToVector(FeatureName.dct);
 							
 							//dependency information
-							fv.addToVector(Feature.depPath);
-							fv.addToVector(Feature.mainVerb);
+							fv.addToVector(FeatureName.depPath);
+							fv.addToVector(FeatureName.mainVerb);
 							
 							//temporal connective/signal
-							fv.addToVector(Feature.tempMarker);
+							fv.addToVector(FeatureName.tempMarker);
 							
 							//timex rule type
-							fv.addToVector(Feature.timexRule);
+							fv.addToVector(FeatureName.timexRule);
 						}
 						
-						fv.addToVector(Feature.label);
+						fv.addToVector(FeatureName.label);
 						
 						if (fv instanceof EventEventFeatureVector) {
 							ee.append(fv.printCSVVectors() + "\n");

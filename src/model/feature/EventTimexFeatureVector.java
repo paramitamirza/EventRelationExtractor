@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 import parser.entities.Doc;
 import parser.entities.Entity;
 import parser.entities.Event;
@@ -44,15 +44,15 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 	public ArrayList<String> getEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
 		
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "|" + getEntityAttribute(e1, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e1, Feature.polarity));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.eventClass));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.tense) + "|" + getEntityAttribute(e1, FeatureName.aspect));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.polarity));
 		
-		entityAttrs.add(getEntityAttribute(e2, Feature.timexType) + "|" + 
-				getEntityAttribute(e2, Feature.timexValueTemplate));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.timexType) + "|" + 
+				getEntityAttribute(e2, FeatureName.timexValueTemplate));
 		//entityAttrs.add(getEntityAttribute(e2, Feature.timexValue));
 		//entityAttrs.add(getEntityAttribute(e2, Feature.timexValueTemplate));
-		entityAttrs.add(getEntityAttribute(e2, Feature.dct));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.dct));
 		
 		return entityAttrs;
 	}
@@ -68,9 +68,10 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 			for (String govID : tokenArr1) {
 				List<String> paths = new ArrayList<String>();
 				List<String> visited = new ArrayList<String>();
-				if (getTokenAttribute(e1, Feature.mainpos).equals("v")) {
+				
+				if (getTokenAttribute(e1, FeatureName.mainpos).equals("v")) {
 					govID = getMateHeadVerb(govID);
-				} else if (getTokenAttribute(e1, Feature.mainpos).equals("adj") &&
+				} else if (getTokenAttribute(e1, FeatureName.mainpos).equals("adj") &&
 					getMateVerbFromAdj(govID) != null) {
 					govID = getMateVerbFromAdj(govID);
 				}
@@ -130,11 +131,31 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 			int tidxStartSent = doc.getTokens().get(s.getStartTokID()).getIndex();
 			
 			if (tidxStart > tidxStartSent) {
+				
+				String depPath = getMateDependencyPath();
+				if (depPath.contains("TMP-PMOD") 
+						&& (!depPath.contains("OBJ")
+								&& !depPath.contains("SUB")
+								&& !depPath.contains("NMOD"))) {
+					String beforeTmx = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
+					if ((beforeTmx.equals("for")
+							|| beforeTmx.equals("during"))
+							&& ((Timex)e2).getType().equals("DURATION")) {
+						return "TMX-SIM";
+					} else if ((beforeTmx.equals("in"))
+							&& ((Timex)e2).getType().equals("DURATION")) {
+						return "TMX-IN";
+					} else if ((beforeTmx.equals("in") || beforeTmx.equals("at") || beforeTmx.equals("on"))
+							&& (((Timex)e2).getType().equals("DATE") || ((Timex)e2).getType().equals("TIME"))) {
+						return "TMX-IN";
+					}
+				}
+				
 				if (eidx < entArr.size()-1 && doc.getEntities().get(entArr.get(eidx+1)) instanceof Timex) {
 					Entity tmx2 = doc.getEntities().get(entArr.get(eidx+1));
 					int tmx2Idx = doc.getTokens().get(tmx2.getStartTokID()).getIndex();
-					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(Feature.lemma);
-					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tmx2Idx-1)).getTokenAttribute(Feature.lemma);
+					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
+					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tmx2Idx-1)).getTokenAttribute(FeatureName.lemma);
 					
 					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
 						return "TMX-BEGIN";
@@ -149,8 +170,8 @@ public class EventTimexFeatureVector extends PairFeatureVector{
 				} else if (eidx > 0 && doc.getEntities().get(entArr.get(eidx-1)) instanceof Timex) {
 					Entity tmx1 = doc.getEntities().get(entArr.get(eidx-1));
 					int tmx1Idx = doc.getTokens().get(tmx1.getStartTokID()).getIndex();
-					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tmx1Idx-1)).getTokenAttribute(Feature.lemma);
-					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(Feature.lemma);
+					String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tmx1Idx-1)).getTokenAttribute(FeatureName.lemma);
+					String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
 					
 					if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
 						return "TMX-END";

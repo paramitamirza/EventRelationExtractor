@@ -45,7 +45,7 @@ public class PairFeatureVector {
 	private String[] ev_aspect = {"PROGRESSIVE", "PERFECTIVE", "PERFECTIVE_PROGRESSIVE", "NONE"};
 	private String[] tmx_type = {"DATE", "TIME", "DURATION", "SET"};
 	private String[] marker_position = {"BETWEEN", "BEFORE", "AFTER", "BEGIN", "BEGIN-BETWEEN", "BEGIN-BEFORE"};
-	private String[] timex_rule = {"TMX-BEGIN", "TMX-END"};
+	private String[] timex_rule = {"TMX-BEGIN", "TMX-END", "TMX-SIM", "TMX-IN"};
 	private String[] temp_signal_event = {"as soon as", "as long as", "at the same time", "followed by", 
 			"prior to", "still", "during", "while", "when", "immediately", "after", 
 			"until", "if", "eventually", "then", "finally", "afterwards", "initially", "next", "once", 
@@ -60,9 +60,19 @@ public class PairFeatureVector {
 			"since", "after", "as", "so", "by", "from"};
 	private String[] caus_verb = {"CAUSE", "CAUSE-AMBIGUOUS", "ENABLE", "PREVENT", "PREVENT-AMBIGUOUS", "AFFECT", "LINK"};
 	
+	private String[] dep_event_path = {"COORD-CONJ", "TMP-SUB", "OPRD", "OPRD-IM", "ADV", "OBJ", "SBJ", "ADV-SUB", "VC", "LGS-PMOD", "ADV-PMOD", "LOC-PMOD",
+			"CONJ-COORD", "SUB-TMP", "OPRD", "IM-OPRD", "ADV", "OBJ", "SBJ", "SUB-ADV", "VC", "PMOD-LGS", "PMOD-ADV", "PMOD-LOC"};
+	private String[] dep_signal_path = {"SBJ", "OBJ", "OPRD", "IM", "ADV", "PRP",
+			"SUB", "PRD", "TMP", "PMOD", "LGS", "DEP", "LOC", "APPO"};
+	private String[] dep_signal_path2 = {"SBJ|OBJ", "SBJ|OPRD-IM", "SBJ|OPRD", "ADV|OBJ", "ADV|OPRD-IM", "ADV|OPRD", 
+			"PRP|SUB", "TMP|SUB", "ADV|SUB", "PRD|PMOD", "PRP|PMOD", "LGS|PMOD", "ADV|PMOD", "PRP|IM"};
+	
 	private String[] temp_rel_type = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
 	private List<String> temp_rel_type_list = Arrays.asList(temp_rel_type);
+	
+	private String[] caus_rel_type = {"CLINK", "CLINK-R", "NONE"};
+	private List<String> caus_rel_type_list = Arrays.asList(caus_rel_type);
 	
 	public PairFeatureVector() {
 		this.setVectors(new ArrayList<String>());
@@ -137,12 +147,7 @@ public class PairFeatureVector {
 	}
 
 	public String getLabel() {
-//		if (label.equals("IBEFORE")) 
-//			return "BEFORE";
-//		else if (label.equals("IAFTER")) 
-//			return "AFTER";
-//		else 
-			return label;
+		return label;
 	}
 
 	public void setLabel(String label) {
@@ -212,7 +217,7 @@ public class PairFeatureVector {
 		return tokIDs;
 	}
 	
-	protected String getTokenAttribute(Entity e, Feature feature) {
+	public String getTokenAttribute(Entity e, FeatureName feature) {
 		ArrayList<String> attrList = new ArrayList<String>();
 		String currAttr;
 		if (e instanceof Timex && (((Timex)e).isDct() || ((Timex)e).isEmptyTag())) {
@@ -228,7 +233,7 @@ public class PairFeatureVector {
 					}
 				}
 			}
-			if (feature.equals(Feature.token) || feature.equals(Feature.lemma))
+			if (feature.equals(FeatureName.token) || feature.equals(FeatureName.lemma))
 				return String.join(" ", attrList);
 			else
 				return String.join("_", attrList);
@@ -240,75 +245,75 @@ public class PairFeatureVector {
 			if (((Timex)e).isDct() || ((Timex)e).isEmptyTag()) {
 				return "O";
 			} else {
-				return getTokenAttribute(e, Feature.token);
+				return getTokenAttribute(e, FeatureName.token);
 			}
 		} else {
 			List<String> chunkText = new ArrayList<String>();
 			
 			Token currToken = doc.getTokens().get(e.getStartTokID());
-			String currChunk = currToken.getTokenAttribute(Feature.chunk);
+			String currChunk = currToken.getTokenAttribute(FeatureName.chunk);
 			if (currChunk.contains("B-") || currChunk.contains("I-")) {
 				String currPhrase = currChunk.substring(2);
 				if (currChunk.contains("B-")) {
-					chunkText.add(currToken.getTokenAttribute(Feature.token));
+					chunkText.add(currToken.getTokenAttribute(FeatureName.token));
 					Token nextToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()+1));
-					String nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					String nextChunk = nextToken.getTokenAttribute(FeatureName.chunk);
 					String nextPhrase;
 					while (nextChunk.contains("I-")) {
 						nextPhrase = nextChunk.substring(2);
 						if (nextPhrase.equals(currPhrase))
-							chunkText.add(nextToken.getTokenAttribute(Feature.token));
+							chunkText.add(nextToken.getTokenAttribute(FeatureName.token));
 						nextToken = doc.getTokens().get(doc.getTokenArr().get(nextToken.getIndex()+1));
-						nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+						nextChunk = nextToken.getTokenAttribute(FeatureName.chunk);
 					}
 				} else if (currChunk.contains("I-")) {
-					chunkText.add(currToken.getTokenAttribute(Feature.token));
+					chunkText.add(currToken.getTokenAttribute(FeatureName.token));
 					Token nextToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()+1));
-					String nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+					String nextChunk = nextToken.getTokenAttribute(FeatureName.chunk);
 					String nextPhrase;
 					while (nextChunk.contains("I-")) {
 						nextPhrase = nextChunk.substring(2);
 						if (nextPhrase.equals(currPhrase))
-							chunkText.add(nextToken.getTokenAttribute(Feature.token));
+							chunkText.add(nextToken.getTokenAttribute(FeatureName.token));
 						nextToken = doc.getTokens().get(doc.getTokenArr().get(nextToken.getIndex()+1));
-						nextChunk = nextToken.getTokenAttribute(Feature.chunk);
+						nextChunk = nextToken.getTokenAttribute(FeatureName.chunk);
 					}
 					Token beforeToken = doc.getTokens().get(doc.getTokenArr().get(currToken.getIndex()-1));
-					String beforeChunk = beforeToken.getTokenAttribute(Feature.chunk);
+					String beforeChunk = beforeToken.getTokenAttribute(FeatureName.chunk);
 					String beforePhrase;
 					while (beforeChunk.contains("I-")) {
 						beforePhrase = beforeChunk.substring(2);
 						if (beforePhrase.equals(currPhrase))
-							chunkText.add(0, beforeToken.getTokenAttribute(Feature.token));
+							chunkText.add(0, beforeToken.getTokenAttribute(FeatureName.token));
 						beforeToken = doc.getTokens().get(doc.getTokenArr().get(beforeToken.getIndex()-1));
-						beforeChunk = beforeToken.getTokenAttribute(Feature.chunk);
+						beforeChunk = beforeToken.getTokenAttribute(FeatureName.chunk);
 					}
 					if (beforeChunk.contains("B-")) {
 						beforePhrase = beforeChunk.substring(2);
 						if (beforePhrase.equals(currPhrase))
-							chunkText.add(0, beforeToken.getTokenAttribute(Feature.token));
+							chunkText.add(0, beforeToken.getTokenAttribute(FeatureName.token));
 					}
 				}
 			} else {
-				chunkText.add(currToken.getTokenAttribute(Feature.token));
+				chunkText.add(currToken.getTokenAttribute(FeatureName.token));
 			}
 			
 			return String.join(" ", chunkText);
 		}
 	}
 	
-	public ArrayList<String> getTokenAttribute(Feature feature) {
+	public ArrayList<String> getTokenAttribute(FeatureName feature) {
 		ArrayList<String> texts = new ArrayList<String>();
 		texts.add(getTokenAttribute(e1, feature));
 		texts.add(getTokenAttribute(e2, feature));
 		return texts;
 	}
 	
-	public String getCombinedTokenAttribute(Feature feature) {
+	public String getCombinedTokenAttribute(FeatureName feature) {
 		return getTokenAttribute(e1, feature) + "|" + getTokenAttribute(e2, feature);
 	}
 	
-	public Boolean isSameTokenAttribute(Feature feature) {
+	public Boolean isSameTokenAttribute(FeatureName feature) {
 		String eAttr1 = getTokenAttribute(e1, feature);
 		String eAttr2 = getTokenAttribute(e2, feature);
 		return (eAttr1.equals(eAttr2));
@@ -321,7 +326,7 @@ public class PairFeatureVector {
 		} else {
 			int eidx1 = e1.getIndex();
 			int eidx2 = e2.getIndex();
-			return Math.abs(eidx1 - eidx2); 
+			return Math.abs(eidx1 - eidx2)-1; 
 		}
 	}
 	
@@ -363,7 +368,7 @@ public class PairFeatureVector {
 		return null;
 	}
 	
-	protected String getEntityAttribute(Entity e, Feature feature) {
+	protected String getEntityAttribute(Entity e, FeatureName feature) {
 		if (e instanceof Event) {
 			if (((Event)e).getAttribute(feature).equals("O")) {
 				String relatedTid = null;
@@ -374,9 +379,9 @@ public class PairFeatureVector {
 					relatedTid = getMateVerbFromAdj(e.getStartTokID());
 				}
 				if (relatedTid != null) {
-					if (feature == Feature.tense) return doc.getTokens().get(relatedTid).getTense();
-					else if (feature == Feature.aspect) return doc.getTokens().get(relatedTid).getAspect();
-					else if (feature == Feature.polarity) return doc.getTokens().get(relatedTid).getPolarity();
+					if (feature == FeatureName.tense) return doc.getTokens().get(relatedTid).getTense();
+					else if (feature == FeatureName.aspect) return doc.getTokens().get(relatedTid).getAspect();
+					else if (feature == FeatureName.polarity) return doc.getTokens().get(relatedTid).getPolarity();
 				}
 				return "NONE";
 			} else {
@@ -472,8 +477,20 @@ public class PairFeatureVector {
 		}
 	}
 	
+	protected void generateDependencyPath(String govID, String depID, List<String> paths, String pathSoFar, List<String> visited) {
+		if (doc.getTokens().get(govID).getDependencyRel() != null && !visited.contains(govID)) {
+			for (String key : doc.getTokens().get(govID).getDependencyRel().keySet()) {
+				if (depID.equals(key)) {
+					paths.add(pathSoFar + "-" + doc.getTokens().get(govID).getDependencyRel().get(key));
+				} else {
+					generateDependencyPath(key, depID, paths, pathSoFar + "-" + doc.getTokens().get(govID).getDependencyRel().get(key), visited);
+				}
+			}
+		}
+	}
+	
 	public String getMateMainVerb(Entity e) {
-		if (getTokenAttribute(e, Feature.mainpos).equals("v")) {
+		if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
 			return (doc.getTokens().get(getMateHeadVerb(e.getStartTokID())).isMainVerb() ? "MAIN" : "O");
 		}
 		return "O";
@@ -483,41 +500,162 @@ public class PairFeatureVector {
 		ArrayList<String> tokIDs = getTokenIDArr(startTokID, endTokID);
 		ArrayList<String> context = new ArrayList<String>();
 		for (String tokID : tokIDs) {
-			context.add(doc.getTokens().get(tokID).getTokenAttribute(Feature.token).toLowerCase());
+			context.add(doc.getTokens().get(tokID).getTokenAttribute(FeatureName.token).toLowerCase());
 		}
 		return String.join(" ", context);
 	}
 	
+	private String simplifiedDependencyPath(String depPath) {
+		String path = depPath;
+		path = path.replaceAll("-VC", "");
+		path = path.replaceAll("-COORD", "");
+		path = path.replaceAll("-CONJ", "");
+		path = path.replaceAll("-NMOD", "");
+		path = path.replaceAll("-AMOD", "");
+		return path;
+	}
+	
 	public String getSignalMateDependencyPath(Entity e, ArrayList<String> entArr, ArrayList<String> signalArr) {
-		for (String govID : entArr) {
+		String path = "O";
+		for (String tokID : entArr) {
 			List<String> paths = new ArrayList<String>();
 			List<String> visited = new ArrayList<String>();
-			if (getTokenAttribute(e, Feature.mainpos).equals("v")) {
-				govID = getMateHeadVerb(govID);
-			} else if (getTokenAttribute(e, Feature.mainpos).equals("adj") &&
-				getMateVerbFromAdj(govID) != null) {
-				govID = getMateVerbFromAdj(govID);
+			String govID = tokID;
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
+				govID = getMateHeadVerb(tokID);
+			} else if (getTokenAttribute(e, FeatureName.mainpos).equals("adj") &&
+				getMateVerbFromAdj(tokID) != null) {
+				govID = getMateVerbFromAdj(tokID);
 			}
+			
 			generateDependencyPath(govID, signalArr, paths, "", visited);
 			if (!paths.isEmpty()) {
-				return paths.get(0).substring(1);
+				path = simplifiedDependencyPath(paths.get(0));				
+				if (path.equals("")) return "O";
+				else return path.substring(1);
 			}
+			
 			if (getMateCoordVerb(govID) != null) {
 				generateDependencyPath(getMateCoordVerb(govID), signalArr, paths, "", visited);
 				if (!paths.isEmpty()) {
-					return paths.get(0).substring(1);
+					path = simplifiedDependencyPath(paths.get(0));				
+					if (path.equals("")) return "O";
+					else return path.substring(1);
+				}
+			}
+			
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("n")) {
+				if (getMateVerbFromSbjNoun(tokID) != null) {
+					generateDependencyPath(getMateVerbFromSbjNoun(tokID), signalArr, paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath(paths.get(0));				
+						if (path.equals("")) return "O";
+						else return path.substring(1);
+					}
 				}
 			}
 		}
-		for (String govID : signalArr) {
+		
+		for (String tokID : signalArr) {
+			for (String tokkID : entArr) {
+				List<String> paths = new ArrayList<String>();
+				List<String> visited = new ArrayList<String>();
+				String govID = tokID;
+				String depID = tokkID;
+				if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
+					depID = getMateHeadVerb(tokkID);
+				} else if (getTokenAttribute(e, FeatureName.mainpos).equals("adj") &&
+					getMateVerbFromAdj(tokkID) != null) {
+					depID = getMateVerbFromAdj(tokkID);
+				}
+				
+				generateDependencyPath(govID, depID, paths, "", visited);			
+				if (!paths.isEmpty()) {
+					path = simplifiedDependencyPath(paths.get(0));				
+					if (path.equals("")) return "O";
+					else return path.substring(1);
+				}
+				
+				if (getMateCoordVerb(depID) != null) {
+					generateDependencyPath(govID, getMateCoordVerb(depID), paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath(paths.get(0));				
+						if (path.equals("")) return "O";
+						else return path.substring(1);
+					}
+				}
+				
+				if (getTokenAttribute(e, FeatureName.mainpos).equals("n")) {
+					if (getMateVerbFromSbjNoun(depID) != null) {
+						generateDependencyPath(govID, getMateVerbFromSbjNoun(depID), paths, "", visited);
+						if (!paths.isEmpty()) {
+							path = simplifiedDependencyPath(paths.get(0));				
+							if (path.equals("")) return "O";
+							else return path.substring(1);
+						}
+					}
+				}
+			}
+			
+		}
+		return path;
+	}
+	
+	public String getSignalMateDependencyPath(Entity e, ArrayList<String> entArr, String signalID) {
+		String path = "O";
+		for (String govID : entArr) {
 			List<String> paths = new ArrayList<String>();
 			List<String> visited = new ArrayList<String>();
-			generateDependencyPath(govID, entArr, paths, "", visited);
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
+				govID = getMateHeadVerb(govID);
+			} else if (getTokenAttribute(e, FeatureName.mainpos).equals("adj") &&
+				getMateVerbFromAdj(govID) != null) {
+				govID = getMateVerbFromAdj(govID);
+			}
+			generateDependencyPath(govID, signalID, paths, "", visited);
 			if (!paths.isEmpty()) {
-				return paths.get(0).substring(1);
+				path = simplifiedDependencyPath(paths.get(0));				
+				if (path.equals("")) return "O";
+				else return path.substring(1);
+			}
+			if (getMateCoordVerb(govID) != null) {
+				generateDependencyPath(getMateCoordVerb(govID), signalID, paths, "", visited);
+				if (!paths.isEmpty()) {
+					path = simplifiedDependencyPath(paths.get(0));				
+					if (path.equals("")) return "O";
+					else return path.substring(1);
+				}
+			}
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("n")) {
+				if (getMateVerbFromSbjNoun(govID) != null) {
+					govID = getMateVerbFromSbjNoun(govID);
+					generateDependencyPath(govID, signalID, paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath(paths.get(0));				
+						if (path.equals("")) return "O";
+						else return path.substring(1);
+					}
+				}
+				if (getMateVerbFromObjNoun(govID) != null) {
+					govID = getMateVerbFromObjNoun(govID);
+					generateDependencyPath(govID, signalID, paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath(paths.get(0));				
+						if (path.equals("")) return "O";
+						else return path.substring(1);
+					}
+				}
 			}
 		}
-		return "O";
+		List<String> paths = new ArrayList<String>();
+		List<String> visited = new ArrayList<String>();
+		generateDependencyPath(signalID, entArr, paths, "", visited);
+		if (!paths.isEmpty()) {
+			path = simplifiedDependencyPath(paths.get(0));				
+			if (path.equals("")) return "O";
+			else return path.substring(1);
+		}
+		return path;
 	}
 	
 	private ArrayList<String> getSignalTidArr(String signal, String context, String tidStartContext, String position) {
@@ -638,10 +776,47 @@ public class PairFeatureVector {
 		m.setText(text);
 		m.setCluster(signalList.get(text));
 		m.setPosition(position);
-		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+		
+//		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+//				getSignalTidArr(text, context, contextStartTid, position));
+//		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+//				getSignalTidArr(text, context, contextStartTid, position));
+		
+		ArrayList<String> signalTidArr = getSignalTidArr(text, context, contextStartTid, position);
+		String dep1 = "O"; String dep2 = "O";
+		if (position.equals("BETWEEN")
+				|| position.equals("INSIDE")) {
+			dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					signalTidArr);
+			dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					signalTidArr);
+		} else if (position.equals("BEFORE")
+				|| position.equals("BEGIN")) {
+			dep1 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					signalTidArr);
+			dep2 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					signalTidArr);
+		} else if (position.equals("BEGIN-BEFORE")) {
+			dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					signalTidArr);
+		} else if (position.equals("BEGIN-BETWEEN")) {
+			dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					signalTidArr);
+		}
+		
+		m.setDepRelE1(dep1);
+		m.setDepRelE2(dep2);
+		return m;
+	}
+	
+	public Marker getSignalMarkerPerEntity(Entity ent, Map<String, String> signalList, String text, String position, String context, String contextStartTid) {
+		Marker m = new Marker();
+		m.setText(text);
+		m.setCluster(signalList.get(text));
+		m.setPosition(position);
+		String dep1 = getSignalMateDependencyPath(ent, getTokenIDArr(ent.getStartTokID(), ent.getEndTokID()), 
 				getSignalTidArr(text, context, contextStartTid, position));
-		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
-				getSignalTidArr(text, context, contextStartTid, position));
+		String dep2 = "";
 		m.setDepRelE1(dep1);
 		m.setDepRelE2(dep2);
 		return m;
@@ -652,8 +827,31 @@ public class PairFeatureVector {
 		m.setText(text);
 		m.setCluster(text);
 		m.setPosition(position);
-		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), conn);
-		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), conn);
+		
+//		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), conn);
+//		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), conn);
+		
+		String dep1 = "O"; String dep2 = "O";
+		if (position.equals("BETWEEN")
+				|| position.equals("INSIDE")) {
+			dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					conn);
+			dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					conn);
+		} else if (position.equals("BEFORE")
+				|| position.equals("BEGIN")) {
+			dep1 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					conn);
+			dep2 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					conn);
+		} else if (position.equals("BEGIN-BEFORE")) {
+			dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
+					conn);
+		} else if (position.equals("BEGIN-BETWEEN")) {
+			dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
+					conn);
+		}
+		
 		m.setDepRelE1(dep1);
 		m.setDepRelE2(dep2);
 		return m;
@@ -679,6 +877,17 @@ public class PairFeatureVector {
 		if (tsignalListEvent != null && tsignalListTimex != null) {		
 			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
 			
+			Map<String, String> signalList;
+			if (e2 instanceof Timex) signalList = tsignalListTimex;
+			else signalList = tsignalListEvent;
+			
+			Object[] sigKeys = signalList.keySet().toArray();
+			Arrays.sort(sigKeys, Collections.reverseOrder());
+			
+			Map<String, String> evSignalList = tsignalListEvent;
+			Object[] evSigKeys = evSignalList.keySet().toArray();
+			Arrays.sort(evSigKeys, Collections.reverseOrder());
+			
 			if (isSameSentence()) {
 				Sentence s = doc.getSentences().get(e1.getSentID());
 				
@@ -700,28 +909,28 @@ public class PairFeatureVector {
 				String contextBegin = getString(s.getStartTokID(), tidBegin);
 				String contextEntity = getString(e2.getStartTokID(), e2.getEndTokID());	//in event-timex pair, sometimes signal is within timex
 				
-				Map<String, String> signalList;
-				if (e2 instanceof Timex) signalList = tsignalListTimex;
-				else signalList = tsignalListEvent;
-				for (String key : signalList.keySet()) {
-					if (contextBetween.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BETWEEN", contextBetween, tidBefore2);
-						candidates.put(getSignalEntityDistance(key, contextBetween, "BETWEEN"), m);
-					} else if (contextEntity.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "INSIDE", contextEntity, e2.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextEntity, "INSIDE") + 100, m);
-					} else if (contextAfter.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "AFTER", contextAfter, tidEnd2);
-						candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 300, m);
+				//for (String key : signalList.keySet()) {
+				for (Object key : sigKeys) {
+					if (contextEntity.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "INSIDE", contextEntity, e2.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextEntity, "INSIDE"), m);
+					} else if (contextBetween.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BETWEEN", contextBetween, tidBefore2);
+						candidates.put(getSignalEntityDistance(((String)key), contextBetween, "BETWEEN") + 100, m);
+//					} else if (contextAfter.contains(" " + ((String)key) + " ")) {
+//						Marker m = getSignalMarker(signalList, ((String)key), "AFTER", contextAfter, tidEnd2);
+//						candidates.put(getSignalEntityDistance(((String)key), contextAfter, "AFTER") + 300, m);
 					}
 				}
-				for (String key : tsignalListEvent.keySet()) {
-					if (contextBefore.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(tsignalListEvent, key, "BEFORE", contextBefore, tidBefore1);
-						candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE") + 200, m);
-					} else if (contextBegin.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN", contextBegin, s.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 400, m);
+				
+				//for (String key : tsignalListEvent.keySet()) {
+				for (Object key : evSigKeys) {
+					if (contextBefore.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, ((String)key), "BEFORE", contextBefore, tidBefore1);
+						candidates.put(getSignalEntityDistance(((String)key), contextBefore, "BEFORE") + 200, m);
+					} else if (contextBegin.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, ((String)key), "BEGIN", contextBegin, s.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextBegin, "BEGIN") + 400, m);
 					} 
 				}
 			} else { //different sentences
@@ -732,15 +941,74 @@ public class PairFeatureVector {
 				String contextBegin1 = getString(s1.getStartTokID(), tidBegin1);
 				String contextBegin2 = getString(s2.getStartTokID(), tidBegin2);
 				
-				for (String key : tsignalListEvent.keySet()) {
-					if (contextBegin2.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin2, "BEGIN-BETWEEN"), m);
-					} else if (contextBegin1.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(tsignalListEvent, key, "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin1, "BEGIN-BEFORE") + 100, m);
+				//for (String key : tsignalListEvent.keySet()) {
+				for (Object key : evSigKeys) {
+					if (contextBegin2.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(tsignalListEvent, ((String)key), "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextBegin2, "BEGIN-BETWEEN"), m);
+//					} else if (contextBegin1.contains(" " + ((String)key) + " ")) {
+//						Marker m = getSignalMarker(tsignalListEvent, ((String)key), "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
+//						candidates.put(getSignalEntityDistance(((String)key), contextBegin1, "BEGIN-BEFORE") + 100, m);
 					}
 				}
+			}
+			
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O", "O", "O");
+			}
+		}
+		return null;
+	}
+	
+	public Marker getTemporalSignalPerEntity(Entity ent) throws IOException {
+		Map<String, String> tsignalListEvent = this.getTempSignalList().getEventList();
+		Map<String, String> tsignalListTimex = this.getTempSignalList().getTimexList();
+		
+		if (tsignalListEvent != null && tsignalListTimex != null) {		
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+			
+			Map<String, String> signalList;
+			if (ent instanceof Timex) signalList = tsignalListTimex;
+			else signalList = tsignalListEvent;
+			
+			//sort the signals, reversed-alphabetically, so that "because of" < "because"
+			Object[] sigKeys = signalList.keySet().toArray();
+			Arrays.sort(sigKeys, Collections.reverseOrder());
+			
+			Sentence s = doc.getSentences().get(ent.getSentID());
+			
+			String tidBefore1 = getTidEntityBeforeAfter(ent).get(0);
+			String tidStart1 = getTidBeforeAfter(ent).get(0);
+			String tidAfter2 = getTidEntityBeforeAfter(ent).get(1);
+			String tidEnd2 = getTidBeforeAfter(ent).get(1);
+			
+			String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+			
+			String contextBefore = getString(tidBefore1, tidStart1);
+			String contextAfter = getString(tidEnd2, tidAfter2);
+			String contextBegin = getString(s.getStartTokID(), tidBegin);
+			String contextEntity = getString(ent.getStartTokID(), ent.getEndTokID());	//in event-timex pair, sometimes signal is within timex
+			
+			Marker m;
+			//for (String key : signalList.keySet()) {
+			for (Object key : sigKeys) {
+				if (contextEntity.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, signalList, ((String)key), "INSIDE", contextEntity, ent.getStartTokID());
+					candidates.put(getSignalEntityDistance(((String)key), contextEntity, "INSIDE"), m);
+				} else if (contextBefore.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, signalList, ((String)key), "BEFORE", contextBefore, tidBefore1);
+					candidates.put(getSignalEntityDistance(((String)key), contextBefore, "BEFORE") + 100, m);	
+				} else if (contextAfter.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, signalList, ((String)key), "AFTER", contextAfter, tidEnd2);
+					candidates.put(getSignalEntityDistance(((String)key), contextAfter, "AFTER") + 200, m);
+				} else if (contextBegin.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, signalList, ((String)key), "BEGIN", contextBegin, s.getStartTokID());
+					candidates.put(getSignalEntityDistance(((String)key), contextBegin, "BETWEEN") + 300, m);
+				} 
 			}
 			
 			if (!candidates.isEmpty()) {
@@ -839,6 +1107,9 @@ public class PairFeatureVector {
 		Map<String, String> signalList = null;
 		signalList = ((CausalSignalList) this.getCausalSignalList()).getList();
 		
+		Object[] sigKeys = signalList.keySet().toArray();
+		Arrays.sort(sigKeys, Collections.reverseOrder());
+		
 		if (signalList != null) {	
 			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
 			
@@ -862,19 +1133,20 @@ public class PairFeatureVector {
 				String contextAfter = getString(tidEnd2, tidAfter2);
 				String contextBegin = getString(s.getStartTokID(), tidBegin);
 				
-				for (String key : signalList.keySet()) {
-					if (contextBetween.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BETWEEN", contextBetween, tidBefore2);
-						candidates.put(getSignalEntityDistance(key, contextBetween, "BETWEEN"), m);
-					} else if (contextBefore.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BEFORE", contextBefore, tidBefore1);
-						candidates.put(getSignalEntityDistance(key, contextBefore, "BEFORE") + 100, m);
-					} else if (contextAfter.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "AFTER", contextAfter, tidEnd2);
-						candidates.put(getSignalEntityDistance(key, contextAfter, "AFTER") + 200, m);
-					} else if (contextBegin.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BEGIN", contextBegin, s.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin, "BEGIN") + 300, m);
+				//for (String key : signalList.keySet()) {
+				for (Object key : sigKeys) {
+					if (contextBetween.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BETWEEN", contextBetween, tidBefore2);
+						candidates.put(getSignalEntityDistance(((String)key), contextBetween, "BETWEEN"), m);
+					} else if (contextBefore.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BEFORE", contextBefore, tidBefore1);
+						candidates.put(getSignalEntityDistance(((String)key), contextBefore, "BEFORE") + 100, m);
+					} else if (contextAfter.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "AFTER", contextAfter, tidEnd2);
+						candidates.put(getSignalEntityDistance(((String)key), contextAfter, "AFTER") + 200, m);
+					} else if (contextBegin.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BEGIN", contextBegin, s.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextBegin, "BEGIN") + 300, m);
 					} 
 				}
 			} else { //consecutive sentences
@@ -885,15 +1157,69 @@ public class PairFeatureVector {
 				String contextBegin1 = getString(s1.getStartTokID(), tidBegin1);
 				String contextBegin2 = getString(s2.getStartTokID(), tidBegin2);
 				
-				for (String key : signalList.keySet()) {
-					if (contextBegin2.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin2, "BEGIN-BETWEEN"), m);
-					} else if (contextBegin1.contains(" " + key + " ")) {
-						Marker m = getSignalMarker(signalList, key, "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
-						candidates.put(getSignalEntityDistance(key, contextBegin1, "BEGIN-BEFORE") + 100, m);
+				//for (String key : signalList.keySet()) {
+				for (Object key : sigKeys) {
+					if (contextBegin2.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextBegin2, "BEGIN-BETWEEN"), m);
+					} else if (contextBegin1.contains(" " + ((String)key) + " ")) {
+						Marker m = getSignalMarker(signalList, ((String)key), "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
+						candidates.put(getSignalEntityDistance(((String)key), contextBegin1, "BEGIN-BEFORE") + 100, m);
 					}
 				}
+			}
+			
+			if (!candidates.isEmpty()) {
+				Object[] keys = candidates.keySet().toArray();
+				Arrays.sort(keys);
+				return candidates.get(keys[0]);
+			} else {
+				return new Marker("O", "O", "O", "O", "O");
+			}
+		}
+		return null;
+	}
+	
+	public Marker getCausalSignalPerEntity(Entity ent) throws IOException {
+		Map<String, String> csignalList = this.getCausalSignalList().getList();
+		
+		if (csignalList != null) {		
+			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+			
+			//sort the signals, reversed-alphabetically, so that "because of" < "because"
+			Object[] sigKeys = csignalList.keySet().toArray();
+			Arrays.sort(sigKeys, Collections.reverseOrder());
+			
+			Sentence s = doc.getSentences().get(ent.getSentID());
+			
+			String tidBefore1 = getTidEntityBeforeAfter(ent).get(0);
+			String tidStart1 = getTidBeforeAfter(ent).get(0);
+			String tidAfter2 = getTidEntityBeforeAfter(ent).get(1);
+			String tidEnd2 = getTidBeforeAfter(ent).get(1);
+			
+			String tidBegin = doc.getTokenArr().get(doc.getTokenArr().indexOf(s.getStartTokID()) + 4);
+			
+			String contextBefore = getString(tidBefore1, tidStart1);
+			String contextAfter = getString(tidEnd2, tidAfter2);
+			String contextBegin = getString(s.getStartTokID(), tidBegin);
+			String contextEntity = getString(ent.getStartTokID(), ent.getEndTokID());	//in event-timex pair, sometimes signal is within timex
+			
+			Marker m;
+			//for (String key : signalList.keySet()) {
+			for (Object key : sigKeys) {
+				if (contextEntity.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, csignalList, ((String)key), "INSIDE", contextEntity, ent.getStartTokID());
+					candidates.put(getSignalEntityDistance(((String)key), contextEntity, "INSIDE"), m);
+				} else if (contextBefore.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, csignalList, ((String)key), "BEFORE", contextBefore, tidBefore1);
+					candidates.put(getSignalEntityDistance(((String)key), contextBefore, "BEFORE") + 100, m);	
+				} else if (contextAfter.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, csignalList, ((String)key), "AFTER", contextAfter, tidEnd2);
+					candidates.put(getSignalEntityDistance(((String)key), contextAfter, "AFTER") + 200, m);
+				} else if (contextBegin.contains(" " + ((String)key) + " ")) {
+					m = getSignalMarkerPerEntity(ent, csignalList, ((String)key), "BEGIN", contextBegin, s.getStartTokID());
+					candidates.put(getSignalEntityDistance(((String)key), contextBegin, "BETWEEN") + 300, m);
+				} 
 			}
 			
 			if (!candidates.isEmpty()) {
@@ -1074,7 +1400,35 @@ public class PairFeatureVector {
 		return m;
 	}
 	
-	public void addToVector(Feature feature) throws Exception {
+	public void addToVector(String featureName, String featureValue) {
+		List<String> fields = null;
+		if (this instanceof EventEventFeatureVector) {
+			fields = EventEventFeatureVector.fields;
+		} else if (this instanceof EventTimexFeatureVector) {
+			fields = EventTimexFeatureVector.fields;
+		}
+		getVectors().add(featureValue);
+		fields.add(featureName);
+	}
+	
+	public void addBinaryFeatureToVector(String featureName, String featureValue, List<String> featureValList) {
+		List<String> fields = null;
+		if (this instanceof EventEventFeatureVector) {
+			fields = EventEventFeatureVector.fields;
+		} else if (this instanceof EventTimexFeatureVector) {
+			fields = EventTimexFeatureVector.fields;
+		}
+		for (String val : featureValList) {
+			if (val.equals(featureValue)) {
+				getVectors().add("1");
+			} else {
+				getVectors().add("0");
+			}
+			fields.add(featureName + "_" + val);
+		}
+	}
+	
+	public void addToVector(FeatureName feature) throws Exception {
 		List<String> fields = null;
 		if (this instanceof EventEventFeatureVector) {
 			fields = EventEventFeatureVector.fields;
@@ -1091,27 +1445,27 @@ public class PairFeatureVector {
 					fields.add("id2");
 					break;
 				case token: 	
-					getVectors().add(getTokenAttribute(e1, Feature.token).replace(" ", "_"));
+					getVectors().add(getTokenAttribute(e1, FeatureName.token).replace(" ", "_"));
 					fields.add("token1");
-					getVectors().add(getTokenAttribute(e2, Feature.token).replace(" ", "_"));
+					getVectors().add(getTokenAttribute(e2, FeatureName.token).replace(" ", "_"));
 					fields.add("token2");
 					break;
 				case lemma: 	
-					getVectors().add(getTokenAttribute(e1, Feature.lemma).replace(" ", "_"));
+					getVectors().add(getTokenAttribute(e1, FeatureName.lemma).replace(" ", "_"));
 					fields.add("lemma1");
-					getVectors().add(getTokenAttribute(e2, Feature.lemma).replace(" ", "_"));
+					getVectors().add(getTokenAttribute(e2, FeatureName.lemma).replace(" ", "_"));
 					fields.add("lemma2");
 					break;
 				case tokenSpace: 	
-					getVectors().add(getTokenAttribute(e1, Feature.token));
+					getVectors().add(getTokenAttribute(e1, FeatureName.token));
 					fields.add("token1");
-					getVectors().add(getTokenAttribute(e2, Feature.token));
+					getVectors().add(getTokenAttribute(e2, FeatureName.token));
 					fields.add("token2");
 					break;
 				case lemmaSpace: 	
-					getVectors().add(getTokenAttribute(e1, Feature.lemma));
+					getVectors().add(getTokenAttribute(e1, FeatureName.lemma));
 					fields.add("lemma1");
-					getVectors().add(getTokenAttribute(e2, Feature.lemma));
+					getVectors().add(getTokenAttribute(e2, FeatureName.lemma));
 					fields.add("lemma2");
 					break;
 				case tokenChunk: 	
@@ -1121,61 +1475,61 @@ public class PairFeatureVector {
 					fields.add("tokenchunk2");
 					break;
 				case pos:
-					getVectors().add(getTokenAttribute(e1, Feature.pos));
+					getVectors().add(getTokenAttribute(e1, FeatureName.pos));
 					fields.add("pos1");
-					getVectors().add(getTokenAttribute(e2, Feature.pos));
+					getVectors().add(getTokenAttribute(e2, FeatureName.pos));
 					fields.add("pos2");
 					break;
 				case mainpos:
-					getVectors().add(getTokenAttribute(e1, Feature.mainpos));
+					getVectors().add(getTokenAttribute(e1, FeatureName.mainpos));
 					fields.add("mainpos1");
-					getVectors().add(getTokenAttribute(e2, Feature.mainpos));
+					getVectors().add(getTokenAttribute(e2, FeatureName.mainpos));
 					fields.add("mainpos2");
 					break;
 				case chunk:
-					getVectors().add(getTokenAttribute(e1, Feature.chunk));
+					getVectors().add(getTokenAttribute(e1, FeatureName.chunk));
 					fields.add("chunk1");
-					getVectors().add(getTokenAttribute(e2, Feature.chunk));
+					getVectors().add(getTokenAttribute(e2, FeatureName.chunk));
 					fields.add("chunk2");
 					break;
 				case ner:
-					getVectors().add(getTokenAttribute(e1, Feature.ner));
+					getVectors().add(getTokenAttribute(e1, FeatureName.ner));
 					fields.add("ner1");
-					getVectors().add(getTokenAttribute(e2, Feature.ner));
+					getVectors().add(getTokenAttribute(e2, FeatureName.ner));
 					fields.add("ner2");
 					break;
 				case supersense:
-					getVectors().add(getTokenAttribute(e1, Feature.supersense));
+					getVectors().add(getTokenAttribute(e1, FeatureName.supersense));
 					fields.add("supersense1");
-					getVectors().add(getTokenAttribute(e2, Feature.supersense));
+					getVectors().add(getTokenAttribute(e2, FeatureName.supersense));
 					fields.add("supersense2");
 					break;
 				case posCombined:
-					getVectors().add(getCombinedTokenAttribute(Feature.pos));
+					getVectors().add(getCombinedTokenAttribute(FeatureName.pos));
 					fields.add("pos");
 					break;
 				case mainposCombined:
-					getVectors().add(getCombinedTokenAttribute(Feature.mainpos));
+					getVectors().add(getCombinedTokenAttribute(FeatureName.mainpos));
 					fields.add("mainpos");
 					break;
 				case chunkCombined:
-					getVectors().add(getCombinedTokenAttribute(Feature.chunk));
+					getVectors().add(getCombinedTokenAttribute(FeatureName.chunk));
 					fields.add("chunk");
 					break;
 				case nerCombined:
-					getVectors().add(getCombinedTokenAttribute(Feature.ner));
+					getVectors().add(getCombinedTokenAttribute(FeatureName.ner));
 					fields.add("ner");
 					break;
 				case supersenseCombined:
-					getVectors().add(getCombinedTokenAttribute(Feature.supersense));
+					getVectors().add(getCombinedTokenAttribute(FeatureName.supersense));
 					fields.add("supersense");
 					break;
 				case samePos:
-					getVectors().add(isSameTokenAttribute(Feature.pos) ? "TRUE" : "FALSE");
+					getVectors().add(isSameTokenAttribute(FeatureName.pos) ? "TRUE" : "FALSE");
 					fields.add("samePos");
 					break;
 				case sameMainPos:
-					getVectors().add(isSameTokenAttribute(Feature.mainpos) ? "TRUE" : "FALSE");
+					getVectors().add(isSameTokenAttribute(FeatureName.mainpos) ? "TRUE" : "FALSE");
 					fields.add("sameMainPos");
 					break;
 				case entDistance:
@@ -1192,149 +1546,149 @@ public class PairFeatureVector {
 					break;					
 				case eventClass:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.eventClass));
+						getVectors().add(getEntityAttribute(e1, FeatureName.eventClass));
 						fields.add("eventClass1");
-						getVectors().add(getEntityAttribute(e2, Feature.eventClass));
+						getVectors().add(getEntityAttribute(e2, FeatureName.eventClass));
 						fields.add("eventClass2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						this.getVectors().add(getEntityAttribute(e1, Feature.eventClass));
+						this.getVectors().add(getEntityAttribute(e1, FeatureName.eventClass));
 						fields.add("eventClass");
 					}
 					break;
 				case tense:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense));
 						fields.add("tense1");
-						getVectors().add(getEntityAttribute(e2, Feature.tense));
+						getVectors().add(getEntityAttribute(e2, FeatureName.tense));
 						fields.add("tense2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense));
 						fields.add("tense");
 					}
 					break;
 				case aspect:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("aspect1");
-						getVectors().add(getEntityAttribute(e2, Feature.aspect));
+						getVectors().add(getEntityAttribute(e2, FeatureName.aspect));
 						fields.add("aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("aspect");
 					}
 					break;
 				case tenseAspect:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("tense-aspect1");
-						getVectors().add(getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
+						getVectors().add(getEntityAttribute(e2, FeatureName.tense) + "-" + getEntityAttribute(e2, FeatureName.aspect));
 						fields.add("tense-aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("tense-aspect");
 					}
 					break;
 				case polarity:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.polarity));
+						getVectors().add(getEntityAttribute(e1, FeatureName.polarity));
 						fields.add("polarity1");
-						getVectors().add(getEntityAttribute(e2, Feature.polarity));
+						getVectors().add(getEntityAttribute(e2, FeatureName.polarity));
 						fields.add("polarity2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.polarity));
+						getVectors().add(getEntityAttribute(e1, FeatureName.polarity));
 						fields.add("polarity");
 					}
 					break;
 				case eventClassCombined:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.eventClass) + "|" + 
-								getEntityAttribute(e2, Feature.eventClass));
+						getVectors().add(getEntityAttribute(e1, FeatureName.eventClass) + "|" + 
+								getEntityAttribute(e2, FeatureName.eventClass));
 						fields.add("eventClass1|eventClass2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						this.getVectors().add(getEntityAttribute(e1, Feature.eventClass));
+						this.getVectors().add(getEntityAttribute(e1, FeatureName.eventClass));
 						fields.add("eventClass");
 					}
 					break;
 				case tenseCombined:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense) + "|" + 
-								getEntityAttribute(e2, Feature.tense));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense) + "|" + 
+								getEntityAttribute(e2, FeatureName.tense));
 						fields.add("tense1|tense2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense));
 						fields.add("tense");
 					}
 					break;
 				case aspectCombined:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.aspect) + "|" + 
-								getEntityAttribute(e2, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.aspect) + "|" + 
+								getEntityAttribute(e2, FeatureName.aspect));
 						fields.add("aspect1|aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("aspect");
 					}
 					break;
 				case tenseAspectCombined:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect) + "|" + 
-								getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect) + "|" + 
+								getEntityAttribute(e2, FeatureName.tense) + "-" + getEntityAttribute(e2, FeatureName.aspect));
 						fields.add("tense-aspect1|tense-aspect2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect));
+						getVectors().add(getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect));
 						fields.add("tense-aspect");
 					}
 					break;
 				case polarityCombined:
 					if (this instanceof EventEventFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.polarity) + "|" + 
-								getEntityAttribute(e2, Feature.polarity));
+						getVectors().add(getEntityAttribute(e1, FeatureName.polarity) + "|" + 
+								getEntityAttribute(e2, FeatureName.polarity));
 						fields.add("polarity1|polarity2");
 					} else if (this instanceof EventTimexFeatureVector) {
-						getVectors().add(getEntityAttribute(e1, Feature.polarity));
+						getVectors().add(getEntityAttribute(e1, FeatureName.polarity));
 						fields.add("polarity");
 					}
 					break;
 				case sameEventClass:
-					getVectors().add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "TRUE" : "FALSE");
+					getVectors().add(getEntityAttribute(e1, FeatureName.eventClass).equals(getEntityAttribute(e2, FeatureName.eventClass)) ? "TRUE" : "FALSE");
 					fields.add("sameEventClass");
 					break;
 				case sameTense:
-					getVectors().add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "TRUE" : "FALSE");
+					getVectors().add(getEntityAttribute(e1, FeatureName.tense).equals(getEntityAttribute(e2, FeatureName.tense)) ? "TRUE" : "FALSE");
 					fields.add("sameTense");
 					break;
 				case sameAspect:
-					getVectors().add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
+					getVectors().add(getEntityAttribute(e1, FeatureName.aspect).equals(getEntityAttribute(e2, FeatureName.aspect)) ? "TRUE" : "FALSE");
 					fields.add("sameAspect");
 					break;
 				case sameTenseAspect:
-					getVectors().add((getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) &&
-							getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect))) ? "TRUE" : "FALSE");
+					getVectors().add((getEntityAttribute(e1, FeatureName.tense).equals(getEntityAttribute(e2, FeatureName.tense)) &&
+							getEntityAttribute(e1, FeatureName.aspect).equals(getEntityAttribute(e2, FeatureName.aspect))) ? "TRUE" : "FALSE");
 					fields.add("sameTenseAspect");
 					break;
 				case samePolarity:
-					getVectors().add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
+					getVectors().add(getEntityAttribute(e1, FeatureName.polarity).equals(getEntityAttribute(e2, FeatureName.polarity)) ? "TRUE" : "FALSE");
 					fields.add("samePolarity");
 					break;
 				case timexType:
-					getVectors().add(getEntityAttribute(e2, Feature.timexType));
+					getVectors().add(getEntityAttribute(e2, FeatureName.timexType));
 					fields.add("timexType");
 					break;
 				case timexValue:
-					getVectors().add(getEntityAttribute(e2, Feature.timexValue));
+					getVectors().add(getEntityAttribute(e2, FeatureName.timexValue));
 					fields.add("timexValue");
 					break;
 				case timexValueTemplate:
-					getVectors().add(getEntityAttribute(e2, Feature.timexValueTemplate));
+					getVectors().add(getEntityAttribute(e2, FeatureName.timexValueTemplate));
 					fields.add("timexValueTemplate");
 					break;
 				case timexTypeValueTemplate:
-					getVectors().add(getEntityAttribute(e2, Feature.timexType) + "|" + 
-							getEntityAttribute(e2, Feature.timexValueTemplate));
+					getVectors().add(getEntityAttribute(e2, FeatureName.timexType) + "|" + 
+							getEntityAttribute(e2, FeatureName.timexValueTemplate));
 					fields.add("timexValueTemplate");
 					break;
 				case dct:
-					getVectors().add(getEntityAttribute(e2, Feature.dct));
+					getVectors().add(getEntityAttribute(e2, FeatureName.dct));
 					fields.add("dct");
 					break;
 				case mainVerb:
@@ -1355,6 +1709,38 @@ public class PairFeatureVector {
 						fields.add("depPath");
 					}
 					break;
+					
+				case depTmxPath:
+					String depTmxPathStr = ((EventTimexFeatureVector) this).getMateDependencyPath();
+					if (depTmxPathStr.equals("TMP-PMOD")) {
+						getVectors().add("TMP-PMOD"); 
+					} else if (!depTmxPathStr.equals("TMP-PMOD")
+							&& depTmxPathStr.contains("TMP-PMOD")) {
+						getVectors().add("X-TMP-PMOD"); 
+					} else if (!depTmxPathStr.contains("TMP-PMOD")) {
+						getVectors().add("O"); 
+					} else {
+						getVectors().add("O");
+					}
+					fields.add("depTmxPath");
+					break;
+					
+				case depEvPath:
+					String depEvPathStr = ((EventEventFeatureVector) this).getMateDependencyPath();
+					
+					String depEvPath = "O";
+					for (String s : this.dep_event_path) {
+						if (depEvPathStr.equals(s)
+								|| depEvPathStr.contains(s)
+							) {
+							depEvPath = s;
+							break;
+						}
+					}
+					getVectors().add(depEvPath);
+					fields.add("depEvPath");
+					break;
+					
 				case tempMarker:
 					m = getTemporalMarkerFeature();
 					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
@@ -1407,6 +1793,146 @@ public class PairFeatureVector {
 					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
 					fields.add("tempMarkerDep1-Dep2");
 					break;
+					
+				case tempSignalText:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignalText");
+						} else {	
+							m = getTemporalSignal();
+							getVectors().add(m.getText().replace(" ", "_"));
+							fields.add("tempSignalText");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignal();
+						getVectors().add(m.getText().replace(" ", "_"));
+						fields.add("tempSignalText");
+					}
+					break;
+					
+				case tempSignalClusText:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignalClusText");
+						} else {	
+							m = getTemporalSignal();
+							getVectors().add(m.getCluster().replace(" ", "_"));
+							fields.add("tempSignalClusText");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignal();
+						getVectors().add(m.getCluster().replace(" ", "_"));
+						fields.add("tempSignalClusText");
+					}
+					break;
+					
+				case tempSignalPos:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignalPos");
+						} else {	
+							m = getTemporalSignal();
+							getVectors().add(m.getPosition());
+							fields.add("tempSignalPos");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignal();
+						getVectors().add(m.getPosition());
+						fields.add("tempSignalPos");
+					}
+					break;
+					
+				case tempConnText:
+					m = getTemporalConnective();
+					getVectors().add(m.getText().replace(" ", "_"));
+					fields.add("tempConnText");
+					break;
+					
+				case tempConnPos:
+					m = getTemporalConnective();
+					getVectors().add(m.getPosition());
+					fields.add("tempConnPos");
+					break;
+					
+				case tempSignal1ClusText:
+					m = getTemporalSignalPerEntity(e1);
+					getVectors().add(m.getCluster().replace(" ", "_"));
+					fields.add("tempSignal1ClusText");
+					break;
+				case tempSignal1Text:
+					m = getTemporalSignalPerEntity(e1);
+					getVectors().add(m.getText().replace(" ", "_"));
+					fields.add("tempSignal1Text");
+					break;
+				case tempSignal1Pos:
+					m = getTemporalSignalPerEntity(e1);
+					getVectors().add(m.getPosition());
+					fields.add("tempSignal1Pos");
+					break;
+				case tempSignal2ClusText:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignal2ClusText");
+						} else {	
+							m = getTemporalSignalPerEntity(e2);
+							getVectors().add(m.getCluster().replace(" ", "_"));
+							fields.add("tempSignal2ClusText");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignalPerEntity(e2);
+						getVectors().add(m.getCluster().replace(" ", "_"));
+						fields.add("tempSignal2ClusText");
+					}
+					break;
+				case tempSignal2Text:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignal2Text");
+						} else {	
+							m = getTemporalSignalPerEntity(e2);
+							getVectors().add(m.getText().replace(" ", "_"));
+							fields.add("tempSignal2Text");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignalPerEntity(e2);
+						getVectors().add(m.getText().replace(" ", "_"));
+						fields.add("tempSignal2Text");
+					}
+					break;
+				case tempSignal2Pos:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							getVectors().add("O");
+							fields.add("tempSignal2Pos");
+						} else {	
+							m = getTemporalSignalPerEntity(e2);
+							getVectors().add(m.getPosition());
+							fields.add("tempSignal2Pos");
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignalPerEntity(e2);
+						getVectors().add(m.getPosition());
+						fields.add("tempSignal2Pos");
+					}
+					break;
+					
 				case causMarker:
 					m = getCausalMarkerFeature();
 					getVectors().add(m.getCluster().replace(" ", "_") + "|" + m.getPosition());
@@ -1456,8 +1982,55 @@ public class PairFeatureVector {
 					break;
 				case causMarkerDep1Dep2:
 					m = getCausalMarkerFeature();
-					getVectors().add(m.getDepRelE1() + "|" + m.getDepRelE2());
+					String depE1E2 = m.getDepRelE1() + "|" + m.getDepRelE2();
+//					for (String s : this.dep_signal_path2) {
+//						if (depE1E2.contains(s)) {
+//							depE1E2 = s;
+//							break;
+//						}
+//					}
+					getVectors().add(depE1E2);
 					fields.add("causMarkerDep1-Dep2");
+					break;
+				case causSignal1ClusText:
+					m = getCausalSignalPerEntity(e1);
+					getVectors().add(m.getCluster().replace(" ", "_"));
+					fields.add("causSignal1ClusText");
+					break;
+				case causSignal1Text:
+					m = getCausalSignalPerEntity(e1);
+					getVectors().add(m.getText().replace(" ", "_"));
+					fields.add("causSignal1Text");
+					break;
+				case causSignal1Pos:
+					m = getCausalSignalPerEntity(e1);
+					getVectors().add(m.getPosition());
+					fields.add("causSignal1Pos");
+					break;
+				case causSignal2ClusText:
+					m = getCausalSignalPerEntity(e2);
+					getVectors().add(m.getCluster().replace(" ", "_"));
+					fields.add("causSignal1ClusText");
+					break;
+				case causSignal2Text:
+					m = getCausalSignalPerEntity(e2);
+					getVectors().add(m.getText().replace(" ", "_"));
+					fields.add("causSignal1Text");
+					break;
+				case causSignal2Pos:
+					m = getCausalSignalPerEntity(e2);
+					getVectors().add(m.getPosition());
+					fields.add("causSignal1Pos");
+					break;
+				case causVerbClusText:
+					m = getCausalVerb();
+					getVectors().add(m.getCluster().replace(" ", "_"));
+					fields.add("causVerbClusText");
+					break;
+				case causVerbPos:
+					m = getCausalVerb();
+					getVectors().add(m.getPosition());
+					fields.add("causVerbPos");
 					break;
 				case coref:
 					getVectors().add(((EventEventFeatureVector) this).isCoreference() ? "COREF" : "NOCOREF");
@@ -1478,22 +2051,148 @@ public class PairFeatureVector {
 					getVectors().add(lbl);
 					fields.add("label");
 					break;
-				case labelReduced:
-					String lblRed = getLabel();
-					if (lblRed.equals("END")) lbl = "ENDS";
-					else if (lblRed.equals("IDENTITY")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("DURING")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("DURING_INV")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("IBEFORE")) lblRed = "BEFORE";
-					else if (lblRed.equals("IAFTER")) lblRed = "AFTER";
-					getVectors().add(lblRed);
-					fields.add("labelReduced");
+				case labelCollapsed:
+					String lblC = getLabel();
+					if (lblC.equals("END")) lblC = "ENDS";
+					else if (lblC.equals("DURING")) lblC = "SIMULTANEOUS";
+					else if (lblC.equals("DURING_INV")) lblC = "SIMULTANEOUS";
+					else if (lblC.equals("IBEFORE")) lblC = "BEFORE";
+					else if (lblC.equals("IAFTER")) lblC = "AFTER";
+					getVectors().add(lblC);
+					fields.add("labelCollapsed");
+					break;
+				case labelCollapsed1:
+					String lblC1 = getLabel();
+					if (lblC1.equals("END")) lbl = "ENDS";
+					else if (lblC1.equals("IDENTITY")) lblC1 = "SIMULTANEOUS";
+					else if (lblC1.equals("DURING")) lblC1 = "SIMULTANEOUS";
+					else if (lblC1.equals("DURING_INV")) lblC1 = "SIMULTANEOUS";
+					else if (lblC1.equals("IBEFORE")) lblC1 = "BEFORE";
+					else if (lblC1.equals("IAFTER")) lblC1 = "AFTER";
+					getVectors().add(lblC1);
+					fields.add("labelCollapsed1");
+					break;
+				case labelCollapsed2:
+					String lblC2 = getLabel();
+					if (lblC2.equals("END")) lbl = "ENDS";
+					else if (lblC2.equals("IDENTITY")) lblC2 = "SIMULTANEOUS";
+					else if (lblC2.equals("DURING")) lblC2 = "SIMULTANEOUS";
+					else if (lblC2.equals("DURING_INV")) lblC2 = "SIMULTANEOUS";
+					else if (lblC2.equals("IBEFORE")) lblC2 = "BEFORE";
+					else if (lblC2.equals("IAFTER")) lblC2 = "AFTER";
+					else if (lblC2.equals("BEGINS")) lblC2 = "BEFORE";
+					else if (lblC2.equals("BEGUN_BY")) lblC2 = "AFTER";
+					else if (lblC2.equals("ENDS")) lblC2 = "AFTER";
+					else if (lblC2.equals("ENDED_BY")) lblC2 = "BEFORE";
+					getVectors().add(lblC2);
+					fields.add("labelCollapsed2");
+					break;
+				case labelCollapsed3:
+					String lblC3 = getLabel();
+					if (lblC3.equals("END")) lbl = "ENDS";
+					else if (lblC3.equals("IDENTITY")) lblC3 = "SIMULTANEOUS";
+					else if (lblC3.equals("DURING")) lblC3 = "IS_INCLUDED";
+					else if (lblC3.equals("DURING_INV")) lblC3 = "INCLUDES";
+					else if (lblC3.equals("IBEFORE")) lblC3 = "BEFORE";
+					else if (lblC3.equals("IAFTER")) lblC3 = "AFTER";
+					else if (lblC3.equals("BEGINS")) lblC3 = "BEFORE";
+					else if (lblC3.equals("BEGUN_BY")) lblC3 = "AFTER";
+					else if (lblC3.equals("ENDS")) lblC3 = "AFTER";
+					else if (lblC3.equals("ENDED_BY")) lblC3 = "BEFORE";
+					getVectors().add(lblC3);
+					fields.add("labelCollapsed3");
+					break;
+				case labelCollapsed4:
+					String lblC4 = getLabel();
+					if (lblC4.equals("END")) lblC4 = "ENDS";
+					else if (lblC4.equals("IDENTITY")) lblC4 = "SIMULTANEOUS";
+					else if (lblC4.equals("DURING")) lblC4 = "DURING";
+					else if (lblC4.equals("DURING_INV")) lblC4 = "DURING";
+					else if (lblC4.equals("IBEFORE")) lblC4 = "BEFORE";
+					else if (lblC4.equals("IAFTER")) lblC4 = "AFTER";
+					else if (lblC4.equals("BEGINS")) lblC4 = "DURING";
+					else if (lblC4.equals("BEGUN_BY")) lblC4 = "DURING";
+					else if (lblC4.equals("ENDS")) lblC4 = "DURING";
+					else if (lblC4.equals("ENDED_BY")) lblC4 = "DURING";
+					getVectors().add(lblC4);
+					fields.add("labelCollapsed4");
+					break;
+				case labelCollapsed5:
+					String lblC5 = getLabel();
+					if (lblC5.equals("END")) lblC5 = "ENDS";
+					else if (lblC5.equals("IDENTITY")) lblC5 = "SIMULTANEOUS";
+					else if (lblC5.equals("DURING")) lblC5 = "DURING";
+					else if (lblC5.equals("DURING_INV")) lblC5 = "DURING";
+					else if (lblC5.equals("IBEFORE")) lblC5 = "BEFORE";
+					else if (lblC5.equals("IAFTER")) lblC5 = "AFTER";
+					else if (lblC5.equals("BEGINS")) lblC5 = "IS_INCLUDED";
+					else if (lblC5.equals("BEGUN_BY")) lblC5 = "INCLUDES";
+					else if (lblC5.equals("ENDS")) lblC5 = "IS_INCLUDED";
+					else if (lblC5.equals("ENDED_BY")) lblC5 = "INCLUDES";
+					getVectors().add(lblC5);
+					fields.add("labelCollapsed5");
+					break;
+				case labelCollapsed6:
+					String lblC6 = getLabel();
+					if (lblC6.equals("END")) lblC6 = "ENDS";
+					else if (lblC6.equals("IDENTITY")) lblC6 = "SIMULTANEOUS";
+					else if (lblC6.equals("DURING")) lblC6 = "NONE";
+					else if (lblC6.equals("DURING_INV")) lblC6 = "NONE";
+					else if (lblC6.equals("IBEFORE")) lblC6 = "BEFORE";
+					else if (lblC6.equals("IAFTER")) lblC6 = "AFTER";
+					else if (lblC6.equals("BEGINS")) lblC6 = "NONE";
+					else if (lblC6.equals("BEGUN_BY")) lblC6 = "NONE";
+					else if (lblC6.equals("ENDS")) lblC6 = "NONE";
+					else if (lblC6.equals("ENDED_BY")) lblC6 = "NONE";
+					getVectors().add(lblC6);
+					fields.add("labelCollapsed6");
+					break;
+				case labelCollapsed01:
+					String lblC01 = getLabel();
+					if (lblC01.equals("IDENTITY")) lblC01 = "SIMULTANEOUS";
+					else if (lblC01.equals("IS_INCLUDED")) lblC01 = "INCLUDES";
+					else if (lblC01.equals("IBEFORE")) lblC01 = "BEFORE";
+					else if (lblC01.equals("IAFTER")) lblC01 = "AFTER";
+					else if (lblC01.equals("BEGUN_BY")) lblC01 = "BEGINS";
+					else if (lblC01.equals("ENDED_BY")) lblC01 = "ENDS";
+					else if (lblC01.equals("DURING_INV")) lblC01 = "DURING";
+					getVectors().add(lblC01);
+					fields.add("labelCollapsed01");
+					break;
+				case labelCollapsed02:
+					String lblC02 = getLabel();
+					if (lblC02.equals("IDENTITY")) lblC02 = "SIMULTANEOUS";
+					else if (lblC02.equals("IS_INCLUDED")) lblC02 = "INCLUDES";
+					else if (lblC02.equals("IBEFORE")) lblC02 = "BEFORE";
+					else if (lblC02.equals("IAFTER")) lblC02 = "AFTER";
+					else if (lblC02.equals("BEGINS")) lblC02 = "DURING";
+					else if (lblC02.equals("ENDS")) lblC02 = "DURING";
+					else if (lblC02.equals("DURING")) lblC02 = "DURING";
+					else if (lblC02.equals("BEGUN_BY")) lblC02 = "DURING_INV";
+					else if (lblC02.equals("ENDED_BY")) lblC02 = "DURING_INV";
+					else if (lblC02.equals("DURING_INV")) lblC02 = "DURING_INV";
+					getVectors().add(lblC02);
+					fields.add("labelCollapsed02");
+					break;
+				case labelCollapsed03:
+					String lblC03 = getLabel();
+					if (lblC03.equals("IDENTITY")) lblC03 = "SIMULTANEOUS";
+					else if (lblC03.equals("IBEFORE")) lblC03 = "BEFORE";
+					else if (lblC03.equals("IAFTER")) lblC03 = "AFTER";
+					else if (lblC03.equals("BEGINS")) lblC03 = "DURING";
+					else if (lblC03.equals("ENDS")) lblC03 = "DURING";
+					else if (lblC03.equals("DURING")) lblC03 = "DURING";
+					else if (lblC03.equals("BEGUN_BY")) lblC03 = "DURING_INV";
+					else if (lblC03.equals("ENDED_BY")) lblC03 = "DURING_INV";
+					else if (lblC03.equals("DURING_INV")) lblC03 = "DURING_INV";
+					getVectors().add(lblC03);
+					fields.add("labelCollapsed03");
 					break;
 			}
 		}
 	}
 	
-	public void addBinaryFeatureToVector(Feature feature) throws Exception {
+	public void addBinaryFeatureToVector(FeatureName feature) throws Exception {
 		List<String> fields = null;
 		if (this instanceof EventEventFeatureVector) {
 			fields = EventEventFeatureVector.fields;
@@ -1501,6 +2200,7 @@ public class PairFeatureVector {
 			fields = EventTimexFeatureVector.fields;
 		}
 		Marker m = null;
+		String lblStr = null;
 		if (fields != null) {
 			switch(feature) {
 				case id: 	
@@ -1510,8 +2210,8 @@ public class PairFeatureVector {
 					fields.add("id2");
 					break;
 				case pos:
-					String[] e1Pos = getTokenAttribute(e1, Feature.pos).split("_");
-					String[] e2Pos = getTokenAttribute(e2, Feature.pos).split("_");
+					String[] e1Pos = getTokenAttribute(e1, FeatureName.pos).split("_");
+					String[] e2Pos = getTokenAttribute(e2, FeatureName.pos).split("_");
 					for (String s : this.pos) {
 						fields.add("pos1_" + s);
 						getVectors().add("0");
@@ -1532,8 +2232,8 @@ public class PairFeatureVector {
 					}
 					break;
 				case mainpos:
-					String[] e1Mpos = getTokenAttribute(e1, Feature.mainpos).split("_");
-					String[] e2Mpos = getTokenAttribute(e2, Feature.mainpos).split("_");
+					String[] e1Mpos = getTokenAttribute(e1, FeatureName.mainpos).split("_");
+					String[] e2Mpos = getTokenAttribute(e2, FeatureName.mainpos).split("_");
 					for (String s : this.main_pos) {
 						fields.add("mainpos1_" + s);
 						getVectors().add("0");
@@ -1554,8 +2254,8 @@ public class PairFeatureVector {
 					}
 					break;
 				case chunk:
-					String[] e1Chunk = getTokenAttribute(e1, Feature.chunk).split("_");
-					String[] e2Chunk = getTokenAttribute(e2, Feature.chunk).split("_");
+					String[] e1Chunk = getTokenAttribute(e1, FeatureName.chunk).split("_");
+					String[] e2Chunk = getTokenAttribute(e2, FeatureName.chunk).split("_");
 					for (String s : this.chunk) {
 						fields.add("chunk1_" + s);
 						getVectors().add("0");
@@ -1576,19 +2276,19 @@ public class PairFeatureVector {
 					}
 					break;
 				case samePos:
-					getVectors().add(isSameTokenAttribute(Feature.pos) ? "1" : "0");
+					getVectors().add(isSameTokenAttribute(FeatureName.pos) ? "1" : "0");
 					fields.add("samePos");
 					break;
 				case sameMainPos:
-					getVectors().add(isSameTokenAttribute(Feature.mainpos) ? "1" : "0");
+					getVectors().add(isSameTokenAttribute(FeatureName.mainpos) ? "1" : "0");
 					fields.add("sameMainPos");
 					break;
 				case entDistance:
 					//getVectors().add(getEntityDistance().toString());
-					if (getEntityDistance() > 0) {
-						getVectors().add("1");
-					} else {
+					if (getEntityDistance() == 0) {
 						getVectors().add("0");
+					} else {
+						getVectors().add("1");
 					}
 					fields.add("entDistance");
 					break;
@@ -1611,18 +2311,18 @@ public class PairFeatureVector {
 				case eventClass:
 					if (this instanceof EventEventFeatureVector) {
 						for (String s : this.ev_class) {
-							if (s.equals(getEntityAttribute(e1, Feature.eventClass))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.eventClass))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e1class_" + s);
 						}
 						for (String s : this.ev_class) {
-							if (s.equals(getEntityAttribute(e2, Feature.eventClass))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e2, FeatureName.eventClass))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e2class_" + s);
 						}
 					} else if (this instanceof EventTimexFeatureVector) {
 						for (String s : this.ev_class) {
-							if (s.equals(getEntityAttribute(e1, Feature.eventClass))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.eventClass))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("eclass_" + s);
 						}
@@ -1631,18 +2331,18 @@ public class PairFeatureVector {
 				case tense:
 					if (this instanceof EventEventFeatureVector) {
 						for (String s : this.ev_tense) {
-							if (s.equals(getEntityAttribute(e1, Feature.tense))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.tense))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e1tense_" + s);
 						}
 						for (String s : this.ev_tense) {
-							if (s.equals(getEntityAttribute(e2, Feature.tense))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e2, FeatureName.tense))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e2tense_" + s);
 						}
 					} else if (this instanceof EventTimexFeatureVector) {
 						for (String s : this.ev_tense) {
-							if (s.equals(getEntityAttribute(e1, Feature.tense))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.tense))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("etense_" + s);
 						}
@@ -1651,18 +2351,18 @@ public class PairFeatureVector {
 				case aspect:
 					if (this instanceof EventEventFeatureVector) {
 						for (String s : this.ev_aspect) {
-							if (s.equals(getEntityAttribute(e1, Feature.aspect))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.aspect))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e1aspect_" + s);
 						}
 						for (String s : this.ev_aspect) {
-							if (s.equals(getEntityAttribute(e2, Feature.aspect))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e2, FeatureName.aspect))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("e2aspect_" + s);
 						}
 					} else if (this instanceof EventTimexFeatureVector) {
 						for (String s : this.ev_aspect) {
-							if (s.equals(getEntityAttribute(e1, Feature.aspect))) getVectors().add("1");
+							if (s.equals(getEntityAttribute(e1, FeatureName.aspect))) getVectors().add("1");
 							else getVectors().add("0");
 							fields.add("easpect_" + s);
 						}
@@ -1670,42 +2370,42 @@ public class PairFeatureVector {
 					break;
 				case polarity:
 					if (this instanceof EventEventFeatureVector) {
-						if (getEntityAttribute(e1, Feature.polarity).equals("neg")) getVectors().add("0");
+						if (getEntityAttribute(e1, FeatureName.polarity).equals("neg")) getVectors().add("0");
 						else getVectors().add("1");
 						fields.add("e1polarity");
-						if (getEntityAttribute(e2, Feature.polarity).equals("neg")) getVectors().add("0");
+						if (getEntityAttribute(e2, FeatureName.polarity).equals("neg")) getVectors().add("0");
 						else getVectors().add("1");
 						fields.add("e2polarity");
 					} else if (this instanceof EventTimexFeatureVector) {
-						if (getEntityAttribute(e1, Feature.polarity).equals("neg")) getVectors().add("0");
+						if (getEntityAttribute(e1, FeatureName.polarity).equals("neg")) getVectors().add("0");
 						else getVectors().add("1");
 						fields.add("epolarity");
 					}
 					break;
 				case sameEventClass:
-					getVectors().add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "1" : "0");
+					getVectors().add(getEntityAttribute(e1, FeatureName.eventClass).equals(getEntityAttribute(e2, FeatureName.eventClass)) ? "1" : "0");
 					fields.add("sameEventClass");
 					break;
 				case sameTense:
-					getVectors().add(getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) ? "1" : "0");
+					getVectors().add(getEntityAttribute(e1, FeatureName.tense).equals(getEntityAttribute(e2, FeatureName.tense)) ? "1" : "0");
 					fields.add("sameTense");
 					break;
 				case sameAspect:
-					getVectors().add(getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect)) ? "1" : "0");
+					getVectors().add(getEntityAttribute(e1, FeatureName.aspect).equals(getEntityAttribute(e2, FeatureName.aspect)) ? "1" : "0");
 					fields.add("sameAspect");
 					break;
 				case sameTenseAspect:
-					getVectors().add((getEntityAttribute(e1, Feature.tense).equals(getEntityAttribute(e2, Feature.tense)) &&
-							getEntityAttribute(e1, Feature.aspect).equals(getEntityAttribute(e2, Feature.aspect))) ? "1" : "0");
+					getVectors().add((getEntityAttribute(e1, FeatureName.tense).equals(getEntityAttribute(e2, FeatureName.tense)) &&
+							getEntityAttribute(e1, FeatureName.aspect).equals(getEntityAttribute(e2, FeatureName.aspect))) ? "1" : "0");
 					fields.add("sameTenseAspect");
 					break;
 				case samePolarity:
-					getVectors().add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "1" : "0");
+					getVectors().add(getEntityAttribute(e1, FeatureName.polarity).equals(getEntityAttribute(e2, FeatureName.polarity)) ? "1" : "0");
 					fields.add("samePolarity");
 					break;
 				case timexType:
 					for (String s : this.tmx_type) {
-						if (s.equals(getEntityAttribute(e2, Feature.timexType))) getVectors().add("1");
+						if (s.equals(getEntityAttribute(e2, FeatureName.timexType))) getVectors().add("1");
 						else getVectors().add("0");
 						fields.add("ttype_" + s);
 					}
@@ -1724,6 +2424,34 @@ public class PairFeatureVector {
 						fields.add("e_mainverb");
 					}
 					break;
+					
+				case depTmxPath:
+					String depTmxPathStr = ((EventTimexFeatureVector) this).getMateDependencyPath();
+					if (depTmxPathStr.equals("TMP-PMOD")) {
+						getVectors().add("1"); 
+					} else {
+						getVectors().add("0");
+					}
+					if (!depTmxPathStr.equals("TMP-PMOD")
+							&& depTmxPathStr.contains("TMP-PMOD")) {
+						getVectors().add("1"); 
+					} else {
+						getVectors().add("0");
+					}
+					fields.add("depTmxPath1");
+					fields.add("depTmxPath2");
+					break;
+					
+				case depEvPath:
+					String depEvPathStr = ((EventEventFeatureVector) this).getMateDependencyPath();
+					
+					for (String s : this.dep_event_path) {
+						if (s.equals(depEvPathStr)) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("depevpath_" + s.replace(" ", "_"));
+					}
+					break;
+					
 				case tempSignalClusText:
 					if (this instanceof EventTimexFeatureVector) {
 						//Assuming that the pair is already in event-timex order
@@ -1776,52 +2504,156 @@ public class PairFeatureVector {
 						}
 					}
 					break;
-				case causMarkerClusText:
-					boolean found = false;
-					m = getCausalSignal();
-					for (String s : this.caus_signal) {
-						if (s.equals(m.getCluster())) {
-							getVectors().add("1");
-							found = true;
-						}
+					
+				case tempSignal1ClusText:
+					m = getTemporalSignalPerEntity(e1);
+					for (String s : this.temp_signal_event) {
+						if (s.equals(m.getCluster())) getVectors().add("1");
 						else getVectors().add("0");
-						fields.add("caussig_" + s.replace(" ", "_"));
+						fields.add("tempsig1_" + s.replace(" ", "_"));
 					}
-					m = getCausalVerb();
-					for (String s : this.caus_verb) {
-						if (found) {
-							getVectors().add("0");
+					break;
+				case tempSignal1Pos:
+					m = getTemporalSignalPerEntity(e1);
+					for (String s : this.marker_position) {
+						if (s.equals(m.getCluster())) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("tempsigpos1_" + s);
+					}
+					break;
+				case tempSignal2ClusText:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							for (String s : this.temp_signal_timex) {
+								getVectors().add("0");
+								fields.add("tempsig2_" + s.replace(" ", "_"));
+							}
+						} else {	
+							m = getTemporalSignalPerEntity(e2);
+							for (String s : this.temp_signal_timex) {
+								if (s.equals(m.getCluster())) getVectors().add("1");
+								else getVectors().add("0");
+								fields.add("tempsig2_" + s.replace(" ", "_"));
+							}
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignalPerEntity(e2);
+						for (String s : this.temp_signal_event) {
+							if (s.equals(m.getCluster())) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("tempsig2_" + s.replace(" ", "_"));
+						}
+					}
+					break;
+				case tempSignal2Pos:
+					if (this instanceof EventTimexFeatureVector) {
+						//Assuming that the pair is already in event-timex order
+						if ((e2 instanceof Timex && ((Timex)e2).isDct()) || (e2 instanceof Timex && ((Timex)e2).isEmptyTag()) ||
+							!isSameSentence()) {
+							for (String s : this.marker_position) {
+								getVectors().add("0");
+								fields.add("tempsigpos2_" + s);
+							}
+						} else {	
+							m = getTemporalSignalPerEntity(e2);
+							for (String s : this.marker_position) {
+								if (s.equals(m.getCluster())) getVectors().add("1");
+								else getVectors().add("0");
+								fields.add("tempsigpos2_" + s);
+							}
+						}
+					} else if (this instanceof EventEventFeatureVector) {
+						m = getTemporalSignalPerEntity(e2);
+						for (String s : this.marker_position) {
+							if (s.equals(m.getCluster())) getVectors().add("1");
+							else getVectors().add("0");
+							fields.add("tempsigpos2_" + s);
+						}
+					}
+					break;
+					
+				case causMarkerClusText:
+					m = getCausalSignal();
+					if (m.getCluster().equals("O")) {
+						for (int i=0; i<this.caus_signal.length; i++) getVectors().add("0");
+						m = getCausalVerb();
+						if (m.getCluster().equals("O")) {
+							for (int i=0; i<this.caus_verb.length; i++) getVectors().add("0");
 						} else {
+							for (String s : this.caus_verb) {
+								if (s.equals(m.getCluster())) getVectors().add("1");
+								else getVectors().add("0");
+							}
+						}
+					} else {
+						for (String s : this.caus_signal) {
 							if (s.equals(m.getCluster())) getVectors().add("1");
 							else getVectors().add("0");
 						}
+						for (int i=0; i<this.caus_verb.length; i++) getVectors().add("0");
+					}
+					for (String s : this.caus_signal) {
+						fields.add("caussig_" + s.replace(" ", "_"));
+					}
+					for (String s : this.caus_verb) {
 						fields.add("causverb_" + s.replace(" ", "_"));
 					}
 					break;
 				case causMarkerPos:
-					boolean foundd = false;
-					List<String> pos = new ArrayList<String>();
 					m = getCausalSignal();
-					for (String s : this.marker_position) {
-						if (s.equals(m.getPosition())) {
-							pos.add("1");
-							foundd = true;
-						}
-						else pos.add("0");
-					}
-					if (!foundd) {
-						pos.clear();
+					if (m.getPosition().equals("O")) {
 						m = getCausalVerb();
-						for (String s : this.marker_position) {
-							if (s.equals(m.getPosition())) {
-								pos.add("1");
+						if (m.getPosition().equals("O")) {
+							for (int i=0; i<this.marker_position.length; i++) getVectors().add("0");
+						} else {
+							for (String s : this.marker_position) {
+								if (s.equals(m.getPosition())) getVectors().add("1");
+								else getVectors().add("0");
 							}
-							else pos.add("0");
+						}
+					} else {
+						for (String s : this.marker_position) {
+							if (s.equals(m.getPosition())) getVectors().add("1");
+							else getVectors().add("0");
 						}
 					}
-					getVectors().addAll(pos);
 					for (String s : this.marker_position) {
-						fields.add("caussigpos_" + s);
+						fields.add("causmarkpos_" + s);
+					}
+					break;
+				case causMarkerDep1Dep2:
+					m = getCausalSignal();
+					if (m.getCluster().equals("O")) {
+						m = getCausalVerb();
+						if (m.getCluster().equals("O")) {
+							for (int i=0; i<(this.dep_signal_path.length); i++) getVectors().add("0");
+						} else {
+							for (String s : this.dep_signal_path) {
+								if (m.getDepRelE1().contains(s)) getVectors().add("1");
+								else getVectors().add("0");
+							}
+							for (String s : this.dep_signal_path) {
+								if (m.getDepRelE2().contains(s)) getVectors().add("1");
+								else getVectors().add("0");
+							}
+						}
+					} else {
+						for (String s : this.dep_signal_path) {
+							if (m.getDepRelE1().contains(s)) getVectors().add("1");
+							else getVectors().add("0");
+						}
+						for (String s : this.dep_signal_path) {
+							if (m.getDepRelE2().contains(s)) getVectors().add("1");
+							else getVectors().add("0");
+						}
+					}
+					for (String s : this.dep_signal_path) {
+						fields.add("caussigdep_" + s);
+					}
+					for (String s : this.dep_signal_path) {
+						fields.add("caussigdep_" + s);
 					}
 					break;
 				case coref:
@@ -1850,18 +2682,153 @@ public class PairFeatureVector {
 					if (lbl.equals("END")) lbl = "ENDS";
 					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lbl)+1));
 					fields.add("label");
-					break;	
-				case labelReduced:
-					String lblRed = getLabel();
-					if (lblRed.equals("END")) lbl = "ENDS";
-					else if (lblRed.equals("IDENTITY")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("DURING")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("DURING_INV")) lblRed = "SIMULTANEOUS";
-					else if (lblRed.equals("IBEFORE")) lblRed = "BEFORE";
-					else if (lblRed.equals("IAFTER")) lblRed = "AFTER";
-					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblRed)+1));
-					fields.add("labelReduced");
 					break;
+				case labelCaus:
+					String lblCaus = getLabel();
+					getVectors().add(String.valueOf(caus_rel_type_list.indexOf(lblCaus)+1));
+					fields.add("label");
+					break;
+				case labelCollapsed:
+					String lblC = getLabel();
+					if (lblC.equals("END")) lblC = "ENDS";
+					else if (lblC.equals("DURING")) lblC = "SIMULTANEOUS";
+					else if (lblC.equals("DURING_INV")) lblC = "SIMULTANEOUS";
+					else if (lblC.equals("IBEFORE")) lblC = "BEFORE";
+					else if (lblC.equals("IAFTER")) lblC = "AFTER";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC)+1));
+					fields.add("labelCollapsed");
+					break;	
+				case labelCollapsed1:
+					String lblC1 = getLabel();
+					if (lblC1.equals("END")) lblC1 = "ENDS";
+					else if (lblC1.equals("IDENTITY")) lblC1 = "SIMULTANEOUS";
+					else if (lblC1.equals("DURING")) lblC1 = "IS_INCLUDED";
+					else if (lblC1.equals("DURING_INV")) lblC1 = "INCLUDES";
+					else if (lblC1.equals("IBEFORE")) lblC1 = "BEFORE";
+					else if (lblC1.equals("IAFTER")) lblC1 = "AFTER";
+					else if (lblC1.equals("BEGINS")) lblC1 = "BEFORE";
+					else if (lblC1.equals("BEGUN_BY")) lblC1 = "AFTER";
+					else if (lblC1.equals("ENDS")) lblC1 = "AFTER";
+					else if (lblC1.equals("ENDED_BY")) lblC1 = "BEFORE";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC1)+1));
+					fields.add("labelCollapsed1");
+					break;
+				case labelCollapsed2:
+					String lblC2 = getLabel();
+					if (lblC2.equals("END")) lblC2 = "ENDS";
+					else if (lblC2.equals("IDENTITY")) lblC2 = "SIMULTANEOUS";
+					else if (lblC2.equals("DURING")) lblC2 = "IS_INCLUDED";
+					else if (lblC2.equals("DURING_INV")) lblC2 = "INCLUDES";
+					else if (lblC2.equals("IBEFORE")) lblC2 = "BEFORE";
+					else if (lblC2.equals("IAFTER")) lblC2 = "AFTER";
+					else if (lblC2.equals("BEGINS")) lblC2 = "IS_INCLUDED";
+					else if (lblC2.equals("BEGUN_BY")) lblC2 = "INCLUDES";
+					else if (lblC2.equals("ENDS")) lblC2 = "IS_INCLUDED";
+					else if (lblC2.equals("ENDED_BY")) lblC2 = "INCLUDES";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC2)+1));
+					fields.add("labelCollapsed2");
+					break;
+				case labelCollapsed3:
+					String lblC3 = getLabel();
+					if (lblC3.equals("END")) lblC3 = "ENDS";
+					else if (lblC3.equals("IDENTITY")) lblC3 = "SIMULTANEOUS";
+					else if (lblC3.equals("IBEFORE")) lblC3 = "BEFORE";
+					else if (lblC3.equals("IAFTER")) lblC3 = "AFTER";
+					else if (lblC3.equals("BEGINS")) lblC3 = "DURING";
+					else if (lblC3.equals("BEGUN_BY")) lblC3 = "DURING_INV";
+					else if (lblC3.equals("ENDS")) lblC3 = "DURING";
+					else if (lblC3.equals("ENDED_BY")) lblC3 = "DURING_INV";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC3)+1));
+					fields.add("labelCollapsed3");
+					break;
+				case labelCollapsed4:
+					String lblC4 = getLabel();
+					if (lblC4.equals("END")) lblC4 = "ENDS";
+					else if (lblC4.equals("IDENTITY")) lblC4 = "SIMULTANEOUS";
+					else if (lblC4.equals("IS_INCLUDED")) lblC4 = "INCLUDES";
+					else if (lblC4.equals("DURING")) lblC4 = "DURING";
+					else if (lblC4.equals("DURING_INV")) lblC4 = "DURING";
+					else if (lblC4.equals("IBEFORE")) lblC4 = "BEFORE";
+					else if (lblC4.equals("IAFTER")) lblC4 = "AFTER";
+					else if (lblC4.equals("BEGINS")) lblC4 = "DURING";
+					else if (lblC4.equals("BEGUN_BY")) lblC4 = "DURING";
+					else if (lblC4.equals("ENDS")) lblC4 = "DURING";
+					else if (lblC4.equals("ENDED_BY")) lblC4 = "DURING";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC4)+1));
+					fields.add("labelCollapsed4");
+					break;
+				case labelCollapsed5:
+					String lblC5 = getLabel();
+					if (lblC5.equals("END")) lblC5 = "ENDS";
+					else if (lblC5.equals("IDENTITY")) lblC5 = "SIMULTANEOUS";
+					else if (lblC5.equals("DURING")) lblC5 = "DURING";
+					else if (lblC5.equals("DURING_INV")) lblC5 = "DURING";
+					else if (lblC5.equals("IBEFORE")) lblC5 = "BEFORE";
+					else if (lblC5.equals("IAFTER")) lblC5 = "AFTER";
+					else if (lblC5.equals("BEGINS")) lblC5 = "IS_INCLUDED";
+					else if (lblC5.equals("BEGUN_BY")) lblC5 = "INCLUDES";
+					else if (lblC5.equals("ENDS")) lblC5 = "IS_INCLUDED";
+					else if (lblC5.equals("ENDED_BY")) lblC5 = "INCLUDES";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC5)+1));
+					fields.add("labelCollapsed5");
+					break;
+				case labelCollapsed6:
+					String lblC6 = getLabel();
+					if (lblC6.equals("END")) lblC6 = "ENDS";
+					else if (lblC6.equals("IDENTITY")) lblC6 = "SIMULTANEOUS";
+					else if (lblC6.equals("DURING")) lblC6 = "NONE";
+					else if (lblC6.equals("DURING_INV")) lblC6 = "NONE";
+					else if (lblC6.equals("IBEFORE")) lblC6 = "BEFORE";
+					else if (lblC6.equals("IAFTER")) lblC6 = "AFTER";
+					else if (lblC6.equals("BEGINS")) lblC6 = "NONE";
+					else if (lblC6.equals("BEGUN_BY")) lblC6 = "NONE";
+					else if (lblC6.equals("ENDS")) lblC6 = "NONE";
+					else if (lblC6.equals("ENDED_BY")) lblC6 = "NONE";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC6)+1));
+					fields.add("labelCollapsed6");
+					break;
+				case labelCollapsed01:
+					String lblC01 = getLabel();
+					if (lblC01.equals("IDENTITY")) lblC01 = "SIMULTANEOUS";
+					else if (lblC01.equals("IS_INCLUDED")) lblC01 = "INCLUDES";
+					else if (lblC01.equals("IBEFORE")) lblC01 = "BEFORE";
+					else if (lblC01.equals("IAFTER")) lblC01 = "AFTER";
+					else if (lblC01.equals("BEGUN_BY")) lblC01 = "BEGINS";
+					else if (lblC01.equals("ENDED_BY")) lblC01 = "ENDS";
+					else if (lblC01.equals("DURING_INV")) lblC01 = "DURING";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC01)+1));
+					fields.add("labelCollapsed01");
+					break;
+				case labelCollapsed02:
+					String lblC02 = getLabel();
+					if (lblC02.equals("IDENTITY")) lblC02 = "SIMULTANEOUS";
+					else if (lblC02.equals("IS_INCLUDED")) lblC02 = "INCLUDES";
+					else if (lblC02.equals("IBEFORE")) lblC02 = "BEFORE";
+					else if (lblC02.equals("IAFTER")) lblC02 = "AFTER";
+					else if (lblC02.equals("BEGINS")) lblC02 = "DURING";
+					else if (lblC02.equals("ENDS")) lblC02 = "DURING";
+					else if (lblC02.equals("DURING")) lblC02 = "DURING";
+					else if (lblC02.equals("BEGUN_BY")) lblC02 = "DURING_INV";
+					else if (lblC02.equals("ENDED_BY")) lblC02 = "DURING_INV";
+					else if (lblC02.equals("DURING_INV")) lblC02 = "DURING_INV";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC02)+1));
+					fields.add("labelCollapsed02");
+					break;
+				case labelCollapsed03:
+					String lblC03 = getLabel();
+					if (lblC03.equals("IDENTITY")) lblC03 = "SIMULTANEOUS";
+					else if (lblC03.equals("IBEFORE")) lblC03 = "BEFORE";
+					else if (lblC03.equals("IAFTER")) lblC03 = "AFTER";
+					else if (lblC03.equals("BEGINS")) lblC03 = "DURING";
+					else if (lblC03.equals("ENDS")) lblC03 = "DURING";
+					else if (lblC03.equals("DURING")) lblC03 = "DURING";
+					else if (lblC03.equals("BEGUN_BY")) lblC03 = "DURING_INV";
+					else if (lblC03.equals("ENDED_BY")) lblC03 = "DURING_INV";
+					else if (lblC03.equals("DURING_INV")) lblC03 = "DURING_INV";
+					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC03)+1));
+					fields.add("labelCollapsed03");
+					break;
+				
 			}
 		}
 	}
@@ -1870,7 +2837,7 @@ public class PairFeatureVector {
 		return temp_rel_type_list.get(Integer.valueOf(num)-1);
 	}
 	
-	public void addPhraseFeatureToVector(Feature feature) throws Exception {
+	public void addPhraseFeatureToVector(FeatureName feature) throws Exception {
 		List<String> fields = null;
 		if (this instanceof EventEventFeatureVector) {
 			fields = EventEventFeatureVector.fields;

@@ -13,7 +13,7 @@ import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Lin;
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 
 public class EventEventFeatureVector extends PairFeatureVector{
 	
@@ -46,7 +46,7 @@ public class EventEventFeatureVector extends PairFeatureVector{
 	public Double getWordSimilarity() {
 		ILexicalDatabase db = new NictWordNet();
 		RelatednessCalculator rc = new Lin(db);
-		return rc.calcRelatednessOfWords(getTokenAttribute(e1, Feature.lemma), getTokenAttribute(e2, Feature.lemma));
+		return rc.calcRelatednessOfWords(getTokenAttribute(e1, FeatureName.lemma), getTokenAttribute(e2, FeatureName.lemma));
 	}
 	
 	public String getDiscreteWordSimilarity() {
@@ -67,36 +67,46 @@ public class EventEventFeatureVector extends PairFeatureVector{
 	
 	public ArrayList<String> getEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e2, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e2, Feature.tense));
-		entityAttrs.add(getEntityAttribute(e1, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e2, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e1, Feature.polarity));
-		entityAttrs.add(getEntityAttribute(e2, Feature.polarity));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.eventClass));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.eventClass));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.tense));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.tense));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.aspect));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.aspect));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.polarity));
+		entityAttrs.add(getEntityAttribute(e2, FeatureName.polarity));
 		return entityAttrs;
 	}
 	
 	public ArrayList<String> getCombinedEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass) + "|" + getEntityAttribute(e2, Feature.eventClass));
-		entityAttrs.add(getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect) + "|" + 
-				getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect));
-		entityAttrs.add(getEntityAttribute(e1, Feature.polarity) + "|" + getEntityAttribute(e2, Feature.polarity));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.eventClass) + "|" + getEntityAttribute(e2, FeatureName.eventClass));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect) + "|" + 
+				getEntityAttribute(e2, FeatureName.tense) + "-" + getEntityAttribute(e2, FeatureName.aspect));
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.polarity) + "|" + getEntityAttribute(e2, FeatureName.polarity));
 		return entityAttrs;
 	}
 	
 	public ArrayList<String> getSameEntityAttributes() {
 		ArrayList<String> entityAttrs = new ArrayList<String>();
-		entityAttrs.add(getEntityAttribute(e1, Feature.eventClass).equals(getEntityAttribute(e2, Feature.eventClass)) ? "TRUE" : "FALSE");
-		entityAttrs.add((getEntityAttribute(e1, Feature.tense) + "-" + getEntityAttribute(e1, Feature.aspect)).equals(getEntityAttribute(e2, Feature.tense) + "-" + getEntityAttribute(e2, Feature.aspect)) ? "TRUE" : "FALSE");
-		entityAttrs.add(getEntityAttribute(e1, Feature.polarity).equals(getEntityAttribute(e2, Feature.polarity)) ? "TRUE" : "FALSE");
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.eventClass).equals(getEntityAttribute(e2, FeatureName.eventClass)) ? "TRUE" : "FALSE");
+		entityAttrs.add((getEntityAttribute(e1, FeatureName.tense) + "-" + getEntityAttribute(e1, FeatureName.aspect)).equals(getEntityAttribute(e2, FeatureName.tense) + "-" + getEntityAttribute(e2, FeatureName.aspect)) ? "TRUE" : "FALSE");
+		entityAttrs.add(getEntityAttribute(e1, FeatureName.polarity).equals(getEntityAttribute(e2, FeatureName.polarity)) ? "TRUE" : "FALSE");
 		return entityAttrs;
 	}
 	
 	public Boolean isCoreference() {
 		return ((Event)e1).getCorefList().contains(e2.getID());
+	}
+	
+	private static String reversePath(String path) {
+	    StringBuilder sb = new StringBuilder(path.length() + 1);
+	    String[] words = path.split("-");
+	    for (int i = words.length - 1; i >= 0; i--) {
+	        sb.append(words[i]).append('-');
+	    }
+	    sb.setLength(sb.length() - 1);  // Strip trailing space
+	    return sb.toString();
 	}
 	
 	public String getMateDependencyPath() {
@@ -129,12 +139,12 @@ public class EventEventFeatureVector extends PairFeatureVector{
 				List<String> visited = new ArrayList<String>();
 				generateDependencyPath(govID, tokenArr1, paths, "", visited);
 				if (!paths.isEmpty()) {
-					return paths.get(0).substring(1);
+					return reversePath(paths.get(0).substring(1));
 				}
 				if (getMateCoordVerb(govID) != null) {
 					generateDependencyPath(getMateCoordVerb(govID), tokenArr1, paths, "", visited);
 					if (!paths.isEmpty()) {
-						return paths.get(0).substring(1);
+						return reversePath(paths.get(0).substring(1));
 					}
 				}
 			}
@@ -142,17 +152,17 @@ public class EventEventFeatureVector extends PairFeatureVector{
 			tokenArr1.clear();
 			tokenArr2.clear();			
 			
-			if (getTokenAttribute(e1, Feature.mainpos).equals("v")) {
+			if (getTokenAttribute(e1, FeatureName.mainpos).equals("v")) {
 				tokenArr1.add(getMateHeadVerb(tokenID1));
-			} else if (getTokenAttribute(e1, Feature.mainpos).equals("adj") &&
+			} else if (getTokenAttribute(e1, FeatureName.mainpos).equals("adj") &&
 				getMateVerbFromAdj(tokenID1) != null) {
 				tokenArr1.add(getMateVerbFromAdj(tokenID1));
 			} else {
 				tokenArr1.add(tokenID1);
 			}
-			if (getTokenAttribute(e2, Feature.mainpos).equals("v")) {
+			if (getTokenAttribute(e2, FeatureName.mainpos).equals("v")) {
 				tokenArr2.add(getMateHeadVerb(tokenID2));
-			} else if (getTokenAttribute(e2, Feature.mainpos).equals("adj") &&
+			} else if (getTokenAttribute(e2, FeatureName.mainpos).equals("adj") &&
 				getMateVerbFromAdj(tokenID2) != null) {
 				tokenArr2.add(getMateVerbFromAdj(tokenID2));
 			} else {
@@ -178,12 +188,12 @@ public class EventEventFeatureVector extends PairFeatureVector{
 				List<String> visited = new ArrayList<String>();
 				generateDependencyPath(govID, tokenArr1, paths, "", visited);
 				if (!paths.isEmpty()) {
-					return paths.get(0).substring(1);
+					return reversePath(paths.get(0).substring(1));
 				}
 				if (getMateCoordVerb(govID) != null) {
 					generateDependencyPath(getMateCoordVerb(govID), tokenArr1, paths, "", visited);
 					if (!paths.isEmpty()) {
-						return paths.get(0).substring(1);
+						return reversePath(paths.get(0).substring(1));
 					}
 				}
 			}

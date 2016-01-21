@@ -24,8 +24,8 @@ public class TemporalSignalList extends SignalList{
 	public void readSignalFile() throws IOException {
 		BufferedReader eventreader = null, timexreader = null;
 		if (language.equals(Language.EN)) {
-			eventreader = new BufferedReader(new FileReader("resource/temporal_signal_event.list"));
-			timexreader = new BufferedReader(new FileReader("resource/temporal_signal_timex.list"));
+			eventreader = new BufferedReader(new FileReader("./resource/temporal_signal_event.list"));
+			timexreader = new BufferedReader(new FileReader("./resource/temporal_signal_timex.list"));
 		} else if (language.equals(Language.IT)) {
 			
 		}

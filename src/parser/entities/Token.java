@@ -3,7 +3,7 @@ package parser.entities;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 
 public class Token {
 	
@@ -57,7 +57,7 @@ public class Token {
 		this.dependencyRel = dependencyRel;
 	}
 	
-	public String getTokenText(Feature feature) {
+	public String getTokenText(FeatureName feature) {
 		switch (feature) {
 			case token: return this.getText(); 
 			case lemma: return this.getLemma();
@@ -65,7 +65,7 @@ public class Token {
 		}
 	}
 	
-	public String getTokenAttribute(Feature feature) {
+	public String getTokenAttribute(FeatureName feature) {
 		switch (feature) {
 			case token: return this.getText(); 
 			case lemma: return this.getLemma();

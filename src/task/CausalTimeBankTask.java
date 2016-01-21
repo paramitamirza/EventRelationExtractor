@@ -1,10 +1,14 @@
 package task;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,15 +20,21 @@ import org.xml.sax.SAXException;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
-import javafx.util.Pair;
+import evaluator.PairEvaluator;
+import model.classifier.EventEventCausalClassifier;
+import model.classifier.EventEventRelationClassifier;
+import model.classifier.EventTimexRelationClassifier;
+import model.classifier.PairClassifier;
+import model.classifier.PairClassifier.VectorClassifier;
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
 import model.feature.EventTimexFeatureVector;
 import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
-import model.feature.TimexTimexRelationRule;
-import model.feature.FeatureEnum.Feature;
+import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.EventEventRelationRule;
+import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TimeMLParser;
 import parser.TXPParser.Field;
@@ -68,49 +78,34 @@ public class CausalTimeBankTask {
 		features = new ArrayList<String>();
 	}
 	
-	public Map<Pair<String,String>,String> getCLINKs(Doc doc) {
-		Map<Pair<String,String>,String> clinks = new HashMap<Pair<String,String>,String>();
-		Pair<String,String> pair = null, pairInv = null;
+	public Map<String,String> getCLINKs(Doc doc) {
+		Map<String,String> clinks = new HashMap<String,String>();
+		String pair = null, pairInv = null;
 		for (CausalRelation clink : doc.getClinks()) {
-			pair = new Pair<String,String>(clink.getSourceID(), clink.getTargetID());
-			pairInv = new Pair<String,String>(clink.getTargetID(), clink.getSourceID());
+			pair = clink.getSourceID() + "-" + clink.getTargetID();
+			pairInv = clink.getTargetID()+ "-" + clink.getSourceID();
 			clinks.put(pair, "CLINK");
 			clinks.put(pairInv, "CLINK-R");
 		}			
 		return clinks;
 	}
 	
-	public Map<Pair<String,String>,String> getCandidatePairs(Doc doc) {
-		Map<Pair<String,String>,String> candidates = new HashMap<Pair<String,String>,String>();
-		Map<Pair<String,String>,String> clinks = getCLINKs(doc);
+	public Map<String,String> getCandidatePairs(Doc doc) {
+		Map<String,String> candidates = new HashMap<String,String>();
+		Map<String,String> clinks = getCLINKs(doc);
 		
-		for (int s=0; s<doc.getSentenceArr().size()-1; s++) {
+		for (int s=0; s<doc.getSentenceArr().size(); s++) {
 			Sentence s1 = doc.getSentences().get(doc.getSentenceArr().get(s));
-			Sentence s2 = doc.getSentences().get(doc.getSentenceArr().get(s+1));
 			
 			//candidate pairs within the same sentence
 			Entity e1, e2;
-			Pair<String,String> pair = null;
+			String pair = null;
 			for (int i = 0; i < s1.getEntityArr().size()-1; i++) {
 				for (int j = i+1; j < s1.getEntityArr().size(); j++) {
 					e1 = doc.getEntities().get(s1.getEntityArr().get(i));
 					e2 = doc.getEntities().get(s1.getEntityArr().get(j));
 					if (e1 instanceof Event && e2 instanceof Event) {
-						pair = new Pair<String,String>(e1.getID(), e2.getID());
-						if (clinks.containsKey(pair)) {
-							candidates.put(pair, clinks.get(pair));
-						} else {
-							candidates.put(pair, "NONE");
-						}
-					}
-				}
-			}
-			for (int i = 0; i < s2.getEntityArr().size()-1; i++) {
-				for (int j = i+1; j < s2.getEntityArr().size(); j++) {
-					e1 = doc.getEntities().get(s2.getEntityArr().get(i));
-					e2 = doc.getEntities().get(s2.getEntityArr().get(j));
-					if (e1 instanceof Event && e2 instanceof Event) {
-						pair = new Pair<String,String>(e1.getID(), e2.getID());
+						pair = e1.getID() + "-" + e2.getID();
 						if (clinks.containsKey(pair)) {
 							candidates.put(pair, clinks.get(pair));
 						} else {
@@ -121,16 +116,19 @@ public class CausalTimeBankTask {
 			}
 			
 			//candidate pairs in consecutive sentences
-			for (int i = 0; i < s1.getEntityArr().size(); i++) {
-				for (int j = 0; j < s2.getEntityArr().size(); j++) {
-					e1 = doc.getEntities().get(s1.getEntityArr().get(i));
-					e2 = doc.getEntities().get(s2.getEntityArr().get(j));
-					if (e1 instanceof Event && e2 instanceof Event) {
-						pair = new Pair<String,String>(e1.getID(), e2.getID());
-						if (clinks.containsKey(pair)) {
-							candidates.put(pair, clinks.get(pair));
-						} else {
-							candidates.put(pair, "NONE");
+			if (s < doc.getSentenceArr().size()-1) {
+				Sentence s2 = doc.getSentences().get(doc.getSentenceArr().get(s+1));
+				for (int i = 0; i < s1.getEntityArr().size(); i++) {
+					for (int j = 0; j < s2.getEntityArr().size(); j++) {
+						e1 = doc.getEntities().get(s1.getEntityArr().get(i));
+						e2 = doc.getEntities().get(s2.getEntityArr().get(j));
+						if (e1 instanceof Event && e2 instanceof Event) {
+							pair = e1.getID() + "-" + e2.getID();
+							if (clinks.containsKey(pair)) {
+								candidates.put(pair, clinks.get(pair));
+							} else {
+								candidates.put(pair, "NONE");
+							}
 						}
 					}
 				}
@@ -140,250 +138,145 @@ public class CausalTimeBankTask {
 		return candidates;
 	}
 	
-	public void getFeatureVectorPerFile(TXPParser txpParser, File file, StringBuilder ee) 
-			throws Exception {
+	public List<List<PairFeatureVector>> getEventEventClinksPerFile(TXPParser txpParser, 
+			File txpFile, PairClassifier eeRelCls,
+			boolean train, double threshold) throws Exception {
+		List<List<PairFeatureVector>> fvList = new ArrayList<List<PairFeatureVector>>();
+		List<PairFeatureVector> fvListClink = new ArrayList<PairFeatureVector>();
+		List<PairFeatureVector> fvListNone = new ArrayList<PairFeatureVector>();
 		
-		Doc docTxp = txpParser.parseDocument(file.getPath());
-		Map<Pair<String,String>,String> candidates = getCandidatePairs(docTxp);
+		Doc docTxp = txpParser.parseDocument(txpFile.getPath());
+		Map<String,String> candidates = getCandidatePairs(docTxp);
 		
-		for (Pair<String,String> clink : candidates.keySet()) {	//for every CLINK in TXP file: candidate pairs
-			Entity e1 = docTxp.getEntities().get(clink.getKey());
-			Entity e2 = docTxp.getEntities().get(clink.getValue());
-			
+		TemporalSignalList tsignalList = new TemporalSignalList(EntityEnum.Language.EN);
+		CausalSignalList csignalList = new CausalSignalList(EntityEnum.Language.EN);
+		
+		String[] tlinksArr = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
+				"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
+		List<String> tlinkTypes = Arrays.asList(tlinksArr);
+	    
+		for (String clink : candidates.keySet()) {	//for every CLINK in TXP file: candidate pairs
+			Entity e1 = docTxp.getEntities().get(clink.split("-")[0]);
+			Entity e2 = docTxp.getEntities().get(clink.split("-")[1]);
 			PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, candidates.get(clink), tsignalList, csignalList);	
-			fv = new EventEventFeatureVector(fv);
-			fv.addToVector(Feature.id);
 			
-			//token attribute features
-			fv.addToVector(Feature.token);
-			fv.addToVector(Feature.lemma);
-			fv.addToVector(Feature.pos);
-			fv.addToVector(Feature.mainpos);
-			fv.addToVector(Feature.chunk);
-			//fv.addToVector(Feature.ner);
-			fv.addToVector(Feature.samePos);
-			//fv.addToVector(Feature.sameMainPos);
+			EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
 			
-			//context features
-			fv.addToVector(Feature.entDistance);
-			fv.addToVector(Feature.sentDistance);
-			
-			//Entity attributes
-			fv.addToVector(Feature.eventClass);
-			fv.addToVector(Feature.tenseAspect);
-			//fv.addToVector(Feature.tense);
-			//fv.addToVector(Feature.aspect);
-			fv.addToVector(Feature.polarity);
-			fv.addToVector(Feature.sameEventClass);
-			fv.addToVector(Feature.sameTense);
-			fv.addToVector(Feature.sameAspect);
-			fv.addToVector(Feature.samePolarity);
-			
-			//dependency information
-			fv.addToVector(Feature.depPath);
-			fv.addToVector(Feature.mainVerb);
-			
-			//temporal connective/signal
-			//fv.addToVector(Feature.tempMarker);
-			fv.addToVector(Feature.tempMarkerClusText);
-			fv.addToVector(Feature.tempMarkerPos);
-			fv.addToVector(Feature.tempMarkerDep1Dep2);
-			
-			//causal connective/signal/verb
-			//fv.addToVector(Feature.causMarker);
-			fv.addToVector(Feature.causMarkerClusText);
-			fv.addToVector(Feature.causMarkerPos);
-			fv.addToVector(Feature.causMarkerDep1Dep2);
-			
-			//event co-reference
-			fv.addToVector(Feature.coref);
-			
-			//WordNet similarity
-			//fv.addToVector(Feature.wnSim);
-			
-			fv.addToVector(Feature.label);
-			
-			ee.append(fv.printVectors() + "\n");
-		}
-		ee.append("\n");
-	}
-	
-	public void getFeatureVector(TXPParser parser, String filepath, StringBuilder ee) 
-			throws Exception {
-		File dir_TXP = new File(filepath);
-		File[] files_TXP = dir_TXP.listFiles();
-		
-		if (files_TXP == null) return;
-		
-		for (File file : files_TXP) {
-			if (file.isDirectory()){				
-				this.getFeatureVector(parser, file.getPath(), ee);				
-			} else if (file.isFile()) {				
-				getFeatureVectorPerFile(parser, file, ee);
+			if (eeRelCls.classifier.equals(VectorClassifier.yamcha)) {
+				eefv.addToVector(FeatureName.id);
 			}
-		}		
-	}
-	
-	public void train(TXPParser txpParser) throws Exception {
-		System.out.println("Building training data...");
-		
-		StringBuilder[] folds = new StringBuilder[5];
-		for (int i=0; i<5; i++) {
-			folds[i] = new StringBuilder();
-			getFeatureVector(txpParser, TXPPath + "-" + String.valueOf(i+1), folds[i]);
-		}
-		
-		StringBuilder[] trainFolds = new StringBuilder[5];
-		for (int i=0; i<5; i++) {
-			trainFolds[i] = new StringBuilder();
-			for (int j=0; j<5; j++) {
-				if (i != j) {
-					trainFolds[i].append(folds[j].toString());
-				}
-			}
-		}
-		
-		//Field/column titles of features
-		features.clear();
-		for (String s : EventEventFeatureVector.fields) {
-			if (s!= null) features.add(s);
-		}
-		System.out.println("event-event features: " + String.join(",", features));
-		
-		//Print feature vectors to file
-		System.setProperty("line.separator", "\n");
-		PrintWriter eePW;
-		for (int i=0; i<5; i++) {
-			eePW = new PrintWriter("data/" + name + "-ee-train-" + String.valueOf(i+1) + ".tlinks", "UTF-8");
-			eePW.write(trainFolds[i].toString());
-			eePW.close();
-		}
-		
-		//Copy training data to server
-		System.out.println("Copy training data...");
-		RemoteServer rs = new RemoteServer();
-		File eeFile;
-		for (int i=0; i<5; i++) {
-			eeFile = new File("data/" + name + "-ee-train-" + String.valueOf(i+1) + ".tlinks");
-			rs.copyFile(eeFile, "data/");
-		}
-		
-		//Train models using YamCha + TinySVM
-		System.out.println("Train models...");
-		String cmdCd = "cd tools/yamcha-0.33/";
-		StringBuilder cmdTrain = new StringBuilder();
-		for (int i=0; i<5; i++) {
-			cmdTrain.append(" && make CORPUS=~/data/"+name+"-ee-train-"+String.valueOf(i+1)+".tlinks "
-					+ "MODEL=~/models/"+name+"-ee-"+String.valueOf(i+1)+ " "
-					+ "FEATURE=\"F:0:2..\" "
-					+ "SVM_PARAM=\"-t1 -d2 -c1 -m 512\" train");
-		}
-		System.out.println(cmdCd + cmdTrain);
-		rs.executeCommand(cmdCd + cmdTrain);
-		
-		rs.disconnect();
-	}
-	
-	public void evaluate(TXPParser txpParser) throws Exception {
-		File dir_TXP;
-		File[] files_TXP;
-		StringBuilder ee;
-		System.setProperty("line.separator", "\n");
-		PrintWriter eePW;
-		File eeFile;
-		Doc docTxp;
-		RemoteServer rs = new RemoteServer();
-		
-		int totalnumGoldClinks = 0, totalnumSystemClinks = 0, totalnumCorrectClinks = 0;
-		float microprecision = 0, microrecall = 0, microf1 = 0;
-		float sumprecision = 0, sumrecall = 0, sumf1 = 0;
-		
-		for (int i=0; i<5; i++) {
-			dir_TXP = new File(TXPPath + "-" + String.valueOf(i+1));
-			files_TXP = dir_TXP.listFiles();
 			
-			int numGoldClinks = 0, numSystemClinks = 0, numCorrectClinks = 0;
-			float precision = 0, recall = 0, f1 = 0;
-			
-			//For each file in the evaluation dataset
-			for (File file : files_TXP) {
-				if (file.isFile()) {	
-					//System.out.println("Test " + file.getName() + "...");
-					ee = new StringBuilder();
-					getFeatureVectorPerFile(txpParser, file, ee);
-					
-					eePW = new PrintWriter("data/" + name + "-ee-eval.tlinks", "UTF-8");
-					eePW.write(ee.toString());
-					eePW.close();
-					
-					eeFile = new File("data/" + name + "-ee-eval.tlinks");
-					rs.copyFile(eeFile, "data/");
-					
-					String cmdCd = "cd tools/yamcha-0.33/";					
-					String cmdTest = "./usr/local/bin/yamcha "
-							+ "-m ~/models/"+name+"-ee-"+String.valueOf(i+1)+".model"
-							+ " < ~/data/"+name+"-ee-eval.tlinks "
-							+ " | cut -f1,2," + (EventEventFeatureVector.fields.size()) + "," + (EventEventFeatureVector.fields.size()+1);
-					List<String> eeResult = rs.executeCommand(cmdCd + " && " + cmdTest);
-					
-					docTxp = txpParser.parseDocument(file.getPath());
-					numGoldClinks += docTxp.getClinks().size();
-					
-					String[] cols;
-					String sid, tid, label;
-					CausalRelation cl;
-					for (String s : eeResult) {
-						if (!s.isEmpty()) {
-							cols = s.split("\t");
-							label = cols[3];
-							if (!label.equals("NONE")) {
-								numSystemClinks += 1;								
-								if (label.equals("CLINK")) {
-									cl = new CausalRelation(cols[0], cols[1]);
-								} else {
-									cl = new CausalRelation(cols[1], cols[0]);
-								}
-								if (docTxp.getClinks().contains(cl))
-									numCorrectClinks += 1;
-							}
-						}
-					}
+			//Add features to feature vector
+			for (FeatureName f : eeRelCls.featureList) {
+				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
+						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
+						eeRelCls.classifier.equals(VectorClassifier.weka)) {
+					eefv.addBinaryFeatureToVector(f);
+				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+						eeRelCls.classifier.equals(VectorClassifier.none)) {
+					eefv.addToVector(f);
+//					eefv.addBinaryFeatureToVector(f);
 				}
 			}
 			
-			//micro evaluation per fold
-			precision = numCorrectClinks / (float)numSystemClinks;
-			recall = numCorrectClinks / (float)numGoldClinks;
-			f1 = (2 * precision * recall) / (precision + recall);
-			System.out.println("Fold " + String.valueOf(i+1) + ":"
-				+ " P " + String.format( "%.2f", precision*100) + "%"
-				+ " R " + String.format( "%.2f", recall*100) + "%"
-				+ " F1 " + String.format( "%.2f", f1*100) + "%");
+			//Add TLINK type feature
+			if (docTxp.getTlinkTypes().containsKey(e1.getID()+","+e2.getID())) {
+				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
+						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
+						eeRelCls.classifier.equals(VectorClassifier.weka)) {
+					eefv.addBinaryFeatureToVector("tlink", docTxp.getTlinkTypes().get(e1.getID()+","+e2.getID()), tlinkTypes);
+				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+						eeRelCls.classifier.equals(VectorClassifier.none)) {
+					eefv.addToVector("tlink", docTxp.getTlinkTypes().get(e1.getID()+","+e2.getID()));
+				}
+			} else if (docTxp.getTlinkTypes().containsKey(e2.getID()+","+e1.getID())) {
+				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
+						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
+						eeRelCls.classifier.equals(VectorClassifier.weka)) {
+					eefv.addBinaryFeatureToVector("tlink", docTxp.getTlinkTypes().get(e2.getID()+","+e1.getID()), tlinkTypes);
+				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+						eeRelCls.classifier.equals(VectorClassifier.none)) {
+					eefv.addToVector("tlink", docTxp.getTlinkTypes().get(e2.getID()+","+e1.getID()));
+				}
+			} else {
+				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
+						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
+						eeRelCls.classifier.equals(VectorClassifier.weka)) {
+					eefv.addBinaryFeatureToVector("tlink","O", tlinkTypes);
+				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+						eeRelCls.classifier.equals(VectorClassifier.none)) {
+					eefv.addToVector("tlink", "O");
+				}
+			}
 			
-			totalnumGoldClinks += numGoldClinks;
-			totalnumSystemClinks += numSystemClinks;
-			totalnumCorrectClinks += numCorrectClinks;
-			sumprecision += precision;
-			sumrecall += recall;
-			sumf1 += f1;
+			if (eeRelCls.classifier.equals(VectorClassifier.libsvm) || 
+					eeRelCls.classifier.equals(VectorClassifier.liblinear)) {
+				eefv.addBinaryFeatureToVector(FeatureName.labelCaus);
+			} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+					eeRelCls.classifier.equals(VectorClassifier.weka) ||
+					eeRelCls.classifier.equals(VectorClassifier.none)){
+				eefv.addToVector(FeatureName.label);
+				
+			}
+			
+			if (eefv.getLabel().equals("NONE")) {
+				fvListNone.add(eefv);
+			} else {
+				fvListClink.add(eefv);
+			}
 		}
 		
-		microprecision = totalnumCorrectClinks / (float)totalnumSystemClinks;
-		microrecall = totalnumCorrectClinks / (float)totalnumGoldClinks;
-		microf1 = (2 * microprecision * microrecall) / (microprecision + microrecall);
-		System.out.println("Micro average :"
-				+ " P " + String.format( "%.2f", microprecision*100) + "%"
-				+ " R " + String.format( "%.2f", microrecall*100) + "%"
-				+ " F1 " + String.format( "%.2f", microf1*100) + "%");
-		System.out.println("Macro average :"
-			+ " P " + String.format( "%.2f", sumprecision/5*100) + "%"
-			+ " R " + String.format( "%.2f", sumrecall/5*100) + "%"
-			+ " F1 " + String.format( "%.2f", sumf1/5*100) + "%");
+		fvList.add(fvListNone);
+		fvList.add(fvListClink);
 		
-		rs.disconnect();
+		return fvList;
 	}
 	
-	public static void main(String [] args) {
+	public List<PairFeatureVector> getEventEventClinks(TXPParser txpParser, 
+			String dirTxpPath, PairClassifier eeRelCls,
+			boolean train, double threshold) throws Exception {
+		File[] txpFiles = new File(dirTxpPath).listFiles();		
+		if (dirTxpPath == null) return null;
+		
+		List<PairFeatureVector> fvList = new ArrayList<PairFeatureVector>();
+		List<PairFeatureVector> fvListNone = new ArrayList<PairFeatureVector>();
+		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
+			List<List<PairFeatureVector>> fvListList = getEventEventClinksPerFile(txpParser, 
+					txpFile, eeRelCls, train, threshold);
+			
+			fvListNone.addAll(fvListList.get(0));
+			fvList.addAll(fvListList.get(1));
+		}
+		
+		int numClink = fvList.size();
+		int numNone = fvListNone.size();
+		
+		if (train) {
+			if (threshold > 0) {
+				//Take a ratio (according to threshold) of random elements from fvListNone
+				Collections.shuffle(fvListNone);
+				//int cutoff = (int) Math.floor(threshold * numNone);
+				//int cutoff = (int) Math.floor((1/threshold) * numClink);
+				int cutoff = (int) (threshold * numClink);
+				if (cutoff > numNone) cutoff = numNone;
+				for (int i=0; i<cutoff; i++) {
+					fvList.add(fvListNone.get(i));
+				}
+			} else {
+				for (PairFeatureVector fv : fvListNone) {
+					fvList.add(fv);
+				}
+			}
+		} else {
+			for (PairFeatureVector fv : fvListNone) {
+				fvList.add(fv);
+			}
+		}
+		
+		return fvList;
+	}
+	
+	public static void main(String [] args) throws Exception {
 		Field[] fields = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
 				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
 				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
@@ -391,36 +284,146 @@ public class CausalTimeBankTask {
 				Field.main_verb, Field.connective, Field.morpho, 
 				Field.tense_aspect_pol, Field.coref_event, Field.tlink, 
 				Field.supersense, Field.ss_ner, Field.clink, Field.csignal};
-		TXPParser parser = new TXPParser(EntityEnum.Language.EN, fields);
 		
-		//dir_TXP <-- data/example_TXP
-		try {
-			CausalTimeBankTask task = new CausalTimeBankTask();
+//		Field[] fields = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
+//				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
+//				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
+//				Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
+//				Field.main_verb, Field.connective, Field.morpho, 
+//				Field.tense_aspect_pol, Field.coref_event, Field.tlink, 
+//				Field.clink, Field.csignal};
+		
+		CausalTimeBankTask task = new CausalTimeBankTask();
+		
+		PrintStream out = new PrintStream(new FileOutputStream("causality_output.txt"));
+		System.setOut(out);
+		PrintStream log = new PrintStream(new FileOutputStream("causality_log.txt"));
+		System.setErr(log);
+		
+		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);
+		
+//		String trainTxpDirpath = "./data/Causal-TimeBank_TXP/";
+//		String evalTxpDirpath = "./data/Causal-TimeBank_TXP/";
+		
+		String trainTxpDirpath1 = "./data/Causal-TimeBank-train_TXP-1/";
+		String evalTxpDirpath1 = "./data/Causal-TimeBank_TXP-1/";
+		
+		String trainTxpDirpath2 = "./data/Causal-TimeBank-train_TXP-2/";
+		String evalTxpDirpath2 = "./data/Causal-TimeBank_TXP-2/";
+		
+		String trainTxpDirpath3 = "./data/Causal-TimeBank-train_TXP-3/";
+		String evalTxpDirpath3 = "./data/Causal-TimeBank_TXP-3/";
+		
+		String trainTxpDirpath4 = "./data/Causal-TimeBank-train_TXP-4/";
+		String evalTxpDirpath4 = "./data/Causal-TimeBank_TXP-4/";
+		
+		String trainTxpDirpath5 = "./data/Causal-TimeBank-train_TXP-5/";
+		String evalTxpDirpath5 = "./data/Causal-TimeBank_TXP-5/";
+		
+		String[] trainTxpFoldPath = {"./data/Causal-TimeBank-train_TXP-1/", "./data/Causal-TimeBank-train_TXP-2/",
+				"./data/Causal-TimeBank-train_TXP-3/", "./data/Causal-TimeBank-train_TXP-4/", "./data/Causal-TimeBank-train_TXP-5/"};
+		String[] evalTxpFoldPath = {"./data/Causal-TimeBank_TXP-1/", "./data/Causal-TimeBank_TXP-2/",
+				"./data/Causal-TimeBank_TXP-3/", "./data/Causal-TimeBank_TXP-4/", "./data/Causal-TimeBank_TXP-5/"};
+		
+		String[] aquaintPath = {"./data/AQUAINT_TXP/1/", "./data/AQUAINT_TXP/2/", "./data/AQUAINT_TXP/3/", 
+				"./data/AQUAINT_TXP/4/", "./data/AQUAINT_TXP/5/", "./data/AQUAINT_TXP/6/", "./data/AQUAINT_TXP/7/"};
+		String aquaintAllPath = "./data/AQUAINT_TXP/all/";
+		
+		//Init classifiers
+		PairClassifier eeCls = new EventEventCausalClassifier("causal", "yamcha");
+		
+		boolean labelProbs = true;
+		
+//		double threshold = 1000;
+//		double[] thresholds = {1000,0.5,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100};
+		double[] thresholds = {0,1,10,20,30,40,50,60,70,80,90,100,1000};
+		String[] label = {"CLINK", "CLINK-R", "NONE"};
+		for (double threshold : thresholds) {
 			
-			task.train(parser);
-			task.evaluate(parser);
+			System.err.println("Threshold " + (threshold) + "...");
+			System.out.println("Threshold " + (threshold) + "...");
 			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SftpException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSchException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+			for (int fold=0; fold<5; fold++) {
+		
+				System.err.println("Iteration 0...");
+				System.err.println("Fold " + (fold+1) + "...");
+				System.out.println("Fold " + (fold+1) + "...");
+				//Train models
+				List<PairFeatureVector> eeTrainFvList = task.getEventEventClinks(txpParser, trainTxpFoldPath[fold], eeCls, true, threshold);
+				eeCls.train(eeTrainFvList, labelProbs);
+				
+				//Test models
+				List<PairFeatureVector> eeEvalFvList = task.getEventEventClinks(txpParser, evalTxpFoldPath[fold], eeCls, false, 0);
+				String eeClsTest = eeCls.test(eeEvalFvList, labelProbs, label);
+				String[] eeClsTestList = eeClsTest.trim().split("\\r?\\n");
+				List<String> eeTestList = new ArrayList<String>();
+				for (int i=0; i<eeClsTestList.length; i++) {
+					eeTestList.add(eeClsTestList[i]);
+				}
+				
+				//Evaluate
+				PairEvaluator pee = new PairEvaluator(eeTestList);
+				pee.evaluateCausalPerLabelIdx(label);
+				
+//				for (int itr=0; itr<7; itr++) {
+//					System.err.println("Iteration " + (itr+1) + "...");
+//					System.out.println("Iteration " + (itr+1) + "...");
+					
+					//List<PairFeatureVector> eeAquaint = task.getEventEventClinks(txpParser, aquaintPath[itr], eeCls, false, 0);
+					List<PairFeatureVector> eeAquaint = task.getEventEventClinks(txpParser, aquaintAllPath, eeCls, false, 0);
+					
+					List<PairFeatureVector> eeAquaintNone = new ArrayList<PairFeatureVector>();
+					Map<Integer, Double> eeAquaintNoneProbs = new LinkedHashMap<Integer, Double>();
+					
+					String[] eeClsAquaint = eeCls.test(eeAquaint, labelProbs, label).trim().split("\\r?\\n");
+					String labelAquaint; Double probAquaint = 1.0;
+					int numAquaintClink = 0, numAquaintNone = 0;
+					for (int i=0; i<eeAquaint.size(); i++) {
+						labelAquaint = label[Integer.parseInt(eeClsAquaint[i].split("\t")[1])-1];
+						if (labelProbs) probAquaint = Double.parseDouble(eeClsAquaint[i].split("\t")[2]);
+						eeAquaint.get(i).setLabel(labelAquaint);
+						if (!labelAquaint.equals("NONE")) {
+							eeTrainFvList.add(eeAquaint.get(i));
+							numAquaintClink ++;
+						} else {
+							eeAquaintNone.add(eeAquaint.get(i));
+							eeAquaintNoneProbs.put(numAquaintNone, probAquaint);
+							numAquaintNone ++;
+						}
+					}
+					
+					//Sort eeAquaintNoneProbs
+					Map<Integer, Double> eeAquaintNoneProbsSorted = SortMapByValue.sortByComparator(eeAquaintNoneProbs, true);
+					
+					//Take a ratio (according to threshold) of sorted elements from None list
+					//int cutoff = (int) Math.floor(threshold * numAquaintNone);
+					//int cutoff = (int) Math.floor((1/threshold) * numAquaintClink);
+					int cutoff = (int) (threshold * numAquaintClink);
+					if (cutoff > numAquaintNone) cutoff = numAquaintNone;
+					int z=0;
+					for (Integer idx : eeAquaintNoneProbsSorted.keySet()) {
+						if (z<cutoff) {
+							eeTrainFvList.add(eeAquaintNone.get(idx));
+						} else {
+							break;
+						}
+						z++;
+					}				
+					eeCls.train(eeTrainFvList);
+					
+					//Test models					
+					String eeClsTestItr = eeCls.test(eeEvalFvList, labelProbs, label);
+					String[] eeClsTestListItr = eeClsTestItr.trim().split("\\r?\\n");
+					List<String> eeTestListItr = new ArrayList<String>();
+					for (int i=0; i<eeClsTestListItr.length; i++) {
+						eeTestListItr.add(eeClsTestListItr[i]);
+					}
+					
+					//Evaluate
+					PairEvaluator peeItr = new PairEvaluator(eeTestListItr);
+					peeItr.evaluateCausalPerLabelIdx(label);
+//				}
+			}
+		}
 	}
 }

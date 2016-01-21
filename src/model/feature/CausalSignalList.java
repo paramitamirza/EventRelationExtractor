@@ -23,8 +23,8 @@ public class CausalSignalList extends SignalList{
 	public void readSignalFile() throws IOException {
 		BufferedReader reader = null, verbReader = null;
 		if (language.equals(Language.EN)) {
-			reader = new BufferedReader(new FileReader("resource/causal_signal.list"));
-			verbReader = new BufferedReader(new FileReader("resource/causal_verb.list"));
+			reader = new BufferedReader(new FileReader("./resource/causal_signal.list"));
+			verbReader = new BufferedReader(new FileReader("./resource/causal_verb.list"));
 		} else if (language.equals(Language.IT)) {
 			
 		}

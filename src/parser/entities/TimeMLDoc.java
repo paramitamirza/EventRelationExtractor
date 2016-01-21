@@ -3,6 +3,8 @@ package parser.entities;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -68,8 +70,32 @@ public class TimeMLDoc {
 		//this.trimWhitespace(root);
 	}
 	
+	public void removeInstances() {
+		NodeList tlinks = doc.getElementsByTagName("MAKEINSTANCE");
+		for (int index = tlinks.getLength() - 1; index >= 0; index--) {
+			root.removeChild(tlinks.item(index));
+		}
+		//this.trimWhitespace(root);
+	}
+	
+	public void removeText() {
+		NodeList tlinks = doc.getElementsByTagName("TEXT");
+		for (int index = tlinks.getLength() - 1; index >= 0; index--) {
+			root.removeChild(tlinks.item(index));
+		}
+		//this.trimWhitespace(root);
+	}
+	
 	public void addLink(Node link) {
 		root.appendChild(link);
+	}
+	
+	public void addInstance(Node instance) {
+		root.appendChild(instance);
+	}
+	
+	public void addText(Node text) {
+		root.appendChild(text);
 	}
 	
 	public String nodeToString(Node node) throws TransformerException {
@@ -97,11 +123,14 @@ public class TimeMLDoc {
 			trans = transfac.newTransformer();
 			//trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
 			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			trans.setOutputProperty(OutputKeys.METHOD, "xml");
+		    trans.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 			
 			// Print the DOM node
 			StringWriter sw = new StringWriter();
 			StreamResult result = new StreamResult(sw);
-			DOMSource source = new DOMSource(root);
+			doc.setXmlStandalone(true);
+			DOMSource source = new DOMSource(doc);
 			trans.transform(source, result);
 			xmlString = sw.toString();
 		} catch (TransformerConfigurationException e) {
@@ -112,6 +141,20 @@ public class TimeMLDoc {
 			e.printStackTrace();
 		}	
 		return xmlString;
+	}
+	
+	public List<String> splitText() throws Exception {
+		List<String> wordList = new ArrayList<String>();
+		NodeList text = doc.getElementsByTagName("TEXT");
+		
+		String textStr = text.item(0).getTextContent();
+		textStr = textStr.replaceAll("\\<.*?>","");
+		textStr = textStr.replaceAll("\n", " \n");
+		for (String s : textStr.split(" ")) {
+			wordList.add(s);
+		}
+		
+		return wordList;
 	}
 
 	public Document getDoc() {

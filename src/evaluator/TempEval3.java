@@ -3,7 +3,9 @@ package evaluator;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jcraft.jsch.JSchException;
@@ -21,7 +23,7 @@ public class TempEval3 {
 		this.setSystemPath(system);
 	}
 	
-	public void evaluate() throws IOException, JSchException, SftpException {
+	public void evaluate() throws IOException, JSchException, SftpException, InterruptedException {
 		RemoteServer rs = new RemoteServer();
 		
 		//Copy gold and system files to remote server
@@ -40,6 +42,25 @@ public class TempEval3 {
 			}
 		}
 		rs.disconnect();
+		
+//		/*******Windows*******/
+//		String pythonPath = "C:\\Anaconda2\\python.exe";
+//		List<String> command = new ArrayList<String>();
+//		command.add(pythonPath);
+//		command.add("tools/TempEval3-evaluation-tool/TE3-evaluation.py");
+//		command.add(this.goldPath);
+//		command.add(this.systemPath);
+//		ProcessBuilder builder = new ProcessBuilder(command);
+//		final Process process = builder.start();
+//		process.waitFor();
+//		
+//		InputStream is = process.getInputStream();
+//	    InputStreamReader isr = new InputStreamReader(is);
+//	    BufferedReader br = new BufferedReader(isr);
+//	    String line;
+//	    while ((line = br.readLine()) != null) {
+//	      System.out.println(line);
+//	    }
 	}
 
 	public String getGoldPath() {

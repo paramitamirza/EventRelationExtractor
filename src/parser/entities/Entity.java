@@ -1,5 +1,8 @@
 package parser.entities;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class Entity {
 	
 	private String ID;
@@ -54,4 +57,16 @@ public class Entity {
 		this.sentID = sentID;
 	}
 	
+	public String toString(Doc docTxp) {
+		String str = "";
+		Map<String, Token> tokens = docTxp.getTokens();
+		ArrayList<String> tokenArr = docTxp.getTokenArr();
+		int iter = tokenArr.indexOf(startTokID);
+		while (!tokenArr.get(iter).equals(endTokID)) {
+			str += tokens.get(tokenArr.get(iter)).getText() + " ";
+			iter ++;
+		}
+		str += tokens.get(tokenArr.get(iter)).getText();
+		return str;		
+	}
 }
