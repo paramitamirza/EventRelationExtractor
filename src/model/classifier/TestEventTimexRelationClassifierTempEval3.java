@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,8 @@ import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.EventEventRelationRule;
+import model.rule.EventTimexRelationRule;
 import parser.TXPParser;
 import parser.TimeMLParser;
 import parser.TXPParser.Field;
@@ -142,5 +145,36 @@ public class TestEventTimexRelationClassifierTempEval3 {
 		
 		etCls.train(trainFvList, "et-model");   
 		etCls.evaluate(evalFvList, "et-model");
+		
+		File[] txpFiles = new File(evalTxpDirpath).listFiles();
+		//For each file in the evaluation dataset
+		for (File txpFile : txpFiles) {
+			if (txpFile.isFile()) {	
+				File tmlFile = new File(evalTmlDirpath, txpFile.getName().replace(".txp", ""));
+//				System.err.println(tmlFile.getName());
+				Doc docTxp = txpParser.parseDocument(txpFile.getPath());
+				
+				//Predict labels
+				List<PairFeatureVector> etFvList = test.getEventTimexTlinksPerFile(txpParser, tmlParser, 
+							txpFile, tmlFile, etCls, false);
+				List<String> eeClsTest = etCls.predict(etFvList, "ee-model");
+				
+				for (int i=0; i<etFvList.size(); i++) {
+					//Find label according to rules
+					EventTimexFeatureVector etfv = new EventTimexFeatureVector(etFvList.get(i));
+					EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
+							docTxp, etfv.getMateDependencyPath());
+					
+					//Prefer labels from rules than classifier 
+					String label;
+					if (!etRule.getRelType().equals("O")) label = etRule.getRelType();
+					else label = eeClsTest.get(i);
+					
+					System.out.println(etFvList.get(i).getE1().getID() 
+							+ "\t" + etFvList.get(i).getE2().getID() 
+							+ "\t" + label);
+				}
+			}
+		}
 	}
 }

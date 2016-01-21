@@ -105,9 +105,9 @@ public class TestEventEventRelationRuleTempEval3 {
 		if (txpFiles == null) return;	
 		
 		TestEventEventRelationRuleTempEval3 test = new TestEventEventRelationRuleTempEval3();
-		List<String> ttResult = test.getEventEventTlinks(txpParser, tmlParser, txpDirpath, tmlDirpath);
+		List<String> eeResult = test.getEventEventTlinks(txpParser, tmlParser, txpDirpath, tmlDirpath);
 
-		PairEvaluator pe = new PairEvaluator(ttResult);
+		PairEvaluator pe = new PairEvaluator(eeResult);
 		pe.evaluatePerLabel();   
 		
 	}

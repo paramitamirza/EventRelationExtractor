@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import edu.stanford.nlp.parser.lexparser.LexicalizedParser;
 import evaluator.PairEvaluator;
+import evaluator.TempEval3;
 import model.classifier.PairClassifier.VectorClassifier;
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
@@ -18,6 +20,7 @@ import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.rule.EventEventRelationRule;
 import parser.TXPParser;
 import parser.TimeMLParser;
 import parser.TXPParser.Field;
@@ -29,6 +32,7 @@ import parser.entities.Sentence;
 import parser.entities.TemporalRelation;
 import parser.entities.Timex;
 import simplifier.SentenceSimplifier;
+import task.SortMapByValue;
 
 public class TestEventEventRelationClassifierTempEval3 {
 	
@@ -144,5 +148,36 @@ public class TestEventEventRelationClassifierTempEval3 {
 		
 		eeCls.train(trainFvList, "ee-model");   
 		eeCls.evaluate(evalFvList, "ee-model");
+		
+		File[] txpFiles = new File(evalTxpDirpath).listFiles();
+		//For each file in the evaluation dataset
+		for (File txpFile : txpFiles) {
+			if (txpFile.isFile()) {	
+				File tmlFile = new File(evalTmlDirpath, txpFile.getName().replace(".txp", ""));
+				System.err.println(tmlFile.getName());
+				Doc docTxp = txpParser.parseDocument(txpFile.getPath());
+				
+				//Predict labels
+				List<PairFeatureVector> eeFvList = test.getEventEventTlinksPerFile(txpParser, tmlParser, 
+							txpFile, tmlFile, eeCls, false);
+				List<String> eeClsTest = eeCls.predict(eeFvList, "ee-model");
+				
+				for (int i=0; i<eeFvList.size(); i++) {
+					//Find label according to rules
+					EventEventFeatureVector eefv = new EventEventFeatureVector(eeFvList.get(i));
+					EventEventRelationRule eeRule = new EventEventRelationRule((Event) eefv.getE1(), (Event) eefv.getE2(), 
+							docTxp, eefv.getMateDependencyPath());
+					
+					//Prefer labels from rules than classifier 
+					String label;
+					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
+					else label = eeClsTest.get(i);
+					
+					System.out.println(eeFvList.get(i).getE1().getID() 
+							+ "\t" + eeFvList.get(i).getE2().getID() 
+							+ "\t" + label);
+				}
+			}
+		}
 	}
 }
