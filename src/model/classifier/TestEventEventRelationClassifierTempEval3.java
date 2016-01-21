@@ -175,6 +175,7 @@ public class TestEventEventRelationClassifierTempEval3 {
 					
 					System.out.println(eeFvList.get(i).getE1().getID() 
 							+ "\t" + eeFvList.get(i).getE2().getID() 
+//							+ "\t" + eeFvList.get(i).getLabel()
 							+ "\t" + label);
 				}
 			}

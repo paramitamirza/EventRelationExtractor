@@ -157,7 +157,7 @@ public class TestEventTimexRelationClassifierTempEval3 {
 				//Predict labels
 				List<PairFeatureVector> etFvList = test.getEventTimexTlinksPerFile(txpParser, tmlParser, 
 							txpFile, tmlFile, etCls, false);
-				List<String> eeClsTest = etCls.predict(etFvList, "ee-model");
+				List<String> eeClsTest = etCls.predict(etFvList, "et-model");
 				
 				for (int i=0; i<etFvList.size(); i++) {
 					//Find label according to rules
@@ -171,7 +171,8 @@ public class TestEventTimexRelationClassifierTempEval3 {
 					else label = eeClsTest.get(i);
 					
 					System.out.println(etFvList.get(i).getE1().getID() 
-							+ "\t" + etFvList.get(i).getE2().getID() 
+							+ "\t" + etFvList.get(i).getE2().getID()
+//							+ "\t" + etFvList.get(i).getLabel()
 							+ "\t" + label);
 				}
 			}
