@@ -63,10 +63,10 @@ public class TestEventTimexRelationClassifierTempEval3 {
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				
 				if (fv.getPairType().equals(PairType.event_timex)) {
-					fv = new EventTimexFeatureVector(fv);
+					EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
 					
 					if (etRelCls.classifier.equals(VectorClassifier.yamcha)) {
-						fv.addToVector(FeatureName.id);
+						etfv.addToVector(FeatureName.id);
 					}
 					
 					//Add features to feature vector
@@ -74,27 +74,29 @@ public class TestEventTimexRelationClassifierTempEval3 {
 						if (etRelCls.classifier.equals(VectorClassifier.libsvm) ||
 								etRelCls.classifier.equals(VectorClassifier.liblinear) ||
 								etRelCls.classifier.equals(VectorClassifier.weka)) {
-							fv.addBinaryFeatureToVector(f);
+							etfv.addBinaryFeatureToVector(f);
 						} else if (etRelCls.classifier.equals(VectorClassifier.yamcha) ||
 								etRelCls.classifier.equals(VectorClassifier.none)) {
-							fv.addToVector(f);
+							etfv.addToVector(f);
 						}
 					}
 					
 					if (etRelCls.classifier.equals(VectorClassifier.libsvm) || 
 							etRelCls.classifier.equals(VectorClassifier.liblinear)) {
-						fv.addBinaryFeatureToVector(FeatureName.label);
+						if (train) etfv.addBinaryFeatureToVector(FeatureName.labelCollapsed);
+						else etfv.addBinaryFeatureToVector(FeatureName.label);
 					} else if (etRelCls.classifier.equals(VectorClassifier.yamcha) ||
 							etRelCls.classifier.equals(VectorClassifier.weka) ||
 							etRelCls.classifier.equals(VectorClassifier.none)){
-						fv.addToVector(FeatureName.label);
+						if (train) etfv.addToVector(FeatureName.labelCollapsed);
+						else etfv.addToVector(FeatureName.label);
 					}
 						
 					if (train && !fv.getVectors().get(fv.getVectors().size()-1).equals("0")
 							&& !fv.getVectors().get(fv.getVectors().size()-1).equals("NONE")) {
-						fvList.add(fv);
+						fvList.add(etfv);
 					} else if (!train){ //test, add all
-						fvList.add(fv);
+						fvList.add(etfv);
 					}
 				}
 			}
@@ -166,9 +168,8 @@ public class TestEventTimexRelationClassifierTempEval3 {
 							docTxp, etfv.getMateDependencyPath());
 					
 					//Prefer labels from rules than classifier 
-					String label;
+					String label = etClsTest.get(i);
 					if (!etRule.getRelType().equals("O")) label = etRule.getRelType();
-					else label = etClsTest.get(i);
 					
 					System.out.println(etfv.getE1().getID() 
 							+ "\t" + etfv.getE2().getID()

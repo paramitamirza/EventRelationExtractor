@@ -64,10 +64,10 @@ public class TestEventEventRelationClassifierTempEval3 {
 				PairFeatureVector fv = new PairFeatureVector(docTxp, e1, e2, tlink.getRelType(), tsignalList, csignalList);	
 				
 				if (fv.getPairType().equals(PairType.event_event)) {
-					fv = new EventEventFeatureVector(fv);
+					EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
 					
 					if (eeRelCls.classifier.equals(VectorClassifier.yamcha)) {
-						fv.addToVector(FeatureName.id);
+						eefv.addToVector(FeatureName.id);
 					}
 					
 					//Add features to feature vector
@@ -75,29 +75,29 @@ public class TestEventEventRelationClassifierTempEval3 {
 						if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
 								eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
 								eeRelCls.classifier.equals(VectorClassifier.weka)) {
-							fv.addBinaryFeatureToVector(f);
+							eefv.addBinaryFeatureToVector(f);
 						} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
 								eeRelCls.classifier.equals(VectorClassifier.none)) {
-							fv.addToVector(f);
+							eefv.addToVector(f);
 						}
 					}
 					
 					if (eeRelCls.classifier.equals(VectorClassifier.libsvm) || 
 							eeRelCls.classifier.equals(VectorClassifier.liblinear)) {
-						if (train) fv.addBinaryFeatureToVector(FeatureName.labelCollapsed);
-						else fv.addBinaryFeatureToVector(FeatureName.label);
+						if (train) eefv.addBinaryFeatureToVector(FeatureName.labelCollapsed);
+						else eefv.addBinaryFeatureToVector(FeatureName.label);
 					} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
 							eeRelCls.classifier.equals(VectorClassifier.weka) ||
 							eeRelCls.classifier.equals(VectorClassifier.none)){
-						if (train) fv.addToVector(FeatureName.labelCollapsed);
-						else fv.addToVector(FeatureName.label);
+						if (train) eefv.addToVector(FeatureName.labelCollapsed);
+						else eefv.addToVector(FeatureName.label);
 					}
 						
-					if (train && !fv.getVectors().get(fv.getVectors().size()-1).equals("0")
-							&& !fv.getVectors().get(fv.getVectors().size()-1).equals("NONE")) {
-						fvList.add(fv);
+					if (train && !eefv.getVectors().get(eefv.getVectors().size()-1).equals("0")
+							&& !eefv.getVectors().get(eefv.getVectors().size()-1).equals("NONE")) {
+						fvList.add(eefv);
 					} else if (!train){ //test, add all
-						fvList.add(fv);
+						fvList.add(eefv);
 					}
 				}
 			}
@@ -169,9 +169,8 @@ public class TestEventEventRelationClassifierTempEval3 {
 							docTxp, eefv.getMateDependencyPath());
 					
 					//Prefer labels from rules than classifier 
-					String label;
+					String label = eeClsTest.get(i);
 					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
-					else label = eeClsTest.get(i);
 					
 					System.out.println(eefv.getE1().getID() 
 							+ "\t" + eefv.getE2().getID() 
