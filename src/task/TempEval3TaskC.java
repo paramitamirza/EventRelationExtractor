@@ -167,52 +167,19 @@ class TempEval3TaskC {
 					
 					if (train && !fv.getVectors().get(fv.getVectors().size()-1).equals("0")
 							&& !fv.getVectors().get(fv.getVectors().size()-1).equals("NONE")) {
-						fvList.add(fv);
-					} else if (!train){ //test, add all
-						fvList.add(fv);
-					}
-					
-//					//Rules
-//					EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
-//							docTxp, etfv.getMateDependencyPath());
-//					
-//					if (train && !etfv.getLabel().equals("0")
-//							&& !etfv.getLabel().equals("NONE")) {
-//						fvList.add(etfv);
-//					} else if (!train){ //test
-//						fvList.add(etfv);	//add all
-//						if (etRule.equals("O")) etRuleRel.append("0" + "\n");
-//						else etRuleRel.append((labelList.indexOf(etRule.getRelType())+1) + "\n");
-						
-//						//add only if with DCT/EmptyTag or in the same sentence
-//						if (((Timex) etfv.getE2()).isDct() || ((Timex) etfv.getE2()).isEmptyTag()) {
+						fvList.add(etfv);
+					} else if (!train){ //test
+//						//add only if with DCT/EmptyTag or in the same sentence --> doesn't improve
+//						if (((Timex) etfv.getE2()).isDct() || ((Timex) etfv.getE2()).isEmptyTag()
+//								|| ((Event) etfv.getE1()).getSentID().equals(((Timex) etfv.getE2()).getSentID())) {
 //							fvList.add(etfv);
-//							etRuleRel.append("0" + "\n");
-//						} else {
-//							if (((Event) etfv.getE1()).getSentID().equals(((Timex) etfv.getE2()).getSentID())) {
-//								fvList.add(etfv);
-//								if (etRule.equals("O")) etRuleRel.append("0" + "\n");
-//								else etRuleRel.append((labelList.indexOf(etRule.getRelType())+1) + "\n");
-//							}
-//						}
-//					}
+//						} 
+						
+						//add all
+						fvList.add(etfv);
+					}
 				}
 			}
-		}
-		return fvList;
-	}
-	
-	public List<PairFeatureVector> getEventTimexTlinks(TXPParser txpParser, TimeMLParser tmlParser, 
-			String dirTxpPath, String dirTmlPath, PairClassifier etRelCls,
-			boolean train) throws Exception {
-		File[] txpFiles = new File(dirTxpPath).listFiles();		
-		if (dirTxpPath == null) return null;
-		
-		List<PairFeatureVector> fvList = new ArrayList<PairFeatureVector>();
-		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
-			File tmlFile = new File(dirTmlPath, txpFile.getName().replace(".txp", ""));
-			fvList.addAll(getEventTimexTlinksPerFile(txpParser, tmlParser, 
-					txpFile, tmlFile, etRelCls, train));
 		}
 		return fvList;
 	}
@@ -271,46 +238,12 @@ class TempEval3TaskC {
 					
 					if (train && !fv.getVectors().get(fv.getVectors().size()-1).equals("0")
 							&& !fv.getVectors().get(fv.getVectors().size()-1).equals("NONE")) {
-						fvList.add(fv);
+						fvList.add(eefv);
 					} else if (!train){ //test, add all
-						fvList.add(fv);
+						fvList.add(eefv);
 					}
-					
-//					//Rules
-//					EventEventRelationRule eeRule = new EventEventRelationRule((Event) eefv.getE1(), (Event) eefv.getE2(), 
-//							docTxp, eefv.getMateDependencyPath());
-//					
-//					if (train && !eefv.getLabel().equals("0")
-//							&& !eefv.getLabel().equals("NONE")) {
-//						fvList.add(eefv);
-//					} else if (!train){ //test
-//						fvList.add(eefv);	//add all
-//						
-//						if (eefv.isCoreference()) {	//check if co-refer events
-//							eeRuleRel.append((labelList.indexOf("IDENTITY")+1) + "\n");
-//						} else {	
-//							//check if event-event rules applied
-//							if (eeRule.getRelType().equals("O")) eeRuleRel.append("0" + "\n");
-//							else eeRuleRel.append((labelList.indexOf(eeRule.getRelType())+1) + "\n");
-//						}
-//					}
 				}
 			}
-		}
-		return fvList;
-	}
-	
-	public List<PairFeatureVector> getEventEventTlinks(TXPParser txpParser, TimeMLParser tmlParser, 
-			String dirTxpPath, String dirTmlPath, PairClassifier eeRelCls,
-			boolean train) throws Exception {
-		File[] txpFiles = new File(dirTxpPath).listFiles();		
-		if (dirTxpPath == null) return null;
-		
-		List<PairFeatureVector> fvList = new ArrayList<PairFeatureVector>();
-		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
-			File tmlFile = new File(dirTmlPath, txpFile.getName().replace(".txp", ""));
-			fvList.addAll(getEventEventTlinksPerFile(txpParser, tmlParser, 
-					txpFile, tmlFile, eeRelCls, train));
 		}
 		return fvList;
 	}
@@ -458,6 +391,7 @@ class TempEval3TaskC {
 					//Prefer labels from rules than classifier 
 					String label;
 					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
+//					else if (eefv.isCoreference()) label = "IDENTITY";	//--> doesn't work
 					else label = eeClsTest.get(i);
 					
 					eeTestList.add(eefv.getE1().getID() 
