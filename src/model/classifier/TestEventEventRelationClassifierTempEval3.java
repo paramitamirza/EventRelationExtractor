@@ -173,9 +173,9 @@ public class TestEventEventRelationClassifierTempEval3 {
 					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
 					else label = eeClsTest.get(i);
 					
-					System.out.println(eeFvList.get(i).getE1().getID() 
-							+ "\t" + eeFvList.get(i).getE2().getID() 
-//							+ "\t" + eeFvList.get(i).getLabel()
+					System.out.println(eefv.getE1().getID() 
+							+ "\t" + eefv.getE2().getID() 
+//							+ "\t" + eefv.getLabel()
 							+ "\t" + label);
 				}
 			}

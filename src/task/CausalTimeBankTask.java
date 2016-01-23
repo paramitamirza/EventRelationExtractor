@@ -179,34 +179,19 @@ public class CausalTimeBankTask {
 				}
 			}
 			
-			//Add TLINK type feature
+			String tlinkType = "O";
 			if (docTxp.getTlinkTypes().containsKey(e1.getID()+","+e2.getID())) {
-				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
-						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
-						eeRelCls.classifier.equals(VectorClassifier.weka)) {
-					eefv.addBinaryFeatureToVector("tlink", docTxp.getTlinkTypes().get(e1.getID()+","+e2.getID()), tlinkTypes);
-				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
-						eeRelCls.classifier.equals(VectorClassifier.none)) {
-					eefv.addToVector("tlink", docTxp.getTlinkTypes().get(e1.getID()+","+e2.getID()));
-				}
+				tlinkType = docTxp.getTlinkTypes().get(e1.getID()+","+e2.getID());
 			} else if (docTxp.getTlinkTypes().containsKey(e2.getID()+","+e1.getID())) {
-				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
-						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
-						eeRelCls.classifier.equals(VectorClassifier.weka)) {
-					eefv.addBinaryFeatureToVector("tlink", docTxp.getTlinkTypes().get(e2.getID()+","+e1.getID()), tlinkTypes);
-				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
-						eeRelCls.classifier.equals(VectorClassifier.none)) {
-					eefv.addToVector("tlink", docTxp.getTlinkTypes().get(e2.getID()+","+e1.getID()));
-				}
-			} else {
-				if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
-						eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
-						eeRelCls.classifier.equals(VectorClassifier.weka)) {
-					eefv.addBinaryFeatureToVector("tlink","O", tlinkTypes);
-				} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
-						eeRelCls.classifier.equals(VectorClassifier.none)) {
-					eefv.addToVector("tlink", "O");
-				}
+				tlinkType = TemporalRelation.getInverseRelation(docTxp.getTlinkTypes().get(e2.getID()+","+e1.getID()));
+			} 			
+			if (eeRelCls.classifier.equals(VectorClassifier.libsvm) ||
+					eeRelCls.classifier.equals(VectorClassifier.liblinear) ||
+					eeRelCls.classifier.equals(VectorClassifier.weka)) {
+				eefv.addBinaryFeatureToVector("tlink", tlinkType, tlinkTypes);
+			} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
+					eeRelCls.classifier.equals(VectorClassifier.none)) {
+				eefv.addToVector("tlink", tlinkType);
 			}
 			
 			if (eeRelCls.classifier.equals(VectorClassifier.libsvm) || 
@@ -336,7 +321,8 @@ public class CausalTimeBankTask {
 		
 //		double threshold = 1000;
 //		double[] thresholds = {1000,0.5,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100};
-		double[] thresholds = {0,1,10,20,30,40,50,60,70,80,90,100,1000};
+//		double[] thresholds = {0,1,10,20,30,40,50,60,70,80,90,100,1000};
+		double[] thresholds = {50,60,70,80};
 		String[] label = {"CLINK", "CLINK-R", "NONE"};
 		for (double threshold : thresholds) {
 			

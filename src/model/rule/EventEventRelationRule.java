@@ -41,7 +41,7 @@ public class EventEventRelationRule {
 			} else if (eventRule.equals("EV_INCL")) {
 				this.setRelType("INCLUDES");
 			} else if (eventRule.equals("EV_ISINCL")) {
-				this.setRelType("IS_INCLUDES");
+				this.setRelType("IS_INCLUDED");
 			} else if (eventRule.equals("EV_DURINV")) {
 				this.setRelType("DURING_INV");
 			} else if (eventRule.equals("EV_DUR")) {
