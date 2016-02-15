@@ -171,7 +171,7 @@ public class CauseRelPro {
 				"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
 		List<String> tlinkTypes = Arrays.asList(tlinksArr);
 		
-		System.err.println(txpFile.getName());
+//		System.err.println(txpFile.getName());
 	    
 		for (String clink : candidates.keySet()) {	//for every CLINK in TXP file: candidate pairs
 			Entity e1 = docTxp.getEntities().get(clink.split(",")[0]);
@@ -446,7 +446,7 @@ public class CauseRelPro {
 		//or...
 		
 		//2. BUILD FEATURE VECTOR FROM FILE
-		String filepath = "./data/Causal-TimeBank_TXP2/wsj_1014.tml.txp";
+		String filepath = "./data/example_TXP/wsj_1014.tml.txp";
 		Field[] fieldsFile = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
 				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
 				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 

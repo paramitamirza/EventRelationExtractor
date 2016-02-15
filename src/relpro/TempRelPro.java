@@ -667,7 +667,7 @@ public class TempRelPro {
 		//or...
 		
 		//2. BUILD FEATURE VECTOR FROM FILE
-		String filepath = "./data/TempEval3-eval_TXP/AP_20130322.tml.txp";
+		String filepath = "./data/example_TXP/bbc_20130322_721.tml.txp";
 		Field[] fieldsFile = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
 				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
 				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
