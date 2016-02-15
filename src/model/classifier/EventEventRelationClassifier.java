@@ -17,6 +17,8 @@ public class EventEventRelationClassifier extends PairClassifier {
 	
 	private String[] label = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
+	private String[] labelDense = {"BEFORE", "AFTER", "SIMULTANEOUS", 
+			"INCLUDES", "IS_INCLUDED", "VAGUE"};
 	
 	private void initFeatureVector() {
 		
@@ -41,6 +43,7 @@ public class EventEventRelationClassifier extends PairClassifier {
 					FeatureName.sameEventClass, FeatureName.sameTense, FeatureName.sameAspect, FeatureName.samePolarity,
 					FeatureName.depEvPath,				
 					FeatureName.mainVerb,
+					FeatureName.modalVerb,
 					FeatureName.tempSignalText,
 					FeatureName.tempSignalPos,
 					FeatureName.tempConnText,
@@ -63,15 +66,19 @@ public class EventEventRelationClassifier extends PairClassifier {
 					FeatureName.sameEventClass, FeatureName.sameTenseAspect, /*Feature.sameAspect,*/ FeatureName.samePolarity,
 					FeatureName.depEvPath,			
 					FeatureName.mainVerb,
-//					Feature.tempSignalClusText,
-//					Feature.tempSignalPos,
-//					Feature.tempSignal1ClusText,
-//					Feature.tempSignal1Pos,
+//					FeatureName.modalVerb,
+//					FeatureName.tempSignalClusText,
+//					FeatureName.tempSignalPos,
+//					FeatureName.tempSignalDep1Dep2,
+//					FeatureName.tempSignal1ClusText,
+//					FeatureName.tempSignal1Pos,
+//					FeatureName.tempSignal1Dep,
 					FeatureName.tempSignal2ClusText,
 					FeatureName.tempSignal2Pos,
-//					Feature.causMarkerClusText,
-//					Feature.causMarkerPos,
-//					/*Feature.coref,*/
+					FeatureName.tempSignal2Dep,
+//					FeatureName.causMarkerClusText,
+//					FeatureName.causMarkerPos,
+//					/*FeatureName.coref,*/
 					FeatureName.wnSim
 			};
 			featureList = Arrays.asList(eeFeatures);
@@ -154,44 +161,47 @@ public class EventEventRelationClassifier extends PairClassifier {
 	public void evaluate(List<PairFeatureVector> vectors, String modelPath) throws Exception {
 		
 		System.err.println("Evaluate model...");
-
-		int nInstances = vectors.size();
-		int nFeatures = vectors.get(0).getVectors().size()-1;
 		
-		if (classifier.equals(VectorClassifier.liblinear)) {
-			//Prepare evaluation data
-			Feature[][] instances = new Feature[nInstances][nFeatures];
-			double[] labels = new double[nInstances];
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			int row = 0;
-			for (PairFeatureVector fv : vectors) {				
-				int idx = 1, col = 0;
-				for (int i=0; i<nFeatures; i++) {
-					labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
-					instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
-					idx ++;
-					col ++;
+			if (classifier.equals(VectorClassifier.liblinear)) {
+				//Prepare evaluation data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {				
+					int idx = 1, col = 0;
+					for (int i=0; i<nFeatures; i++) {
+						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
+						instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
+						idx ++;
+						col ++;
+					}
+					row ++;
 				}
-				row ++;
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				double[] predictions = new double[nInstances];
+				int p = 0;
+				for (Feature[] instance : instances) {
+					predictions[p] = Linear.predict(model, instance);
+					p ++;
+				}
+				
+				List<String> result = new ArrayList<String>();
+				for (int i=0; i<labels.length; i++) {
+					result.add(((int)labels[i]) + "\t" + ((int)predictions[i]));
+				}
+				
+				PairEvaluator pe = new PairEvaluator(result);
+				pe.evaluatePerLabelIdx(label);
 			}
-			
-			//Test
-			File modelFile = new File(modelPath);
-			Model model = Model.load(modelFile);
-			double[] predictions = new double[nInstances];
-			int p = 0;
-			for (Feature[] instance : instances) {
-				predictions[p] = Linear.predict(model, instance);
-				p ++;
-			}
-			
-			List<String> result = new ArrayList<String>();
-			for (int i=0; i<labels.length; i++) {
-				result.add(((int)labels[i]) + "\t" + ((int)predictions[i]));
-			}
-			
-			PairEvaluator pe = new PairEvaluator(result);
-			pe.evaluatePerLabelIdx(label);
 		}
 	}
 	
@@ -199,33 +209,76 @@ public class EventEventRelationClassifier extends PairClassifier {
 		
 		System.err.println("Test model...");
 
-		int nInstances = vectors.size();
-		int nFeatures = vectors.get(0).getVectors().size()-1;
-		
 		List<String> predictionLabels = new ArrayList<String>();
 		
-		if (classifier.equals(VectorClassifier.liblinear)) {
-			//Prepare test data
-			Feature[][] instances = new Feature[nInstances][nFeatures];
-			double[] labels = new double[nInstances];
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			int row = 0;
-			for (PairFeatureVector fv : vectors) {				
-				int idx = 1, col = 0;
-				for (int i=0; i<nFeatures; i++) {
-					labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
-					instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
-					idx ++;
-					col ++;
+			if (classifier.equals(VectorClassifier.liblinear)) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {				
+					int idx = 1, col = 0;
+					for (int i=0; i<nFeatures; i++) {
+						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
+						instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
+						idx ++;
+						col ++;
+					}
+					row ++;
 				}
-				row ++;
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				for (Feature[] instance : instances) {
+					predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+				}
 			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predictDense(List<PairFeatureVector> vectors, String modelPath) throws Exception {
+		
+		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			//Test
-			File modelFile = new File(modelPath);
-			Model model = Model.load(modelFile);
-			for (Feature[] instance : instances) {
-				predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+			if (classifier.equals(VectorClassifier.liblinear)) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {				
+					int idx = 1, col = 0;
+					for (int i=0; i<nFeatures; i++) {
+						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
+						instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				for (Feature[] instance : instances) {
+					predictionLabels.add(labelDense[(int)Linear.predict(model, instance)-1]);
+				}
 			}
 		}
 		

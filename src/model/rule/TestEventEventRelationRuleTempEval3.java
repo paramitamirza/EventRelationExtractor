@@ -63,6 +63,9 @@ public class TestEventEventRelationRuleTempEval3 {
 					if (!eeRule.getRelType().equals("O")) {
 						ee.add(eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + 
 								eefv.getLabel() + "\t" + eeRule.getRelType());
+//					} else {
+//						ee.add(eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + 
+//								eefv.getLabel() + "\tNONE");
 					}
 				}
 			}

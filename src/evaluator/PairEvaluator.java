@@ -124,6 +124,36 @@ public class PairEvaluator {
 		printEvaluation(label, tp, fp, total);
 	}
 	
+	public void evaluatePerLabel(String[] label) {
+		int[] tp = new int[label.length]; Arrays.fill(tp, 0);
+		int[] fp = new int[label.length]; Arrays.fill(fp, 0);
+		int[] fn = new int[label.length]; Arrays.fill(fp, 0);
+		int[] total = new int[label.length]; Arrays.fill(total, 0);
+		
+		List<String> labelList = Arrays.asList(label);
+		
+		int idxLabel, idxPred;
+		for (String s : pairs) { //e1	e2	label(str)	predicted(str)
+			if (!s.trim().isEmpty()) {
+				String[] cols = s.split("\t");
+				idxLabel = labelList.indexOf(cols[2]);
+				if (!cols[2].equals("NONE")) total[idxLabel] ++;
+				if (cols[3].equals("NONE")) {
+					fn[idxLabel] ++;
+				} else {
+					idxPred = labelList.indexOf(cols[3]);
+					if (cols[2].equals("NONE")) fp[idxPred] ++;
+					else {
+						if (idxPred == idxLabel) tp[idxPred] ++;
+						else fp[idxPred] ++;
+					}
+				}
+			}
+		}
+		printEvaluation(label, tp, fp, total);
+//		printEvaluation(label, tp, fp, fn, total);
+	}
+	
 	public void evaluateCausalPerLabelIdx(String[] label) {
 		int[] tp = new int[label.length]; Arrays.fill(tp, 0);
 		int[] fp = new int[label.length]; Arrays.fill(fp, 0);
@@ -160,18 +190,24 @@ public class PairEvaluator {
 				}
 			}
 		}
-		printEvaluation(label, tp, fp, total);
-		double precision = sumtp/(double)(sumtp+sumfp);
-		double recall = sumtp/(double)(sumtp+sumfn);
-		double f1 = (2*precision*recall)/(precision+recall);
-		double tpr = recall;
-		double fpr = sumfp/(double)(sumfp+sumtn);
-		//System.out.println("P R F1 TPR FPR")
-		System.out.println(precision +
-				" " + recall +
-				" " + f1 +
-				" " + tpr + 
-				" " + fpr);
+		
+		System.err.println(label[0] + "\t" +
+				(total[0]+total[1]) + "\t" +
+				(tp[0]+tp[1]) + "\t" +
+				(fp[0]+fp[0]));
+		
+//		printEvaluation(label, tp, fp, total);
+//		double precision = sumtp/(double)(sumtp+sumfp);
+//		double recall = sumtp/(double)(sumtp+sumfn);
+//		double f1 = (2*precision*recall)/(precision+recall);
+//		double tpr = recall;
+//		double fpr = sumfp/(double)(sumfp+sumtn);
+//		//System.out.println("P R F1 TPR FPR")
+//		System.err.println(precision +
+//				" " + recall +
+//				" " + f1 +
+//				" " + tpr + 
+//				" " + fpr);
 	}
 	
 	private void printEvaluation(String[] label,
@@ -302,13 +338,12 @@ public class PairEvaluator {
 				if (!label.equals(pred)) {
 					e1 = docTxp.getEntities().get(cols[0]);
 					e2 = docTxp.getEntities().get(cols[1]);
-					if (e1 instanceof Timex && e2 instanceof Timex) {
-						e1Str = ((Timex)e1).getValue(); //+ "-" + ((Timex)e1).getType() + "-" + ((Timex)e1).isDct();
-						e2Str = ((Timex)e2).getValue(); //+ "-" + ((Timex)e2).getType() + "-" + ((Timex)e2).isDct();
-					} else {
-						e1Str = e1.toString(docTxp);
-						e2Str = e2.toString(docTxp);
-					}
+					
+					if (e1 instanceof Timex) e1Str = ((Timex)e1).getValue();
+					else e1Str = e1.toString(docTxp);
+					if (e2 instanceof Timex) e2Str = ((Timex)e2).getValue(); //+ "-" + ((Timex)e2).getType() + "-" + ((Timex)e2).isDct();
+					else e2Str = e2.toString(docTxp);
+					
 					System.out.println(e1Str + " | " + e2Str + " | " + label + " | " + pred);
 				}
 			}
@@ -324,17 +359,41 @@ public class PairEvaluator {
 				String[] cols = s.split("\t");
 				label = cols[2];
 				pred = cols[3];
-				if (!label.equals(pred)) {
-					e1 = docTxp.getEntities().get(cols[0]);
-					e2 = docTxp.getEntities().get(cols[1]);
-					if (e1 instanceof Timex && e2 instanceof Timex) {
-						e1Str = ((Timex)e1).getValue(); //+ "-" + ((Timex)e1).getType() + "-" + ((Timex)e1).isDct();
-						e2Str = ((Timex)e2).getValue(); //+ "-" + ((Timex)e2).getType() + "-" + ((Timex)e2).isDct();
+				e1 = docTxp.getEntities().get(cols[0]);
+				e2 = docTxp.getEntities().get(cols[1]);
+				
+				sentStr = "";
+				if (e1 instanceof Timex) {
+					e1Str = ((Timex)e1).getValue();
+					if (((Timex) e1).isDct()) {
+						sentStr += "DCT";
 					} else {
-						e1Str = e1.toString(docTxp);
-						e2Str = e2.toString(docTxp);
+						sentStr += docTxp.getSentences().get(e1.getSentID()).toString(docTxp);
 					}
-					sentStr = docTxp.getSentences().get(e2.getSentID()).toString(docTxp);
+				}
+				else {
+					e1Str = e1.toString(docTxp);
+					sentStr += docTxp.getSentences().get(e1.getSentID()).toString(docTxp);
+				}
+				if (e2 instanceof Timex) {
+					e2Str = ((Timex)e2).getValue(); //+ "-" + ((Timex)e2).getType() + "-" + ((Timex)e2).isDct();
+					if (((Timex) e2).isDct()) {
+						sentStr += "DCT";
+					} else {
+						if ((e1 instanceof Timex && ((Timex) e1).isDct())
+								|| !e1.getSentID().equals(e2.getSentID()))
+							sentStr += " || " + docTxp.getSentences().get(e2.getSentID()).toString(docTxp);
+					}
+				}
+				else {
+					e2Str = e2.toString(docTxp);
+					if (!e1.getSentID().equals(e2.getSentID()))
+						sentStr += " || " + docTxp.getSentences().get(e2.getSentID()).toString(docTxp);
+				}
+				
+				if (!label.equals(pred)) {					
+					System.err.println(e1Str + " | " + e2Str + " | " + sentStr + " | " + label + " | " + pred);
+				} else {					
 					System.out.println(e1Str + " | " + e2Str + " | " + sentStr + " | " + label + " | " + pred);
 				}
 			}

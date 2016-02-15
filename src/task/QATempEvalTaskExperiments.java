@@ -22,8 +22,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 
-import com.cognitionis.jtimegraph.timegraph.TimeGraph;
-
 import evaluator.PairEvaluator;
 import evaluator.TempEval3;
 import model.classifier.EventDctRelationClassifier;
@@ -40,7 +38,7 @@ import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
 import model.rule.EventEventRelationRule;
 import model.rule.EventTimexRelationRule;
-//import model.rule.TimeGraph;
+import model.rule.TimeGraph;
 import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
 import parser.TXPParser.Field;
@@ -54,7 +52,7 @@ import parser.entities.TimeMLDoc;
 import parser.entities.Timex;
 import server.RemoteServer;
 
-class TempEval3TaskABCExperiments {
+class QATempEvalTaskExperiments {
 	
 	private String[] label = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
@@ -64,10 +62,10 @@ class TempEval3TaskABCExperiments {
 	private int numCorrectCandidate;
 	private String taskName;
 	
-	public TempEval3TaskABCExperiments() {
+	public QATempEvalTaskExperiments() {
 		numTotalCandidate = 0;
 		numCorrectCandidate = 0;
-		taskName = "te3-abc";
+		taskName = "qa-te";
 	}
 	
 	public Map<String,String> getTimexTimexRuleRelation(Doc doc) {
@@ -140,6 +138,7 @@ class TempEval3TaskABCExperiments {
 			boolean train, boolean goldCandidate) throws Exception {
 		List<PairFeatureVector> fvList = new ArrayList<PairFeatureVector>();
 		
+		System.err.println(txpFile.getName());
 		Doc docTxp = txpParser.parseDocument(txpFile.getPath());
 		Doc docTml = tmlParser.parseDocument(tmlFile.getPath());
 		
@@ -407,7 +406,14 @@ class TempEval3TaskABCExperiments {
 							inTml = true;
 							tmlTok = tmlTok.substring(txpTok.length());
 							t ++;
-						} 
+						} else if ((tmlTok.equals("'re") && txpTok.equals("are"))
+								|| (tmlTok.equals("'ve") && txpTok.equals("have"))
+								) {
+							txpTok = tmlTok;
+							if (!inTml) textStr += " ";
+							inTml = false;
+							w ++; t ++;
+						}
 						if (evid != null) {
 							ev = (Event) dTxp.getEntities().get(evid);
 							if (tid.equals(ev.getStartTokID()))
@@ -658,7 +664,7 @@ class TempEval3TaskABCExperiments {
 				Field.main_verb, Field.connective, Field.morpho, 
 				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
 		
-		TempEval3TaskABCExperiments task = new TempEval3TaskABCExperiments();
+		QATempEvalTaskExperiments task = new QATempEvalTaskExperiments();
 		
 //		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
 //		System.setOut(out);
@@ -677,425 +683,438 @@ class TempEval3TaskABCExperiments {
 		boolean tlinkFromEEClassifier = true;
 		boolean tlinkFromETClassifier = true;
 		
-		boolean tlinkFromInferredMLN = true;
-		boolean tlinkFromRESTReasoner = false;
+		boolean tlinkFromInferredMLN = false;
+		boolean tlinkFromRESTReasoner = true;
 		boolean tlinkNonCandidateFromInferred = false;
 		
 		boolean postTimeGraph = false;
-		boolean evaluateTempEval3 = true;
+		boolean evaluateTempEval3 = false;
 		
 		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);		
 		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
 		
-		String trainTxpDirpath = "./data/TempEval3-train_TXP2/";
-		String trainTmlDirpath = "./data/TempEval3-train_TML/";
+		String trainTxpDirpath = "./data/QATempEval-train_TXP/";
+		String trainTmlDirpath = "./data/QATempEval-train_TML/";
 		
-		String evalTxpDirpath = "./data/tempeval3_TXP_TimeML_cl/";
-		String evalTmlDirpath = "./data/TempEval3-eval_TML/";
+		String[] domains = {"blogs", "news", "wikipedia"};
 		
-		//TimeML directory for system result files
-		String systemTMLPath = "data/TempEval3-ABC-system_TML";
-		File sysDir = new File(systemTMLPath);
-		// if the directory does not exist, create it
-		if (!sysDir.exists()) {
-			sysDir.mkdir();
-		}
+		for (String dom : domains) {
 		
-		//Init classifiers
-		
-		EventTimexRelationClassifier dctCls = new EventTimexRelationClassifier("te3", "liblinear");
-		EventTimexRelationClassifier etCls = new EventTimexRelationClassifier("te3", "liblinear");
-		EventEventRelationClassifier eeCls = new EventEventRelationClassifier("te3", "liblinear");
-		
-		
-		//Train classifiers
-		if (trainModels) {
-			List<List<PairFeatureVector>> etTrainFvList = task.getEventTimexSplitTlinks(txpParser, tmlParser, 
-					trainTxpDirpath, trainTmlDirpath, dctCls, etCls, true, true);
-			List<PairFeatureVector> eeTrainFvList = task.getEventEventTlinks(txpParser, tmlParser, 
-					trainTxpDirpath, trainTmlDirpath, eeCls, true, true);
+			String evalTxpDirpath = "./data/QATempEval-eval_TXP/"+dom+"/";
+			String evalTmlDirpath = "./data/QATempEval-eval_TML/"+dom+"/";
 			
-			dctCls.train(etTrainFvList.get(0), "models/" + task.taskName + "-dct.model");
-			etCls.train(etTrainFvList.get(1), "models/" + task.taskName + "-et.model");   
-			eeCls.train(eeTrainFvList, "models/" + task.taskName + "-ee.model");
-		}
-		
-		Map<String, Map<String, String>> clinkPerFile = task.getCLINKs("causality_result_all_auto_tlinks.txt");
-		
-		List<String> ttResult = new ArrayList<String>();
-		List<String> dctResult = new ArrayList<String>();
-		List<String> etResult = new ArrayList<String>();
-		List<String> eeResult = new ArrayList<String>();
-		
-		int numCorrected=0, dctNum=0, etNum=0;
-		
-		File[] txpFiles = new File(evalTxpDirpath).listFiles();
-		//For each file in the evaluation dataset
-		for (File txpFile : txpFiles) {
-			if (txpFile.isFile()) {	
-				File tmlFile = new File(evalTmlDirpath, txpFile.getName().replace(".txp", ""));
-				System.err.println(tmlFile.getName());
-				Doc docTxp = txpParser.parseDocument(txpFile.getPath());
-				Doc docTml = tmlParser.parseDocument(tmlFile.getPath());
-				
-				BufferedWriter bw = new BufferedWriter(new FileWriter("./data/mln/TempEval3/"+txpFile.getName()+".db"));
-				String ttStr = "", etStr = "", eeStr = "";
-				String ttTG = "", etTG = "", eeTG = "";
-				List<String> dctTestList = new ArrayList<String>();
-				List<String> etTestList = new ArrayList<String>();
-				List<String> eeTestList = new ArrayList<String>();
-				
-				Set<String> extracted = new HashSet<String>();
-				
-				//CANDIDATE PAIRS
-				
-				//event-DCT
-				List<PairFeatureVector> dctFvList = task.getEventDctTlinksPerFile(txpParser, tmlParser, 
-						txpFile, tmlFile, dctCls, false, taskCRelOnly);
-				dctNum += dctFvList.size();
-				task.numTotalCandidate += dctFvList.size();
-				for (PairFeatureVector fv : dctFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
-				}
-				List<PairFeatureVector> dctFvListCls = new ArrayList<PairFeatureVector>();
-				
-				//event-timex
-				List<PairFeatureVector> etFvList = task.getEventTimexTlinksPerFile(txpParser, tmlParser, 
-						txpFile, tmlFile, etCls, false, taskCRelOnly);
-				etNum += etFvList.size();
-				task.numTotalCandidate += etFvList.size();
-				for (PairFeatureVector fv : etFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
-				}
-				List<PairFeatureVector> etFvListCls = new ArrayList<PairFeatureVector>();
-				
-				//event-event
-				List<PairFeatureVector> eeFvList = task.getEventEventTlinksPerFile(txpParser, tmlParser, 
-						txpFile, tmlFile, eeCls, false, taskCRelOnly);
-				task.numTotalCandidate += eeFvList.size();
-				for (PairFeatureVector fv : eeFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
-				}
-				List<PairFeatureVector> eeFvListCls = new ArrayList<PairFeatureVector>();
+			//TimeML directory for system result files
+			String systemTMLPath = "data/QATempEval-system_TML/"+dom+"/";
+			File sysDir = new File(systemTMLPath);
+			// if the directory does not exist, create it
+			if (!sysDir.exists()) {
+				sysDir.mkdirs();
+			}
 			
+			//Init classifiers
+			
+			EventTimexRelationClassifier dctCls = new EventTimexRelationClassifier("te3", "liblinear");
+			EventTimexRelationClassifier etCls = new EventTimexRelationClassifier("te3", "liblinear");
+			EventEventRelationClassifier eeCls = new EventEventRelationClassifier("te3", "liblinear");
+			
+			
+			//Train classifiers
+			if (trainModels) {
+				Field[] trainFields = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
+						Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
+						Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
+						Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
+						Field.main_verb, Field.connective, Field.morpho, 
+						Field.tense_aspect_pol, /*Field.coref_event,*/ Field.tlink};
+				TXPParser txpParserTrain = new TXPParser(EntityEnum.Language.EN, fields);
 				
-				//RULE-BASED
+				List<List<PairFeatureVector>> etTrainFvList = task.getEventTimexSplitTlinks(txpParserTrain, tmlParser, 
+						trainTxpDirpath, trainTmlDirpath, dctCls, etCls, true, true);
+				List<PairFeatureVector> eeTrainFvList = task.getEventEventTlinks(txpParserTrain, tmlParser, 
+						trainTxpDirpath, trainTmlDirpath, eeCls, true, true);
 				
-				//timex-timex pairs
-				List<String> ttPerFile = new ArrayList<String>();
-				if (taskCRelOnly) {
-					//gold candidate timex-timex
-					ttPerFile = task.getTimexTimexTlinksPerFile(txpParser, tmlParser, txpFile, tmlFile, taskCRelOnly);
-					for (String tt : ttPerFile) {
-						ttTG = "gold\t" + tt.split("\t")[0] + "\t" + tt.split("\t")[1] + "\t"+ tt.split("\t")[3] + "\n" + ttTG;
-						ttStr += "RelTT(" + tt.split("\t")[0] + ", " + tt.split("\t")[1] + ", "+ tt.split("\t")[3] + ")\n";
-						extracted.add(tt.split("\t")[0]+"-"+tt.split("\t")[1]);
-					}
-				
-				} else {
-					//rule-based timex-timex
-					ttPerFile = new ArrayList<String>();
-					Map<String,String> ttlinks = task.getTimexTimexRuleRelation(docTxp);
-					for (String tt : ttlinks.keySet()) {
-						TemporalRelation trel = new TemporalRelation(tt.split("\t")[0], tt.split("\t")[1]);
-						trel.setRelType(ttlinks.get(tt));
-						
-						String goldLabel = "NONE";
-						if (docTml.getTlinks().contains(trel)) {
-							int idx = docTml.getTlinks().indexOf(trel);
-							goldLabel = docTml.getTlinks().get(idx).getRelType();
-							task.numCorrectCandidate ++;
-						}
-						
-						ttPerFile.add(trel.getSourceID() + "\t" + trel.getTargetID() 
-								+ "\t"+ goldLabel
-								+ "\t"+ trel.getRelType());
-						ttTG = "gold\t" + trel.getSourceID() + "\t" + trel.getTargetID() + "\t"+ trel.getRelType() + "\n" + ttTG;
-						ttStr += "RelTT(" + trel.getSourceID() + ", " + trel.getTargetID() + ", "+ trel.getRelType() + ")\n";
-						extracted.add(trel.getSourceID()+"-"+trel.getTargetID());
-					}
-				}
-				
-				//event-dct
-				if (tlinkFromDCTRules) {
+				dctCls.train(etTrainFvList.get(0), "models/" + task.taskName + "-dct.model");
+				etCls.train(etTrainFvList.get(1), "models/" + task.taskName + "-et.model");   
+				eeCls.train(eeTrainFvList, "models/" + task.taskName + "-ee.model");
+			}
+			
+			Map<String, Map<String, String>> clinkPerFile = task.getCLINKs("causality_result_all_auto_tlinks.txt");
+			
+			List<String> ttResult = new ArrayList<String>();
+			List<String> dctResult = new ArrayList<String>();
+			List<String> etResult = new ArrayList<String>();
+			List<String> eeResult = new ArrayList<String>();
+			
+			int numCorrected=0, dctNum=0, etNum=0;
+			
+			File[] txpFiles = new File(evalTxpDirpath).listFiles();
+			//For each file in the evaluation dataset
+			for (File txpFile : txpFiles) {
+				if (txpFile.isFile()) {	
+					File tmlFile = new File(evalTmlDirpath, txpFile.getName().replace(".txp", ""));
+					System.err.println(tmlFile.getName());
+					Doc docTxp = txpParser.parseDocument(txpFile.getPath());
+					Doc docTml = tmlParser.parseDocument(tmlFile.getPath());
+					
+					String ttStr = "", etStr = "", eeStr = "";
+					String ttTG = "", etTG = "", eeTG = "";
+					List<String> dctTestList = new ArrayList<String>();
+					List<String> etTestList = new ArrayList<String>();
+					List<String> eeTestList = new ArrayList<String>();
+					
+					Set<String> extracted = new HashSet<String>();
+					
+					//CANDIDATE PAIRS
+					
+					//event-DCT
+					List<PairFeatureVector> dctFvList = task.getEventDctTlinksPerFile(txpParser, tmlParser, 
+							txpFile, tmlFile, dctCls, false, taskCRelOnly);
+					dctNum += dctFvList.size();
+					task.numTotalCandidate += dctFvList.size();
 					for (PairFeatureVector fv : dctFvList) {
-						//Find label according to rules
-						EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
-						EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
-								docTxp, etfv.getMateDependencyPath());
-						
-						String label = etRule.getRelType();
-						if (!label.equals("O")) {
-							dctTestList.add(etfv.getE1().getID() 
-									+ "\t" + etfv.getE2().getID()
-									+ "\t" + etfv.getLabel()
-									+ "\t" + label);
-							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
-							etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						} else {
-							dctFvListCls.add(fv);
-						}
+						if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
 					}
-				} else {
-					dctFvListCls.addAll(dctFvList);
-				}
-				
-				//event-timex
-				if (tlinkFromETRules) {
+					List<PairFeatureVector> dctFvListCls = new ArrayList<PairFeatureVector>();
+					
+					//event-timex
+					List<PairFeatureVector> etFvList = task.getEventTimexTlinksPerFile(txpParser, tmlParser, 
+							txpFile, tmlFile, etCls, false, taskCRelOnly);
+					etNum += etFvList.size();
+					task.numTotalCandidate += etFvList.size();
 					for (PairFeatureVector fv : etFvList) {
-						//Find label according to rules
-						EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
-						EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
-								docTxp, etfv.getMateDependencyPath());
-						
-						String label = etRule.getRelType();
-						if (!label.equals("O")) {
-							etTestList.add(etfv.getE1().getID() 
-									+ "\t" + etfv.getE2().getID()
-									+ "\t" + etfv.getLabel()
-									+ "\t" + label);
-							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
-							etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						} else {
-							etFvListCls.add(fv);
-						}
+						if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
 					}
-				} else {
-					etFvListCls.addAll(etFvList);
-				}
-				
-				//event-event
-				if (tlinkFromEERules) {
+					List<PairFeatureVector> etFvListCls = new ArrayList<PairFeatureVector>();
+					
+					//event-event
+					List<PairFeatureVector> eeFvList = task.getEventEventTlinksPerFile(txpParser, tmlParser, 
+							txpFile, tmlFile, eeCls, false, taskCRelOnly);
+					task.numTotalCandidate += eeFvList.size();
 					for (PairFeatureVector fv : eeFvList) {
-						//Find label according to rules
-						EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
-						EventEventRelationRule eeRule = new EventEventRelationRule((Event) eefv.getE1(), (Event) eefv.getE2(), 
-								docTxp, eefv.getMateDependencyPath());
-						 
-						String label = eeRule.getRelType();
-						if (!label.equals("O")) {
-							if (label.equals("IDENTITY")) label = "SIMULTANEOUS";
-							eeTestList.add(eefv.getE1().getID() 
-									+ "\t" + eefv.getE2().getID() 
-									+ "\t" + eefv.getLabel()
-									+ "\t" + label);
-							eeTG = "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n" + eeTG;
-							eeStr += "RelEE(" + eefv.getE1().getID() + ", " + eefv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+						if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
+					}
+					List<PairFeatureVector> eeFvListCls = new ArrayList<PairFeatureVector>();
+				
+					
+					//RULE-BASED
+					
+					//timex-timex pairs
+					List<String> ttPerFile = new ArrayList<String>();
+					if (taskCRelOnly) {
+						//gold candidate timex-timex
+						ttPerFile = task.getTimexTimexTlinksPerFile(txpParser, tmlParser, txpFile, tmlFile, taskCRelOnly);
+						for (String tt : ttPerFile) {
+							ttTG = "gold\t" + tt.split("\t")[0] + "\t" + tt.split("\t")[1] + "\t"+ tt.split("\t")[3] + "\n" + ttTG;
+							ttStr += "RelTT(" + tt.split("\t")[0] + ", " + tt.split("\t")[1] + ", "+ tt.split("\t")[3] + ")\n";
+							extracted.add(tt.split("\t")[0]+"-"+tt.split("\t")[1]);
 						}
-	//					else if (eefv.isCoreference()) label = "IDENTITY";	//--> doesn't work
-						else {
-							eeFvListCls.add(fv);
+					
+					} else {
+						//rule-based timex-timex
+						ttPerFile = new ArrayList<String>();
+						Map<String,String> ttlinks = task.getTimexTimexRuleRelation(docTxp);
+						for (String tt : ttlinks.keySet()) {
+							TemporalRelation trel = new TemporalRelation(tt.split("\t")[0], tt.split("\t")[1]);
+							trel.setRelType(ttlinks.get(tt));
+							
+							String goldLabel = "NONE";
+							if (docTml.getTlinks().contains(trel)) {
+								int idx = docTml.getTlinks().indexOf(trel);
+								goldLabel = docTml.getTlinks().get(idx).getRelType();
+								task.numCorrectCandidate ++;
+							}
+							
+							ttPerFile.add(trel.getSourceID() + "\t" + trel.getTargetID() 
+									+ "\t"+ goldLabel
+									+ "\t"+ trel.getRelType());
+							ttTG = "gold\t" + trel.getSourceID() + "\t" + trel.getTargetID() + "\t"+ trel.getRelType() + "\n" + ttTG;
+							ttStr += "RelTT(" + trel.getSourceID() + ", " + trel.getTargetID() + ", "+ trel.getRelType() + ")\n";
+							extracted.add(trel.getSourceID()+"-"+trel.getTargetID());
 						}
 					}
-				} else {
-					eeFvListCls.addAll(eeFvList);
-				}
-				
-				//TEMPORAL CLOSURE
-				
-				Map<String, String> inferredPairs = new HashMap<String, String>();
-				Set<String> inferred = inferredPairs.keySet();
-				
-				//MLN inferred TLINKs
-				if (tlinkFromInferredMLN) {
+					
+					//event-dct
+					if (tlinkFromDCTRules) {
+						for (PairFeatureVector fv : dctFvList) {
+							//Find label according to rules
+							EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
+							EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
+									docTxp, etfv.getMateDependencyPath());
+							
+							String label = etRule.getRelType();
+							if (!label.equals("O")) {
+								dctTestList.add(etfv.getE1().getID() 
+										+ "\t" + etfv.getE2().getID()
+										+ "\t" + etfv.getLabel()
+										+ "\t" + label);
+								etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
+								etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
+								extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							} else {
+								dctFvListCls.add(fv);
+							}
+						}
+					} else {
+						dctFvListCls.addAll(dctFvList);
+					}
+					
+					//event-timex
+					if (tlinkFromETRules) {
+						for (PairFeatureVector fv : etFvList) {
+							//Find label according to rules
+							EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
+							EventTimexRelationRule etRule = new EventTimexRelationRule((Event) etfv.getE1(), (Timex) etfv.getE2(), 
+									docTxp, etfv.getMateDependencyPath());
+							
+							String label = etRule.getRelType();
+							if (!label.equals("O")) {
+								etTestList.add(etfv.getE1().getID() 
+										+ "\t" + etfv.getE2().getID()
+										+ "\t" + etfv.getLabel()
+										+ "\t" + label);
+								etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
+								etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
+								extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							} else {
+								etFvListCls.add(fv);
+							}
+						}
+					} else {
+						etFvListCls.addAll(etFvList);
+					}
+					
+					//event-event
+					if (tlinkFromEERules) {
+						for (PairFeatureVector fv : eeFvList) {
+							//Find label according to rules
+							EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
+							EventEventRelationRule eeRule = new EventEventRelationRule((Event) eefv.getE1(), (Event) eefv.getE2(), 
+									docTxp, eefv.getMateDependencyPath());
+							 
+							String label = eeRule.getRelType();
+							if (!label.equals("O")) {
+								if (label.equals("IDENTITY")) label = "SIMULTANEOUS";
+								eeTestList.add(eefv.getE1().getID() 
+										+ "\t" + eefv.getE2().getID() 
+										+ "\t" + eefv.getLabel()
+										+ "\t" + label);
+								eeTG = "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n" + eeTG;
+								eeStr += "RelEE(" + eefv.getE1().getID() + ", " + eefv.getE2().getID() + ", " + label + ")\n";
+								extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+							}
+		//					else if (eefv.isCoreference()) label = "IDENTITY";	//--> doesn't work
+							else {
+								eeFvListCls.add(fv);
+							}
+						}
+					} else {
+						eeFvListCls.addAll(eeFvList);
+					}
+					
+					//TEMPORAL CLOSURE
+					
+					Map<String, String> inferredPairs = new HashMap<String, String>();
+					Set<String> inferred = inferredPairs.keySet();
+					
 					//Data preparation
+					BufferedWriter bw = new BufferedWriter(new FileWriter("./data/mln/QATempEval/" + txpFile.getName()+".db"));
 					bw.write(ttStr + etStr + eeStr);
 					bw.close();
 					
-					//Read inferred TLINKs
-					BufferedReader br = new BufferedReader(new FileReader("./data/mln/TempEval3-ABC-inferred/" + docTxp.getFilename() + ".db.txt"));
-					String line, rel;
-					while ((line = br.readLine()) != null) {
-						rel = line.replaceAll("\"", "");
-						rel = rel.replace("(", "\t");
-						rel = rel.replace(")", "");
-						rel = rel.replaceAll(", ", "\t");
-						String[] cols = rel.split("\t");
-						if (Double.parseDouble(cols[0]) > 0.5) {
-							inferredPairs.put(cols[2]+"-"+cols[3], cols[4]);
-						}
-					}
-				}
-				
-				//RESTReasoner
-				if (tlinkFromRESTReasoner) {
 					//Data preparation
 					etTestList.addAll(dctTestList);
 					task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
 					ttPerFile, etTestList, eeTestList,
 					systemTMLPath);
 					
-					//Read deduced TLINKs
-					String systemDeducedTMLPath = "data/TempEval3-ABC-system_TML_deduced";
-					File deducedTmlFile = new File(systemDeducedTMLPath, tmlFile.getName());
-					Doc docDedTml = tmlParser.parseDocument(deducedTmlFile.getPath());
-					for (TemporalRelation tlink : docDedTml.getTlinks()) {
-						if (tlink.isDeduced()) {
-							inferredPairs.put(tlink.getSourceID()+"-"+tlink.getTargetID(), tlink.getRelType());
-							inferredPairs.put(tlink.getTargetID()+"-"+tlink.getSourceID(), TemporalRelation.getInverseRelation(tlink.getRelType()));
-						}
-					}
-				}
-				
-				//CLASSIFIERS
-				
-				//event-dct
-				List<String> dctClsTest = dctCls.predict(dctFvListCls, "models/" + task.taskName + "-dct.model");
-				for (int i=0; i<dctFvListCls.size(); i++) {
-					EventTimexFeatureVector etfv = new EventTimexFeatureVector(dctFvListCls.get(i));
-					String label = "NONE";
-					
-					if (tlinkFromDCTClassifier) label = dctClsTest.get(i);
-					
-					if (inferredPairs.containsKey(etfv.getE1().getID()+"-"+etfv.getE2().getID())) {
-						label = inferredPairs.get(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						inferred.remove(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
-					} else {
-						etTG += "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n";
-					}
-					dctTestList.add(etfv.getE1().getID() 
-							+ "\t" + etfv.getE2().getID()
-							+ "\t" + etfv.getLabel()
-							+ "\t" + label);
-					extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-				}
-				
-				//event-timex
-				List<String> etClsTest = etCls.predict(etFvListCls, "models/" + task.taskName + "-et.model");
-				for (int i=0; i<etFvListCls.size(); i++) {
-					EventTimexFeatureVector etfv = new EventTimexFeatureVector(etFvListCls.get(i));
-					String label = "NONE";
-					
-					if (tlinkFromETClassifier) label = etClsTest.get(i);
-					
-					if (inferredPairs.containsKey(etfv.getE1().getID()+"-"+etfv.getE2().getID())) {
-						label = inferredPairs.get(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						inferred.remove(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-						etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
-					} else {
-						etTG += "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n";
-					}
-					etTestList.add(etfv.getE1().getID() 
-							+ "\t" + etfv.getE2().getID()
-							+ "\t" + etfv.getLabel()
-							+ "\t" + label);
-					extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
-				}
-				
-				//event-event
-				List<String> eeClsTest = eeCls.predict(eeFvListCls, "models/" + task.taskName + "-ee.model");	
-				for (int i=0; i<eeFvListCls.size(); i++) {
-					EventEventFeatureVector eefv = new EventEventFeatureVector(eeFvListCls.get(i));
-					String label = "NONE";
-					
-					if (tlinkFromEEClassifier) label = eeClsTest.get(i);
-					
-					if (inferredPairs.containsKey(eefv.getE1().getID()+"-"+eefv.getE2().getID())) {
-						label = inferredPairs.get(eefv.getE1().getID()+"-"+eefv.getE2().getID());
-						inferred.remove(eefv.getE1().getID()+"-"+eefv.getE2().getID());
-						eeTG = "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n" + eeTG;
-					} else {
-						eeTG += "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n";
-					}
-					if (label.equals("IDENTITY")) label = "SIMULTANEOUS";
-					eeTestList.add(eefv.getE1().getID() 
-							+ "\t" + eefv.getE2().getID()
-							+ "\t" + eefv.getLabel()
-							+ "\t" + label);
-					extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
-				}
-				
-				//ADD INFERRED/DEDUCED BUT NOT CANDIDATE
-				if (tlinkNonCandidateFromInferred &&
-						(tlinkFromInferredMLN || tlinkFromRESTReasoner)) {
-					for (String key : inferred) {
-						String source = key.split("-")[0];
-						String target = key.split("-")[1];
-						String tlink = inferredPairs.get(key);
-						if (!extracted.contains(target+"-"+source)) {
-							if (source.startsWith("t") && target.startsWith("t")) {
-								ttPerFile.add(source + "\t" + target
-										+ "\tNONE" + "\t" + tlink);
-								ttTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + ttTG;
-							} else if (source.startsWith("e") && target.startsWith("t")) {
-								if (target.endsWith("0")) {
-									dctTestList.add(source + "\t" + target
-											+ "\tNONE" + "\t" + tlink);
-								} else {
-									etTestList.add(source + "\t" + target
-											+ "\tNONE" + "\t" + tlink);
-								}
-								etTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + etTG;
-							} else if (source.startsWith("e") && target.startsWith("e")) {
-								eeTestList.add(source + "\t" + target
-										+ "\tNONE" + "\t" + tlink);
-								eeTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + eeTG;
+					//MLN inferred TLINKs
+					if (tlinkFromInferredMLN) {
+						
+						//Read inferred TLINKs
+						BufferedReader br = new BufferedReader(new FileReader("./data/mln/QATempEval-inferred/" + docTxp.getFilename() + ".db.txt"));
+						String line, rel;
+						while ((line = br.readLine()) != null) {
+							rel = line.replaceAll("\"", "");
+							rel = rel.replace("(", "\t");
+							rel = rel.replace(")", "");
+							rel = rel.replaceAll(", ", "\t");
+							String[] cols = rel.split("\t");
+							if (Double.parseDouble(cols[0]) > 0.5) {
+								inferredPairs.put(cols[2]+"-"+cols[3], cols[4]);
 							}
 						}
 					}
-				}
-				
-				for (String tlink : ttPerFile) {
-					if (precisionOnly) {
-						if (!tlink.endsWith("NONE")) ttResult.add(tlink);
-					} else ttResult.add(tlink);
-				}
-				for (String tlink : dctTestList) {
-					if (precisionOnly) {
-						if (!tlink.endsWith("NONE")) dctResult.add(tlink);
-					} else dctResult.add(tlink);
-				}
-				for (String tlink : etTestList) {
-					if (precisionOnly) {
-						if (!tlink.endsWith("NONE")) etResult.add(tlink);
-					} else etResult.add(tlink);
-				}
-				for (String tlink : eeTestList) {
-					if (precisionOnly) {
-						if (!tlink.endsWith("NONE")) eeResult.add(tlink);
-					} else eeResult.add(tlink);
-				}
-				
-				//Write the TimeML document with new TLINKs
-				etTestList.addAll(dctTestList);
-				task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
-						ttPerFile, etTestList, eeTestList,
-						systemTMLPath);
-				
-//				Timegraph tg = new TimeGraph();
-				
-				//TIMEGRAPH
-				if (postTimeGraph) {
-//					TimeGraph tg = new TimeGraph(ttTG + etTG + eeTG);
-//					HashMap<String, String> finalTlinks = new HashMap<String, String>();
-//					finalTlinks.putAll(tg.finalRel);
-//					finalTlinks.putAll(tg.removeRel);
-//					for (String key : tg.violatedRel.keySet()) finalTlinks.remove(key);
-//					task.writeTimeMLFile(tmlParser, tmlFile, finalTlinks, systemTMLPath);
+					
+					//RESTReasoner
+					if (tlinkFromRESTReasoner) {
+						
+						//Read deduced TLINKs
+						String systemDeducedTMLPath = "data/QATempEval-system_TML_deduced";
+						File deducedTmlFile = new File(systemDeducedTMLPath, tmlFile.getName());
+						Doc docDedTml = tmlParser.parseDocument(deducedTmlFile.getPath());
+						for (TemporalRelation tlink : docDedTml.getTlinks()) {
+							if (tlink.isDeduced()) {
+								inferredPairs.put(tlink.getSourceID()+"-"+tlink.getTargetID(), tlink.getRelType());
+								inferredPairs.put(tlink.getTargetID()+"-"+tlink.getSourceID(), TemporalRelation.getInverseRelation(tlink.getRelType()));
+							}
+						}
+					}
+					
+					//CLASSIFIERS
+					
+					//event-dct
+					List<String> dctClsTest = dctCls.predict(dctFvListCls, "models/" + task.taskName + "-dct.model");
+					for (int i=0; i<dctFvListCls.size(); i++) {
+						EventTimexFeatureVector etfv = new EventTimexFeatureVector(dctFvListCls.get(i));
+						String label = "NONE";
+						
+						if (tlinkFromDCTClassifier) label = dctClsTest.get(i);
+						
+						if (inferredPairs.containsKey(etfv.getE1().getID()+"-"+etfv.getE2().getID())) {
+							label = inferredPairs.get(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							inferred.remove(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
+						} else {
+							etTG += "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n";
+						}
+						dctTestList.add(etfv.getE1().getID() 
+								+ "\t" + etfv.getE2().getID()
+								+ "\t" + etfv.getLabel()
+								+ "\t" + label);
+						extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+					}
+					
+					//event-timex
+					List<String> etClsTest = etCls.predict(etFvListCls, "models/" + task.taskName + "-et.model");
+					for (int i=0; i<etFvListCls.size(); i++) {
+						EventTimexFeatureVector etfv = new EventTimexFeatureVector(etFvListCls.get(i));
+						String label = "NONE";
+						
+						if (tlinkFromETClassifier) label = etClsTest.get(i);
+						
+						if (inferredPairs.containsKey(etfv.getE1().getID()+"-"+etfv.getE2().getID())) {
+							label = inferredPairs.get(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							inferred.remove(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
+						} else {
+							etTG += "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n";
+						}
+						etTestList.add(etfv.getE1().getID() 
+								+ "\t" + etfv.getE2().getID()
+								+ "\t" + etfv.getLabel()
+								+ "\t" + label);
+						extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+					}
+					
+					//event-event
+					List<String> eeClsTest = eeCls.predict(eeFvListCls, "models/" + task.taskName + "-ee.model");	
+					for (int i=0; i<eeFvListCls.size(); i++) {
+						EventEventFeatureVector eefv = new EventEventFeatureVector(eeFvListCls.get(i));
+						String label = "NONE";
+						
+						if (tlinkFromEEClassifier) label = eeClsTest.get(i);
+						
+						if (inferredPairs.containsKey(eefv.getE1().getID()+"-"+eefv.getE2().getID())) {
+							label = inferredPairs.get(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+							inferred.remove(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+							eeTG = "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n" + eeTG;
+						} else {
+							eeTG += "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n";
+						}
+						if (label.equals("IDENTITY")) label = "SIMULTANEOUS";
+						eeTestList.add(eefv.getE1().getID() 
+								+ "\t" + eefv.getE2().getID()
+								+ "\t" + eefv.getLabel()
+								+ "\t" + label);
+						extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+					}
+					
+					//ADD INFERRED/DEDUCED BUT NOT CANDIDATE
+					if (tlinkNonCandidateFromInferred &&
+							(tlinkFromInferredMLN || tlinkFromRESTReasoner)) {
+						for (String key : inferred) {
+							String source = key.split("-")[0];
+							String target = key.split("-")[1];
+							String tlink = inferredPairs.get(key);
+							if (!extracted.contains(target+"-"+source)) {
+								if (source.startsWith("t") && target.startsWith("t")) {
+									ttPerFile.add(source + "\t" + target
+											+ "\tNONE" + "\t" + tlink);
+									ttTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + ttTG;
+								} else if (source.startsWith("e") && target.startsWith("t")) {
+									if (target.endsWith("0")) {
+										dctTestList.add(source + "\t" + target
+												+ "\tNONE" + "\t" + tlink);
+									} else {
+										etTestList.add(source + "\t" + target
+												+ "\tNONE" + "\t" + tlink);
+									}
+									etTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + etTG;
+								} else if (source.startsWith("e") && target.startsWith("e")) {
+									eeTestList.add(source + "\t" + target
+											+ "\tNONE" + "\t" + tlink);
+									eeTG = "gold\t" + source + "\t" + target + "\t" + tlink + "\n" + eeTG;
+								}
+							}
+						}
+					}
+					
+					for (String tlink : ttPerFile) {
+						if (precisionOnly) {
+							if (!tlink.endsWith("NONE")) ttResult.add(tlink);
+						} else ttResult.add(tlink);
+					}
+					for (String tlink : dctTestList) {
+						if (precisionOnly) {
+							if (!tlink.endsWith("NONE")) dctResult.add(tlink);
+						} else dctResult.add(tlink);
+					}
+					for (String tlink : etTestList) {
+						if (precisionOnly) {
+							if (!tlink.endsWith("NONE")) etResult.add(tlink);
+						} else etResult.add(tlink);
+					}
+					for (String tlink : eeTestList) {
+						if (precisionOnly) {
+							if (!tlink.endsWith("NONE")) eeResult.add(tlink);
+						} else eeResult.add(tlink);
+					}
+					
+					//Write the TimeML document with new TLINKs
+					etTestList.addAll(dctTestList);
+					task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
+							ttPerFile, etTestList, eeTestList,
+							systemTMLPath);
+					
+					//TIMEGRAPH
+					if (postTimeGraph) {
+						TimeGraph tg = new TimeGraph(ttTG + etTG + eeTG);
+						HashMap<String, String> finalTlinks = new HashMap<String, String>();
+						finalTlinks.putAll(tg.finalRel);
+						finalTlinks.putAll(tg.removeRel);
+						for (String key : tg.violatedRel.keySet()) finalTlinks.remove(key);
+						task.writeTimeMLFile(tmlParser, tmlFile, finalTlinks, systemTMLPath);
+					}
 				}
 			}
-		}
-		
-		System.out.println("event-DCT: " + dctNum + " event-tmx: " + etNum);
-		System.out.println("total candidate: " + task.numTotalCandidate
-				+ " correct candidate: " + task.numCorrectCandidate);
-		
-		PairEvaluator ptt = new PairEvaluator(ttResult);
-		ptt.evaluatePerLabel(task.label);
-		PairEvaluator pdct = new PairEvaluator(dctResult);
-		pdct.evaluatePerLabel(task.label);
-		PairEvaluator pet = new PairEvaluator(etResult);
-		pet.evaluatePerLabel(task.label);
-		PairEvaluator pee = new PairEvaluator(eeResult);
-		pee.evaluatePerLabel(task.label);
-		
-		if (evaluateTempEval3) {
-			TempEval3 te3 = new TempEval3(evalTmlDirpath, systemTMLPath);
-			te3.evaluate();
+			
+			System.out.println("event-DCT: " + dctNum + " event-tmx: " + etNum);
+			System.out.println("total candidate: " + task.numTotalCandidate
+					+ " correct candidate: " + task.numCorrectCandidate);
+			
+			PairEvaluator ptt = new PairEvaluator(ttResult);
+			ptt.evaluatePerLabel(task.label);
+			PairEvaluator pdct = new PairEvaluator(dctResult);
+			pdct.evaluatePerLabel(task.label);
+			PairEvaluator pet = new PairEvaluator(etResult);
+			pet.evaluatePerLabel(task.label);
+			PairEvaluator pee = new PairEvaluator(eeResult);
+			pee.evaluatePerLabel(task.label);
+			
+			if (evaluateTempEval3) {
+				TempEval3 te3 = new TempEval3(evalTmlDirpath, systemTMLPath);
+				te3.evaluate();
+			}
 		}
 	}
 

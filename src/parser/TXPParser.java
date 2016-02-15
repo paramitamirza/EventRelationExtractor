@@ -63,6 +63,21 @@ public class TXPParser {
 		return doc;
 	}
 	
+	public Doc parseLines(String[] lines) throws IOException {
+		Doc doc = new Doc(this.language, "TEXT");
+		for (String line : lines) {
+			parseLine(line, doc);
+		}
+		
+		//Add the last sentence
+		currSentence.setIndex(doc.getSentIdx()); doc.setSentIdx(doc.getSentIdx() + 1);
+		doc.getSentenceArr().add(currSentence.getID());
+		doc.getSentences().put(currSentence.getID(), currSentence);
+		currSentence = null;
+		
+		return doc;
+	}
+	
 	private Integer getIndex(Field field) {
 		Integer idx = -1;
 		ArrayList<Field> arr_fields = new ArrayList<Field>(Arrays.asList(this.fields));
@@ -181,7 +196,9 @@ public class TXPParser {
 			tok.setMainPos(getMainPosFromPos(cols.get(getIndex(Field.pos))));
 			
 			//named entitiy type
-			tok.setNamedEntity(cols.get(getIndex(Field.ner)));
+			if (getIndex(Field.ner) != -1) {
+				tok.setNamedEntity(cols.get(getIndex(Field.ner)));
+			}
 			
 			//WordNet supersense
 			if (getIndex(Field.supersense) != -1) {
@@ -189,11 +206,15 @@ public class TXPParser {
 			}
 			
 			//discourse connective
-			tok.setDiscourseConn(cols.get(getIndex(Field.connective)));
+			if (getIndex(Field.connective) != -1) {
+				tok.setDiscourseConn(cols.get(getIndex(Field.connective)));
+			}
 			
 			//dependency info
-			tok.setDependencyInfo(isMainVerb(cols.get(getIndex(Field.main_verb))), 
-					parseDependency(cols.get(getIndex(Field.deps))));
+			if (getIndex(Field.main_verb) != -1 && getIndex(Field.deps) != -1) {
+				tok.setDependencyInfo(isMainVerb(cols.get(getIndex(Field.main_verb))), 
+						parseDependency(cols.get(getIndex(Field.deps))));
+			}
 			
 			String tense = "O", aspect = "O", pol = "O";
 			//tense, aspect, polarity

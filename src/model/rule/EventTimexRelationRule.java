@@ -37,6 +37,25 @@ public class EventTimexRelationRule {
 		}
 	}
 	
+	protected ArrayList<String> getTokenIDArr(Doc doc, String startTokID, String endTokID) {
+		ArrayList<String> tokIDs = new ArrayList<String>();
+		int startTokIdx = doc.getTokens().get(startTokID).getIndex();
+		int endTokIdx = doc.getTokens().get(endTokID).getIndex();
+		for (int i=startTokIdx; i<endTokIdx+1; i++) {
+			tokIDs.add(doc.getTokenArr().get(i));
+		}
+		return tokIDs;
+	}
+	
+	protected String getString(Doc doc, String startTokID, String endTokID) {
+		ArrayList<String> tokIDs = getTokenIDArr(doc, startTokID, endTokID);
+		ArrayList<String> context = new ArrayList<String>();
+		for (String tokID : tokIDs) {
+			context.add(doc.getTokens().get(tokID).getTokenAttribute(FeatureName.lemma).toLowerCase());
+		}
+		return String.join(" ", context);
+	}
+	
 	/**
 	 * Feature for timespan timexes
 	 * e.g. "between" tmx1 "and" tmx2, "from" tmx1 "to" tmx 2, tmx1 "-" tmx2, tmx1 "until" tmx2
@@ -55,20 +74,49 @@ public class EventTimexRelationRule {
 				
 				if (tidxStart > tidxStartSent) {
 					
-					if (depPath.contains("TMP-PMOD") 
+					if (depPath.contains("TMP") 
 							&& (!depPath.contains("OBJ")
-									&& !depPath.contains("SUB")
-									&& !depPath.contains("NMOD"))) {
-						String beforeTmx = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
+							&& !depPath.contains("SUB")
+							&& !depPath.contains("NMOD"))
+							) {
+						
+						String tidBeforeStart;
+						if (tidxStart-1 > 0) tidBeforeStart = doc.getTokenArr().get(tidxStart-1);
+						else tidBeforeStart = doc.getTokenArr().get(tidxStartSent);
+						String tidBefore = doc.getTokenArr().get(tidxStart-1);
+						String beforeTmx = getString(doc, tidBeforeStart, tidBefore);
+						
 						if ((beforeTmx.equals("for")
-								|| beforeTmx.equals("during"))
+								|| beforeTmx.equals("during")
+								|| beforeTmx.equals("through")
+								|| beforeTmx.equals("throughout"))
 								&& tmx.getType().equals("DURATION")) {
-							this.setRelType("SIMULTANEOUS");
-						} else if ((beforeTmx.equals("in"))
+							if (depPath.contains("OPRD-IM")) {
+								this.setRelType("BEFORE");
+							} else {
+								this.setRelType("DURING");
+							}
+						} else if ((beforeTmx.equals("in")
+								|| beforeTmx.equals("within"))
 								&& tmx.getType().equals("DURATION")) {
-							this.setRelType("IS_INCLUDED");
+							if (depPath.contains("OPRD-IM")) {
+								this.setRelType("BEFORE");
+							} else {
+								this.setRelType("IS_INCLUDED");
+							}
 						} else if ((beforeTmx.equals("in") || beforeTmx.equals("at") || beforeTmx.equals("on"))
 								&& (tmx.getType().equals("DATE") || tmx.getType().equals("TIME"))) {
+							this.setRelType("IS_INCLUDED");
+						} else if (beforeTmx.equals("after")) {
+							this.setRelType("AFTER");
+						} else if (beforeTmx.equals("before")) {
+							this.setRelType("BEFORE");
+						} else if (beforeTmx.equals("from") || beforeTmx.equals("since")) {
+							this.setRelType("BEGUN_BY");
+						} else if ((beforeTmx.equals("until") || beforeTmx.equals("till"))
+								&& ev.getPolarity().equals("POS")) {
+							this.setRelType("ENDED_BY");
+						} else {
 							this.setRelType("IS_INCLUDED");
 						}
 					}
@@ -79,35 +127,54 @@ public class EventTimexRelationRule {
 						String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
 						String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tmx2Idx-1)).getTokenAttribute(FeatureName.lemma);
 						
-						if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
-							return "TMX-BEGIN";
-						} else if (beforeTmx1.equals("from") && 
-								(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
-							return "TMX-BEGIN";
-						} else if (beforeTmx2.equals("-")) {
-							return "TMX-BEGIN";
-						} else if (beforeTmx2.equals("until") || beforeTmx2.equals("until")) {
-							return "TMX-BEGIN";
+						if (((Timex) tmx2).getType().equals("DATE") || ((Timex) tmx2).getType().equals("TIME")) {
+							if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
+								return "TMX-BEGIN";
+							} else if (beforeTmx1.equals("from") && 
+									(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
+								return "TMX-BEGIN";
+							} else if (beforeTmx2.equals("-")) {
+								return "TMX-BEGIN";
+							} else if (beforeTmx2.equals("until") || beforeTmx2.equals("till")) {
+								return "TMX-BEGIN";
+							}
 						}
+						
 					} else if (eidx > 0 && doc.getEntities().get(entArr.get(eidx-1)) instanceof Timex) {
 						Entity tmx1 = doc.getEntities().get(entArr.get(eidx-1));
 						int tmx1Idx = doc.getTokens().get(tmx1.getStartTokID()).getIndex();
 						String beforeTmx1 = doc.getTokens().get(doc.getTokenArr().get(tmx1Idx-1)).getTokenAttribute(FeatureName.lemma);
 						String beforeTmx2 = doc.getTokens().get(doc.getTokenArr().get(tidxStart-1)).getTokenAttribute(FeatureName.lemma);
 						
-						if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
-							return "TMX-END";
-						} else if (beforeTmx1.equals("from") && 
-								(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
-							return "TMX-END";
-						} else if (beforeTmx2.equals("-")) {
-							return "TMX-END";
-						} else if (beforeTmx2.equals("until") || beforeTmx2.equals("until")) {
-							return "TMX-END";
+						if (((Timex) tmx1).getType().equals("DATE") || ((Timex) tmx1).getType().equals("TIME")) {
+							if (beforeTmx1.equals("between") && beforeTmx2.equals("and")) {
+								return "TMX-END";
+							} else if (beforeTmx1.equals("from") && 
+									(beforeTmx2.equals("to") || beforeTmx2.equals("until") || beforeTmx2.equals("till"))) {
+								return "TMX-END";
+							} else if (beforeTmx2.equals("-")) {
+								return "TMX-END";
+							} else if (beforeTmx2.equals("until")) {
+								return "TMX-END";
+							}
 						}
 					}
 				}
 			}
+		} else if (tmx.isDct()) {
+			if (ev.getTense().equals("FUTURE")) {
+				this.setRelType("AFTER");
+				
+			} else if (ev.getTense().equals("PRESENT")
+					&& (ev.getAspect().equals("PROGRESSIVE")
+						|| ev.getAspect().equals("PERFECTIVE_PROGRESSIVE"))) {
+				this.setRelType("INCLUDES");
+				
+			} else if (ev.getTense().equals("PAST")
+					&& ev.getAspect().equals("PERFECTIVE")) {
+				this.setRelType("BEFORE");
+				
+			} 
 		}
 		return "O";
 	}

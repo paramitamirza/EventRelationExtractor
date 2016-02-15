@@ -80,6 +80,32 @@ public class Sentence {
 		return str;		
 	}
 	
+	public String toLowerString(Doc docTxp) {
+		String str = "";
+		Map<String, Token> tokens = docTxp.getTokens();
+		ArrayList<String> tokenArr = docTxp.getTokenArr();
+		int iter = tokenArr.indexOf(startTokID);
+		while (!tokenArr.get(iter).equals(endTokID)) {
+			str += tokens.get(tokenArr.get(iter)).getText().toLowerCase() + " ";
+			iter ++;
+		}
+		str += tokens.get(tokenArr.get(iter)).getText().toLowerCase();
+		return str;		
+	}
+	
+	public String toLemmaString(Doc docTxp) {
+		String str = "";
+		Map<String, Token> tokens = docTxp.getTokens();
+		ArrayList<String> tokenArr = docTxp.getTokenArr();
+		int iter = tokenArr.indexOf(startTokID);
+		while (!tokenArr.get(iter).equals(endTokID)) {
+			str += tokens.get(tokenArr.get(iter)).getLemma() + " ";
+			iter ++;
+		}
+		str += tokens.get(tokenArr.get(iter)).getLemma();
+		return str;		
+	}
+	
 	public String toAnnotatedString(Doc docTxp, ArrayList<Entity> entities) {
 		String str = "";
 		Map<String, Token> tokens = docTxp.getTokens();

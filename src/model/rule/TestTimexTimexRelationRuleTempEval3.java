@@ -41,8 +41,9 @@ public class TestTimexTimexRelationRuleTempEval3 {
 			for (int j = i; j < entArr.length; j++) {
 				if (!entArr[i].equals(entArr[j]) && doc.getEntities().get(entArr[i]) instanceof Timex && 
 						doc.getEntities().get(entArr[j]) instanceof Timex) {
-					TimexTimexRelationRule timextimex = new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
-							((Timex)doc.getEntities().get(entArr[j])), doc.getDct(), true);
+					TimexTimexRelationRule timextimex = 
+							new TimexTimexRelationRule(((Timex)doc.getEntities().get(entArr[i])), 
+							((Timex)doc.getEntities().get(entArr[j])), doc.getDct(), false);
 					if (!timextimex.getRelType().equals("O")) {
 						pair = ((String) entArr[i]) + "-" + ((String) entArr[j]);
 						ttlinks.put(pair, timextimex.getRelType());
@@ -107,7 +108,7 @@ public class TestTimexTimexRelationRuleTempEval3 {
 			List<String> ttPerFile = getTimexTimexTlinksPerFile(txpParser, tmlParser, txpFile, tmlFile);
 			tt.addAll(ttPerFile);
 			PairEvaluator pe = new PairEvaluator(ttPerFile);
-			pe.printIncorrect(txpParser, txpFile);
+			pe.printIncorrectAndSentence(txpParser, txpFile);
 		}		
 		return tt;
 	}
@@ -122,11 +123,11 @@ public class TestTimexTimexRelationRuleTempEval3 {
 		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);		
 		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
 		
-		String txpDirpath = "./data/TempEval3-train_TXP2/";
-		String tmlDirpath = "./data/TempEval3-train_TML/";
+//		String txpDirpath = "./data/TempEval3-train_TXP2/";
+//		String tmlDirpath = "./data/TempEval3-train_TML/";
 		
-//		String txpDirpath = "./data/TempEval3-eval_TXP/";
-//		String tmlDirpath = "./data/TempEval3-eval_TML/";
+		String txpDirpath = "./data/TempEval3-eval_TXP/";
+		String tmlDirpath = "./data/TempEval3-eval_TML/";
 		
 		File[] txpFiles = new File(txpDirpath).listFiles();		
 		if (txpFiles == null) return;	

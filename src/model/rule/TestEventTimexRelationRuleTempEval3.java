@@ -63,6 +63,9 @@ public class TestEventTimexRelationRuleTempEval3 {
 					if (!etRule.getRelType().equals("O")) {
 						et.add(etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + 
 								etfv.getLabel() + "\t" + etRule.getRelType());
+					} else {
+						et.add(etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + 
+								etfv.getLabel() + "\tNONE");
 					}
 				}
 			}
@@ -95,11 +98,11 @@ public class TestEventTimexRelationRuleTempEval3 {
 		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);		
 		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
 		
-//		String txpDirpath = "./data/TempEval3-train_TXP2/";
-//		String tmlDirpath = "./data/TempEval3-train_TML/";
+		String txpDirpath = "./data/TempEval3-train_TXP2/";
+		String tmlDirpath = "./data/TempEval3-train_TML/";
 		
-		String txpDirpath = "./data/TempEval3-eval_TXP/";
-		String tmlDirpath = "./data/TempEval3-eval_TML/";
+//		String txpDirpath = "./data/TempEval3-eval_TXP/";
+//		String tmlDirpath = "./data/TempEval3-eval_TML/";
 		
 		File[] txpFiles = new File(txpDirpath).listFiles();		
 		if (txpFiles == null) return;	

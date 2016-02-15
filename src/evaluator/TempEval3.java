@@ -8,6 +8,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.python.core.Py;
+import org.python.core.PyClass;
+import org.python.core.PyFunction;
+import org.python.core.PyObject;
+import org.python.core.PyString;
+import org.python.core.PySystemState;
+import org.python.util.PythonInterpreter;
+
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.SftpException;
 
@@ -17,6 +25,8 @@ public class TempEval3 {
 	
 	private String goldPath;
 	private String systemPath;
+	
+	private String path_te3_eval_script = "./tools/TempEval3-evaluation-tool/TE3-evaluation.py";
 	
 	public TempEval3(String gold, String system) {
 		this.setGoldPath(gold);
@@ -43,24 +53,19 @@ public class TempEval3 {
 		}
 		rs.disconnect();
 		
-//		/*******Windows*******/
-//		String pythonPath = "C:\\Anaconda2\\python.exe";
-//		List<String> command = new ArrayList<String>();
-//		command.add(pythonPath);
-//		command.add("tools/TempEval3-evaluation-tool/TE3-evaluation.py");
-//		command.add(this.goldPath);
-//		command.add(this.systemPath);
-//		ProcessBuilder builder = new ProcessBuilder(command);
-//		final Process process = builder.start();
-//		process.waitFor();
+		//Run python script
+//		PythonInterpreter interp = new PythonInterpreter(null, new PySystemState());
+//
+//        PySystemState sys = Py.getSystemState();
+//        sys.path.append(new PyString("C:/Users/Paramita/.p2/pool/plugins/org.python.pydev.jython_4.5.3.201601211913"));
+//        sys.path.append(new PyString("C:/Users/Paramita/.p2/pool/pluginsorg.python.pydev.jython_4.5.3.201601211913/Lib"));
+//        sys.argv.append(new PyString(goldPath));
+//        sys.argv.append(new PyString(systemPath));
+//        
+//		interp.execfile(path_te3_eval_script);
 //		
-//		InputStream is = process.getInputStream();
-//	    InputStreamReader isr = new InputStreamReader(is);
-//	    BufferedReader br = new BufferedReader(isr);
-//	    String line;
-//	    while ((line = br.readLine()) != null) {
-//	      System.out.println(line);
-//	    }
+//		PyClass funcEvaluate = (PyClass)interp.get("TE3Evaluation", PyClass.class);
+//		PyObject timegraph = funcEvaluate.__call__();
 	}
 
 	public String getGoldPath() {

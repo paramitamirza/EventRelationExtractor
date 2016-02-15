@@ -18,6 +18,16 @@ public class TimexTimexRelationRule {
 		this.setRelType("O");	
 		this.setIdentityRel(identityRel);
 		
+		//Remove time in DCT and change it into DATE type
+		if (t1.isDct()) {
+			if (t1.getValue().contains("T")) t1.setValue(t1.getValue().split("T")[0]);
+			t1.setType("DATE");
+		}
+		if (t2.isDct()) {
+			if (t2.getValue().contains("T")) t2.setValue(t2.getValue().split("T")[0]);
+			t2.setType("DATE");
+		}
+		
 		if (!t1.getID().equals(t2.getID())) {
 			if (t1.getType().equals("DATE") && t2.getType().equals("TIME")) {
 				if (t1.getValue().equals(t2.getValue())) {
@@ -457,7 +467,7 @@ public class TimexTimexRelationRule {
 	private Time getTimeComponents(String time) {
 		Time t = new Time();
 		
-		String[] cols = time.split("-");
+		String[] cols = time.split(":");
 		if (cols.length == 1) {
 			if (cols[0].matches("\\d+")) {
 				t.setHour(Integer.valueOf(cols[0]));

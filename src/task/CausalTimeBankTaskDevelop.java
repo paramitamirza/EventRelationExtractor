@@ -33,6 +33,7 @@ import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.feature.Marker;
 import model.rule.EventEventRelationRule;
 import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
@@ -163,6 +164,9 @@ public class CausalTimeBankTaskDevelop {
 			
 			EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
 			
+			Marker m = fv.getCausalMarkerFeature();
+			if (!m.getCluster().equals("O")) {
+			
 			if (eeRelCls.classifier.equals(VectorClassifier.yamcha)) {
 				eefv.addToVector(FeatureName.id);
 			}
@@ -216,6 +220,8 @@ public class CausalTimeBankTaskDevelop {
 				fvListNone.add(eefv);
 			} else {
 				fvListClink.add(eefv);
+			}
+			
 			}
 		}
 		
@@ -392,7 +398,7 @@ public class CausalTimeBankTaskDevelop {
 		//Init classifiers
 		PairClassifier eeCls = new EventEventCausalClassifier("causal", "yamcha");
 		
-		double[] thresholds = {60,1000};
+		double[] thresholds = {0,1000};
 		
 		String[] label = {"CLINK", "CLINK-R", "NONE"};
 		for (double threshold : thresholds) {
@@ -406,7 +412,7 @@ public class CausalTimeBankTaskDevelop {
 			
 			File[] txpFiles = new File(evalTxpDirpath).listFiles();
 			
-			/**
+			
 			//Test models
 			//For each file in the evaluation dataset
 			for (File txpFile : txpFiles) {
@@ -439,10 +445,10 @@ public class CausalTimeBankTaskDevelop {
 								TemporalRelation.getInverseRelation(tlinkLbl));
 					}
 					
-					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
-							txpFile, eeCls, false, 0, new HashMap<String,String>());
 //					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
-//							txpFile, eeCls, false, 0, tlinks);
+//							txpFile, eeCls, false, 0, new HashMap<String,String>());
+					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
+							txpFile, eeCls, false, 0, tlinks);
 					
 					List<PairFeatureVector> eeEvalFvList = new ArrayList<PairFeatureVector>();
 					eeEvalFvList.addAll(fvListList.get(0));
@@ -461,7 +467,7 @@ public class CausalTimeBankTaskDevelop {
 					}
 				}
 			}
-			**/
+			
 			
 			System.out.println("After self-training...");
 			
@@ -538,10 +544,10 @@ public class CausalTimeBankTaskDevelop {
 								TemporalRelation.getInverseRelation(tlinkLbl));
 					}
 					
-					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
-							txpFile, eeCls, false, 0, new HashMap<String,String>());	//gold TLINKs
 //					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
-//							txpFile, eeCls, false, 0, tlinks);	//automatically extracted TLINKs
+//							txpFile, eeCls, false, 0, new HashMap<String,String>());	//gold TLINKs
+					List<List<PairFeatureVector>> fvListList = task.getEventEventClinksPerFile(txpParser, 
+							txpFile, eeCls, false, 0, tlinks);	//automatically extracted TLINKs
 					
 					List<PairFeatureVector> eeEvalFvList = new ArrayList<PairFeatureVector>();
 					eeEvalFvList.addAll(fvListList.get(0));

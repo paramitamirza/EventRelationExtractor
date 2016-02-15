@@ -33,6 +33,7 @@ import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
+import model.feature.Marker;
 import model.rule.EventEventRelationRule;
 import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
@@ -162,6 +163,9 @@ public class CausalTimeBankTask {
 			
 			EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
 			
+			Marker m = fv.getCausalMarkerFeature();
+			if (!m.getCluster().equals("O")) {
+			
 			if (eeRelCls.classifier.equals(VectorClassifier.yamcha)) {
 				eefv.addToVector(FeatureName.id);
 			}
@@ -209,6 +213,8 @@ public class CausalTimeBankTask {
 			} else {
 				fvListClink.add(eefv);
 			}
+			
+			}
 		}
 		
 		fvList.add(fvListNone);
@@ -230,7 +236,10 @@ public class CausalTimeBankTask {
 					txpFile, eeRelCls, train, threshold);
 			
 			fvListNone.addAll(fvListList.get(0));
-			fvList.addAll(fvListList.get(1));
+			for (PairFeatureVector fv : fvListList.get(1)) {
+				fvList.add(fv);
+			}
+			//fvList.addAll(fvListList.get(1));
 		}
 		
 		int numClink = fvList.size();
@@ -280,10 +289,10 @@ public class CausalTimeBankTask {
 		
 		CausalTimeBankTask task = new CausalTimeBankTask();
 		
-		PrintStream out = new PrintStream(new FileOutputStream("causality_output.txt"));
-		System.setOut(out);
-		PrintStream log = new PrintStream(new FileOutputStream("causality_log.txt"));
-		System.setErr(log);
+//		PrintStream out = new PrintStream(new FileOutputStream("causality_output.txt"));
+//		System.setOut(out);
+//		PrintStream log = new PrintStream(new FileOutputStream("causality_log.txt"));
+//		System.setErr(log);
 		
 		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);
 		
@@ -316,14 +325,15 @@ public class CausalTimeBankTask {
 		
 		//Init classifiers
 		PairClassifier eeCls = new EventEventCausalClassifier("causal", "yamcha");
+//		EventEventCausalClassifier eeCls = new EventEventCausalClassifier("causal", "liblinear");
 		
-		boolean labelProbs = true;
+		boolean labelProbs = false;
 		
 //		double threshold = 1000;
 //		double[] thresholds = {1000,0.5,1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100};
-//		double[] thresholds = {0,1,10,20,30,40,50,60,70,80,90,100,1000};
-		double[] thresholds = {50,60,70,80};
+		double[] thresholds = {0,1,10,20,30,40,50,60,70,80,90,100,1000};
 		String[] label = {"CLINK", "CLINK-R", "NONE"};
+		List<String> labelList = Arrays.asList(label);
 		for (double threshold : thresholds) {
 			
 			System.err.println("Threshold " + (threshold) + "...");
@@ -336,20 +346,34 @@ public class CausalTimeBankTask {
 				System.out.println("Fold " + (fold+1) + "...");
 				//Train models
 				List<PairFeatureVector> eeTrainFvList = task.getEventEventClinks(txpParser, trainTxpFoldPath[fold], eeCls, true, threshold);
+
 				eeCls.train(eeTrainFvList, labelProbs);
+//				eeCls.train(eeTrainFvList, "causal.model");
 				
 				//Test models
 				List<PairFeatureVector> eeEvalFvList = task.getEventEventClinks(txpParser, evalTxpFoldPath[fold], eeCls, false, 0);
+				List<String> eeTestList = new ArrayList<String>();
+				
 				String eeClsTest = eeCls.test(eeEvalFvList, labelProbs, label);
 				String[] eeClsTestList = eeClsTest.trim().split("\\r?\\n");
-				List<String> eeTestList = new ArrayList<String>();
 				for (int i=0; i<eeClsTestList.length; i++) {
 					eeTestList.add(eeClsTestList[i]);
 				}
 				
+//				List<String> eeClsTest = eeCls.predict(eeEvalFvList, "causal.model");				
+//				for (int i=0; i<eeEvalFvList.size(); i++) {
+//					//Find label according to rules
+//					EventEventFeatureVector eefv = new EventEventFeatureVector(eeEvalFvList.get(i)); 
+//					eeTestList.add((labelList.indexOf(eefv.getLabel())+1)
+//							+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
+//				}
+				
 				//Evaluate
 				PairEvaluator pee = new PairEvaluator(eeTestList);
 				pee.evaluateCausalPerLabelIdx(label);
+				
+				
+				
 				
 //				for (int itr=0; itr<7; itr++) {
 //					System.err.println("Iteration " + (itr+1) + "...");
@@ -409,6 +433,7 @@ public class CausalTimeBankTask {
 					PairEvaluator peeItr = new PairEvaluator(eeTestListItr);
 					peeItr.evaluateCausalPerLabelIdx(label);
 //				}
+
 			}
 		}
 	}

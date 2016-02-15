@@ -1,24 +1,47 @@
 package model.rule;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import model.feature.CausalSignalList;
+import model.feature.EventEventFeatureVector;
+import model.feature.PairFeatureVector;
+import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
+import model.feature.Marker;
 import parser.entities.Doc;
 import parser.entities.Entity;
+import parser.entities.EntityEnum;
 import parser.entities.Event;
 import parser.entities.Sentence;
+import parser.entities.TemporalRelation;
 import parser.entities.Timex;
 
 public class EventEventRelationRule {
 	
 	private String relType;
 	private Boolean identityRel=true;
+	public static Integer numReason=0;
+	
+	public EventEventRelationRule(PairFeatureVector fv) {
+		
+	}
 	
 	public EventEventRelationRule(Event e1, Event e2, Doc doc, String depPath,
 			Boolean identity) {
 		this(e1, e2, doc, depPath);
+		this.setIdentityRel(identity);
+	}
+	
+	public EventEventRelationRule(Event e1, Event e2, Doc doc, String depPath,
+			Boolean identity, Map<String, String> etanchor, 
+			Map<String, String> etbefore, Map<String, String> etafter, 
+			Map<String, String> ttlinks) {
+		this(e1, e2, doc, depPath, etanchor, etbefore, etafter, ttlinks);
 		this.setIdentityRel(identity);
 	}
 	
@@ -28,26 +51,9 @@ public class EventEventRelationRule {
 		
 		String eventRule = getEventRule(e1, e2, doc, depPath); 
 		if (!eventRule.equals("O")) {
-			if (eventRule.equals("EV_SIM")) {
-				this.setRelType("SIMULTANEOUS");
-			} else if (eventRule.equals("EV_AFTER")) {
-				this.setRelType("AFTER");
-			} else if (eventRule.equals("EV_BEFORE")) {
-				this.setRelType("BEFORE");
-			} else if (eventRule.equals("EV_BEGIN")) {
-				this.setRelType("BEGINS");
-			} else if (eventRule.equals("EV_END")) {
-				this.setRelType("ENDS");
-			} else if (eventRule.equals("EV_INCL")) {
-				this.setRelType("INCLUDES");
-			} else if (eventRule.equals("EV_ISINCL")) {
-				this.setRelType("IS_INCLUDED");
-			} else if (eventRule.equals("EV_DURINV")) {
-				this.setRelType("DURING_INV");
-			} else if (eventRule.equals("EV_DUR")) {
-				this.setRelType("DURING");
-			}
+			this.setRelType(eventRule);
 		}
+		
 		if (!identityRel && this.getRelType().equals("IDENTITY")) {
 			this.setRelType("SIMULTANEOUS");
 		}
@@ -57,6 +63,168 @@ public class EventEventRelationRule {
 		}
 	}
 	
+	public EventEventRelationRule(Event e1, Event e2, Doc doc, String depPath,
+			Map<String, String> etanchor,
+			Map<String, String> etbefore, Map<String, String> etafter,
+			Map<String, String> ttlinks) {
+		
+		this.setRelType("O");
+		
+		String eventRule = getEventRule(e1, e2, doc, depPath); 
+		if (!eventRule.equals("O")) {
+			this.setRelType(eventRule);
+		} else {
+			eventRule = getEventRule(e1, e2, doc, etanchor, 
+					etbefore, etafter, ttlinks);
+			if (!eventRule.equals("O")) {
+				this.setRelType(eventRule);
+			}
+		}
+		
+		if (!identityRel && this.getRelType().equals("IDENTITY")) {
+			this.setRelType("SIMULTANEOUS");
+		}
+		/***** TempEval3 *****/
+		if (this.getRelType().equals("DURING") || this.getRelType().equals("DURING_INV")) {
+			this.setRelType("SIMULTANEOUS");
+		}
+	}
+	
+	public static String getEventCausalityRule(EventEventFeatureVector eefv) throws Exception {
+		String cVerb = "O", construction = "O";		
+		if (eefv.getE1().getSentID().equals(eefv.getE2().getSentID())) {	//in the same sentence
+			Marker m = eefv.getCausalVerb();
+			if (m.getCluster().equals("AFFECT")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("APPO")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM")) 
+						&& m.getDepRelE2().equals("OBJ")) {
+					cVerb = "AFFECT";
+				}
+			} else if (m.getCluster().equals("LINK")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("APPO")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("APPO-OPRD-IM")
+						|| m.getDepRelE1().equals("NMOD-OPRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM")) 
+						&& (m.getDepRelE2().equals("DIR-PMOD")
+								|| m.getDepRelE2().equals("ADV-PMOD"))) {
+					if (m.getText().equals("link") || m.getText().equals("depend")) cVerb = "LINK-R";
+					else cVerb = "LINK";
+				}
+			} else if (m.getCluster().equals("CAUSE")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("APPO")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM"))) {
+					if (m.getDepRelE2().equals("OBJ")) {
+						cVerb = "CAUSE";
+						construction = "BASIC";
+					} else if (m.getDepRelE2().equals("OPRD-IM")
+							|| m.getDepRelE2().equals("OPRD")) {
+						cVerb = "CAUSE";
+						construction = "PERIPHRASTIC";
+					} else if (m.getDepRelE2().equals("LGS-PMOD")) {
+						cVerb = "CAUSE-R";
+						construction = "PASS";
+					} 
+				}
+			} else if (m.getCluster().equals("CAUSE-AMBIGUOUS")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM"))) {
+					if (m.getDepRelE2().equals("OPRD-IM")) {
+						cVerb = "CAUSE";
+						construction = "PERIPHRASTIC";
+					} else if (m.getText().equals("make")
+							&& m.getDepRelE2().equals("OPRD-SUB-IM")) {
+						cVerb = "CAUSE";
+						construction = "PERIPHRASTIC";
+					}
+				}
+			} else if (m.getCluster().equals("PREVENT")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("APPO")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM")
+						|| m.getDepRelE1().equals("OBJ-IM"))) {
+					if (m.getDepRelE2().equals("OBJ")) {
+						cVerb = "PREVENT";
+						construction = "BASIC";
+					} else if (m.getDepRelE2().equals("OPRD-IM")
+							|| m.getDepRelE2().equals("OPRD")
+							|| m.getDepRelE2().equals("ADV-PMOD")) {
+						cVerb = "PREVENT";
+						construction = "PERIPHRASTIC";
+					} else if (m.getDepRelE2().equals("LGS-PMOD")) {
+						cVerb = "PREVENT-R";
+						construction = "PERIPHRASTIC";
+					}
+				}
+			} else if (m.getCluster().equals("PREVENT-AMBIGUOUS")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM"))) {
+					if (m.getDepRelE2().equals("ADV-PMOD")
+							|| m.getDepRelE2().equals("OPRD")) {
+						cVerb = "PREVENT";
+						construction = "PERIPHRASTIC";
+					}
+				}
+			} else if (m.getCluster().equals("ENABLE")) {
+				if ((m.getDepRelE1().equals("SBJ") 
+						|| m.getDepRelE1().equals("ADV")
+						|| m.getDepRelE1().equals("NMOD")
+						|| m.getDepRelE1().equals("APPO")
+						|| m.getDepRelE1().equals("PRD-IM")
+						|| m.getDepRelE1().equals("PRP-IM")
+						|| m.getDepRelE1().equals("OBJ-NMOD")
+						|| m.getDepRelE1().equals("IM")
+						|| m.getDepRelE1().equals("NMOD-IM"))) {
+					if (m.getDepRelE2().equals("OBJ")) {
+						cVerb = "ENABLE";
+						construction = "BASIC";
+					} else if (m.getDepRelE2().equals("OPRD-IM")
+							|| m.getDepRelE2().equals("OPRD")
+							|| m.getDepRelE2().equals("OBJ-IM")) {
+						cVerb = "ENABLE";
+						construction = "PERIPHRASTIC";
+					}
+				} 
+			}
+			
+//			if (!m.getCluster().equals("O")) {
+//				if (cVerb != "O") {
+//					System.err.println(eefv.getDoc().getFilename()+"\t"
+//							+"+"+eefv.getLabel()+"\t"+m.getCluster()+"\t"
+//							+construction+"\t"
+//							+eefv.getE1().getID()+"\t"+eefv.getE2().getID()+"\t"
+//							+m.getDepRelE1()+"|"+m.getDepRelE2());
+//				} else {
+//					System.err.println(eefv.getDoc().getFilename()+"\t"
+//							+"-"+eefv.getLabel()+"\t"+m.getCluster()+"\t"
+//							+"O\t"
+//							+eefv.getE1().getID()+"\t"+eefv.getE2().getID()+"\t"
+//							+m.getDepRelE1()+"|"+m.getDepRelE2());
+//				}
+//			}
+		}
+		return cVerb;
+	}
 	
 	public String getEventRule(Event e1, Event e2, Doc doc, String depPath) {
 		String[] aspectual_initiation = {"begin", "start", "initiate", "commence", "launch"};
@@ -77,31 +245,143 @@ public class EventEventRelationRule {
 			
 			if (eidx1 < eidx2 && eidx2-eidx1 == 1
 					&& depPath.equals("LGS-PMOD")) {
-				return "EV_AFTER";
+				return "AFTER";
+				
 			} else if (eidx1 < eidx2 && eidx2-eidx1 == 1
 					&& (depPath.equals("OPRD-IM") 
 //							|| depPath.equals("OPRD")
 						)
 					) {
 				if (asp_init_list.contains(doc.getTokens().get(e1.getStartTokID()).getLemma())) {
-					return "EV_BEGIN";
+					return "BEGINS";
+					
 				} else if (asp_term_list.contains(doc.getTokens().get(e1.getStartTokID()).getLemma())) {
-					return "EV_END";
+					return "ENDS";
+					
 				} else if (asp_cont_list.contains(doc.getTokens().get(e1.getStartTokID()).getLemma())) {
-					return "EV_INCL";
+					return "INCLUDES";
+					
 				} else if (asp_remain_list.contains(doc.getTokens().get(e1.getStartTokID()).getLemma())) {
-					return "EV_DURINV";
+					return "DURING_INV";
+					
 				} else {
 					if (e1.getAspect().equals("PERFECTIVE_PROGRESSIVE")) {
-						return "EV_SIM";
+						return "SIMULTANEOUS";
 					} else {
-						return "EV_BEFORE";
+						return "BEFORE";
 					}
 				}
+			} else if (depPath.equals("OBJ-SUB")
+					&& e1.getEventClass().equals("REPORTING")) {
+				if (!reportingEventRules(e1, e2).equals("O")) 
+					return reportingEventRules(e1, e2);
+				
+			} else if (depPath.equals("OBJ_REV")
+					&& e2.getEventClass().equals("REPORTING")) {
+				if (!reportingEventRules(e2, e1).equals("O")) 
+					return reportingEventRules(e2, e1);
+				
 			} else if (depPath.equals("LOC-PMOD")) {
-				return "EV_ISINCL";
+				return "IS_INCLUDED";
+				
 			} else if (depPath.equals("PMOD-LOC")) {
-				return "EV_INCL";
+				return "INCLUDES";
+				
+			} else if (!reichenbachRules(e1, e2).equals("O")) {
+				return reichenbachRules(e1, e2);
+			}
+		}
+		return "O";
+	}
+	
+	//Reporting Event with Dominated Event rules (Chambers et al., 2014)
+	public String reportingEventRules(Event gov, Event dep) {
+		if (gov.getTense().equals("PRESENT") 
+				&& dep.getTense().equals("PAST")) {
+			return "AFTER";
+			
+		} else if (gov.getTense().equals("PRESENT") 
+				&& dep.getTense().equals("PRESENT")
+				&& dep.getAspect().equals("PERFECTIVE")) {
+			return "AFTER";
+			
+		} else if (gov.getTense().equals("PRESENT") 
+				&& dep.getTense().equals("FUTURE")) {
+			return "BEFORE";
+			
+		} else if (gov.getTense().equals("PAST") 
+				&& dep.getTense().equals("PAST")
+				&& dep.getAspect().equals("PERFECTIVE")) {
+			return "AFTER";
+			
+		} else if (gov.getTense().equals("PAST") 
+				&& dep.getTense().equals("PAST")
+				&& dep.getAspect().equals("PROGRESSIVE")) {
+			return "IS_INCLUDED";
+		}
+		
+		return "O";
+	}
+	
+	//Reichenbach Rules (Chambers et al., 2014)
+	public String reichenbachRules(Event e1, Event e2) {
+		if (e1.getTense().equals("PAST") 
+				&& e1.getAspect().equals("NONE")
+				&& e2.getTense().equals("PAST")
+				&& e2.getAspect().equals("PERFECTIVE")) {
+			return "AFTER";
+			
+		} else if (e1.getTense().equals("FUTURE") 
+				&& e1.getAspect().equals("NONE")
+				&& e2.getTense().equals("PRESENT")
+				&& e2.getAspect().equals("PERFECTIVE")) {
+			return "AFTER";
+			
+		} else if (e1.getTense().equals("PAST") 
+				&& e1.getAspect().equals("NONE")
+				&& e2.getTense().equals("FUTURE")
+				&& e2.getAspect().equals("NONE")) {
+			return "BEFORE";
+			
+		} 
+		
+		return "O";
+	}
+	
+	public String getEventRule(Event e1, Event e2, Doc doc, 
+			Map<String, String> etanchor, 
+			Map<String, String> etbefore, Map<String, String> etafter, 
+			Map<String, String> ttlinks) {
+		String tt = "";
+		if (etanchor.containsKey(e1.getID()) && etanchor.containsKey(e2.getID())) {
+			tt = etanchor.get(e1.getID())+"\t"+etanchor.get(e2.getID());
+			if (ttlinks.containsKey(tt)){
+				numReason ++;
+				return ttlinks.get(tt);
+			}
+		} else if (etbefore.containsKey(e1.getID()) && etanchor.containsKey(e2.getID())) {
+			tt = etbefore.get(e1.getID())+"\t"+etanchor.get(e2.getID());
+			if (ttlinks.containsKey(tt) && ttlinks.get(tt).equals("BEFORE")) {
+				numReason ++;
+				return ttlinks.get(tt);
+			}
+		} else if (etafter.containsKey(e1.getID()) && etanchor.containsKey(e2.getID())) {
+			tt = etafter.get(e1.getID())+"\t"+etanchor.get(e2.getID());
+			if (ttlinks.containsKey(tt) && ttlinks.get(tt).equals("AFTER")) {
+				numReason ++;
+				return ttlinks.get(tt);
+			}
+		} else if (etanchor.containsKey(e1.getID()) && etafter.containsKey(e2.getID())) {
+			tt = etanchor.get(e1.getID())+"\t"+etafter.get(e2.getID());
+			if (ttlinks.containsKey(tt) && ttlinks.get(tt).equals("BEFORE")) {
+				numReason ++;
+				return ttlinks.get(tt);
+			}
+		} else if (etanchor.containsKey(e1.getID()) && etbefore.containsKey(e2.getID())) {
+			tt = etanchor.get(e1.getID())+"\t"+etbefore.get(e2.getID());
+			if (ttlinks.containsKey(tt) && ttlinks.get(tt).equals("AFTER")) {
+				numReason ++;
+				return ttlinks.get(tt);
 			}
 		}
 		return "O";
