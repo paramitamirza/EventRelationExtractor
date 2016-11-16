@@ -25,6 +25,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import parser.entities.CausalRelation;
 import parser.entities.Doc;
 import parser.entities.EntityEnum;
 import parser.entities.TemporalRelation;
@@ -54,12 +55,28 @@ public class TimeMLParser {
 	public Doc parseDocument(String filepath) throws ParserConfigurationException, SAXException, IOException, TransformerException {
 		TimeMLDoc tmlDoc = new TimeMLDoc(filepath);
 		
-		Doc d = new Doc();	
+		Doc d = new Doc();
 		setInstances(tmlDoc, d);
 		setTlinks(tmlDoc, d);
+		setClinks(tmlDoc, d);
 		d.setFilename(new File(filepath).getName());
 		
 		return d;
+	}
+	
+	public List<String> getEvents(TimeMLDoc tmlDoc) {
+		List<String> arrEvents = new ArrayList<String>();
+		NodeList events = tmlDoc.getDoc().getElementsByTagName("EVENT");
+		for (int index = 0; index < events.getLength(); index++) {
+			Node event = events.item(index);
+			NamedNodeMap attrs = event.getAttributes();			
+			for (int i = 0; i < attrs.getLength(); i++) {
+				if (attrs.item(i).getNodeName().equals("eid")) {
+					arrEvents.add(attrs.item(i).getNodeValue());
+				}
+			}
+		}
+		return arrEvents;
 	}
 	
 	public void setTlinks(TimeMLDoc tmlDoc, Doc d) {
@@ -111,6 +128,39 @@ public class TimeMLParser {
 			tl.setRelType(relType);
 			tl.setDeduced(deduced);
 			tlinkArr.add(tl);
+		}
+	}
+	
+	public void setClinks(TimeMLDoc tmlDoc, Doc d) {
+		NodeList clinks = tmlDoc.getDoc().getElementsByTagName("CLINK");
+		ArrayList<CausalRelation> clinkArr = d.getClinks();
+		String source = null, target = null;
+		String sourceType = null, targetType = null;
+		
+		for (int index = clinks.getLength() - 1; index >= 0; index--) {
+			Node tlink = clinks.item(index);
+			NamedNodeMap attrs = tlink.getAttributes();			
+			for (int i = 0; i < attrs.getLength(); i++) {
+				switch(attrs.item(i).getNodeName()) {
+					case "eventInstanceID": 
+						source = attrs.item(i).getNodeValue();
+						sourceType = "Event";
+						break;
+					case "relatedToEventInstance":
+						target = attrs.item(i).getNodeValue();
+						targetType = "Event";
+						break;
+				}
+				if (d.getInstances().containsKey(source)) {
+					source = d.getInstances().get(source);
+				} 
+				if (d.getInstances().containsKey(target)) {
+					target = d.getInstances().get(target);
+				}
+			}
+			CausalRelation cl = new CausalRelation(source, target);
+			cl.setSourceType(sourceType); cl.setTargetType(targetType);
+			clinkArr.add(cl);
 		}
 	}
 	

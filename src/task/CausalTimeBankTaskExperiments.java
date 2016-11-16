@@ -98,13 +98,15 @@ public class CausalTimeBankTaskExperiments {
 	
 	public Boolean isContainCausalSignal(Sentence sent, Doc doc) {
 		Map<String, String> signalList = csignalList.getList();
+		Map<String, String> patternList = csignalList.getPatternList();
 		
-		Object[] sigKeys = signalList.keySet().toArray();
-		Arrays.sort(sigKeys, Collections.reverseOrder());
+//		Object[] sigKeys = signalList.keySet().toArray();
+//		Arrays.sort(sigKeys, Collections.reverseOrder());
 		
 		String str = " " + sent.toLowerString(doc) + " ";
-		for (Object key : sigKeys) {
-			Pattern pattern = Pattern.compile(" " + (String)key + " ");
+		for (String key : signalList.keySet()) {
+//		for (Object key : sigKeys) {
+			Pattern pattern = Pattern.compile(" " + patternList.get(key) + " ");
 			Matcher matcher = pattern.matcher(str);
 			if (matcher.find()) {
 				return true;
@@ -198,10 +200,16 @@ public class CausalTimeBankTaskExperiments {
 			File txpFile, PairClassifier eeRelCls,
 			boolean train, double threshold) throws Exception {
 		List<List<PairFeatureVector>> fvList = new ArrayList<List<PairFeatureVector>>();
+		
 		List<PairFeatureVector> fvListClink = new ArrayList<PairFeatureVector>();
 		List<PairFeatureVector> fvListClinkR = new ArrayList<PairFeatureVector>();
 		List<PairFeatureVector> fvListNone = new ArrayList<PairFeatureVector>();
 		List<PairFeatureVector> fvListRule = new ArrayList<PairFeatureVector>();
+		
+		List<PairFeatureVector> fvListTClink = new ArrayList<PairFeatureVector>();
+		List<PairFeatureVector> fvListTClinkR = new ArrayList<PairFeatureVector>();
+		List<PairFeatureVector> fvListTNone = new ArrayList<PairFeatureVector>();
+		List<PairFeatureVector> fvListTRule = new ArrayList<PairFeatureVector>();
 		
 		Doc docTxp = txpParser.parseDocument(txpFile.getPath());
 		Map<String,String> candidates = getCandidatePairs(docTxp);
@@ -223,12 +231,18 @@ public class CausalTimeBankTaskExperiments {
 			EventEventFeatureVector eefv = new EventEventFeatureVector(fv);
 			
 			String rule = EventEventRelationRule.getEventCausalityRule(eefv);
-			if (!rule.equals("O")) {
-				if (rule.contains("-R")) eefv.setPredLabel("CLINK-R");
-				else eefv.setPredLabel("CLINK");
+			if (!rule.equals("O") && !rule.equals("NONE")) {
+				if (rule.contains("-R")) {
+					eefv.setPredLabel("CLINK-R");
+				}
+				else {
+					eefv.setPredLabel("CLINK");
+				}
 				fvListRule.add(eefv);
 				
-			} else {
+			} else if (rule.equals("O") 
+					|| rule.equals("NONE")
+					) {
 			
 				if (eeRelCls.classifier.equals(VectorClassifier.yamcha)) {
 					eefv.addToVector(FeatureName.id);
@@ -243,7 +257,6 @@ public class CausalTimeBankTaskExperiments {
 					} else if (eeRelCls.classifier.equals(VectorClassifier.yamcha) ||
 							eeRelCls.classifier.equals(VectorClassifier.none)) {
 						eefv.addToVector(f);
-	//					eefv.addBinaryFeatureToVector(f);
 					}
 				}
 				
@@ -270,11 +283,10 @@ public class CausalTimeBankTaskExperiments {
 						eeRelCls.classifier.equals(VectorClassifier.weka) ||
 						eeRelCls.classifier.equals(VectorClassifier.none)){
 					eefv.addToVector(FeatureName.label);
-					
 				}
 				
 				Marker m = fv.getCausalSignal();
-				if (!eefv.getSimplifiedSignalDependencyPath(m).equals("O|O")) {
+				if (!m.getDepRelE1().equals("O") || !m.getDepRelE2().equals("O")) {
 //					System.out.println("--"+m.getText());
 					if (eefv.getLabel().equals("NONE")) {
 						fvListNone.add(eefv);
@@ -308,6 +320,7 @@ public class CausalTimeBankTaskExperiments {
 		List<PairFeatureVector> fvListClink = new ArrayList<PairFeatureVector>();
 		List<PairFeatureVector> fvListClinkR = new ArrayList<PairFeatureVector>();
 		List<PairFeatureVector> fvListCrule = new ArrayList<PairFeatureVector>();
+		
 		for (File txpFile : txpFiles) {	//assuming that there is no sub-directory
 			List<List<PairFeatureVector>> fvListList = getEventEventClinksPerFile(txpParser, 
 					txpFile, eeRelCls, train, threshold);
@@ -432,8 +445,8 @@ public class CausalTimeBankTaskExperiments {
 		String aquaintAllPath = "./data/AQUAINT_TXP/all/";
 		
 		//Init classifiers
-//		PairClassifier eeCls = new EventEventCausalClassifier("causal", "yamcha");
-		EventEventCausalClassifier eeCls = new EventEventCausalClassifier("causal", "liblinear");
+		PairClassifier eeCls = new EventEventCausalClassifier("causal", "yamcha");
+//		EventEventCausalClassifier eeCls = new EventEventCausalClassifier("causal", "liblinear");
 		
 		boolean labelProbs = false;
 		int numFold = 10;
@@ -448,10 +461,12 @@ public class CausalTimeBankTaskExperiments {
 //			System.err.println("Threshold " + (threshold) + "...");
 			
 			//Train models 
+			System.err.println("---------------Causal-TimeBank---------------");
 			List<List<PairFeatureVector>> fvListList = 
 					task.getEventEventClinks(txpParser, txpDirpath, 
 							eeCls, true, numFold, threshold);
 			
+//			System.err.println("---------------AQUAINT---------------");
 			List<PairFeatureVector> eeAquaint = task.getEventEventClinks(txpParser, aquaintAllPath, eeCls, false, 0);
 			List<PairFeatureVector> evalAquaint = new ArrayList<PairFeatureVector>();
 			
@@ -489,7 +504,7 @@ public class CausalTimeBankTaskExperiments {
 				BufferedWriter bwTrain = new BufferedWriter(new FileWriter("./data/train-ee-fold"+(fold+1)+".data"));
 				bwTrain.write(eeCls.printFeatureVector(trainFvList));
 				BufferedWriter bwEval = new BufferedWriter(new FileWriter("./data/eval-ee-fold"+(fold+1)+".data"));
-				bwEval.write(eeCls.printFeatureVector(trainFvList));
+				bwEval.write(eeCls.printFeatureVector(evalFvList));
 				
 				svm_model model = new svm_model();
 				
@@ -499,25 +514,25 @@ public class CausalTimeBankTaskExperiments {
 					String eeClsTest = eeCls.test(evalFvList, labelProbs, label);
 					eeTestList.addAll(Arrays.asList(eeClsTest.trim().split("\\r?\\n")));
 				
-				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
-					eeCls.train(trainFvList, "models/" + task.name + ".model");
-					
-					List<String> eeClsTest = eeCls.predict(evalFvList, "models/" + task.name + ".model");
-					for (int i=0; i<evalFvList.size(); i++) {
-						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
-						eeTestList.add((labelList.indexOf(eefv.getLabel())+1)
-								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
-					}
-					
-				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
-					model = eeCls.trainSVM(trainFvList);
-					
-					List<String> eeClsTest = eeCls.predict(evalFvList, model);
-					for (int i=0; i<evalFvList.size(); i++) {
-						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
-						eeTestList.add((labelList.indexOf(eefv.getLabel())+1)
-								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
-					}
+//				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
+//					eeCls.train(trainFvList, "models/" + task.name + ".model");
+//					
+//					List<String> eeClsTest = eeCls.predict(evalFvList, "models/" + task.name + ".model");
+//					for (int i=0; i<evalFvList.size(); i++) {
+//						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
+//						eeTestList.add((labelList.indexOf(eefv.getLabel())+1)
+//								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
+//					}
+//					
+//				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
+//					model = eeCls.trainSVM(trainFvList);
+//					
+//					List<String> eeClsTest = eeCls.predict(evalFvList, model);
+//					for (int i=0; i<evalFvList.size(); i++) {
+//						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
+//						eeTestList.add((labelList.indexOf(eefv.getLabel())+1)
+//								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
+//					}
 				}
 				
 				//Evaluate
@@ -540,11 +555,11 @@ public class CausalTimeBankTaskExperiments {
 				if (eeCls.classifier.equals(VectorClassifier.yamcha)) {
 					eeClsAquaint = Arrays.asList(eeCls.test(evalAquaint, labelProbs, label).trim().split("\\r?\\n"));
 				
-				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
-					eeClsAquaint = eeCls.predict(evalAquaint, "models/" + task.name + ".model");	
-				
-				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
-					eeClsAquaint = eeCls.predict(evalAquaint, model);
+//				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
+//					eeClsAquaint = eeCls.predict(evalAquaint, "models/" + task.name + ".model");	
+//				
+//				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
+//					eeClsAquaint = eeCls.predict(evalAquaint, model);
 				}
 								
 				for (int i=0; i<evalAquaint.size(); i++) {
@@ -566,25 +581,25 @@ public class CausalTimeBankTaskExperiments {
 					String eeClsTest = eeCls.test(evalFvList, labelProbs, label);
 					eeTestListSelfTrain.addAll(Arrays.asList(eeClsTest.trim().split("\\r?\\n")));
 				
-				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
-					eeCls.train(trainFvList, "models/" + task.name + ".model");
-					
-					List<String> eeClsTest = eeCls.predict(evalFvList, "models/" + task.name + ".model");
-					for (int i=0; i<evalFvList.size(); i++) {
-						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
-						eeTestListSelfTrain.add((labelList.indexOf(eefv.getLabel())+1)
-								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
-					}
-					
-				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
-					model = eeCls.trainSVM(trainFvList);
-					
-					List<String> eeClsTest = eeCls.predict(evalFvList, model);
-					for (int i=0; i<evalFvList.size(); i++) {
-						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
-						eeTestListSelfTrain.add((labelList.indexOf(eefv.getLabel())+1)
-								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
-					}
+//				} else if (eeCls.classifier.equals(VectorClassifier.liblinear)) {
+//					eeCls.train(trainFvList, "models/" + task.name + ".model");
+//					
+//					List<String> eeClsTest = eeCls.predict(evalFvList, "models/" + task.name + ".model");
+//					for (int i=0; i<evalFvList.size(); i++) {
+//						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
+//						eeTestListSelfTrain.add((labelList.indexOf(eefv.getLabel())+1)
+//								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
+//					}
+//					
+//				} else if (eeCls.classifier.equals(VectorClassifier.libsvm)) {
+//					model = eeCls.trainSVM(trainFvList);
+//					
+//					List<String> eeClsTest = eeCls.predict(evalFvList, model);
+//					for (int i=0; i<evalFvList.size(); i++) {
+//						EventEventFeatureVector eefv = new EventEventFeatureVector(evalFvList.get(i)); 
+//						eeTestListSelfTrain.add((labelList.indexOf(eefv.getLabel())+1)
+//								+ "\t" + (labelList.indexOf(eeClsTest.get(i))+1));
+//					}
 				}
 				
 				//Evaluate

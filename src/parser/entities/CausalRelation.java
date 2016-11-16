@@ -1,5 +1,8 @@
 package parser.entities;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CausalRelation extends Relation{
 	
 	private String signal;
@@ -15,5 +18,11 @@ public class CausalRelation extends Relation{
 
 	public void setSignal(String signal) {
 		this.signal = signal;
+	}
+	
+	public static String getInverseRelation(String relType) {
+        if (relType.equals("CLINK")) return "CLINK-R";
+        else if (relType.equals("CLINK-R")) return "CLINK";
+        else return "NONE";
 	}
 }

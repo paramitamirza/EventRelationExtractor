@@ -194,7 +194,7 @@ public class PairEvaluator {
 		System.err.println(label[0] + "\t" +
 				(total[0]+total[1]) + "\t" +
 				(tp[0]+tp[1]) + "\t" +
-				(fp[0]+fp[0]));
+				(fp[0]+fp[1]));
 		
 //		printEvaluation(label, tp, fp, total);
 //		double precision = sumtp/(double)(sumtp+sumfp);

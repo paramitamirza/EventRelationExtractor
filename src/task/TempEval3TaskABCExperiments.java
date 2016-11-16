@@ -22,8 +22,6 @@ import org.apache.commons.lang.StringEscapeUtils;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 
-import com.cognitionis.jtimegraph.timegraph.TimeGraph;
-
 import evaluator.PairEvaluator;
 import evaluator.TempEval3;
 import model.classifier.EventDctRelationClassifier;
@@ -40,6 +38,7 @@ import model.feature.FeatureEnum.FeatureName;
 import model.feature.FeatureEnum.PairType;
 import model.rule.EventEventRelationRule;
 import model.rule.EventTimexRelationRule;
+import model.rule.TimeGraph;
 //import model.rule.TimeGraph;
 import model.rule.TimexTimexRelationRule;
 import parser.TXPParser;
@@ -60,13 +59,27 @@ class TempEval3TaskABCExperiments {
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
 	private List<String> labelList = Arrays.asList(label);
 	
-	private int numTotalCandidate;
-	private int numCorrectCandidate;
+	private String[] ruleTlinks = {"BEFORE", "AFTER", "SIMULTANEOUS", "INCLUDES", "IS_INCLUDED"};
+	private List<String> ruleTlinkTypes = Arrays.asList(ruleTlinks);
+	
+	private int numTtTotalCandidate;
+	private int numTtCorrectCandidate;
+	private int numDctTotalCandidate;
+	private int numDctCorrectCandidate;
+	private int numEtTotalCandidate;
+	private int numEtCorrectCandidate;
+	private int numEeTotalCandidate;
+	private int numEeCorrectCandidate;
+	
 	private String taskName;
 	
 	public TempEval3TaskABCExperiments() {
-		numTotalCandidate = 0;
-		numCorrectCandidate = 0;
+		numDctTotalCandidate = 0;
+		numDctCorrectCandidate = 0;
+		numEtTotalCandidate = 0;
+		numEtCorrectCandidate = 0;
+		numEeTotalCandidate = 0;
+		numEeCorrectCandidate = 0;
 		taskName = "te3-abc";
 	}
 	
@@ -216,6 +229,8 @@ class TempEval3TaskABCExperiments {
 		if (goldCandidate || train) candidateTlinks = docTml.getTlinks();	//gold annotated pairs
 		else candidateTlinks = docTxp.getTlinks();									//candidate pairs
 		
+		Map<String,String> ttlinks = getTimexTimexRuleRelation(docTxp);
+		
 		for (TemporalRelation tlink : candidateTlinks) {	
 			
 			if (!tlink.getSourceID().equals(tlink.getTargetID())
@@ -246,6 +261,20 @@ class TempEval3TaskABCExperiments {
 									etRelCls.classifier.equals(VectorClassifier.none)) {
 								etfv.addToVector(f);
 							}
+						}
+						
+						//Add timex-DCT TLINK type feature to feature vector
+						String timexDct = "O";
+						if (ttlinks.containsKey(etfv.getE2().getID() + "\t" + docTxp.getDct().getID())) {
+							timexDct = ttlinks.get(etfv.getE2().getID() + "\t" + docTxp.getDct().getID());
+						}
+						if (etRelCls.classifier.equals(VectorClassifier.libsvm) || 
+								etRelCls.classifier.equals(VectorClassifier.liblinear)) {
+							etfv.addBinaryFeatureToVector("timexDct", timexDct, ruleTlinkTypes);
+						} else if (etRelCls.classifier.equals(VectorClassifier.yamcha) ||
+								etRelCls.classifier.equals(VectorClassifier.weka) ||
+								etRelCls.classifier.equals(VectorClassifier.none)){
+							etfv.addToVector("timexDct", timexDct);
 						}
 						
 						if (etRelCls.classifier.equals(VectorClassifier.libsvm) || 
@@ -658,6 +687,13 @@ class TempEval3TaskABCExperiments {
 				Field.main_verb, Field.connective, Field.morpho, 
 				Field.tense_aspect_pol, Field.coref_event, Field.tlink};
 		
+		Field[] fields2 = {Field.token, Field.token_id, Field.sent_id, Field.pos, 
+				Field.lemma, Field.deps, Field.tmx_id, Field.tmx_type, Field.tmx_value, 
+				Field.ner, Field.ev_class, Field.ev_id, Field.role1, Field.role2, 
+				Field.role3, Field.is_arg_pred, Field.has_semrole, Field.chunk, 
+				Field.main_verb, Field.connective, Field.morpho, 
+				Field.tense_aspect_pol, /*Field.coref_event,*/ Field.tlink};
+		
 		TempEval3TaskABCExperiments task = new TempEval3TaskABCExperiments();
 		
 //		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
@@ -666,7 +702,7 @@ class TempEval3TaskABCExperiments {
 //		System.setErr(log);
 		
 		boolean taskCRelOnly = false;
-		boolean trainModels = false;
+		boolean trainModels = true;
 		boolean precisionOnly = true;
 		
 		boolean tlinkFromDCTRules = true;
@@ -677,14 +713,17 @@ class TempEval3TaskABCExperiments {
 		boolean tlinkFromEEClassifier = true;
 		boolean tlinkFromETClassifier = true;
 		
-		boolean tlinkFromInferredMLN = true;
-		boolean tlinkFromRESTReasoner = false;
+		boolean tlinkFromInferredMLN = false;
+		boolean tlinkFromRESTReasoner = true;
 		boolean tlinkNonCandidateFromInferred = false;
+		
+		boolean includeTT = false;
 		
 		boolean postTimeGraph = false;
 		boolean evaluateTempEval3 = true;
 		
-		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);		
+		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);
+		TXPParser txpParser2 = new TXPParser(EntityEnum.Language.EN, fields2);
 		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
 		
 		String trainTxpDirpath = "./data/TempEval3-train_TXP2/";
@@ -745,7 +784,7 @@ class TempEval3TaskABCExperiments {
 				List<String> etTestList = new ArrayList<String>();
 				List<String> eeTestList = new ArrayList<String>();
 				
-				Set<String> extracted = new HashSet<String>();
+				Map<String, String> extracted = new HashMap<String, String>();
 				
 				//CANDIDATE PAIRS
 				
@@ -753,9 +792,9 @@ class TempEval3TaskABCExperiments {
 				List<PairFeatureVector> dctFvList = task.getEventDctTlinksPerFile(txpParser, tmlParser, 
 						txpFile, tmlFile, dctCls, false, taskCRelOnly);
 				dctNum += dctFvList.size();
-				task.numTotalCandidate += dctFvList.size();
+				task.numDctTotalCandidate += dctFvList.size();
 				for (PairFeatureVector fv : dctFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
+					if (!fv.getLabel().equals("NONE")) task.numDctCorrectCandidate ++;
 				}
 				List<PairFeatureVector> dctFvListCls = new ArrayList<PairFeatureVector>();
 				
@@ -763,18 +802,18 @@ class TempEval3TaskABCExperiments {
 				List<PairFeatureVector> etFvList = task.getEventTimexTlinksPerFile(txpParser, tmlParser, 
 						txpFile, tmlFile, etCls, false, taskCRelOnly);
 				etNum += etFvList.size();
-				task.numTotalCandidate += etFvList.size();
+				task.numEtTotalCandidate += etFvList.size();
 				for (PairFeatureVector fv : etFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
+					if (!fv.getLabel().equals("NONE")) task.numEtCorrectCandidate ++;
 				}
 				List<PairFeatureVector> etFvListCls = new ArrayList<PairFeatureVector>();
 				
 				//event-event
 				List<PairFeatureVector> eeFvList = task.getEventEventTlinksPerFile(txpParser, tmlParser, 
 						txpFile, tmlFile, eeCls, false, taskCRelOnly);
-				task.numTotalCandidate += eeFvList.size();
+				task.numEeTotalCandidate += eeFvList.size();
 				for (PairFeatureVector fv : eeFvList) {
-					if (!fv.getLabel().equals("NONE")) task.numCorrectCandidate ++;
+					if (!fv.getLabel().equals("NONE")) task.numEeCorrectCandidate ++;
 				}
 				List<PairFeatureVector> eeFvListCls = new ArrayList<PairFeatureVector>();
 			
@@ -789,7 +828,7 @@ class TempEval3TaskABCExperiments {
 					for (String tt : ttPerFile) {
 						ttTG = "gold\t" + tt.split("\t")[0] + "\t" + tt.split("\t")[1] + "\t"+ tt.split("\t")[3] + "\n" + ttTG;
 						ttStr += "RelTT(" + tt.split("\t")[0] + ", " + tt.split("\t")[1] + ", "+ tt.split("\t")[3] + ")\n";
-						extracted.add(tt.split("\t")[0]+"-"+tt.split("\t")[1]);
+						extracted.put(tt.split("\t")[0]+"-"+tt.split("\t")[1], tt.split("\t")[3]);
 					}
 				
 				} else {
@@ -804,15 +843,16 @@ class TempEval3TaskABCExperiments {
 						if (docTml.getTlinks().contains(trel)) {
 							int idx = docTml.getTlinks().indexOf(trel);
 							goldLabel = docTml.getTlinks().get(idx).getRelType();
-							task.numCorrectCandidate ++;
+							task.numTtCorrectCandidate ++;
 						}
+						task.numTtTotalCandidate ++;
 						
 						ttPerFile.add(trel.getSourceID() + "\t" + trel.getTargetID() 
 								+ "\t"+ goldLabel
 								+ "\t"+ trel.getRelType());
 						ttTG = "gold\t" + trel.getSourceID() + "\t" + trel.getTargetID() + "\t"+ trel.getRelType() + "\n" + ttTG;
 						ttStr += "RelTT(" + trel.getSourceID() + ", " + trel.getTargetID() + ", "+ trel.getRelType() + ")\n";
-						extracted.add(trel.getSourceID()+"-"+trel.getTargetID());
+						extracted.put(trel.getSourceID()+"-"+trel.getTargetID(), trel.getRelType());
 					}
 				}
 				
@@ -832,7 +872,7 @@ class TempEval3TaskABCExperiments {
 									+ "\t" + label);
 							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
 							etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							extracted.put(etfv.getE1().getID()+"-"+etfv.getE2().getID(), label);
 						} else {
 							dctFvListCls.add(fv);
 						}
@@ -857,7 +897,7 @@ class TempEval3TaskABCExperiments {
 									+ "\t" + label);
 							etTG = "gold\t" + etfv.getE1().getID() + "\t" + etfv.getE2().getID() + "\t" + label + "\n" + etTG;
 							etStr += "RelET(" + etfv.getE1().getID() + ", " + etfv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+							extracted.put(etfv.getE1().getID()+"-"+etfv.getE2().getID(), label);
 						} else {
 							etFvListCls.add(fv);
 						}
@@ -883,7 +923,7 @@ class TempEval3TaskABCExperiments {
 									+ "\t" + label);
 							eeTG = "gold\t" + eefv.getE1().getID() + "\t" + eefv.getE2().getID() + "\t" + label + "\n" + eeTG;
 							eeStr += "RelEE(" + eefv.getE1().getID() + ", " + eefv.getE2().getID() + ", " + label + ")\n";
-							extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+							extracted.put(eefv.getE1().getID()+"-"+eefv.getE2().getID(), label);
 						}
 	//					else if (eefv.isCoreference()) label = "IDENTITY";	//--> doesn't work
 						else {
@@ -961,7 +1001,7 @@ class TempEval3TaskABCExperiments {
 							+ "\t" + etfv.getE2().getID()
 							+ "\t" + etfv.getLabel()
 							+ "\t" + label);
-					extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+					extracted.put(etfv.getE1().getID()+"-"+etfv.getE2().getID(), label);
 				}
 				
 				//event-timex
@@ -983,7 +1023,7 @@ class TempEval3TaskABCExperiments {
 							+ "\t" + etfv.getE2().getID()
 							+ "\t" + etfv.getLabel()
 							+ "\t" + label);
-					extracted.add(etfv.getE1().getID()+"-"+etfv.getE2().getID());
+					extracted.put(etfv.getE1().getID()+"-"+etfv.getE2().getID(), label);
 				}
 				
 				//event-event
@@ -1006,7 +1046,7 @@ class TempEval3TaskABCExperiments {
 							+ "\t" + eefv.getE2().getID()
 							+ "\t" + eefv.getLabel()
 							+ "\t" + label);
-					extracted.add(eefv.getE1().getID()+"-"+eefv.getE2().getID());
+					extracted.put(eefv.getE1().getID()+"-"+eefv.getE2().getID(), label);
 				}
 				
 				//ADD INFERRED/DEDUCED BUT NOT CANDIDATE
@@ -1016,7 +1056,7 @@ class TempEval3TaskABCExperiments {
 						String source = key.split("-")[0];
 						String target = key.split("-")[1];
 						String tlink = inferredPairs.get(key);
-						if (!extracted.contains(target+"-"+source)) {
+						if (!extracted.containsKey(target+"-"+source)) {
 							if (source.startsWith("t") && target.startsWith("t")) {
 								ttPerFile.add(source + "\t" + target
 										+ "\tNONE" + "\t" + tlink);
@@ -1062,27 +1102,37 @@ class TempEval3TaskABCExperiments {
 				
 				//Write the TimeML document with new TLINKs
 				etTestList.addAll(dctTestList);
-				task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
-						ttPerFile, etTestList, eeTestList,
-						systemTMLPath);
-				
-//				Timegraph tg = new TimeGraph();
+				if (includeTT || taskCRelOnly) {
+					task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
+							ttPerFile, etTestList, eeTestList,
+							systemTMLPath);
+				} else {
+					task.writeTimeMLFile(txpParser, txpFile, tmlParser, tmlFile, 
+							new ArrayList<String>(), etTestList, eeTestList,
+							systemTMLPath);
+				}
 				
 				//TIMEGRAPH
 				if (postTimeGraph) {
-//					TimeGraph tg = new TimeGraph(ttTG + etTG + eeTG);
-//					HashMap<String, String> finalTlinks = new HashMap<String, String>();
-//					finalTlinks.putAll(tg.finalRel);
-//					finalTlinks.putAll(tg.removeRel);
-//					for (String key : tg.violatedRel.keySet()) finalTlinks.remove(key);
-//					task.writeTimeMLFile(tmlParser, tmlFile, finalTlinks, systemTMLPath);
+					TimeGraph tg = new TimeGraph(ttTG + etTG + eeTG);
+					HashMap<String, String> finalTlinks = new HashMap<String, String>();
+					finalTlinks.putAll(tg.finalRel);
+					finalTlinks.putAll(tg.removeRel);
+					for (String key : tg.violatedRel.keySet()) finalTlinks.remove(key);
+					task.writeTimeMLFile(tmlParser, tmlFile, finalTlinks, systemTMLPath);
 				}
 			}
 		}
 		
 		System.out.println("event-DCT: " + dctNum + " event-tmx: " + etNum);
-		System.out.println("total candidate: " + task.numTotalCandidate
-				+ " correct candidate: " + task.numCorrectCandidate);
+		System.out.println("total TT candidate: " + task.numTtTotalCandidate
+				+ " correct TT candidate: " + task.numTtCorrectCandidate
+				+ " total DCT candidate: " + task.numDctTotalCandidate
+				+ " correct DCT candidate: " + task.numDctCorrectCandidate
+				+ " total ET candidate: " + task.numEtTotalCandidate
+				+ " correct ET candidate: " + task.numEtCorrectCandidate
+				+ " total EE candidate: " + task.numEeTotalCandidate
+				+ " correct EE candidate: " + task.numEeCorrectCandidate);
 		
 		PairEvaluator ptt = new PairEvaluator(ttResult);
 		ptt.evaluatePerLabel(task.label);

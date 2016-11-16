@@ -11,11 +11,13 @@ import parser.entities.EntityEnum.Language;
 public class CausalSignalList extends SignalList{
 	
 	private Map<String, String> list;
+	private Map<String, String> patternlist;
 	private Map<String, String> verbList;
 	
 	public CausalSignalList(Language lang) throws IOException {
 		super(lang);
 		list = new HashMap<String, String>();
+		patternlist = new HashMap<String, String>();
 		verbList = new HashMap<String, String>();
 		readSignalFile();
 	}
@@ -32,7 +34,8 @@ public class CausalSignalList extends SignalList{
 			String line;
 			while ((line = reader.readLine()) != null) { 
 				String[] cols = line.split("\\|\\|\\|");
-				list.put(cols[0].trim(), cols[1].trim());
+				patternlist.put(cols[0].trim(), cols[1].trim());
+				list.put(cols[0].trim(), cols[2].trim());
 			}
 			//for (String key : list.keySet()) System.out.println(key + "\t" + list.get(key));
 		}
@@ -52,6 +55,14 @@ public class CausalSignalList extends SignalList{
 
 	public void setList(Map<String, String> list) {
 		this.list = list;
+	}
+	
+	public Map<String, String> getPatternList() {
+		return patternlist;
+	}
+
+	public void setPatternList(Map<String, String> plist) {
+		this.patternlist = plist;
 	}
 
 	public Map<String, String> getVerbList() {

@@ -109,6 +109,21 @@ public class EventEventFeatureVector extends PairFeatureVector{
 	    return sb.toString();
 	}
 	
+	public String getSimplifiedMateDependencyPath() {
+		String depEvPathStr = getMateDependencyPath();
+		
+		String depEvPath = "O";
+		for (String s : this.dep_event_path) {
+			if (depEvPathStr.equals(s)
+					|| depEvPathStr.contains(s)
+				) {
+				depEvPath = s;
+				break;
+			}
+		}
+		return depEvPath;
+	}
+	
 	public String getMateDependencyPath() {
 		//Assuming that event is always single-token
 		if (isSameSentence()) {

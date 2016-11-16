@@ -98,11 +98,11 @@ public class TestEventTimexRelationRuleTempEval3 {
 		TXPParser txpParser = new TXPParser(EntityEnum.Language.EN, fields);		
 		TimeMLParser tmlParser = new TimeMLParser(EntityEnum.Language.EN);
 		
-		String txpDirpath = "./data/TempEval3-train_TXP2/";
-		String tmlDirpath = "./data/TempEval3-train_TML/";
+//		String txpDirpath = "./data/TempEval3-train_TXP2/";
+//		String tmlDirpath = "./data/TempEval3-train_TML/";
 		
-//		String txpDirpath = "./data/TempEval3-eval_TXP/";
-//		String tmlDirpath = "./data/TempEval3-eval_TML/";
+		String txpDirpath = "./data/TempEval3-eval_TXP/";
+		String tmlDirpath = "./data/TempEval3-eval_TML/";
 		
 		File[] txpFiles = new File(txpDirpath).listFiles();		
 		if (txpFiles == null) return;	

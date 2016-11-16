@@ -17,6 +17,7 @@ public class EventEventRelationClassifier extends PairClassifier {
 	
 	private String[] label = {"BEFORE", "AFTER", "IBEFORE", "IAFTER", "IDENTITY", "SIMULTANEOUS", 
 			"INCLUDES", "IS_INCLUDED", "DURING", "DURING_INV", "BEGINS", "BEGUN_BY", "ENDS", "ENDED_BY"};
+	private List<String> labelList = Arrays.asList(label);
 	private String[] labelDense = {"BEFORE", "AFTER", "SIMULTANEOUS", 
 			"INCLUDES", "IS_INCLUDED", "VAGUE"};
 	
@@ -66,6 +67,7 @@ public class EventEventRelationClassifier extends PairClassifier {
 					FeatureName.sameEventClass, FeatureName.sameTenseAspect, /*Feature.sameAspect,*/ FeatureName.samePolarity,
 					FeatureName.depEvPath,			
 					FeatureName.mainVerb,
+					FeatureName.hasModal,
 //					FeatureName.modalVerb,
 //					FeatureName.tempSignalClusText,
 //					FeatureName.tempSignalPos,
@@ -122,7 +124,9 @@ public class EventEventRelationClassifier extends PairClassifier {
 		int nInstances = vectors.size();
 		int nFeatures = vectors.get(0).getVectors().size()-1;
 		
-		if (classifier.equals(VectorClassifier.liblinear)) {
+		if (classifier.equals(VectorClassifier.liblinear)
+				|| classifier.equals(VectorClassifier.logit)
+				) {
 			//Prepare training data
 			Feature[][] instances = new Feature[nInstances][nFeatures];
 			double[] labels = new double[nInstances];
@@ -130,8 +134,8 @@ public class EventEventRelationClassifier extends PairClassifier {
 			int row = 0;
 			for (PairFeatureVector fv : vectors) {				
 				int idx = 1, col = 0;
+				labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
 				for (int i=0; i<nFeatures; i++) {
-					labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
 					instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
 					idx ++;
 					col ++;
@@ -147,9 +151,66 @@ public class EventEventRelationClassifier extends PairClassifier {
 			problem.y = labels;
 			problem.bias = 1.0;
 			
-			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // -s 1
+			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // SVM, by default
+			
 			double C = 1.0;    // cost of constraints violation
 			double eps = 0.01; // stopping criteria
+			
+			if (classifier.equals(VectorClassifier.logit)) {
+				solver = SolverType.L2R_LR_DUAL; // Logistic Regression
+			}
+
+			Parameter parameter = new Parameter(solver, C, eps);
+			Model model = Linear.train(problem, parameter);
+			File modelFile = new File(modelPath);
+			model.save(modelFile);
+		}
+	}
+	
+	public void train2(List<PairFeatureVector> vectors, String modelPath) throws Exception {
+		
+		System.err.println("Train model...");
+
+		int nInstances = vectors.size();
+		int nFeatures = vectors.get(0).getFeatures().length-1;
+		
+		if (classifier.equals(VectorClassifier.liblinear)
+				|| classifier.equals(VectorClassifier.logit)
+				) {
+			//Prepare training data
+			Feature[][] instances = new Feature[nInstances][nFeatures];
+			double[] labels = new double[nInstances];
+			
+			int row = 0;
+			for (PairFeatureVector fv : vectors) {				
+				int idx = 1, col = 0;
+				labels[row] = fv.getFeatures()[nFeatures];	//last column is label
+				for (int i=0; i<nFeatures; i++) {
+					instances[row][col] = new FeatureNode(idx, fv.getFeatures()[i]);
+					idx ++;
+					col ++;
+				}
+				row ++;
+			}
+			
+			//Train
+			Problem problem = new Problem();
+			problem.l = nInstances;
+			problem.n = nFeatures;
+			problem.x = instances;
+			problem.y = labels;
+			problem.bias = 1.0;
+			
+			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // SVM, by default
+			
+			double C = 1.0;    // cost of constraints violation
+			double eps = 0.01; // stopping criteria
+			
+			if (classifier.equals(VectorClassifier.logit)) {
+				solver = SolverType.L2R_LR_DUAL; // Logistic Regression
+//				C = Math.pow(2.0, 0.0);
+//				eps = Math.pow(2.0, -10.0);
+			}
 
 			Parameter parameter = new Parameter(solver, C, eps);
 			Model model = Linear.train(problem, parameter);
@@ -167,13 +228,15 @@ public class EventEventRelationClassifier extends PairClassifier {
 			int nInstances = vectors.size();
 			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			if (classifier.equals(VectorClassifier.liblinear)) {
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
 				//Prepare evaluation data
 				Feature[][] instances = new Feature[nInstances][nFeatures];
 				double[] labels = new double[nInstances];
 				
 				int row = 0;
-				for (PairFeatureVector fv : vectors) {				
+				for (PairFeatureVector fv : vectors) {	
 					int idx = 1, col = 0;
 					for (int i=0; i<nFeatures; i++) {
 						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
@@ -197,6 +260,7 @@ public class EventEventRelationClassifier extends PairClassifier {
 				List<String> result = new ArrayList<String>();
 				for (int i=0; i<labels.length; i++) {
 					result.add(((int)labels[i]) + "\t" + ((int)predictions[i]));
+					System.out.println(((int)labels[i]) + "\t" + ((int)predictions[i]));
 				}
 				
 				PairEvaluator pe = new PairEvaluator(result);
@@ -206,6 +270,196 @@ public class EventEventRelationClassifier extends PairClassifier {
 	}
 	
 	public List<String> predict(List<PairFeatureVector> vectors, String modelPath) throws Exception {
+		
+//		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getVectors().size()-1;
+			
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {			
+					int idx = 1, col = 0;
+					for (int i=0; i<nFeatures; i++) {
+						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
+						instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				for (Feature[] instance : instances) {
+					predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+				}
+			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predict2(List<PairFeatureVector> vectors, String modelPath,
+			String[] arrLabel) throws Exception {
+		
+//		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getFeatures().length-1;
+			
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {			
+					int idx = 1, col = 0;
+					labels[row] = fv.getFeatures()[nFeatures];	//last column is label
+					for (int i=0; i<nFeatures; i++) {
+						instances[row][col] = new FeatureNode(idx, fv.getFeatures()[i]);
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				for (Feature[] instance : instances) {
+					predictionLabels.add(arrLabel[(int)Linear.predict(model, instance)-1]);
+				}
+			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predictProbs(List<PairFeatureVector> vectors, String modelPath) throws Exception {
+		
+//		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getVectors().size()-1;
+			
+			if (classifier.equals(VectorClassifier.liblinear)) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {				
+					int idx = 1, col = 0;
+					for (int i=0; i<nFeatures; i++) {
+						labels[row] = Double.valueOf(fv.getVectors().get(nFeatures));	//last column is label
+						instances[row][col] = new FeatureNode(idx, Double.valueOf(fv.getVectors().get(i)));
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				int[] mLabels = model.getLabels();
+				for (int i : mLabels) System.out.print(label[i-1] + " ");
+				System.out.println();
+				double[] dec_values = new double[model.getNrClass()];
+				for (Feature[] instance : instances) {
+//					predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+					predictionLabels.add(label[(int)Linear.predictProbability(model, instance, dec_values)-1]);
+//					System.out.print((int)Linear.predict(model, instance) + "\t");
+					for (double d : dec_values) System.out.print(d + " ");
+					System.out.println();
+				}
+			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predictProbs2(List<PairFeatureVector> vectors, String modelPath,
+			String[] arrLabel) throws Exception {
+		
+//		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getFeatures().length-1;
+			
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {			
+					int idx = 1, col = 0;
+					labels[row] = fv.getFeatures()[nFeatures];	//last column is label
+					for (int i=0; i<nFeatures; i++) {
+						instances[row][col] = new FeatureNode(idx, fv.getFeatures()[i]);
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				
+//				int[] mLabels = model.getLabels();
+//				for (int i : mLabels) System.out.print(label[i-1] + " ");
+//				System.out.println();
+				
+				double[] dec_values = new double[model.getNrClass()];
+				String line, lbl;
+				for (Feature[] instance : instances) {
+//					predictionLabels.add(label[(int)Linear.predictProbability(model, instance, dec_values)-1]);
+//					System.out.print((int)Linear.predictProbability(model, instance, dec_values) 
+//							+ " " + label[(int)Linear.predictProbability(model, instance, dec_values)-1]
+//							+ ": ");
+					line = "";
+					lbl = arrLabel[(int)Linear.predictProbability(model, instance, dec_values)-1];
+					for (double d : dec_values) line += d + ",";
+					predictionLabels.add(lbl + "#" + line.substring(0, line.length()-1));
+				}
+			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predictBinary(List<PairFeatureVector> vectors, String modelPath) throws Exception {
 		
 		System.err.println("Test model...");
 
@@ -237,7 +491,8 @@ public class EventEventRelationClassifier extends PairClassifier {
 				File modelFile = new File(modelPath);
 				Model model = Model.load(modelFile);
 				for (Feature[] instance : instances) {
-					predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+					if ((int)Linear.predict(model, instance) == 0) predictionLabels.add("NONE");
+					else predictionLabels.add("TLINK");
 				}
 			}
 		}
@@ -256,7 +511,8 @@ public class EventEventRelationClassifier extends PairClassifier {
 			int nInstances = vectors.size();
 			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			if (classifier.equals(VectorClassifier.liblinear)) {
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)) {
 				//Prepare test data
 				Feature[][] instances = new Feature[nInstances][nFeatures];
 				double[] labels = new double[nInstances];

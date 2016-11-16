@@ -72,8 +72,25 @@ public class EventTimexRelationRule {
 				int tidxStart = doc.getTokens().get(tmx.getStartTokID()).getIndex();
 				int tidxStartSent = doc.getTokens().get(s.getStartTokID()).getIndex();
 				
+				int tidxEnd = doc.getTokens().get(tmx.getEndTokID()).getIndex();
+				int tidxEndSent = doc.getTokens().get(s.getEndTokID()).getIndex();
+				
 				if (tidxStart > tidxStartSent) {
 					
+//					if (depPath.equals("NMOD-PMOD")) {
+//						String tidAfterEnd;
+//						if (tidxEnd+1 < tidxEndSent) {
+//							tidAfterEnd = doc.getTokenArr().get(tidxEnd+1);
+//							String tidAfter = doc.getTokenArr().get(tidxEnd+1);
+//							String afterTmx = getString(doc, tidAfter, tidAfterEnd);
+//							if (afterTmx.equals("of")
+//									&& tmx.getType().equals("DURATION")) {
+//								this.setRelType("DURING");
+//							}
+//						}
+//					}
+//					
+//					else 
 					if (depPath.contains("TMP") 
 							&& (!depPath.contains("OBJ")
 							&& !depPath.contains("SUB")

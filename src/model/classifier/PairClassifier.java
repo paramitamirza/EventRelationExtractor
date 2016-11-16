@@ -47,7 +47,7 @@ public class PairClassifier {
 	
 	protected String dataDirPath;
 	
-	public static enum VectorClassifier {yamcha, libsvm, weka, liblinear, none};
+	public static enum VectorClassifier {yamcha, libsvm, weka, liblinear, logit, none};
 	public VectorClassifier classifier;
 	protected Classifier wekaClassifier;
 	
@@ -83,8 +83,10 @@ public class PairClassifier {
 			dataDirPath = "data/tokens/";
 		} else if (classifier.equals(VectorClassifier.yamcha)) {
 			dataDirPath = "data/yamcha/";
-		} else if (classifier.equals(VectorClassifier.libsvm) ||
-				classifier.equals(VectorClassifier.liblinear)) {
+		} else if (classifier.equals(VectorClassifier.libsvm)
+				|| classifier.equals(VectorClassifier.liblinear)
+				|| classifier.equals(VectorClassifier.logit)
+				) {
 			dataDirPath = "data/libsvm/";
 		} else if (classifier.equals(VectorClassifier.weka)) {
 			dataDirPath = "data/weka/";
@@ -122,6 +124,7 @@ public class PairClassifier {
 			case "yamcha": classifier = VectorClassifier.yamcha; break;
 			case "libsvm": classifier = VectorClassifier.libsvm; break;
 			case "liblinear": classifier = VectorClassifier.liblinear; break;
+			case "logit": classifier = VectorClassifier.logit; break;
 			case "weka": classifier = VectorClassifier.weka; break;
 			default: classifier = VectorClassifier.none; break;
 		}

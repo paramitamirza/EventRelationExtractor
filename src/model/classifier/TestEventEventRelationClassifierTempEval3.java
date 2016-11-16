@@ -141,12 +141,12 @@ public class TestEventEventRelationClassifierTempEval3 {
 		
 		EventEventRelationClassifier eeCls = new EventEventRelationClassifier("te3", "liblinear");
 		
-		List<PairFeatureVector> trainFvList = test.getEventEventTlinks(txpParser, tmlParser, 
-				trainTxpDirpath, trainTmlDirpath, eeCls, true);
+//		List<PairFeatureVector> trainFvList = test.getEventEventTlinks(txpParser, tmlParser, 
+//				trainTxpDirpath, trainTmlDirpath, eeCls, true);
 		List<PairFeatureVector> evalFvList = test.getEventEventTlinks(txpParser, tmlParser, 
 				evalTxpDirpath, evalTmlDirpath, eeCls, false);
 		
-		eeCls.train(trainFvList, "ee-model");   
+//		eeCls.train(trainFvList, "ee-model");   
 		eeCls.evaluate(evalFvList, "ee-model");
 		
 		File[] txpFiles = new File(evalTxpDirpath).listFiles();
@@ -154,7 +154,7 @@ public class TestEventEventRelationClassifierTempEval3 {
 		for (File txpFile : txpFiles) {
 			if (txpFile.isFile()) {	
 				File tmlFile = new File(evalTmlDirpath, txpFile.getName().replace(".txp", ""));
-				System.err.println(tmlFile.getName());
+//				System.err.println(tmlFile.getName());
 				Doc docTxp = txpParser.parseDocument(txpFile.getPath());
 				
 				//Predict labels
@@ -170,11 +170,12 @@ public class TestEventEventRelationClassifierTempEval3 {
 					
 					//Prefer labels from rules than classifier 
 					String label = eeClsTest.get(i);
-					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
+//					if (!eeRule.getRelType().equals("O")) label = eeRule.getRelType();
 					
-					System.out.println(eefv.getE1().getID() 
+					System.out.println(txpFile.getName()
+							+ "\t" + eefv.getE1().getID() 
 							+ "\t" + eefv.getE2().getID() 
-//							+ "\t" + eefv.getLabel()
+							+ "\t" + eefv.getLabel()
 							+ "\t" + label);
 				}
 			}

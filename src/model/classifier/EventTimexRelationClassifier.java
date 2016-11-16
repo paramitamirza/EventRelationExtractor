@@ -84,6 +84,7 @@ public class EventTimexRelationClassifier extends PairClassifier {
 					FeatureName.dct,
 					FeatureName.timexType, 				
 					FeatureName.mainVerb, 
+					FeatureName.hasModal,
 //					FeatureName.modalVerb,
 //					FeatureName.depTmxPath,
 					FeatureName.tempSignalClusText,		//TimeBank-Dense
@@ -138,7 +139,11 @@ public class EventTimexRelationClassifier extends PairClassifier {
 		int nInstances = vectors.size();
 		int nFeatures = vectors.get(0).getVectors().size()-1;
 		
-		if (classifier.equals(VectorClassifier.liblinear)) {
+		System.out.println(nInstances + "-" + vectors.get(0).getVectors().size());
+		
+		if (classifier.equals(VectorClassifier.liblinear)
+				|| classifier.equals(VectorClassifier.logit)
+				) {
 			//Prepare training data
 			Feature[][] instances = new Feature[nInstances][nFeatures];
 			double[] labels = new double[nInstances];
@@ -163,9 +168,66 @@ public class EventTimexRelationClassifier extends PairClassifier {
 			problem.y = labels;
 			problem.bias = 1.0;
 			
-			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // -s 1
+			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // SVM, by default
+			
 			double C = 1.0;    // cost of constraints violation
 			double eps = 0.01; // stopping criteria
+			
+			if (classifier.equals(VectorClassifier.logit)) {
+				solver = SolverType.L2R_LR_DUAL; // Logistic Regression
+			}
+
+			Parameter parameter = new Parameter(solver, C, eps);
+			Model model = Linear.train(problem, parameter);
+			File modelFile = new File(modelPath);
+			model.save(modelFile);
+		}
+	}
+	
+	public void train2(List<PairFeatureVector> vectors, String modelPath) throws Exception {
+		
+		System.err.println("Train model...");
+
+		int nInstances = vectors.size();
+		int nFeatures = vectors.get(0).getFeatures().length-1;
+		
+		if (classifier.equals(VectorClassifier.liblinear)
+				|| classifier.equals(VectorClassifier.logit)
+				) {
+			//Prepare training data
+			Feature[][] instances = new Feature[nInstances][nFeatures];
+			double[] labels = new double[nInstances];
+			
+			int row = 0;
+			for (PairFeatureVector fv : vectors) {				
+				int idx = 1, col = 0;
+				labels[row] = fv.getFeatures()[nFeatures];	//last column is label
+				for (int i=0; i<nFeatures; i++) {
+					instances[row][col] = new FeatureNode(idx, fv.getFeatures()[i]);
+					idx ++;
+					col ++;
+				}
+				row ++;
+			}
+			
+			//Train
+			Problem problem = new Problem();
+			problem.l = nInstances;
+			problem.n = nFeatures;
+			problem.x = instances;
+			problem.y = labels;
+			problem.bias = 1.0;
+			
+			SolverType solver = SolverType.L2R_L2LOSS_SVC_DUAL; // SVM, by default
+			
+			double C = 1.0;    // cost of constraints violation
+			double eps = 0.01; // stopping criteria
+			
+			if (classifier.equals(VectorClassifier.logit)) {
+				solver = SolverType.L2R_LR_DUAL; // Logistic Regression
+//				C = Math.pow(2.0, 0.0);
+//				eps = Math.pow(2.0, -10.0);
+			}
 
 			Parameter parameter = new Parameter(solver, C, eps);
 			Model model = Linear.train(problem, parameter);
@@ -230,7 +292,9 @@ public class EventTimexRelationClassifier extends PairClassifier {
 			int nInstances = vectors.size();
 			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			if (classifier.equals(VectorClassifier.liblinear)) {
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
 				//Prepare evaluation data
 				Feature[][] instances = new Feature[nInstances][nFeatures];
 				double[] labels = new double[nInstances];
@@ -279,7 +343,9 @@ public class EventTimexRelationClassifier extends PairClassifier {
 			int nInstances = vectors.size();
 			int nFeatures = vectors.get(0).getVectors().size()-1;
 			
-			if (classifier.equals(VectorClassifier.liblinear)) {
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
 				//Prepare test data
 				Feature[][] instances = new Feature[nInstances][nFeatures];
 				double[] labels = new double[nInstances];
@@ -301,6 +367,49 @@ public class EventTimexRelationClassifier extends PairClassifier {
 				Model model = Model.load(modelFile);
 				for (Feature[] instance : instances) {
 					predictionLabels.add(label[(int)Linear.predict(model, instance)-1]);
+				}
+			}
+		}
+		
+		return predictionLabels;
+	}
+	
+	public List<String> predict2(List<PairFeatureVector> vectors, String modelPath,
+			String[] arrLabel) throws Exception {
+		
+//		System.err.println("Test model...");
+
+		List<String> predictionLabels = new ArrayList<String>();
+		
+		if (vectors.size() > 0) {
+
+			int nInstances = vectors.size();
+			int nFeatures = vectors.get(0).getFeatures().length-1;
+			
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)
+					) {
+				//Prepare test data
+				Feature[][] instances = new Feature[nInstances][nFeatures];
+				double[] labels = new double[nInstances];
+				
+				int row = 0;
+				for (PairFeatureVector fv : vectors) {			
+					int idx = 1, col = 0;
+					labels[row] = fv.getFeatures()[nFeatures];	//last column is label
+					for (int i=0; i<nFeatures; i++) {
+						instances[row][col] = new FeatureNode(idx, fv.getFeatures()[i]);
+						idx ++;
+						col ++;
+					}
+					row ++;
+				}
+				
+				//Test
+				File modelFile = new File(modelPath);
+				Model model = Model.load(modelFile);
+				for (Feature[] instance : instances) {
+					predictionLabels.add(arrLabel[(int)Linear.predict(model, instance)-1]);
 				}
 			}
 		}
@@ -366,7 +475,8 @@ public class EventTimexRelationClassifier extends PairClassifier {
 			int nInstances = vectors.size();
 			int nFeatures = vectors.get(0).getVectors().size()-1;		
 			
-			if (classifier.equals(VectorClassifier.liblinear)) {
+			if (classifier.equals(VectorClassifier.liblinear)
+					|| classifier.equals(VectorClassifier.logit)) {
 				//Prepare test data
 				Feature[][] instances = new Feature[nInstances][nFeatures];
 				double[] labels = new double[nInstances];

@@ -80,7 +80,12 @@ public class ExpandWord {
 			if (d.gov().index() == nounIdx) {			
 				if (focus) expanded.put(d.gov().index(), d.gov().value().toLowerCase());
 				else {
-					if (replaceNouns) expanded.put(d.gov().index(), d.gov().tag());
+					if (replaceNouns 
+							&& (d.gov().tag().startsWith("NNP") 
+									|| d.gov().tag().startsWith("DT")
+									|| d.gov().tag().startsWith("POS")
+									|| d.gov().tag().startsWith("IN"))) 
+						expanded.put(d.gov().index(), d.gov().tag());
 					else expanded.put(d.gov().index(), d.gov().value().toLowerCase());
 				}
 				
@@ -88,7 +93,12 @@ public class ExpandWord {
 						|| rel.equals("compound")
 //						|| rel.equals("amod")
 						|| rel.equals("neg")) {
-					if (replaceNouns) expanded.put(d.dep().index(), d.dep().tag());
+					if (replaceNouns 
+							&& (d.dep().tag().startsWith("NNP") 
+									|| d.dep().tag().startsWith("DT")
+									|| d.dep().tag().startsWith("POS")
+									|| d.dep().tag().startsWith("IN"))) 
+						expanded.put(d.dep().index(), d.dep().tag());
 					else expanded.put(d.dep().index(), d.dep().value().toLowerCase());
 					
 				} else if (rel.equals("nmod:poss")
@@ -98,7 +108,11 @@ public class ExpandWord {
 								&& dd.reln().getShortName().equals("case")
 								&& (dd.dep().value().toLowerCase().equals("'s")
 									|| dd.dep().value().toLowerCase().equals("of"))) {							
-							if (replaceNouns) {
+							if (replaceNouns
+									&& (d.dep().tag().startsWith("NNP") 
+											|| d.dep().tag().startsWith("DT")
+											|| d.dep().tag().startsWith("POS")
+											|| d.dep().tag().startsWith("IN"))) {
 								expanded.put(d.dep().index(), d.dep().tag());
 								expanded.put(dd.dep().index(), dd.dep().tag());
 							} else {
@@ -124,7 +138,12 @@ public class ExpandWord {
 				if (rel.equals("det")
 						|| rel.equals("compound")
 						|| rel.equals("amod")) {
-					if (replaceNouns) expanded.put(d.gov().index(), d.gov().tag());
+					if (replaceNouns 
+							&& (d.gov().tag().startsWith("NNP") 
+									|| d.gov().tag().startsWith("DT")
+									|| d.gov().tag().startsWith("POS")
+									|| d.gov().tag().startsWith("IN"))) 
+						expanded.put(d.gov().index(), d.gov().tag());
 					else expanded.put(d.gov().index(), d.gov().value().toLowerCase());
 					
 				} else if (rel.equals("nsubj")) {

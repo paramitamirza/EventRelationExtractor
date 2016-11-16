@@ -401,7 +401,7 @@ public class CauseRelPro {
 		CauseRelPro task = new CauseRelPro();
 		
 		/*****TRAIN****/
-//		task.trainModel();
+		task.trainModel();
 		
 		
 		/*****TEST****/

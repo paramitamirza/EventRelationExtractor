@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,7 @@ public class PairFeatureVector {
 	
 	protected Doc doc;
 	private ArrayList<String> vectors;
+	private double[] features;
 	protected Entity e1;
 	protected Entity e2;
 	protected String label;
@@ -58,13 +60,12 @@ public class PairFeatureVector {
 			"between", "after", "before", "up to", "within", "until", "since", "still", "recently", 
 			"formerly", "former", "early", "over", "next", "later", "lately", "immediately", 
 			"earlier", "ago"};
-	private String[] caus_signal = {"in order to", "is why", "so that", "due to", "in consequence of", "in exchange for",
-			"responding to", "in response", "in response to", "reason is", "on basis of", "because of", 
-			"for reason", "by reason", "for reason of", "by reason of", "as a result", "as a result of", "so that", 
-			"therefore", "following", "because", "since", "as", "so", "by", "from"};
+	private String[] caus_signal = {"so that", "because of", "due to", "in consequence of", "in response to",
+			"in exchange for", "in response", "in order to", "as a result of", "as a result", "for reason",
+			"is why", "therefore", "because", "since", "as", "so", "by", "from"};
 	private String[] caus_verb = {"CAUSE", "CAUSE-AMBIGUOUS", "ENABLE", "PREVENT", "PREVENT-AMBIGUOUS", "AFFECT", "LINK"};
 	
-	private String[] dep_event_path = {"COORD-CONJ", "TMP-SUB", "OPRD", "OPRD-IM", "OBJ-SUB",
+	protected String[] dep_event_path = {"COORD-CONJ", "TMP-SUB", "OPRD", "OPRD-IM", "OBJ-SUB",
 			"ADV", "OBJ", "SBJ", "ADV-SUB", "VC", "LGS-PMOD", "ADV-PMOD", "LOC-PMOD",
 			"CONJ-COORD", "SUB-TMP", "IM-OPRD", "SUB-OBJ", "SUB-ADV", "PMOD-LGS", "PMOD-ADV", "PMOD-LOC"};
 	private String[] dep_signal_path = {"SBJ", "OBJ", "OPRD", "IM", "ADV", "PRP",
@@ -113,6 +114,26 @@ public class PairFeatureVector {
 		this.setE2(e2);
 		this.setVectors(vectors);
 		this.setLabel(label);
+		if (e1 instanceof Event && e2 instanceof Event) {
+			this.setPairType(PairType.event_event);
+		} else if ((e1 instanceof Timex && e2 instanceof Event) || 
+				(e1 instanceof Event && e2 instanceof Timex)) {
+			this.setPairType(PairType.event_timex);
+		} else if (e1 instanceof Timex && e2 instanceof Timex) {
+			this.setPairType(PairType.timex_timex);
+		}
+		this.setTempSignalList(tempSignalList);
+		this.setCausalSignalList(causalSignalList);
+	}
+	
+	public PairFeatureVector(Doc doc, Entity e1, Entity e2, String label, int numFeatures,
+			TemporalSignalList tempSignalList, CausalSignalList causalSignalList) {
+		this.setDoc(doc);
+		this.setE1(e1);
+		this.setE2(e2);
+		this.setLabel(label);
+		this.setVectors(new ArrayList<String>());
+		this.setFeatures(new double[numFeatures]);
 		if (e1 instanceof Event && e2 instanceof Event) {
 			this.setPairType(PairType.event_event);
 		} else if ((e1 instanceof Timex && e2 instanceof Event) || 
@@ -643,6 +664,7 @@ public class PairFeatureVector {
 		if (!path.startsWith("-APPO-"))
 			path = path.replaceAll("-APPO-", "-");
 		path = path.replaceAll("-EXTR-", "-");
+		path = path.replaceAll("-PMOD-PMOD", "-PMOD");
 		return path;
 	}
 	
@@ -730,6 +752,113 @@ public class PairFeatureVector {
 						generateDependencyPath(govID, getMateVerbFromSbjNoun(depID), paths, "", visited);
 						if (!paths.isEmpty()) {
 							path = simplifiedDependencyPath(paths.get(0));				
+							if (!path.equals("")) return path.substring(1);
+						}
+					}
+				}
+			}
+			
+		}
+		return "O";
+	}
+	
+	private String simplifiedDependencyPath2(String depPath) {
+		String path = depPath;
+		if (!path.equals("-VC-OBJ"))
+			path = path.replaceAll("-VC", "");
+		path = path.replaceAll("-COORD", "");
+		path = path.replaceAll("-CONJ", "");
+		if (!path.endsWith("-NMOD") && !path.startsWith("-NMOD-"))
+			path = path.replaceAll("-NMOD", "");
+		path = path.replaceAll("-EXTR-", "-");
+		path = path.replaceAll("-PMOD-PMOD", "-PMOD");
+		return path;
+	}
+	
+	public String getSignalMateDependencyPath2(Entity e, ArrayList<String> entArr, ArrayList<String> signalArr) {
+		String path = "O";
+		for (String tokID : entArr) {
+			List<String> paths = new ArrayList<String>();
+			List<String> visited = new ArrayList<String>();
+			String govID = tokID;
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
+				govID = getMateHeadVerb(tokID);					
+			} else if (getTokenAttribute(e, FeatureName.mainpos).equals("adj") &&
+				getMateVerbFromAdj(tokID) != null) {
+				govID = getMateVerbFromAdj(tokID);
+			}
+			
+			generateDependencyPath(govID, signalArr, paths, "", visited);
+			if (!paths.isEmpty()) {
+				path = simplifiedDependencyPath2(paths.get(0));				
+				if (!path.equals("")) return path.substring(1);
+			}
+			
+			if (getMateCoordVerb(govID) != null) {
+				generateDependencyPath(getMateCoordVerb(govID), signalArr, paths, "", visited);
+				if (!paths.isEmpty()) {
+					path = simplifiedDependencyPath2(paths.get(0));				
+					if (!path.equals("")) return path.substring(1);
+				}
+			}
+			
+			if (getTokenAttribute(e, FeatureName.mainpos).equals("n")) {
+				if (getMateVerbFromSbjNoun(tokID) != null) {
+					generateDependencyPath(getMateVerbFromSbjNoun(tokID), signalArr, paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath2(paths.get(0));				
+						if (!path.equals("")) return path.substring(1);
+					}
+				}
+			}
+		}
+		
+		for (String tokID : signalArr) {
+			for (String tokkID : entArr) {
+				List<String> paths = new ArrayList<String>();
+				List<String> visited = new ArrayList<String>();
+				String govID, depID;
+				
+				if (doc.getTokens().get(tokID).getMainPos().equals("v")) {
+					govID = getMateHeadVerb(tokID);
+					depID = tokkID;
+					if (getMateSubjectFromVerb(govID) != null
+							&& getMateSubjectFromVerb(govID).equals(depID)) {
+						return "SBJ";
+					} else if (getMateObjectFromVerb(tokID) != null
+							&& getMateObjectFromVerb(tokID).equals(depID)) {
+						return "OBJ";
+					}
+				}
+				
+				govID = tokID;
+				depID = tokkID;
+				if (getTokenAttribute(e, FeatureName.mainpos).equals("v")) {
+					depID = getMateHeadVerb(tokkID);
+				} else if (getTokenAttribute(e, FeatureName.mainpos).equals("adj") &&
+					getMateVerbFromAdj(tokkID) != null) {
+					depID = getMateVerbFromAdj(tokkID);
+				}
+				
+				generateDependencyPath(govID, depID, paths, "", visited);			
+				if (!paths.isEmpty()) {
+					path = simplifiedDependencyPath2(paths.get(0));				
+					if (!path.equals("")) return path.substring(1);
+				}
+				
+				if (getMateCoordVerb(depID) != null) {
+					generateDependencyPath(govID, getMateCoordVerb(depID), paths, "", visited);
+					if (!paths.isEmpty()) {
+						path = simplifiedDependencyPath2(paths.get(0));				
+						if (!path.equals("")) return path.substring(1);
+					}
+				}
+				
+				if (getTokenAttribute(e, FeatureName.mainpos).equals("n")) {
+					if (getMateVerbFromSbjNoun(depID) != null) {
+						generateDependencyPath(govID, getMateVerbFromSbjNoun(depID), paths, "", visited);
+						if (!paths.isEmpty()) {
+							path = simplifiedDependencyPath2(paths.get(0));				
 							if (!path.equals("")) return path.substring(1);
 						}
 					}
@@ -891,10 +1020,10 @@ public class PairFeatureVector {
 		return m;
 	}
 	
-	public Marker getSignalMarker(Map<String, String> signalList, String pattern, String text, String position, String context, String contextStartTid) {
+	public Marker getSignalMarker(Map<String, String> signalList, String key, String text, String position, String context, String contextStartTid) {
 		Marker m = new Marker();
 		m.setText(text);
-		m.setCluster(signalList.get(pattern));
+		m.setCluster(signalList.get(key));
 		m.setPosition(position);
 		
 //		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), 
@@ -928,6 +1057,16 @@ public class PairFeatureVector {
 				signalTidArr);
 		dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), 
 				signalTidArr);
+		
+		if (dep1.contains(dep2)) {
+			dep1 = dep1.replace(dep2, "O");
+			if (dep1.equals("")) dep1 = "O";
+			dep2 = "O";
+		} else if (dep2.contains(dep1)) {
+			dep2 = dep2.replace(dep1, "O");
+			if (dep2.equals("")) dep2 = "O";
+			dep1 = "O";
+		}
 		
 		m.setDepRelE1(dep1);
 		m.setDepRelE2(dep2);
@@ -988,9 +1127,9 @@ public class PairFeatureVector {
 		m.setCluster(verbList.get(text));
 		m.setPosition(position);
 		ArrayList<String> verbTidArr = new ArrayList<String>(); verbTidArr.add(verbTid);
-		String dep1 = getSignalMateDependencyPath(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), verbTidArr);
-		String dep2 = getSignalMateDependencyPath(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), verbTidArr);
-//		System.out.println(text + "|" + dep1 + "|" + dep2);
+		String dep1 = getSignalMateDependencyPath2(e1, getTokenIDArr(e1.getStartTokID(), e1.getEndTokID()), verbTidArr);
+		String dep2 = getSignalMateDependencyPath2(e2, getTokenIDArr(e2.getStartTokID(), e2.getEndTokID()), verbTidArr);
+//		System.out.println(text + "|" + m.getCluster() + "|" + dep1 + "|" + dep2);
 		m.setDepRelE1(dep1);
 		m.setDepRelE2(dep2);
 		return m;
@@ -1231,13 +1370,15 @@ public class PairFeatureVector {
 	
 	public Marker getCausalSignal() throws IOException {
 		Map<String, String> signalList = null;
+		Map<String, String> patternList = null;
 		signalList = ((CausalSignalList) this.getCausalSignalList()).getList();
+		patternList = ((CausalSignalList) this.getCausalSignalList()).getPatternList();
 		
 		Object[] sigKeys = signalList.keySet().toArray();
-		Arrays.sort(sigKeys, Collections.reverseOrder());
+//		Arrays.sort(sigKeys, Collections.reverseOrder());
 		
-		if (signalList != null) {	
-			Map<Integer, Marker> candidates = new HashMap<Integer, Marker>();
+		if (signalList != null & patternList != null) {	
+			Map<Integer, Marker> candidates = new TreeMap<Integer, Marker>();
 			Integer distance;
 			
 			if (isSameSentence()) {
@@ -1260,37 +1401,59 @@ public class PairFeatureVector {
 				String contextAfter = " " + getString(tidEnd2, tidAfter2) + " ";
 				String contextBegin = " " + getString(s.getStartTokID(), tidBegin) + " ";
 				
-				//for (String key : signalList.keySet()) {
-				for (Object key : sigKeys) {
-					Pattern pattern = Pattern.compile(" " + (String)key + " ");
+				int i = 0;
+				for (String key : signalList.keySet()) {
+//				for (Object key : sigKeys) {
+					Pattern pattern = Pattern.compile(" " + patternList.get(key) + " ");
 					Matcher matcher = pattern.matcher(contextBetween);
 					if (matcher.find()) {
-						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "BETWEEN", contextBetween, tidBefore2);
-						distance = getSignalEntityDistance(matcher.group(), contextBetween, "BETWEEN");
+						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "BETWEEN", contextBetween, tidBefore2);
+						distance = getSignalEntityDistance(matcher.group(), contextBetween, "BETWEEN") + i;
 						if (!candidates.containsKey(distance)) candidates.put(distance, m);
-						break;
+						else {
+							while (candidates.containsKey(distance)) {
+								distance ++; i ++;
+							}
+							candidates.put(distance, m);
+						}
 					}
 					matcher = pattern.matcher(contextBefore);
 					if (matcher.find()) {
-						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "BEFORE", contextBefore, tidBefore1);
-						distance = getSignalEntityDistance(matcher.group(), contextBefore, "BEFORE");
+						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "BEFORE", contextBefore, tidBefore1);
+						distance = getSignalEntityDistance(matcher.group(), contextBefore, "BEFORE") + i;
 						if (!candidates.containsKey(distance)) candidates.put(distance, m);
-						break;
+						else {
+							while (candidates.containsKey(distance)) {
+								distance ++; i ++;
+							}
+							candidates.put(distance, m);
+						}
 					} 
 					matcher = pattern.matcher(contextAfter);
 					if (matcher.find()) {
-						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "AFTER", contextAfter, tidEnd2);
-						distance = getSignalEntityDistance(matcher.group(), contextAfter, "AFTER");
+						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "AFTER", contextAfter, tidEnd2);
+						distance = getSignalEntityDistance(matcher.group(), contextAfter, "AFTER") + i;
 						if (!candidates.containsKey(distance)) candidates.put(distance, m);
-						break;
+						else {
+							while (candidates.containsKey(distance)) {
+								distance ++; i ++;
+							}
+							candidates.put(distance, m);
+						}
 					}
 //					matcher = pattern.matcher(contextBegin);
 //					if (matcher.find()) {
-//						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "BEGIN", contextBegin, s.getStartTokID());
+//						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "BEGIN", contextBegin, s.getStartTokID());
 //						distance = getSignalEntityDistance(matcher.group(), contextBegin, "BEGIN");
 //						if (!candidates.containsKey(distance + 100)) candidates.put(distance + 100, m);
-//						break;
+//						else {
+//							while (candidates.containsKey(distance)) {
+//								distance ++; i ++;
+//							}
+//							candidates.put(distance, m);
+//						}
 //					} 
+					i ++;
 				}
 			} else { //consecutive sentences
 				Sentence s1 = doc.getSentences().get(e1.getSentID());
@@ -1300,23 +1463,35 @@ public class PairFeatureVector {
 				String contextBegin1 = " " + getString(s1.getStartTokID(), tidBegin1) + " ";
 				String contextBegin2 = " " + getString(s2.getStartTokID(), tidBegin2) + " ";
 				
-				//for (String key : signalList.keySet()) {
-				for (Object key : sigKeys) {
-					Pattern pattern = Pattern.compile(" " + (String)key + " ");
+				int i = 0;
+				for (String key : signalList.keySet()) {
+//				for (Object key : sigKeys) {
+					Pattern pattern = Pattern.compile(" " + patternList.get(key) + " ");
 					Matcher matcher = pattern.matcher(contextBegin2);
 					if (matcher.find()) {
-						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
-						distance = getSignalEntityDistance(matcher.group(), contextBegin2, "BEGIN-BETWEEN");
+						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "BEGIN-BETWEEN", contextBegin2, s2.getStartTokID());
+						distance = getSignalEntityDistance(matcher.group(), contextBegin2, "BEGIN-BETWEEN") + i;
 						if (!candidates.containsKey(distance)) candidates.put(distance, m);
-						break;
+						else {
+							while (candidates.containsKey(distance)) {
+								distance ++; i ++;
+							}
+							candidates.put(distance, m);
+						}
 					}
 //					matcher = pattern.matcher(contextBegin1);
 //					if (matcher.find()) {
-//						Marker m = getSignalMarker(signalList, (String)key, matcher.group(), "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
+//						Marker m = getSignalMarker(signalList, key, matcher.group().trim(), "BEGIN-BEFORE", contextBegin1, s1.getStartTokID());
 //						distance = getSignalEntityDistance(matcher.group(), contextBegin1, "BEGIN-BEFORE");
 //						if (!candidates.containsKey(distance + 100)) candidates.put(distance + 100, m);
-//						break;
+//						else {
+//							while (candidates.containsKey(distance)) {
+//								distance ++; i ++;
+//							}
+//							candidates.put(distance, m);
+//						}
 //					}
+					i ++;
 				}
 			}
 			
@@ -1493,15 +1668,47 @@ public class PairFeatureVector {
 							String lemma = doc.getTokens().get(tid).getLemma();
 							
 							Map<String, List<String>> linkVerbs = new HashMap<String, List<String>>();
-							String[] link = {"to", "with"}; String[] lead = {"to"};
-							String[] depend = {"on"}; String[] result = {"in"};
-							linkVerbs.put("link", Arrays.asList(link)); linkVerbs.put("lead", Arrays.asList(lead));
-							linkVerbs.put("depend", Arrays.asList(depend)); linkVerbs.put("result", Arrays.asList(result));
-							if (lemma.equals("link") || lemma.equals("lead") || lemma.equals("depend") || lemma.equals("result")) {
+							String[] link = {"to", "with"}; 
+							String[] lead = {"to"};
+							String[] depend = {"on"}; 
+							String[] result = {"in", "from"};
+							String[] rely = {"on"}; 
+							String[] stem = {"from"};
+							String[] relate = {"to"};
+							String[] connect = {"with"};
+							String[] associate = {"with"};
+							
+							linkVerbs.put("link", Arrays.asList(link)); 
+							linkVerbs.put("lead", Arrays.asList(lead));
+							linkVerbs.put("depend", Arrays.asList(depend)); 
+							linkVerbs.put("result", Arrays.asList(result));
+							linkVerbs.put("rely", Arrays.asList(rely));
+							linkVerbs.put("stem", Arrays.asList(stem));
+							linkVerbs.put("relate", Arrays.asList(relate));
+							linkVerbs.put("connect", Arrays.asList(connect));
+							linkVerbs.put("associate", Arrays.asList(associate));
+							
+//							if (lemma.equals("reflect")) {
+//								Marker m = getVerbMarker(verbList, lemma, "BETWEEN", tid);
+//								int distance = Math.abs(doc.getTokenArr().indexOf(tid) 
+//										- doc.getTokenArr().indexOf(e2.getStartTokID()));
+//								candidates.put(distance, m);
+//								
+//							} else 
+							if (lemma.equals("link") 
+									|| lemma.equals("lead") 
+									|| lemma.equals("depend") 
+									|| lemma.equals("result")
+									|| lemma.equals("rely")
+									|| lemma.equals("stem")
+									|| lemma.equals("relate")
+									|| lemma.equals("connect")
+									|| lemma.equals("associate")
+								) {
 								int tidx = doc.getTokens().get(tid).getIndex();
 								String lemmaNext = doc.getTokens().get(doc.getTokenArr().get(tidx+1)).getLemma();
 								if (linkVerbs.get(lemma).contains(lemmaNext)) {
-									Marker m = getVerbMarker(verbList, lemma, "BETWEEN", tid);
+									Marker m = getVerbMarker(verbList, lemma+"-"+lemmaNext, "BETWEEN", tid);
 									int distance = Math.abs(doc.getTokenArr().indexOf(tid) 
 											- doc.getTokenArr().indexOf(e2.getStartTokID()));
 									candidates.put(distance, m);
@@ -2162,7 +2369,7 @@ public class PairFeatureVector {
 					break;
 				case causSignalClusText:
 					m = getCausalSignal();
-					getVectors().add(m.getCluster());
+					getVectors().add(m.getCluster().replace(" ", "_"));
 					fields.add("causSignalClusText");
 					break;
 				case causMarkerPos:
@@ -2255,6 +2462,13 @@ public class PairFeatureVector {
 					if (lbl.equals("END")) lbl = "ENDS";
 					getVectors().add(lbl);
 					fields.add("label");
+					break;
+				case labelBinary:
+					String lblB = getLabel();
+					if (!lblB.equals("NONE")) lblB = "TLINK";
+					else lblB = "NONE";
+					getVectors().add(lblB);
+					fields.add("labelBinary");
 					break;
 				case labelCollapsed:
 					String lblC = getLabel();
@@ -2415,69 +2629,45 @@ public class PairFeatureVector {
 					fields.add("id2");
 					break;
 				case pos:
-					String[] e1Pos = getTokenAttribute(e1, FeatureName.pos).split("_");
-					String[] e2Pos = getTokenAttribute(e2, FeatureName.pos).split("_");
+					String e1Pos = getTokenAttribute(e1, FeatureName.pos);
+					String e2Pos = getTokenAttribute(e2, FeatureName.pos);
 					for (String s : this.pos) {
+						if (e1Pos.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("pos1_" + s);
-						getVectors().add("0");
-					}
-					for (String e1_pos : e1Pos) {
-						if (fields.contains("pos1_" + e1_pos)) {
-							getVectors().set(fields.indexOf("pos1_" + e1_pos), "1");
-						}
 					}
 					for (String s : this.pos) {
+						if (e2Pos.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("pos2_" + s);
-						getVectors().add("0");
-					}
-					for (String e2_pos : e2Pos) {
-						if (fields.contains("pos2_" + e2_pos)) {
-							getVectors().set(fields.indexOf("pos2_" + e2_pos), "1");
-						}
 					}
 					break;
 				case mainpos:
-					String[] e1Mpos = getTokenAttribute(e1, FeatureName.mainpos).split("_");
-					String[] e2Mpos = getTokenAttribute(e2, FeatureName.mainpos).split("_");
+					String e1Mpos = getTokenAttribute(e1, FeatureName.mainpos);
+					String e2Mpos = getTokenAttribute(e2, FeatureName.mainpos);
 					for (String s : this.main_pos) {
+						if (e1Mpos.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("mainpos1_" + s);
-						getVectors().add("0");
-					}
-					for (String e1_mpos : e1Mpos) {
-						if (fields.contains("mainpos1_" + e1_mpos)) {
-							getVectors().set(fields.indexOf("mainpos1_" + e1_mpos), "1");
-						}
 					}
 					for (String s : this.main_pos) {
+						if (e2Mpos.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("mainpos2_" + s);
-						getVectors().add("0");
-					}
-					for (String e2_mpos : e2Mpos) {
-						if (fields.contains("mainpos2_" + e2_mpos)) {
-							getVectors().set(fields.indexOf("mainpos2_" + e2_mpos), "1");
-						}
 					}
 					break;
 				case chunk:
-					String[] e1Chunk = getTokenAttribute(e1, FeatureName.chunk).split("_");
-					String[] e2Chunk = getTokenAttribute(e2, FeatureName.chunk).split("_");
+					String e1Chunk = getTokenAttribute(e1, FeatureName.chunk);
+					String e2Chunk = getTokenAttribute(e2, FeatureName.chunk);
 					for (String s : this.chunk) {
+						if (e1Chunk.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("chunk1_" + s);
-						getVectors().add("0");
-					}
-					for (String e1_ch : e1Chunk) {
-						if (fields.contains("chunk1_" + e1_ch)) {
-							getVectors().set(fields.indexOf("chunk1_" + e1_ch), "1");
-						}
 					}
 					for (String s : this.chunk) {
+						if (e2Chunk.contains(s)) getVectors().add("1");
+						else getVectors().add("0");
 						fields.add("chunk2_" + s);
-						getVectors().add("0");
-					}
-					for (String e2_ch : e2Chunk) {
-						if (fields.contains("chunk2_" + e2_ch)) {
-							getVectors().set(fields.indexOf("chunk2_" + e2_ch), "1");
-						}
 					}
 					break;
 				case samePos:
@@ -2503,7 +2693,7 @@ public class PairFeatureVector {
 					//getVectors().add(getSentenceDistance().toString());
 					if (getSentenceDistance() > 0) {
 						getVectors().add("1");
-					} else if (getEntityDistance() < 0){
+					} else if (getSentenceDistance() < 0){
 						getVectors().add("-1");
 					} else {
 						getVectors().add("0");
@@ -2689,6 +2879,21 @@ public class PairFeatureVector {
 						}
 					}
 					break;
+					
+				case hasModal:
+					if (this instanceof EventEventFeatureVector) {
+						if (!getMateModalVerb(e1.getStartTokID()).equals("O")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("modal_1");
+						if (!getMateModalVerb(e2.getStartTokID()).equals("O")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("modal_2");
+					} else if (this instanceof EventTimexFeatureVector) {
+						if (!getMateModalVerb(e1.getStartTokID()).equals("O")) getVectors().add("1");
+						else getVectors().add("0");
+						fields.add("modal");
+					}
+					break;	
 					
 				case tempSignalClusText:
 					m = getTemporalSignal();
@@ -2952,9 +3157,7 @@ public class PairFeatureVector {
 					if (m.getCluster().equals("O")) {
 						for (int i=0; i<(this.dep_signal_path.length*2); i++) getVectors().add("0");
 					} else {
-						//Sometimes dependency relations are like: PRP-SUB-SBJ-PMOD-OPRD-IM-OPRD|SBJ-PMOD-OPRD-IM-OPRD
-						if (m.getDepRelE1().contains(m.getDepRelE2())) m.setDepRelE2("O");
-						else if (m.getDepRelE2().contains(m.getDepRelE1())) m.setDepRelE1("O");
+//						String dependency = getSimplifiedSignalDependencyPath(m);
 						
 						for (String s : this.dep_signal_path) {
 							if (m.getDepRelE1().contains(s)) getVectors().add("1");
@@ -2964,6 +3167,11 @@ public class PairFeatureVector {
 							if (m.getDepRelE2().contains(s)) getVectors().add("1");
 							else getVectors().add("0");
 						}
+						
+//						for (String s : this.dep_signal_path) {
+//							if (dependency.contains(s)) getVectors().add("1");
+//							else getVectors().add("0");
+//						}
 					}
 					for (String s : this.dep_signal_path) {
 						fields.add("caussigdep1_" + s);
@@ -2971,6 +3179,9 @@ public class PairFeatureVector {
 					for (String s : this.dep_signal_path) {
 						fields.add("caussigdep2_" + s);
 					}
+//					for (String s : this.dep_signal_path) {
+//						fields.add("caussigdep_" + s);
+//					}
 					break;
 				case coref:
 					getVectors().add(((EventEventFeatureVector) this).isCoreference() ? "1" : "0");
@@ -3013,7 +3224,13 @@ public class PairFeatureVector {
 					else if (lblC.equals("IAFTER")) lblC = "AFTER";
 					getVectors().add(String.valueOf(temp_rel_type_list.indexOf(lblC)+1));
 					fields.add("labelCollapsed");
-					break;	
+					break;
+				case labelBinary:
+					String lblB = getLabel();
+					if (!lblB.equals("NONE")) getVectors().add("1");
+					else getVectors().add("0");
+					fields.add("labelBinary");
+					break;
 				case labelDense:
 					String lblDense = getLabel();
 					getVectors().add(String.valueOf(temp_dense_rel_type_list.indexOf(lblDense)+1));
@@ -3260,5 +3477,21 @@ public class PairFeatureVector {
 
 		conn.disconnect();
 		return sb.toString().split(",");
+	}
+
+	public double[] getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(double[] features) {
+		this.features = features;
+	}
+	
+	public String toCSVString() {
+		String res = "";
+		for (int i=0; i<features.length-1; i++) {
+			res += features[i] + ",";
+		}
+		return res.substring(0, res.length()-1);
 	}
 }
