@@ -3,8 +3,8 @@ package parser;
 import java.io.File;
 import java.io.IOException;
 
-import parser.entities.*;
 import parser.TXPParser.Field;
+import parser.entities.*;
 
 public class testParser {
 	

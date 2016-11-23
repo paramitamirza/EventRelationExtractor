@@ -26,7 +26,6 @@ import parser.entities.Event;
 import parser.entities.Sentence;
 import parser.entities.TemporalRelation;
 import parser.entities.Timex;
-import simplifier.SentenceSimplifier;
 
 public class TestEventEventRelationRuleTempEval3 {
 	

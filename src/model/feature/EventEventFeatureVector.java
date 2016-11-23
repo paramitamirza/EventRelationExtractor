@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import parser.entities.Doc;
-import parser.entities.Entity;
-import parser.entities.Event;
-import parser.entities.TemporalRelation;
 import edu.cmu.lti.lexical_db.ILexicalDatabase;
 import edu.cmu.lti.lexical_db.NictWordNet;
 import edu.cmu.lti.ws4j.RelatednessCalculator;
 import edu.cmu.lti.ws4j.impl.Lin;
 import model.feature.FeatureEnum.FeatureName;
+import parser.entities.Doc;
+import parser.entities.Entity;
+import parser.entities.Event;
+import parser.entities.TemporalRelation;
 
 public class EventEventFeatureVector extends PairFeatureVector{
 	

@@ -9,10 +9,10 @@ import java.util.Map;
 
 import model.feature.CausalSignalList;
 import model.feature.EventEventFeatureVector;
+import model.feature.Marker;
 import model.feature.PairFeatureVector;
 import model.feature.TemporalSignalList;
 import model.feature.FeatureEnum.FeatureName;
-import model.feature.Marker;
 import parser.entities.Doc;
 import parser.entities.Entity;
 import parser.entities.EntityEnum;

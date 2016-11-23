@@ -3,11 +3,10 @@ package model.feature;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import parser.entities.EntityEnum.Language;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import parser.entities.EntityEnum.Language;
 
 public class TemporalSignalList extends SignalList{
 	
