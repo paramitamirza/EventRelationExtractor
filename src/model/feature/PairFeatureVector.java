@@ -19,6 +19,7 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import edu.stanford.nlp.util.StringUtils;
 import model.feature.FeatureEnum.*;
 import parser.entities.*;
 
@@ -3485,6 +3486,10 @@ public class PairFeatureVector {
 
 	public void setFeatures(double[] features) {
 		this.features = features;
+	}
+	
+	public String toString() {
+		return StringUtils.join(getVectors(), ",");
 	}
 	
 	public String toCSVString() {

@@ -65,6 +65,8 @@ public class TestEventTimexRelationClassifierTempEval3 {
 				if (fv.getPairType().equals(PairType.event_timex)) {
 					EventTimexFeatureVector etfv = new EventTimexFeatureVector(fv);
 					
+					if (!((Timex) etfv.getE2()).isDct()) {
+					
 					if (etRelCls.classifier.equals(VectorClassifier.yamcha)) {
 						etfv.addToVector(FeatureName.id);
 					}
@@ -97,6 +99,8 @@ public class TestEventTimexRelationClassifierTempEval3 {
 						fvList.add(etfv);
 					} else if (!train){ //test, add all
 						fvList.add(etfv);
+					}
+					
 					}
 				}
 			}

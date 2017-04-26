@@ -901,31 +901,31 @@ class TempEval3TaskCExperiments {
 		
 		TempEval3TaskCExperiments task = new TempEval3TaskCExperiments();
 		
-		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
-		System.setOut(out);
-		PrintStream log = new PrintStream(new FileOutputStream("temporal_log.txt"));
-		System.setErr(log);
+//		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
+//		System.setOut(out);
+//		PrintStream log = new PrintStream(new FileOutputStream("temporal_log.txt"));
+//		System.setErr(log);
 		
-		boolean taskCRelOnly = false;
+		boolean taskCRelOnly = true;
 		boolean trainModels = true;
 		boolean precisionOnly = true;
 		
 		boolean filterEEClassifier = false;	//doesn't work! never turn this on!
 		boolean tlinkFromMajority = false;
 		
-		boolean tlinkFromDCTRules = true;
-		boolean tlinkFromEERules = true;
-		boolean tlinkFromETRules = true;
+		boolean tlinkFromDCTRules = false;
+		boolean tlinkFromEERules = false;
+		boolean tlinkFromETRules = false;
 		
 		boolean tlinkFromDCTClassifier = true;
 		boolean tlinkFromEEClassifier = true;
 		boolean tlinkFromETClassifier = true;
 		
 		boolean tlinkFromInferredMLN = false;
-		boolean tlinkFromRESTReasoner = true;
+		boolean tlinkFromRESTReasoner = false;
 		boolean tlinkNonCandidateFromInferred = false; //doesn't work! never turn this on!
 		
-		boolean clinkPostEditing = true;
+		boolean clinkPostEditing = false;
 		
 		boolean includeTT = false;
 		

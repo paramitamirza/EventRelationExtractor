@@ -85,6 +85,31 @@ class TimeBankDenseExperiments {
 		"PRI19980306.2000.1675.tml" 
 	};
 	
+	public static final String[] trainDocs = {
+		"APW19980219.0476.tml",
+		"ea980120.1830.0071.tml",
+		"PRI19980205.2000.1998.tml",
+		"ABC19980108.1830.0711.tml",
+		"AP900815-0044.tml",
+		"CNN19980227.2130.0067.tml",
+		"NYT19980206.0460.tml",
+		"APW19980213.1310.tml",
+		"AP900816-0139.tml",
+		"APW19980227.0476.tml",
+		"PRI19980205.2000.1890.tml",
+		"CNN19980222.1130.0084.tml",
+		"APW19980227.0468.tml",
+		"PRI19980213.2000.0313.tml",
+		"ABC19980120.1830.0957.tml",
+		"ABC19980304.1830.1636.tml",
+		"APW19980213.1320.tml",
+		"PRI19980121.2000.2591.tml",
+		"ABC19980114.1830.0611.tml",
+		"APW19980213.1380.tml",
+		"ea980120.1830.0456.tml",
+		"NYT19980206.0466.tml"
+	};
+	
 	public TimeBankDenseExperiments() {
 		taskName = "tbdense";
 	}
@@ -294,20 +319,20 @@ class TimeBankDenseExperiments {
 							}
 						}
 						
-						//Add timex-DCT TLINK type feature to feature vector
-						String timexDct = "O";
-						if (ttlinks.containsKey(etfv.getE2().getID() + "\t" + docTxp.getDct().getID())) {
-							timexDct = ttlinks.get(etfv.getE2().getID() + "\t" + docTxp.getDct().getID());
-						}
-						if (etRelCls.classifier.equals(VectorClassifier.libsvm)
-								|| etRelCls.classifier.equals(VectorClassifier.liblinear)
-								|| etRelCls.classifier.equals(VectorClassifier.logit)) {
-							etfv.addBinaryFeatureToVector("timexDct", timexDct, ruleTlinkTypes);
-						} else if (etRelCls.classifier.equals(VectorClassifier.yamcha)
-								|| etRelCls.classifier.equals(VectorClassifier.weka)
-								|| etRelCls.classifier.equals(VectorClassifier.none)){
-							etfv.addToVector("timexDct", timexDct);
-						}
+//						//Add timex-DCT TLINK type feature to feature vector
+//						String timexDct = "O";
+//						if (ttlinks.containsKey(etfv.getE2().getID() + "\t" + docTxp.getDct().getID())) {
+//							timexDct = ttlinks.get(etfv.getE2().getID() + "\t" + docTxp.getDct().getID());
+//						}
+//						if (etRelCls.classifier.equals(VectorClassifier.libsvm)
+//								|| etRelCls.classifier.equals(VectorClassifier.liblinear)
+//								|| etRelCls.classifier.equals(VectorClassifier.logit)) {
+//							etfv.addBinaryFeatureToVector("timexDct", timexDct, ruleTlinkTypes);
+//						} else if (etRelCls.classifier.equals(VectorClassifier.yamcha)
+//								|| etRelCls.classifier.equals(VectorClassifier.weka)
+//								|| etRelCls.classifier.equals(VectorClassifier.none)){
+//							etfv.addToVector("timexDct", timexDct);
+//						}
 						
 						if (etRelCls.classifier.equals(VectorClassifier.libsvm)
 								|| etRelCls.classifier.equals(VectorClassifier.liblinear)
@@ -318,6 +343,8 @@ class TimeBankDenseExperiments {
 								|| etRelCls.classifier.equals(VectorClassifier.none)){
 							etfv.addToVector(FeatureName.labelDense);
 						}
+						
+						System.out.println(etfv.toString());
 						
 //						if (etfv.isSameSentence())
 						fvList.add(etfv);
@@ -647,10 +674,14 @@ class TimeBankDenseExperiments {
 		for (String filename : tlinkPerFile.keySet()) {	//assuming that there is no sub-directory
 			File txpFile = new File(dirTxpPath, filename + ".txp");
 			File tmlFile = new File(dirTmlPath, filename);
-			if (!exists(tmlFile.getName(), devDocs) && !exists(tmlFile.getName(), testDocs)) {
+//			if (!exists(tmlFile.getName(), devDocs) && !exists(tmlFile.getName(), testDocs)) {
+			if (exists(tmlFile.getName(), trainDocs)) {
 				fvList.addAll(getEventTimexTlinksPerFile(txpParser, tmlParser, 
 						txpFile, tmlFile, etRelCls, tlinkPerFile, train, goldCandidate));
 			}
+		}
+		for (PairFeatureVector pfv : fvList) {
+			System.out.println(pfv.toCSVString());
 		}
 		return fvList;
 	}
@@ -926,8 +957,8 @@ class TimeBankDenseExperiments {
 		
 		TimeBankDenseExperiments task = new TimeBankDenseExperiments();
 		
-//		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
-//		System.setOut(out);
+		PrintStream out = new PrintStream(new FileOutputStream("temporal_output.txt"));
+		System.setOut(out);
 //		PrintStream log = new PrintStream(new FileOutputStream("temporal_log.txt"));
 //		System.setErr(log);
 		
@@ -936,9 +967,9 @@ class TimeBankDenseExperiments {
 		boolean precisionOnly = true;
 		boolean test = true;
 		
-		boolean tlinkFromDCTRules = true;
-		boolean tlinkFromEERules = true;
-		boolean tlinkFromETRules = true;
+		boolean tlinkFromDCTRules = false;
+		boolean tlinkFromEERules = false;
+		boolean tlinkFromETRules = false;
 		
 		boolean tlinkFromDCTClassifier = true;
 		boolean tlinkFromEEClassifier = true;
@@ -949,7 +980,7 @@ class TimeBankDenseExperiments {
 		boolean tlinkFromRESTReasoner = false;
 		boolean tlinkNonCandidateFromInferred = false;
 		
-		boolean clinkPostEditing = true;
+		boolean clinkPostEditing = false;
 		
 		boolean postTimeGraph = false;
 		

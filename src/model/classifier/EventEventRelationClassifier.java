@@ -124,6 +124,8 @@ public class EventEventRelationClassifier extends PairClassifier {
 		int nInstances = vectors.size();
 		int nFeatures = vectors.get(0).getVectors().size()-1;
 		
+		System.out.println(nInstances + "-" + vectors.get(0).getVectors().size());
+		
 		if (classifier.equals(VectorClassifier.liblinear)
 				|| classifier.equals(VectorClassifier.logit)
 				) {

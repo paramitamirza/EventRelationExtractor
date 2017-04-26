@@ -76,27 +76,27 @@ public class EventTimexRelationClassifier extends PairClassifier {
 			
 		} else {
 			FeatureName[] etFeatures = {
-					FeatureName.pos, /*Feature.mainpos,*/
-					FeatureName.samePos, /*Feature.sameMainPos,*/
-					FeatureName.chunk, 
-					FeatureName.entDistance, FeatureName.sentDistance, FeatureName.entOrder,
+//					FeatureName.pos, /*Feature.mainpos,*/
+//					FeatureName.samePos, /*Feature.sameMainPos,*/
+//					FeatureName.chunk, 
+//					FeatureName.entDistance, FeatureName.sentDistance, FeatureName.entOrder,
 					FeatureName.eventClass, FeatureName.tense, FeatureName.aspect, FeatureName.polarity,
-					FeatureName.dct,
-					FeatureName.timexType, 				
-					FeatureName.mainVerb, 
-					FeatureName.hasModal,
-//					FeatureName.modalVerb,
-//					FeatureName.depTmxPath,
-					FeatureName.tempSignalClusText,		//TimeBank-Dense
-					FeatureName.tempSignalPos,			//TimeBank-Dense
-					FeatureName.tempSignalDep1Dep2,		//TimeBank-Dense
-//					FeatureName.tempSignal1ClusText,	//TempEval3
-//					FeatureName.tempSignal1Pos,			//TempEval3
-//					FeatureName.tempSignal1Dep			//TempEval3
-//					FeatureName.tempSignal2ClusText,
-//					FeatureName.tempSignal2Pos,
-//					FeatureName.tempSignal2Dep,
-//					FeatureName.timexRule
+//					FeatureName.dct,
+//					FeatureName.timexType, 				
+//					FeatureName.mainVerb, 
+//					FeatureName.hasModal,
+////					FeatureName.modalVerb,
+////					FeatureName.depTmxPath,
+//					FeatureName.tempSignalClusText,		//TimeBank-Dense
+//					FeatureName.tempSignalPos,			//TimeBank-Dense
+//					FeatureName.tempSignalDep1Dep2,		//TimeBank-Dense
+////					FeatureName.tempSignal1ClusText,	//TempEval3
+////					FeatureName.tempSignal1Pos,			//TempEval3
+////					FeatureName.tempSignal1Dep			//TempEval3
+////					FeatureName.tempSignal2ClusText,
+////					FeatureName.tempSignal2Pos,
+////					FeatureName.tempSignal2Dep,
+////					FeatureName.timexRule
 			};
 			featureList = Arrays.asList(etFeatures);
 		}
